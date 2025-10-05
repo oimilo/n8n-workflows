@@ -17,8 +17,8 @@
       "name": "Setup",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6400
+        3180,
+        100
       ],
       "parameters": {
         "fields": {
@@ -64,8 +64,8 @@
       "name": "Get meetings for today",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        100,
-        5500
+        1780,
+        100
       ],
       "parameters": {
         "options": {
@@ -95,8 +95,8 @@
       "name": "Get attendees email domains",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        5140
+        1220,
+        100
       ],
       "parameters": {
         "fields": {
@@ -123,8 +123,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        6580
+        3460,
+        100
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -140,8 +140,8 @@
       "name": "Get recent LinkedIn posts",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5680
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -206,8 +206,8 @@
       "name": "Gmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        5860
+        2340,
+        100
       ],
       "parameters": {
         "sendTo": "={{ $('Setup').first().json.emails }}",
@@ -259,8 +259,8 @@
       "name": "Extract data for email",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4600
+        380,
+        100
       ],
       "parameters": {
         "fields": {
@@ -293,8 +293,8 @@
       "name": "Prepare email template",
       "type": "n8n-nodes-base.html",
       "position": [
-        100,
-        6220
+        2900,
+        100
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\" />\n\n</head>\n<body>\n  <div class=\"container\">\n     <h2 style=\"font-size: 1.2em\">\n      🗓️ Meeting with <span>{{ $json.attendeeEmail }}</span>\n       at {{ $json.startHour }}:{{ $json.startMinute < 10 ? `0${$json.startMinute}` : $json.startMinute }}h\n       <h3>Here's a quick summary of {{ $json.name }}'s recent social media activities</h3>\n       <p class=\"summary\">\n         {{ $json.message.content }}\n       </p>\n    </h2>\n\n  </div>\n</body>\n</html>\n\n<style>\n.container {\n  font-family: sans-serif;\n}\n\n.summary {\n  background-color: #f7f9fc; \n  font-family: sans-serif; \n  padding: 0.3em 1em\n}\n</style>"
@@ -307,8 +307,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6760
+        3740,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -324,8 +324,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6940
+        4020,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -341,8 +341,8 @@
       "name": "Keep only ones with the domain",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        6040
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -375,8 +375,8 @@
       "name": "Extract important data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4780
+        660,
+        100
       ],
       "parameters": {
         "fields": {
@@ -408,8 +408,8 @@
       "name": "Extract important data again",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4960
+        940,
+        100
       ],
       "parameters": {
         "fields": {
@@ -470,8 +470,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        7480
+        4860,
+        100
       ],
       "parameters": {
         "rules": {
@@ -538,8 +538,8 @@
       "name": "Wrap everything together",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        9460
+        5420,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -554,8 +554,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7120
+        4300,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -571,8 +571,8 @@
       "name": "Get latest tweets",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5320
+        1500,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7300
+        4580,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 31d22fdc-aacf-4228-ac78-b8f05621c0e0",
@@ -719,7 +719,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        4600
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Setup**: set\n- **Every morning @ 7**: scheduleTrigger\n- **Get meetings for today**: googleCalendar\n- **Get attendees email domains**: set\n- **Split Out**: splitOut\n- **Get recent LinkedIn posts**: httpRequest\n- **Enrich attendee company**: clearbit\n- **Gmail**: gmail\n- **Combine all activity for a company**: merge\n- **Extract data for email**: set\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -763,7 +763,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        4780
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -777,7 +777,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        4960
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -851,7 +851,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        5140
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -865,7 +865,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        5320
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -939,7 +939,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        5500
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -953,7 +953,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        5680
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -994,7 +994,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        5860
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1035,7 +1035,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        6040
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1061,8 +1061,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9280
+        5140,
+        100
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1084,7 +1084,480 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Ask AI to summerize": {
+      "main": [
+        [
+          {
+            "node": "Combine all activity for a company",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine all activity for a company": {
+      "main": [
+        [
+          {
+            "node": "Enrich attendee company",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich attendee company": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1cb46dc8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1cb46dc8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 31d22fdc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 31d22fdc": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 68041cd4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 68041cd4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for fda56f50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for fda56f50": {
+      "main": [
+        [
+          {
+            "node": "Every morning @ 7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every morning @ 7": {
+      "main": [
+        [
+          {
+            "node": "Extract data for email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract data for email": {
+      "main": [
+        [
+          {
+            "node": "Extract important data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract important data": {
+      "main": [
+        [
+          {
+            "node": "Extract important data again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract important data again": {
+      "main": [
+        [
+          {
+            "node": "Get attendees email domains",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get attendees email domains": {
+      "main": [
+        [
+          {
+            "node": "Get latest tweets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get latest tweets": {
+      "main": [
+        [
+          {
+            "node": "Get meetings for today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get meetings for today": {
+      "main": [
+        [
+          {
+            "node": "Get recent LinkedIn posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get recent LinkedIn posts": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Keep only ones with the domain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep only ones with the domain": {
+      "main": [
+        [
+          {
+            "node": "Prepare email template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare email template": {
+      "main": [
+        [
+          {
+            "node": "Setup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Setup": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wrap everything together",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Set Workflow",
   "settings": {
     "executionOrder": "v1",

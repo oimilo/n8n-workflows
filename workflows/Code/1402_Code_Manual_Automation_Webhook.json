@@ -343,8 +343,8 @@
       "name": "Write the LinkedIn person info to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        100,
-        9460
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -373,8 +373,8 @@
       "name": "Write the LinkedIn company info to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        100,
-        9280
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -862,8 +862,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9100
+        380,
+        100
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -899,7 +899,480 @@
     "retryDelay": 1000
   },
   "versionId": "35815900-1729-40c7-b128-778eabb62ec1",
-  "connections": {},
+  "connections": {
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Bright Data MCP Client For LinkedIn Company",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright Data MCP Client For LinkedIn Company": {
+      "main": [
+        [
+          {
+            "node": "Bright Data MCP Client For LinkedIn Person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bright Data MCP Client For LinkedIn Person": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Create a binary data for LinkedIn company info extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a binary data for LinkedIn company info extract": {
+      "main": [
+        [
+          {
+            "node": "Create a binary data for LinkedIn person info extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a binary data for LinkedIn person info extract": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 335efc2b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 335efc2b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3e74c49e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3e74c49e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 6ed1402b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6ed1402b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 99f45d7f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 99f45d7f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d1927c08",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d1927c08": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn Data Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn Data Extractor": {
+      "main": [
+        [
+          {
+            "node": "List all available tools for Bright Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List all available tools for Bright Data": {
+      "main": [
+        [
+          {
+            "node": "List all tools for Bright Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List all tools for Bright Data": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Set the LinkedIn Company URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set the LinkedIn Company URL": {
+      "main": [
+        [
+          {
+            "node": "Set the URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set the URLs": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Webhook for LinkedIn Company Web Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook for LinkedIn Company Web Scraper": {
+      "main": [
+        [
+          {
+            "node": "Webhook for LinkedIn Person Web Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook for LinkedIn Person Web Scraper": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Write the LinkedIn company info to disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write the LinkedIn company info to disk": {
+      "main": [
+        [
+          {
+            "node": "Write the LinkedIn person info to disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

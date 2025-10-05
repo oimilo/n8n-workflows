@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7480
+        4020,
+        100
       ],
       "parameters": {
         "options": {}
@@ -58,8 +58,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7660
+        4300,
+        100
       ],
       "parameters": {
         "options": {}
@@ -78,8 +78,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        11080
+        4860,
+        100
       ],
       "parameters": {
         "jsonSchemaExample": "{\n\t\"tags\": [\"Germany\", \"Technology\", \"Workflow Automation\"]\n}"
@@ -93,7 +93,7 @@
       "type": "n8n-nodes-base.rssFeedReadTrigger",
       "position": [
         100,
-        8020
+        5140
       ],
       "parameters": {
         "pollTimes": {
@@ -112,8 +112,8 @@
       "name": "Return article details",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        8200
+        380,
+        280
       ],
       "parameters": {
         "options": {},
@@ -148,8 +148,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        8740
+        1220,
+        280
       ],
       "parameters": {
         "options": {
@@ -165,8 +165,8 @@
       "name": "Loop over articles",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        7120
+        3460,
+        100
       ],
       "parameters": {
         "options": {}
@@ -179,8 +179,8 @@
       "name": "SET initial record",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        8560
+        940,
+        280
       ],
       "parameters": {
         "options": {},
@@ -194,8 +194,8 @@
       "name": "GET WP tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        6220
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -219,8 +219,8 @@
       "name": "POST WP tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        7840
+        4580,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -257,8 +257,8 @@
       "name": "GET updated WP tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        6400
+        2340,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -281,8 +281,8 @@
       "name": "Keep matches",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        6940
+        3180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -362,8 +362,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        6760
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -397,8 +397,8 @@
       "name": "MOCK article",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        7300
+        3740,
+        100
       ],
       "parameters": {
         "options": {},
@@ -439,8 +439,8 @@
       "name": "Return missing tags",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        8380
+        660,
+        280
       ],
       "parameters": {
         "jsCode": "const new_ary = $('SET initial record').first().json.tags.map(x => x.toLowerCase().replaceAll(\" \",\"-\")).filter(x => !$input.first().json.tags.includes(x))\n\nreturn {\"missing_tags\": new_ary};"
@@ -453,8 +453,8 @@
       "name": "Wordpress",
       "type": "n8n-nodes-base.wordpress",
       "position": [
-        100,
-        11260
+        5140,
+        100
       ],
       "parameters": {
         "title": "=Demo tagging post: {{ $json.title }}",
@@ -477,8 +477,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9100
+        1780,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -494,8 +494,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9280
+        2060,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -543,8 +543,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8920
+        1500,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -560,8 +560,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9460
+        2340,
+        280
       ],
       "parameters": {
         "width": 409.8780943583022,
@@ -576,8 +576,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9640
+        2620,
+        280
       ],
       "parameters": {
         "color": 3,
@@ -593,8 +593,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9820
+        2900,
+        280
       ],
       "parameters": {
         "color": 6,
@@ -609,8 +609,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10000
+        3180,
+        280
       ],
       "parameters": {
         "color": 3,
@@ -626,8 +626,8 @@
       "name": "Generate tags for article",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        6580
+        2620,
+        100
       ],
       "parameters": {
         "text": "=Please provide 3-5 suitable tags for the following article:\n\n{{ $json.content }}\n\nTag Formatting Rules:\n1. Tags should be in title case",
@@ -642,8 +642,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10180
+        3460,
+        280
       ],
       "parameters": {
         "width": 285.2555025627061,
@@ -657,8 +657,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10360
+        3740,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -673,8 +673,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10540
+        4020,
+        280
       ],
       "parameters": {
         "color": 4,
@@ -706,8 +706,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10720
+        4300,
+        280
       ],
       "parameters": {
         "message": "Error occurred in cbabadef-9f5f-4402-8bd7-255f5c237ff9",
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10900
+        4580,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 6bf40d39-4b42-413f-9502-3ca494f75bcb",
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        5320
+        660,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0561d80b",
@@ -751,8 +751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        5500
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1468a001",
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        6040
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ec0b93cb",
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        5860
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cbabadef",
@@ -796,8 +796,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        5680
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6bf40d39",
@@ -812,7 +812,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11440
+        5320
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Node Types**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Auto-fixing Output Parser**: outputParserAutofixing\n- **OpenAI Chat Model1**: lmChatOpenAi\n- **Structured Output Parser**: outputParserStructured\n- **RSS Feed Trigger**: rssFeedReadTrigger\n- **Return article details**: set\n- **Split Out**: splitOut\n- **Loop over articles**: splitInBatches\n- **SET initial record**: set\n- **GET WP tags**: httpRequest\n- ... and 30 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -871,7 +871,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11620
+        5500
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -885,7 +885,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11800
+        5680
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -989,7 +989,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11980
+        5860
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1003,7 +1003,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12160
+        6040
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1107,7 +1107,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12340
+        6220
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1121,7 +1121,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12520
+        6400
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1176,7 +1176,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12700
+        6580
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1231,7 +1231,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12880
+        6760
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1257,8 +1257,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        13060
+        5420,
+        100
       ],
       "parameters": {
         "content": "# Auto-Tag Blog Posts in WordPress with AI\n\n## Overview\nAutomated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1270,8 +1270,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        5140
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1310,7 +1310,676 @@
     "retryDelay": 1000
   },
   "versionId": "3acdf19c-288e-4a3b-87ae-5adbf44285fe",
-  "connections": {},
+  "connections": {
+    "Auto-Tag Posts in WordPress": {
+      "main": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "main": [
+        [
+          {
+            "node": "Combine slugs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine slugs": {
+      "main": [
+        [
+          {
+            "node": "Combine tag_ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine tag_ids": {
+      "main": [
+        [
+          {
+            "node": "Demo Usage in Another Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Demo Usage in Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0561d80b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0561d80b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1468a001",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1468a001": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 6bf40d39",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6bf40d39": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for cbabadef",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cbabadef": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ec0b93cb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ec0b93cb": {
+      "main": [
+        [
+          {
+            "node": "GET WP tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET WP tags": {
+      "main": [
+        [
+          {
+            "node": "GET updated WP tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET updated WP tags": {
+      "main": [
+        [
+          {
+            "node": "Generate tags for article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate tags for article": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "Keep matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep matches": {
+      "main": [
+        [
+          {
+            "node": "Loop over articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over articles": {
+      "main": [
+        [
+          {
+            "node": "MOCK article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MOCK article": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "POST WP tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST WP tags": {
+      "main": [
+        [
+          {
+            "node": "RSS Feed Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Feed Trigger": {
+      "main": [
+        [
+          {
+            "node": "Return article details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return article details": {
+      "main": [
+        [
+          {
+            "node": "Return missing tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return missing tags": {
+      "main": [
+        [
+          {
+            "node": "SET initial record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET initial record": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "main": [
+        [
+          {
+            "node": "Wordpress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wordpress": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow integrates 18 different services: filter, httpRequest, wordpress, stickyNote, code. It contains 40 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Auto-Tag Blog Posts in WordPress with AI. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

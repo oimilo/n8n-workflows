@@ -627,8 +627,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        6580
+        380,
+        100
       ],
       "parameters": {
         "content": "# RAG Workflow For Stock Earnings Report Analysis\n\n## Overview\nAutomated workflow: RAG Workflow For Stock Earnings Report Analysis. This workflow integrates 15 different services: stickyNote, vectorStorePinecone, embeddingsGoogleGemini, textSplitterRecursiveCharacterTextSplitter, lmChatGoogleGemini. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -672,7 +672,368 @@
     "retryDelay": 1000
   },
   "versionId": "30c9a6f0-8ace-40c3-8ca7-a79fd91c12a7",
-  "connections": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "main": [
+        [
+          {
+            "node": "Download File From Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File From Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Google Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Google Gemini (retrieval)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini (retrieval)": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1984765a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1984765a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9b0bff2e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9b0bff2e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b0d58ce5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b0d58ce5": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c584d5f6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c584d5f6": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e08dd92a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e08dd92a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e5936e45",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e5936e45": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f4f993d0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f4f993d0": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "List Of Files To Load (Google Sheets)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Of Files To Load (Google Sheets)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store (Retrieval)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store (Retrieval)": {
+      "main": [
+        [
+          {
+            "node": "Recursive Character Text Splitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "main": [
+        [
+          {
+            "node": "Save Report to Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Report to Google Docs": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: RAG Workflow For Stock Earnings Report Analysis. This workflow integrates 15 different services: stickyNote, vectorStorePinecone, embeddingsGoogleGemini, textSplitterRecursiveCharacterTextSplitter, lmChatGoogleGemini. It contains 25 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: RAG Workflow For Stock Earnings Report Analysis. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

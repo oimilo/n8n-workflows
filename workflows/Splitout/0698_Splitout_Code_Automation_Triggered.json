@@ -96,8 +96,8 @@
       "name": "OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        2440
+        660,
+        100
       ],
       "parameters": {
         "modelId": {
@@ -135,8 +135,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        2260
+        380,
+        100
       ],
       "parameters": {
         "numberInputs": 3
@@ -149,8 +149,8 @@
       "name": "Upload to Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        100,
-        2980
+        1500,
+        100
       ],
       "parameters": {
         "name": "={{ $json.fileName }}",
@@ -219,8 +219,8 @@
       "name": "Remove PII columns",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        2620
+        940,
+        100
       ],
       "parameters": {
         "jsCode": "// Input: All items from the previous node\nconst input = $input.all();\n\n// Step 1: Extract the PII column names from the first item\nconst firstItem = input[0];\nif (!firstItem.json.data || !firstItem.json.data) {\n  throw new Error(\"PII column names are missing in the input data.\");\n}\nconst piiColumns = firstItem.json.data.split(',').map(col => col.trim());\n//console.log(\"PII Columns to Remove:\", piiColumns);\n\n// Step 2: Remove the first two items and process the remaining rows\nlet rows = input.slice(2).map(item => item.json); // Exclude the first item\n//console.log(\"Rows to convert (before skipping last):\", rows);\n\n\n// Ensure there are rows to process\nif (rows.length === 0) {\n  throw new Error(\"No rows to convert to CSV.\");\n}\n\n// Step 3: Remove PII columns from each row\nconst sanitizedRows = rows.map(row => {\n  const sanitizedRow = { ...row }; // Copy the row\n  piiColumns.forEach(column => delete sanitizedRow[column]); // Remove PII columns\n  return sanitizedRow;\n});\n//console.log(\"Sanitized Rows:\", sanitizedRows);\n\n// Step 4: Extract headers from sanitized rows\nconst headers = Object.keys(sanitizedRows[0]); // Extract updated headers\n//console.log(\"CSV Headers:\", headers);\n\n// Step 5: Convert rows to CSV format\nconst csvRows = [\n  headers.join(','), // Add header row\n  ...sanitizedRows.map(row => \n    headers.map(header => String(row[header] || '').replace(/,/g, '')).join(',') // Match headers with rows\n  )\n];\n\n// Join all rows with a newline character\nconst csvContent = csvRows.join('\\n');\n//console.log(\"CSV Content:\", csvContent);\n\nconst originalFileName = input[1].json.originalFilename;\n\n// Step 7: Generate a new filename\nconst fileExtension = originalFileName.split('.').pop();\nconst baseName = originalFileName.replace(`.${fileExtension}`, '');\nconst newFileName = `${baseName}_PII_removed.${fileExtension}`;\n//console.log(\"New Filename:\", newFileName);\n\n// Step 8: Return the CSV content and filename as JSON\nreturn [\n  {\n    json: {\n      fileName: newFileName, // New file name\n      content: csvContent // CSV content as plain text\n    }\n  }\n];\n"
@@ -233,8 +233,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2800
+        1220,
+        100
       ],
       "parameters": {
         "height": 260,
@@ -325,7 +325,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3160
+        2260
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Drive Trigger**: googleDriveTrigger\n- **Google Drive**: googleDrive\n- **Extract from File**: extractFromFile\n- **OpenAI**: openAi\n- **Merge**: merge\n- **Upload to Drive**: googleDrive\n- **Get filename**: splitOut\n- **Get result**: splitOut\n- **Remove PII columns**: code\n- **Sticky Note**: stickyNote\n- ... and 5 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -339,7 +339,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3340
+        2440
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -353,7 +353,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3520
+        2620
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -367,7 +367,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3700
+        2800
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -381,7 +381,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3880
+        2980
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -395,7 +395,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4060
+        3160
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -409,7 +409,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4240
+        3340
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -422,7 +422,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4420
+        3520
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -435,7 +435,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4600
+        3700
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -461,8 +461,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        4780
+        1780,
+        100
       ],
       "parameters": {
         "content": "# Googledrivetrigger Workflow\n\n## Overview\nAutomated workflow: Googledrivetrigger Workflow. This workflow integrates 9 different services: stickyNote, googleDriveTrigger, code, splitOut, merge. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -484,7 +484,258 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1fc467fd",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1fc467fd": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 340fb03b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 340fb03b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 36c7e83d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 36c7e83d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4a5d037f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4a5d037f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ff4e8706",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ff4e8706": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Get filename",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get filename": {
+      "main": [
+        [
+          {
+            "node": "Get result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get result": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Drive Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Remove PII columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove PII columns": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Upload to Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Drive": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Googledrivetrigger Workflow",
   "settings": {
     "executionOrder": "v1",

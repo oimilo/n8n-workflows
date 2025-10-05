@@ -31,8 +31,8 @@
       "name": "Upload File",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        8560
+        4300,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -301,8 +301,8 @@
       "name": "OpenAI - Extract Line Items",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        6040
+        380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -328,8 +328,8 @@
       "name": "Set Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6400
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -358,8 +358,8 @@
       "name": "Process Line Items",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        6220
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "// Get the input from the \"OpenAI - Extract Line Items\" node\nconst input = $(\"OpenAI - Extract Line Items\").first().json;\n\n// Initialize an array for the output\nconst outputItems = [];\n\n// Navigate to the 'content' field in the choices array\nconst content = input.choices[0]?.message?.content;\n\nif (content) {\n  try {\n    // Parse the stringified JSON in the 'content' field\n    const parsedContent = JSON.parse(content);\n\n    // Extract 'items' and add them to the output array\n    if (Array.isArray(parsedContent.items)) {\n      outputItems.push(...parsedContent.items.map(i => ({ json: i })));\n    }\n  } catch (error) {\n    // Handle any parsing errors\n    console.error('Error parsing content:', error);\n  }\n}\n\n// Return the extracted items\nreturn outputItems;\n"
@@ -373,7 +373,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        8740
+        6040
       ],
       "webhookId": "0f7f5ebb-8b66-453b-a818-20cc3647c783",
       "parameters": {
@@ -389,8 +389,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6760
+        1500,
+        100
       ],
       "parameters": {
         "width": 920,
@@ -405,8 +405,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6580
+        1220,
+        100
       ],
       "parameters": {
         "width": 1340,
@@ -421,8 +421,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6940
+        1780,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -438,8 +438,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7120
+        2060,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -455,8 +455,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7300
+        2340,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -472,8 +472,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7480
+        2620,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -489,8 +489,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8020
+        3460,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -506,8 +506,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7840
+        3180,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -523,8 +523,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7660
+        2900,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -556,8 +556,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8200
+        3740,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 7ee324e8-6df3-48d6-b1b8-6fdb610b1ec7",
@@ -571,8 +571,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8380
+        4020,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 741dc44e-6d47-4a77-80c2-5e18b291da33",
@@ -662,7 +662,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        6220
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Drive**: googleDrive\n- **Upload File**: httpRequest\n- **Google Drive Trigger**: googleDriveTrigger\n- **Create Invoice**: airtable\n- **Create Line Item**: airtable\n- **OpenAI - Extract Line Items**: httpRequest\n- **Set Fields**: set\n- **Process Line Items**: code\n- **Webhook**: webhook\n- **Sticky Note1**: stickyNote\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -721,7 +721,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        6400
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -735,7 +735,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        6580
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -839,7 +839,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        6760
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -853,7 +853,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        6940
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -957,7 +957,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9820
+        7120
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -971,7 +971,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10000
+        7300
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1026,7 +1026,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10180
+        7480
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1081,7 +1081,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10360
+        7660
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1107,8 +1107,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        10540
+        380,
+        280
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1130,7 +1130,522 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Create Invoice": {
+      "main": [
+        [
+          {
+            "node": "Create Line Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Line Item": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 2a0c2331",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2a0c2331": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 741dc44e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 741dc44e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7ee324e8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7ee324e8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9df72ef9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9df72ef9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e21bb906",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e21bb906": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Drive Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI - Extract Line Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI - Extract Line Items": {
+      "main": [
+        [
+          {
+            "node": "Process Line Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Line Items": {
+      "main": [
+        [
+          {
+            "node": "Set Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Upload File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload File": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Googledrive Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -17,8 +17,8 @@
       "name": "get node types",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5680
+        1220,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -130,8 +130,8 @@
       "name": "extract name and latest version",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5320
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all().map(({json}) => {\n  const typeVersion = Array.isArray(json.version) ? Math.max(...json.version) : json.version;\n  return {\n    name: json.name,\n    version: typeVersion\n  }\n})"
@@ -167,8 +167,8 @@
       "name": "get all workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        100,
-        5500
+        940,
+        100
       ],
       "parameters": {
         "filters": {},
@@ -204,8 +204,8 @@
       "name": "prettify output",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6400
+        2340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -240,8 +240,8 @@
       "name": "instance base url",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6040
+        1780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -297,8 +297,8 @@
       "type": "n8n-nodes-base.n8n",
       "disabled": true,
       "position": [
-        100,
-        5860
+        1500,
+        100
       ],
       "parameters": {
         "operation": "get",
@@ -324,8 +324,8 @@
       "name": "node names that needs update",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6220
+        2060,
+        100
       ],
       "parameters": {
         "options": {},
@@ -631,8 +631,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        5140
+        380,
+        100
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -654,7 +654,321 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for a6d8c7aa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a6d8c7aa": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "extract name and latest version",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract name and latest version": {
+      "main": [
+        [
+          {
+            "node": "get all workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get all workflows": {
+      "main": [
+        [
+          {
+            "node": "get node types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get node types": {
+      "main": [
+        [
+          {
+            "node": "get single workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get single workflow": {
+      "main": [
+        [
+          {
+            "node": "instance base url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "instance base url": {
+      "main": [
+        [
+          {
+            "node": "node names that needs update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node names that needs update": {
+      "main": [
+        [
+          {
+            "node": "prettify output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Httprequest Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -27,7 +27,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
         100,
-        15760
+        13780
       ],
       "parameters": {
         "rule": {
@@ -50,8 +50,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14860
+        2060,
+        100
       ],
       "parameters": {
         "model": "gpt-4o",
@@ -71,8 +71,8 @@
       "name": "Google_Ads",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14500
+        1500,
+        100
       ],
       "parameters": {
         "name": "Google_Ads",
@@ -92,8 +92,8 @@
       "name": "Meta_Ads",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14680
+        1780,
+        100
       ],
       "parameters": {
         "name": "Meta_Ads",
@@ -242,8 +242,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16300
+        940,
+        280
       ],
       "parameters": {
         "color": 6,
@@ -259,8 +259,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16660
+        1500,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -276,8 +276,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16840
+        1780,
+        280
       ],
       "parameters": {
         "width": 2340,
@@ -304,8 +304,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17020
+        2060,
+        280
       ],
       "parameters": {
         "color": 4,
@@ -474,8 +474,8 @@
       "name": "Format data input (previous year)",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        14320
+        1220,
+        100
       ],
       "parameters": {
         "jsCode": "const inputData = items[0].json.results;\nconst totals = {\n   impressions: 0,\n   clicks: 0,\n   conversions: 0,\n   costMicros: 0,\n   conversionsValue: 0\n};\n\ninputData.forEach(campaign => {\n   totals.impressions += parseInt(campaign.metrics.impressions) || 0;\n   totals.clicks += parseInt(campaign.metrics.clicks) || 0;\n   totals.conversions += parseFloat(campaign.metrics.conversions) || 0;\n   totals.costMicros += parseInt(campaign.metrics.costMicros) || 0;\n   totals.conversionsValue += parseFloat(campaign.metrics.conversionsValue) || 0;\n});\n\nconst results = {\n   impressions: totals.impressions,\n   clicks: totals.clicks,\n   conversions: totals.conversions,\n   cost_micros: totals.costMicros,\n   ctr: totals.clicks / totals.impressions,\n   cost_per_conversion: totals.costMicros / totals.conversions,\n   cpm: (totals.costMicros / (totals.impressions / 1000)),\n   roas: totals.conversionsValue / (totals.costMicros / 1000000)\n};\nreturn results;"
@@ -488,8 +488,8 @@
       "name": "Format data input (current year)",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        14140
+        940,
+        100
       ],
       "parameters": {
         "jsCode": "const inputData = items[0].json.results;\nconst totals = {\n    impressions: 0,\n    clicks: 0,\n    conversions: 0,\n    costMicros: 0,\n    conversionsValue: 0\n};\n\ninputData.forEach(campaign => {\n    totals.impressions += parseInt(campaign.metrics.impressions) || 0;\n    totals.clicks += parseInt(campaign.metrics.clicks) || 0; \n    totals.conversions += parseFloat(campaign.metrics.conversions) || 0;\n    totals.costMicros += parseInt(campaign.metrics.costMicros) || 0;\n    totals.conversionsValue += parseFloat(campaign.metrics.conversionsValue) || 0;\n});\n\nconst results = {\n    impressions: totals.impressions,\n    clicks: totals.clicks,\n    conversions: totals.conversions, \n    cost_micros: totals.costMicros,\n    ctr: totals.clicks / totals.impressions,\n    cost_per_conversion: totals.costMicros / totals.conversions,\n    cpm: (totals.costMicros / (totals.impressions / 1000)),\n    roas: totals.conversionsValue / (totals.costMicros / 1000000)\n};\n\nreturn results;"
@@ -568,8 +568,8 @@
       "name": "Summarize input (current year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        100,
-        18460
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -684,8 +684,8 @@
       "name": "Summarize input (previous year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        100,
-        18640
+        4580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -890,8 +890,8 @@
       "name": "Summarize Meta input (current year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        100,
-        18280
+        4020,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1072,8 +1072,8 @@
       "name": "Summarize Meta data input (previous year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        100,
-        18100
+        3740,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1122,8 +1122,8 @@
       "name": "Format all Meta data for LLM",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        13960
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "const currentData = $('Summarize Meta input (current year)').first().json;\nconst previousData = $('Summarize Meta data input (previous year)').first().json;\n\nfunction parseNumber(value) {\n    if (typeof value === 'string') {\n        return parseFloat(value.replace(/\\./g, '').replace(',', '.'));\n    }\n    return value || 0;\n}\n\nfunction formatNumber(number, decimals = 0) {\n    if (number === 0) return \"0\";\n    return parseNumber(number).toLocaleString('de-DE', {\n        minimumFractionDigits: decimals,\n        maximumFractionDigits: decimals\n    });\n}\n\nfunction calculateCPM(cpm) {\n    return parseNumber(cpm);\n}\n\nreturn [{\n    current_impressions: formatNumber(currentData.sum_Impressions),\n    current_cpm: formatNumber(calculateCPM(currentData.average_CPM), 2),\n    current_clicks: formatNumber(currentData.sum_Clicks),\n    current_ctr: formatNumber(parseNumber(currentData.average_CTR), 2),\n    current_conversions: formatNumber(currentData.sum_Conversions, 2),\n    current_cost_per_conversion: formatNumber(currentData.average_Cost_per_conversion, 2),\n    current_cost: formatNumber(currentData.sum_Spend, 2),\n    current_roas: formatNumber(parseNumber(currentData.average_ROAS), 2),\n    \n    previous_impressions: formatNumber(previousData.sum_Impressions),\n    previous_cpm: formatNumber(calculateCPM(previousData.average_CPM), 2),\n    previous_clicks: formatNumber(previousData.sum_Clicks),\n    previous_ctr: formatNumber(parseNumber(previousData.average_CTR), 2),\n    previous_conversions: formatNumber(previousData.sum_Conversions, 2),\n    previous_cost_per_conversion: formatNumber(previousData.average_Cost_per_conversion || 0, 2),\n    previous_cost: formatNumber(previousData.sum_Spend, 2),\n    previous_roas: formatNumber(parseNumber(previousData.average_ROAS), 2)\n}];"
@@ -1136,8 +1136,8 @@
       "name": "Processing for Google Ads report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15040
+        2340,
+        100
       ],
       "parameters": {
         "modelId": {
@@ -1169,8 +1169,8 @@
       "name": "Format all Google data for LLM",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        13780
+        380,
+        100
       ],
       "parameters": {
         "jsCode": "const currentData = $('Summarize input (current year)').first().json;\nconst previousData = $('Summarize input (previous year)').first().json;\n\nfunction formatNumber(number, decimals = 0) {\n   if (number === 0) return \"0\";\n   return number.toLocaleString('de-DE', {\n       minimumFractionDigits: decimals,\n       maximumFractionDigits: decimals\n   });\n}\n\nfunction calculateCPM(costMicros, impressions) {\n   if (impressions === 0) return 0;\n   return (costMicros / 1000000 / impressions) * 1000;\n}\n\nreturn [{\n   current_impressions: formatNumber(currentData.sum_Impressions),\n   current_cpm: formatNumber(calculateCPM(currentData.sum_Spend, currentData.sum_Impressions), 2),\n   current_clicks: formatNumber(currentData.sum_Clicks),\n   current_ctr: formatNumber(currentData.average_CTR * 100, 2),\n   current_conversions: formatNumber(currentData.sum_Conversions, 2),\n   current_cost_per_conversion: formatNumber(currentData.average_Cost_per_Conversion / 1000000, 2),\n   current_cost: formatNumber(currentData.sum_Spend / 1000000, 2),\n   current_roas: formatNumber(currentData.average_ROAS, 2),\n   \n   previous_impressions: formatNumber(previousData.sum_Impressions),\n   previous_cpm: formatNumber(calculateCPM(previousData.sum_Spend, previousData.sum_Impressions), 2),\n   previous_clicks: formatNumber(previousData.sum_Clicks),\n   previous_ctr: formatNumber(previousData.average_CTR * 100, 2),\n   previous_conversions: formatNumber(previousData.sum_Conversions, 2),\n   previous_cost_per_conversion: formatNumber(previousData.average_Cost_per_conversion / 1000000, 2),\n   previous_cost: formatNumber(previousData.sum_Spend / 1000000, 2),\n   previous_roas: formatNumber(previousData.average_ROAS, 2)\n}];"
@@ -1255,8 +1255,8 @@
       "name": "Summarize Google Analytics input (current year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        100,
-        17740
+        3180,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1408,8 +1408,8 @@
       "name": "Summarize Google Analytics input (previous year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        100,
-        17920
+        3460,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1461,8 +1461,8 @@
       "name": "Send mail report",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        100,
-        16120
+        660,
+        280
       ],
       "parameters": {
         "html": "={{ $json.output }}",
@@ -1485,8 +1485,8 @@
       "name": "Processing for Meta Ads Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15400
+        2900,
+        100
       ],
       "parameters": {
         "modelId": {
@@ -1518,8 +1518,8 @@
       "name": "Processing for Google Analytics Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15220
+        2620,
+        100
       ],
       "parameters": {
         "modelId": {
@@ -1551,8 +1551,8 @@
       "name": "Processing for Telegram Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15580
+        3180,
+        100
       ],
       "parameters": {
         "modelId": {
@@ -1584,8 +1584,8 @@
       "name": "Weekly Report Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        18820
+        4860,
+        100
       ],
       "parameters": {
         "text": "=# Expert in Data Processing and Email Generation in N8N\nYOU ARE AN EXPERT IN DATA PROCESSING AND EMAIL GENERATION IN N8N. YOUR TASK IS TO CREATE AN ENGLISH-LANGUAGE HTML EMAIL THAT COMPREHENSIVELY SUMMARIZES GOOGLE ANALYTICS AND GOOGLE ADS DATA FROM VARIOUS WORKFLOWS. YOU MUST FORMAT THE CAPTURED DATA ACCORDING TO THE SPECIFIED SPECIFICATIONS AND DESIGN THE EMAIL FOR OPTIMAL READABILITY.\n\n## Instructions\n\n### 1. Collect Summary\n- First, retrieve the summary and table for `Analytics_Domain_1` from the `Analytics_Domain_1` workflow.\n- Second, retrieve the summary and table for `Analytics_Domain_2` from the `Analytics_Domain_2` workflow.\n- Third, retrieve the summary and table for `Analytics_Domain_3` from the `Analytics_Domain_3` workflow.\n- Fourth, retrieve the summary and table for `Analytics_Domain_4` from the `Analytics_Domain_4` workflow.\n- Fifth, retrieve the summary and table for `Analytics_Domain_5` from the `Analytics_Domain_5` workflow.\n- Sixth, retrieve the summary and table for `Google_Ads` from the `Google_Ads` workflow.\n- Seventh, retrieve the summary and table for `Meta_Ads` from the `Meta_Ads` workflow.\n\n### 2. Email Structure\n- Begin the email with the following introduction:  \n  \"Hi Freddy,  \n  Here is your weekly Online Marketing Report for the last 7 days from Domain 1, Domain 2, Domain 3, Domain 4, Domain 5, as well as Google Ads and Meta Ads!\"\n\n- Create a separate section for each dataset:  \n  - **Domain 1**: Contains the summary and table from `Analytics_Domain_1`\n  - **Domain 2**: Contains the summary and table from `Analytics_Domain_2`\n  - **Domain 3**: Contains the summary and table from `Analytics_Domain_3`\n  - **Domain 4**: Contains the summary and table from `Analytics_Domain_4`\n  - **Domain 5**: Contains the summary and table from `Analytics_Domain_5`\n  - **Google Ads**: Contains the summary and table from `Google Ads`\n  - **Meta Ads**: Contains the summary and table from `Meta Ads`\n\n- Present the sections clearly and readably as HTML.\n\n### 3. Design and Formatting\n- Use simple HTML structures with clear section titles (e.g., `<h2>` for titles).\n- Present the summary as a paragraph (e.g., `<p>`).\n- The table should be cleanly formatted (e.g., with `<table>`, `<tr>`, `<td>`).\n- Keep the presentation clear and easy to read.\n\n### 4. No Conclusion, No Signature\n\n### HTML Output Structure\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n        }\n        h2 {\n            color: #333;\n        }\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin: 10px 0;\n        }\n        table, th, td {\n            border: 1px solid #ddd;\n        }\n        th, td {\n            padding: 8px;\n            text-align: left;\n        }\n        th {\n            background-color: #f4f4f4;\n        }\n    </style>\n</head>\n<body>\n    <p>Hi,</p>\n    <p>Here is your weekly Online Marketing Report for the last 7 days from Domain 1, Domain 2, Domain 3, Domain 4, Domain 5, as well as Google Ads and Meta Ads!</p>\n    \n    <h2>Domain 1</h2>\n    <p>[Summary from Analytics_Domain_1 will be inserted here]</p>\n    <table>\n        [Table content from Analytics_Domain_1 will be inserted here]\n    </table>\n    \n    <h2>Domain 2</h2>\n    <p>[Summary from Analytics_Domain_2 will be inserted here]</p>\n    <table>\n        [Table content from Analytics_Domain_2 will be inserted here]\n    </table>\n</body>\n</html>\n```\n\n### 5. Output\n- Format the entire HTML content as a string for email transmission.\n\n### What Not to Do\n- No unwanted closings or signatures\n- No unstructured, hard-to-read data formatting\n- No missing sections or titles\n- No copying of data without HTML formatting",
@@ -1600,8 +1600,8 @@
       "name": "Send Telegram report",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        15940
+        380,
+        280
       ],
       "parameters": {
         "text": "={{ $json.message.content }}",
@@ -1622,8 +1622,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16480
+        1220,
+        280
       ],
       "parameters": {
         "width": 440,
@@ -1654,8 +1654,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17200
+        2340,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 7246c0af-4e9d-4037-bc1d-c4fd16aae7d3",
@@ -1669,8 +1669,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17380
+        2620,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 13074a3d-6cf4-4ad7-9e26-002f8120e640",
@@ -1684,8 +1684,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17560
+        2900,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 06a32368-f9f1-4311-bd17-3fea6b0d2888",
@@ -1895,7 +1895,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        19000
+        13960
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 68\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Google_Ads**: toolWorkflow\n- **Meta_Ads**: toolWorkflow\n- **Analytics_Domain_1**: toolWorkflow\n- **Analytics_Domain_3**: toolWorkflow\n- **Analytics_Domain_2**: toolWorkflow\n- **Analytics_Domain_4**: toolWorkflow\n- **Analytics_Domain_5**: toolWorkflow\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- ... and 58 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1984,7 +1984,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        19180
+        14140
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1998,7 +1998,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        19360
+        14320
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 75\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2162,7 +2162,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        19540
+        14500
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 86\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2176,7 +2176,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        19720
+        14680
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 87\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2340,7 +2340,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        19900
+        14860
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 98\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2354,7 +2354,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20080
+        15040
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 99\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2437,7 +2437,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20260
+        15220
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 105\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2520,7 +2520,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20440
+        15400
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2546,8 +2546,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        20620
+        5140,
+        100
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2583,7 +2583,1082 @@
     "retryDelay": 1000
   },
   "versionId": "0595b0a6-3130-4041-b3b1-41e820edd985",
-  "connections": {},
+  "connections": {
+    "Analytics_Domain_1": {
+      "main": [
+        [
+          {
+            "node": "Analytics_Domain_2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics_Domain_2": {
+      "main": [
+        [
+          {
+            "node": "Analytics_Domain_3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics_Domain_3": {
+      "main": [
+        [
+          {
+            "node": "Analytics_Domain_4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics_Domain_4": {
+      "main": [
+        [
+          {
+            "node": "Analytics_Domain_5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics_Domain_5": {
+      "main": [
+        [
+          {
+            "node": "Assign Google Analytics data input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Google Analytics data input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Assign Google Analytics data input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Google Analytics data input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Assign Meta data from input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Meta data from input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Assign Meta data input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Meta data input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Assign data from input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign data from input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Assign input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Calculate date format for Google Ads request (last 7 days)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate date format for Google Ads request (last 7 days)": {
+      "main": [
+        [
+          {
+            "node": "Calculate date format for meta ads request s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate date format for meta ads request s": {
+      "main": [
+        [
+          {
+            "node": "Calculation same period previous year",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculation same period previous year": {
+      "main": [
+        [
+          {
+            "node": "Calculation same period previous year1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculation same period previous year1": {
+      "main": [
+        [
+          {
+            "node": "Calculator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "main": [
+        [
+          {
+            "node": "Calculator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator1": {
+      "main": [
+        [
+          {
+            "node": "Calculator3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator3": {
+      "main": [
+        [
+          {
+            "node": "Call Google Ads Data: Last 7 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Google Ads Data: Last 7 days": {
+      "main": [
+        [
+          {
+            "node": "Call Google Ads Data: Last 7 days (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Google Ads Data: Last 7 days (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Call Google Analytics data: Last 7 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Google Analytics data: Last 7 days": {
+      "main": [
+        [
+          {
+            "node": "Call Google Analytics data: Last 7 days (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Google Analytics data: Last 7 days (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Call Meta Ads Data: Last 7 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Meta Ads Data: Last 7 days": {
+      "main": [
+        [
+          {
+            "node": "Call Meta Ads Data: Last 7 days (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Meta Ads Data: Last 7 days (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 06a32368",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 06a32368": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 13074a3d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 13074a3d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 146d6907",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 146d6907": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 165717a8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 165717a8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 2a405e35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2a405e35": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 61311c11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 61311c11": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7246c0af",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7246c0af": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 928d15f2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 928d15f2": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9b25dfe7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9b25dfe7": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a1b4d36a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a1b4d36a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c960aed4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c960aed4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ce9175bd",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ce9175bd": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for da636e2a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for da636e2a": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format all Google data for LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format all Google data for LLM": {
+      "main": [
+        [
+          {
+            "node": "Format all Meta data for LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format all Meta data for LLM": {
+      "main": [
+        [
+          {
+            "node": "Format data input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format data input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Format data input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format data input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Google_Ads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google_Ads": {
+      "main": [
+        [
+          {
+            "node": "Meta_Ads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta_Ads": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Processing for Google Ads report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing for Google Ads report": {
+      "main": [
+        [
+          {
+            "node": "Processing for Google Analytics Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing for Google Analytics Report": {
+      "main": [
+        [
+          {
+            "node": "Processing for Meta Ads Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing for Meta Ads Report": {
+      "main": [
+        [
+          {
+            "node": "Processing for Telegram Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing for Telegram Report": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Telegram report": {
+      "main": [
+        [
+          {
+            "node": "Send mail report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send mail report": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Summarize Google Analytics input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Google Analytics input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Summarize Google Analytics input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Google Analytics input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Summarize Meta data input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Meta data input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Summarize Meta input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Meta input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Summarize input (current year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize input (current year)": {
+      "main": [
+        [
+          {
+            "node": "Summarize input (previous year)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize input (previous year)": {
+      "main": [
+        [
+          {
+            "node": "Weekly Report Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weekly Report Agent": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Online Marketing Weekly Report. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

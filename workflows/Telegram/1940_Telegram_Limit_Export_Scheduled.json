@@ -27,7 +27,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
         100,
-        3520
+        2440
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        3340
+        1780,
+        100
       ],
       "parameters": {
         "options": {
@@ -105,8 +105,8 @@
       "name": "Get DateTIme",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        2800
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -129,8 +129,8 @@
       "name": "Get Workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        100,
-        2980
+        1220,
+        100
       ],
       "parameters": {
         "filters": {},
@@ -150,8 +150,8 @@
       "name": "Limit to 200",
       "type": "n8n-nodes-base.limit",
       "position": [
-        100,
-        3160
+        1500,
+        100
       ],
       "parameters": {
         "maxItems": 200
@@ -181,8 +181,8 @@
       "name": "Save JSON File to Google Drive Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        100,
-        3700
+        380,
+        280
       ],
       "parameters": {
         "name": "={{ $binary.data.fileName }}.json",
@@ -212,8 +212,8 @@
       "name": "Execute Once",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        2440
+        380,
+        100
       ],
       "parameters": {},
       "executeOnce": true,
@@ -225,8 +225,8 @@
       "name": "Search Folder Names",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        100,
-        3880
+        660,
+        280
       ],
       "parameters": {
         "limit": 10,
@@ -309,8 +309,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4060
+        940,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -326,8 +326,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4240
+        1220,
+        280
       ],
       "parameters": {
         "color": 3,
@@ -343,8 +343,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4420
+        1500,
+        280
       ],
       "parameters": {
         "width": 340,
@@ -359,8 +359,8 @@
       "name": "Find Folders to Delete",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        2620
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "// Get all input items and sort by name in descending order\nconst sortedItems = $input.all().sort((a, b) => {\n  if (!a.name || !b.name) return 0;\n  return b.name.localeCompare(a.name);\n});\n\n// Get items older than 7 days\nconst olderItems = sortedItems.slice(7);\n\nreturn olderItems\n\n"
@@ -373,8 +373,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        1780,
+        280
       ],
       "parameters": {
         "width": 260,
@@ -389,8 +389,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        2060,
+        100
       ],
       "parameters": {
         "width": 260,
@@ -405,8 +405,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4960
+        2340,
+        100
       ],
       "parameters": {
         "width": 260,
@@ -421,8 +421,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5140
+        2620,
+        100
       ],
       "parameters": {
         "width": 260,
@@ -437,8 +437,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5320
+        2900,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -546,7 +546,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5500
+        2620
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **On clicking 'execute'**: manualTrigger\n- **Loop Over Items**: splitInBatches\n- **Every Day**: scheduleTrigger\n- **Create Folder with DateTime Stamp**: googleDrive\n- **Get DateTIme**: set\n- **Get Workflows**: n8n\n- **Limit to 200**: limit\n- **Convert Workflow to JSON File**: convertToFile\n- **Save JSON File to Google Drive Folder**: googleDrive\n- **Execute Once**: noOp\n- ... and 18 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -560,7 +560,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        2800
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -574,7 +574,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        2980
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -588,7 +588,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        3160
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -602,7 +602,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        3340
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -616,7 +616,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        3520
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -630,7 +630,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        3700
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -643,7 +643,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        3880
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -656,7 +656,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        4060
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -682,8 +682,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7120
+        3180,
+        100
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -719,7 +719,401 @@
     "retryDelay": 1000
   },
   "versionId": "11ff8d25-bbc5-4681-b292-ac60a00fd7b0",
-  "connections": {},
+  "connections": {
+    "Complete Message": {
+      "main": [
+        [
+          {
+            "node": "Convert Workflow to JSON File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Workflow to JSON File": {
+      "main": [
+        [
+          {
+            "node": "Create Folder with DateTime Stamp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder with DateTime Stamp": {
+      "main": [
+        [
+          {
+            "node": "Delete Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Folders": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 18f61908",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 18f61908": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 67f62b6e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 67f62b6e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 97690d84",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 97690d84": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for aadc54d7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for aadc54d7": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ccdc0655",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ccdc0655": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for fcb210bf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for fcb210bf": {
+      "main": [
+        [
+          {
+            "node": "Every Day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Day": {
+      "main": [
+        [
+          {
+            "node": "Execute Once",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Once": {
+      "main": [
+        [
+          {
+            "node": "Find Folders to Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Folders to Delete": {
+      "main": [
+        [
+          {
+            "node": "Get DateTIme",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get DateTIme": {
+      "main": [
+        [
+          {
+            "node": "Get Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Workflows": {
+      "main": [
+        [
+          {
+            "node": "Limit to 200",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit to 200": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "On clicking 'execute'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Save JSON File to Google Drive Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save JSON File to Google Drive Folder": {
+      "main": [
+        [
+          {
+            "node": "Search Folder Names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Folder Names": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

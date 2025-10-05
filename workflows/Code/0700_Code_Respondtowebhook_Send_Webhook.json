@@ -17,8 +17,8 @@
       "name": "Window Buffer Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        10720
+        4020,
+        100
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -34,7 +34,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        8200
+        7300
       ],
       "parameters": {
         "options": {}
@@ -47,8 +47,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7840
+        1500,
+        100
       ],
       "parameters": {
         "model": "gpt-4o-2024-08-06",
@@ -70,8 +70,8 @@
       "name": "Make Appointment",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7660
+        1220,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -148,8 +148,8 @@
       "name": "varResponse",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        13060
+        5140,
+        100
       ],
       "parameters": {
         "options": {},
@@ -172,8 +172,8 @@
       "name": "freeTimeSlots",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        12700
+        4580,
+        100
       ],
       "parameters": {
         "jsCode": "// Input: An array with objects containing a 'value' array of events.\nconst businessHoursStart = \"08:00:00Z\";  // Business hours start time\nconst businessHoursEnd = \"17:30:00Z\";    // Business hours end time\n\nconst inputData = items[0].json.value;  // Assuming the input data is in the 'value' array of the first item\n\n// Function to convert ISO datetime string to a Date object with specified time\nfunction getDateWithTime(dateString, time) {\n  const datePart = new Date(dateString).toISOString().split(\"T\")[0];  // Extract the date part (YYYY-MM-DD)\n  return new Date(`${datePart}T${time}`);\n}\n\n// Function to get day of the week from a date string\nfunction getDayOfWeek(dateString) {\n  const daysOfWeek = [\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"];\n  return daysOfWeek[new Date(dateString).getUTCDay()];\n}\n\n// Function to add days to a date\nfunction addDays(date, days) {\n  const result = new Date(date);\n  result.setDate(result.getDate() + days);\n  return result;\n}\n\n// Function to format date as YYYY-MM-DD\nfunction formatDate(date) {\n  return date.toISOString().split('T')[0];\n}\n\n// Determine the default timezone from input data\nconst defaultTimeZone = inputData.length > 0 && inputData[0].start && inputData[0].start.timeZone \n  ? inputData[0].start.timeZone \n  : \"UTC\";\n\n// Find min and max dates in the input\nlet minDate = null;\nlet maxDate = null;\n\ninputData.forEach(event => {\n  if (event.start && event.start.dateTime) {\n    const eventDate = new Date(event.start.dateTime);\n    if (!minDate || eventDate < minDate) {\n      minDate = eventDate;\n    }\n    if (!maxDate || eventDate > maxDate) {\n      maxDate = eventDate;\n    }\n  }\n});\n\n// If we have valid dates, ensure they're at the start of the day\nif (minDate && maxDate) {\n  minDate = new Date(minDate.toISOString().split('T')[0]);\n  maxDate = new Date(maxDate.toISOString().split('T')[0]);\n}\n\n// Organise events by date\nconst eventsByDate = {};\ninputData.forEach(event => {\n  if (event.start && event.start.dateTime) {\n    const eventDate = new Date(event.start.dateTime).toISOString().split(\"T\")[0];  // Extract the date\n    if (!eventsByDate[eventDate]) {\n      eventsByDate[eventDate] = [];\n    }\n    if (event.showAs === \"busy\") {\n      eventsByDate[eventDate].push({\n        start: new Date(event.start.dateTime),\n        end: new Date(event.end.dateTime),\n        timeZone: event.start.timeZone || defaultTimeZone\n      });\n    }\n  }\n});\n\n// Find free slots within business hours for each date\nconst freeTimeSlots = [];\n\n// Process all dates in the range\nif (minDate && maxDate) {\n  for (let currentDate = new Date(minDate); currentDate <= maxDate; currentDate = addDays(currentDate, 1)) {\n    const dateStr = formatDate(currentDate);\n    const busyEvents = eventsByDate[dateStr] || [];\n    \n    // Define business start and end times for the current date\n    const businessStart = getDateWithTime(dateStr, businessHoursStart);\n    const businessEnd = getDateWithTime(dateStr, businessHoursEnd);\n    \n    // If there are no busy events for this date, add the entire business day as free\n    if (busyEvents.length === 0) {\n      freeTimeSlots.push({\n        date: dateStr,\n        dayOfWeek: getDayOfWeek(dateStr),\n        freeStart: businessStart.toISOString(),\n        freeEnd: businessEnd.toISOString(),\n        timeZone: defaultTimeZone\n      });\n      continue; // Skip to the next date\n    }\n    \n    // Sort events by their start time\n    busyEvents.sort((a, b) => a.start - b.start);\n    \n    // Check if there's free time before the first busy event\n    if (busyEvents[0].start > businessStart) {\n      freeTimeSlots.push({\n        date: dateStr,\n        dayOfWeek: getDayOfWeek(dateStr),\n        freeStart: businessStart.toISOString(),\n        freeEnd: busyEvents[0].start.toISOString(),\n        timeZone: busyEvents[0].timeZone\n      });\n    }\n    \n    // Check for gaps between busy events\n    for (let i = 0; i < busyEvents.length - 1; i++) {\n      if (busyEvents[i].end < busyEvents[i+1].start) {\n        freeTimeSlots.push({\n          date: dateStr,\n          dayOfWeek: getDayOfWeek(dateStr),\n          freeStart: busyEvents[i].end.toISOString(),\n          freeEnd: busyEvents[i+1].start.toISOString(),\n          timeZone: busyEvents[i].timeZone\n        });\n      }\n    }\n    \n    // Check if there's free time after the last busy event\n    if (busyEvents[busyEvents.length - 1].end < businessEnd) {\n      freeTimeSlots.push({\n        date: dateStr,\n        dayOfWeek: getDayOfWeek(dateStr),\n        freeStart: busyEvents[busyEvents.length - 1].end.toISOString(),\n        freeEnd: businessEnd.toISOString(),\n        timeZone: busyEvents[busyEvents.length - 1].timeZone\n      });\n    }\n  }\n}\n\n// Output the free time slots\nreturn [{ json: { freeTimeSlots } }];\n"
@@ -186,8 +186,8 @@
       "name": "Get Events",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        7300
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -243,8 +243,8 @@
       "name": "Get Availability",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7120
+        380,
+        100
       ],
       "parameters": {
         "name": "Get_availability",
@@ -272,8 +272,8 @@
       "name": "Send Message",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        8380
+        380,
+        280
       ],
       "parameters": {
         "name": "Send_email",
@@ -324,8 +324,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        10540
+        3740,
+        100
       ],
       "parameters": {
         "rules": {
@@ -390,8 +390,8 @@
       "name": "varMessageResponse",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12880
+        4860,
+        100
       ],
       "parameters": {
         "options": {
@@ -416,8 +416,8 @@
       "name": "Send Message1",
       "type": "n8n-nodes-base.microsoftOutlook",
       "position": [
-        100,
-        8560
+        660,
+        280
       ],
       "webhookId": "d8acc2cb-fcba-4312-a743-e74abe76d071",
       "parameters": {
@@ -443,8 +443,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8740
+        940,
+        280
       ],
       "parameters": {
         "width": 311.6936390497898,
@@ -459,8 +459,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8920
+        1220,
+        280
       ],
       "parameters": {
         "width": 468,
@@ -493,8 +493,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        7480
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -529,7 +529,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        8020
+        7120
       ],
       "parameters": {
         "options": {},
@@ -544,8 +544,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9640
+        2340,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -561,8 +561,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9820
+        2620,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -578,8 +578,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9100
+        1500,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -595,8 +595,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9280
+        1780,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -612,8 +612,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        9460
+        2060,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -645,8 +645,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10000
+        2900,
+        100
       ],
       "parameters": {
         "message": "Error occurred in df891547-c715-4dc6-bfcc-c0ac5cfcaf02",
@@ -660,8 +660,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10180
+        3180,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 0786b561-449e-4c8f-bddb-c2bbd95dc197",
@@ -675,8 +675,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10360
+        3460,
+        100
       ],
       "parameters": {
         "message": "Error occurred in c94171a9-a71d-4f63-bef6-e90361c57abd",
@@ -766,7 +766,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10900
+        7480
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Node Types**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Window Buffer Memory**: memoryBufferWindow\n- **Respond to Webhook**: respondToWebhook\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Make Appointment**: toolHttpRequest\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- **varResponse**: set\n- **freeTimeSlots**: code\n- **Get Events**: httpRequest\n- **Get Availability**: toolWorkflow\n- **Send Message**: toolWorkflow\n- ... and 23 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -840,7 +840,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11080
+        7660
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -854,7 +854,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11260
+        7840
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -988,7 +988,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11440
+        8020
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1002,7 +1002,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11620
+        8200
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1136,7 +1136,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11800
+        8380
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1150,7 +1150,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11980
+        8560
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 59\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1219,7 +1219,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12160
+        8740
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1288,7 +1288,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12340
+        8920
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1314,8 +1314,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        12520
+        4300,
+        100
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 16 different services: microsoftOutlook, httpRequest, stickyNote, toolHttpRequest, code. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1344,7 +1344,644 @@
       }
     ]
   },
-  "connections": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Chat Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0786b561",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0786b561": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1111262a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1111262a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 45403d5c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 45403d5c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c94171a9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c94171a9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for df891547",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for df891547": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Availability",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Availability": {
+      "main": [
+        [
+          {
+            "node": "Get Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "Make Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Make Appointment": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Respond With Initial Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond With Initial Message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Message": {
+      "main": [
+        [
+          {
+            "node": "Send Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Message1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Window Buffer Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "freeTimeSlots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "freeTimeSlots": {
+      "main": [
+        [
+          {
+            "node": "varMessageResponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "varMessageResponse": {
+      "main": [
+        [
+          {
+            "node": "varResponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Memorybufferwindow Workflow",
   "settings": {
     "executionOrder": "v1",

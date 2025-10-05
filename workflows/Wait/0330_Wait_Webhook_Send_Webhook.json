@@ -17,8 +17,8 @@
       "name": "VirusTotal result",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        15040
+        7940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -58,8 +58,8 @@
       "name": "Set IP From Lookup",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        12340
+        3740,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -73,8 +73,8 @@
       "name": "Set IP",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12160
+        3460,
+        100
       ],
       "parameters": {
         "values": {
@@ -95,8 +95,8 @@
       "name": "Merge VirusTotal & Greynoise results",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        11440
+        2340,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -118,8 +118,8 @@
       "name": "Is IP?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        10900
+        1500,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -140,8 +140,8 @@
       "name": "Start VirusTotal Scan",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        12520
+        4020,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -168,8 +168,8 @@
       "name": "VirusTotal Summary",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        14680
+        7380,
+        100
       ],
       "parameters": {
         "values": {
@@ -209,8 +209,8 @@
       "name": "VirusTotal ready?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        14860
+        7660,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -231,8 +231,8 @@
       "name": "Wait 5s",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        15220
+        8220,
+        100
       ],
       "webhookId": "18348e84-831d-4ea8-bb39-6ec847c72275",
       "parameters": {
@@ -249,7 +249,7 @@
       "notes": "Example:\n\ncurl -X POST \"{{ $env.WEBHOOK_URL }}\" \\\n                 -H \"Content-Type: application/json\" \\\n                 -d '{\"data\": [{\"url\": \"1.1.1.1\"}, {\"url\": \"88.204.59.2\"}, {\"url\": \"54.36.148.188\"}, {\"url\": \"facebook.com\"}], \"email\": \"user@domain.com\"}'",
       "position": [
         100,
-        15400
+        10180
       ],
       "webhookId": "d5124bd8-aada-44da-8050-3070f303ad24",
       "parameters": {
@@ -265,8 +265,8 @@
       "name": "Get List of URLs",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        100,
-        10180
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -280,8 +280,8 @@
       "name": "Set Email",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        11980
+        3180,
+        100
       ],
       "parameters": {
         "values": {
@@ -302,8 +302,8 @@
       "name": "Merge Greynoise results",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        11260
+        2060,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -318,8 +318,8 @@
       "name": "Send Report Slack",
       "type": "n8n-nodes-base.slack",
       "position": [
-        100,
-        11800
+        2900,
+        100
       ],
       "parameters": {
         "text": "=Successfully scanned {{ $json.url }} {{$json.ip !== $json.url ? `(${$json.ip})`: '' }}\n\n\nVirusTotal Report ({{ $json.virusTotalStats.harmless + $json.virusTotalStats.malicious + $json.virusTotalStats.suspicious + $json.virusTotalStats.undetected}} scans)\n\n{{$json.virusTotalStats.harmless}} Harmless\n{{$json.virusTotalStats.malicious}} Malicious\n{{$json.virusTotalStats.suspicious}} Suspicious\n{{$json.virusTotalStats.undetected}} Undetected\n{{$json.virusTotalStats.timeout}} Timed out\n\nBlockList: {{ $json.blockList }}\nOpenPhish: {{ $json.openPhish }}\n\nSummary: {{ $json.virusTotalStats.suspicious + $json.virusTotalStats.malicious === 0 ? \"✅ Harmless\": \"🚨 Malicous\" }}\n\n\n\nGreynoise Report\n\nTrust Level: {{ $json.trust_level ?? \"Not trusted\"}}\nClassification: {{ $json.classification }}\n\nLocation: {{ $json.location || 'n/a' }}\nCategory: {{ $json.category }}\nTags: {{$json.tags.join(', ') || 'None'}}",
@@ -339,8 +339,8 @@
       "name": "Send Report Email",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        11620
+        2620,
+        100
       ],
       "parameters": {
         "sendTo": "={{ $('Merge').first().json.Email }}",
@@ -356,8 +356,8 @@
       "name": "Greynoise Summary",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        10720
+        1220,
+        100
       ],
       "parameters": {
         "values": {
@@ -401,8 +401,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        11080
+        1780,
+        100
       ],
       "parameters": {},
       "typeVersion": 2.1,
@@ -450,8 +450,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        12700
+        4300,
+        100
       ],
       "parameters": {
         "width": 651.1325602067182,
@@ -466,8 +466,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        12880
+        4580,
+        100
       ],
       "parameters": {
         "width": 653.8285114211884,
@@ -482,8 +482,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13060
+        4860,
+        100
       ],
       "parameters": {
         "width": 827.7173647545219,
@@ -498,8 +498,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13240
+        5140,
+        100
       ],
       "parameters": {
         "width": 1485.5734904392764,
@@ -514,8 +514,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13420
+        5420,
+        100
       ],
       "parameters": {
         "width": 1483.145187368557,
@@ -530,8 +530,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13600
+        5700,
+        100
       ],
       "parameters": {
         "width": 898.9279259630971,
@@ -546,8 +546,8 @@
       "name": "GreyNoise RIOT lookup",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10540
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -563,8 +563,8 @@
       "name": "GreyNoise IP Check",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10360
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -626,8 +626,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        13780
+        5980,
+        100
       ],
       "parameters": {
         "message": "Error occurred in fb71337b-ebd3-4331-9f18-ff953c6b068b",
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        13960
+        6260,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 770b4056-1497-48ed-bcd7-ad6e7106cc7d",
@@ -656,8 +656,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        14140
+        6540,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 76e1414a-d690-44df-a3b8-8dbb4a192720",
@@ -671,8 +671,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        14320
+        6820,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 577d4b74-9155-440f-a752-6654f8e54669",
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        14500
+        7100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 9a41df79-3d81-4b2e-b21c-7f31985d8d1e",
@@ -807,7 +807,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        15580
+        10360
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **VirusTotal result**: httpRequest\n- **DNS Lookup**: httpRequest\n- **Set IP From Lookup**: code\n- **Set IP**: set\n- **Merge VirusTotal & Greynoise results**: merge\n- **Is IP?**: if\n- **Start VirusTotal Scan**: httpRequest\n- **VirusTotal Summary**: set\n- **VirusTotal ready?**: if\n- **Wait 5s**: wait\n- ... and 32 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -911,7 +911,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        15760
+        10540
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -925,7 +925,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        15940
+        10720
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1119,7 +1119,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16120
+        10900
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 63\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1133,7 +1133,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16300
+        11080
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1327,7 +1327,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16480
+        11260
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 77\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1341,7 +1341,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16660
+        11440
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 78\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1438,7 +1438,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16840
+        11620
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 85\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1535,7 +1535,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17020
+        11800
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1561,8 +1561,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        17200
+        380,
+        280
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: webhook, itemLists, httpRequest, filter, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1584,7 +1584,845 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Combine looped items": {
+      "main": [
+        [
+          {
+            "node": "DNS Lookup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DNS Lookup": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1957a675",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1957a675": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 577d4b74",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 577d4b74": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 76e1414a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 76e1414a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 770b4056",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 770b4056": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9a41df79",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9a41df79": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for dbb98f7d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for dbb98f7d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for fb71337b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for fb71337b": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Form Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get List of URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get List of URLs": {
+      "main": [
+        [
+          {
+            "node": "GreyNoise IP Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GreyNoise IP Check": {
+      "main": [
+        [
+          {
+            "node": "GreyNoise RIOT lookup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GreyNoise RIOT lookup": {
+      "main": [
+        [
+          {
+            "node": "Greynoise Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Greynoise Summary": {
+      "main": [
+        [
+          {
+            "node": "Is IP?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is IP?": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge Greynoise results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Greynoise results": {
+      "main": [
+        [
+          {
+            "node": "Merge VirusTotal & Greynoise results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge VirusTotal & Greynoise results": {
+      "main": [
+        [
+          {
+            "node": "Send Report Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Report Email": {
+      "main": [
+        [
+          {
+            "node": "Send Report Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Report Slack": {
+      "main": [
+        [
+          {
+            "node": "Set Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Email": {
+      "main": [
+        [
+          {
+            "node": "Set IP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set IP": {
+      "main": [
+        [
+          {
+            "node": "Set IP From Lookup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set IP From Lookup": {
+      "main": [
+        [
+          {
+            "node": "Start VirusTotal Scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start VirusTotal Scan": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "VirusTotal Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VirusTotal Summary": {
+      "main": [
+        [
+          {
+            "node": "VirusTotal ready?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VirusTotal ready?": {
+      "main": [
+        [
+          {
+            "node": "VirusTotal result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VirusTotal result": {
+      "main": [
+        [
+          {
+            "node": "Wait 5s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 5s": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Httprequest Workflow",
   "settings": {
     "executionOrder": "v1",

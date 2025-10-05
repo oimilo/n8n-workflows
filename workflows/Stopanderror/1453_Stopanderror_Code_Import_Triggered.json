@@ -86,8 +86,8 @@
       "name": "setVars",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        5320
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -152,8 +152,8 @@
       "name": "replace variables",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5140
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "// Fetch the prompt text\nconst prompt = $('SetPrompt').first().json.data; // Ensure the prompt contains placeholders like {{ some.node.value }}\n\n// Example variables object\nconst variables = {\n company: $('setVars').first().json.company,\n features: \"Awesome Software\",\n keyword: \"2025-02-07\"\n};\n\n// Function to replace placeholders dynamically\nconst replaceVariables = (text, vars) => {\n return text.replace(/{{(.*?)}}/g, (match, key) => {\n const trimmedKey = key.trim();\n \n // Extract last part after the last dot\n const finalKey = trimmedKey.split('.').pop();\n\n // Replace if key exists, otherwise leave placeholder unchanged\n return vars.hasOwnProperty(finalKey) ? vars[finalKey] : match;\n });\n};\n\n// Replace and return result\nreturn [{\n prompt: replaceVariables(prompt, variables)\n}];\n"
@@ -552,8 +552,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        4960
+        380,
+        100
       ],
       "parameters": {
         "content": "# Load Prompts from Github Repo and auto populate n8n expressions\n\n## Overview\nAutomated workflow: Load Prompts from Github Repo and auto populate n8n expressions. This workflow integrates 10 different services: stickyNote, code, agent, lmChatOllama, set. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -589,7 +589,287 @@
     "retryDelay": 1000
   },
   "versionId": "4327a337-59e7-4b5b-98e8-93c6be550972",
-  "connections": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Check All Prompt Vars Present",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check All Prompt Vars Present": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 9976b199",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9976b199": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "Ollama Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Prompt Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Output": {
+      "main": [
+        [
+          {
+            "node": "Set Completed Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Completed Prompt": {
+      "main": [
+        [
+          {
+            "node": "SetPrompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetPrompt": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop and Error": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "replace variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "replace variables": {
+      "main": [
+        [
+          {
+            "node": "setVars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Load Prompts from Github Repo and auto populate n8n expressions. This workflow integrates 10 different services: stickyNote, code, agent, lmChatOllama, set. It contains 18 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Load Prompts from Github Repo and auto populate n8n expressions. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

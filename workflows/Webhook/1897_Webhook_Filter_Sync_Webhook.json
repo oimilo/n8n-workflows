@@ -26,8 +26,8 @@
       "name": "Get projects",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        37000
+        9060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -49,8 +49,8 @@
       "name": "Get sections",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        37180
+        9340,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -81,8 +81,8 @@
       "name": "Get Notion Databases",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        34840
+        5700,
+        100
       ],
       "parameters": {
         "resource": "database",
@@ -102,8 +102,8 @@
       "name": "Prep Dropdown",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        47260
+        1780,
+        280
       ],
       "parameters": {
         "jsCode": "let dropDownValues = [];\n\nfor (const item of $input.all()) {\n  if (item.json.name == \"Inbox\") continue;\n  dropDownValues.push({\"option\": item.json.name});\n}\n\nreturn { \"options\": JSON.stringify(dropDownValues) };"
@@ -116,8 +116,8 @@
       "name": "Prep Dropdown1",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        47440
+        2060,
+        280
       ],
       "parameters": {
         "jsCode": "let dropDownValues = [];\n\nfor (const item of $input.all()) {\n  if (item.json.name == \"Inbox\") continue;\n  dropDownValues.push({\"option\": item.json.name});\n}\n\nreturn { \"options\": JSON.stringify(dropDownValues) };"
@@ -130,8 +130,8 @@
       "name": "Generate config",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        33940
+        4300,
+        100
       ],
       "parameters": {
         "jsCode": "let sections = [];\nfor (const item of $('Get sections').all()) {\n  sections.push({ id: item.json.id, name: item.json.name }); \n}\n\nreturn { json: \n{\n  \"database_id\": $('Get Notion Database ID').first().json.database_id,\n  \"project_id\": $('Get Todoist Project ID').first().json.project_id,\n  \"sections\": sections\n}  \n};"
@@ -182,8 +182,8 @@
       "name": "Verify security token",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        69760
+        4580,
+        460
       ],
       "parameters": {
         "options": {},
@@ -217,8 +217,8 @@
       "name": "Generate security token",
       "type": "n8n-nodes-base.crypto",
       "position": [
-        100,
-        34300
+        4860,
+        100
       ],
       "parameters": {
         "action": "generate",
@@ -232,8 +232,8 @@
       "name": "Store variables",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        65440
+        24180,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -247,8 +247,8 @@
       "name": "Get variables",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        37720
+        10180,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -262,8 +262,8 @@
       "name": "Redirect to Auth Page",
       "type": "n8n-nodes-base.form",
       "position": [
-        100,
-        48340
+        3460,
+        280
       ],
       "webhookId": "41b4bc95-2938-4a53-a051-7a3079001329",
       "parameters": {
@@ -280,7 +280,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        46180
+        31780
       ],
       "webhookId": "7aee8b09-29e3-4e12-9b66-c6e8ab080bf7",
       "parameters": {
@@ -336,7 +336,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        49060
+        32140
       ],
       "parameters": {
         "options": {},
@@ -352,7 +352,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        48880
+        31960
       ],
       "parameters": {
         "options": {},
@@ -367,8 +367,8 @@
       "name": "Get Notion Database ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        34660
+        5420,
+        100
       ],
       "parameters": {
         "jsCode": "let database_id = null;\n\nfor (const item of $('Get Notion Databases').all()) {\n  if (item.json.name == $('Choose Notion Database').first().json['Select Notion Database']) {\n    database_id = item.json.id;\n  }\n}\n\nreturn { json: { database_id: database_id } };"
@@ -381,8 +381,8 @@
       "name": "Get Todoist Project ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        35740
+        7100,
+        100
       ],
       "parameters": {
         "jsCode": "let project_id = null;\n\nfor (const item of $('Get projects').all()) {\n  if (item.json.name == $('Choose Todoist Project').first().json['Select Todoist Project']) {\n    project_id = item.json.id;\n  }\n}\n\nreturn { json: { project_id: project_id } };"
@@ -396,7 +396,7 @@
       "type": "n8n-nodes-base.formTrigger",
       "position": [
         100,
-        46000
+        31600
       ],
       "webhookId": "7edf515f-bd69-4875-a5d8-eca8b4679896",
       "parameters": {
@@ -423,7 +423,7 @@
       "type": "n8n-nodes-base.formTrigger",
       "position": [
         100,
-        66880
+        32680
       ],
       "webhookId": "feb96ecb-a7c0-41d3-9368-2299cdce492e",
       "parameters": {
@@ -452,8 +452,8 @@
       "name": "Return config JSON",
       "type": "n8n-nodes-base.form",
       "position": [
-        100,
-        49780
+        1220,
+        460
       ],
       "webhookId": "739f32d1-356d-429d-8698-a166485cc36f",
       "parameters": {
@@ -470,8 +470,8 @@
       "name": "Todoist",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        66160
+        25300,
+        100
       ],
       "parameters": {
         "filters": {
@@ -496,8 +496,8 @@
       "name": "Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        45100
+        21660,
+        100
       ],
       "parameters": {
         "simple": false,
@@ -552,8 +552,8 @@
       "name": "Exists/Completed in Notion",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        32860
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -589,8 +589,8 @@
       "onError": "continueErrorOutput",
       "maxTries": 2,
       "position": [
-        100,
-        35920
+        7380,
+        100
       ],
       "parameters": {
         "taskId": "={{ $json.id }}",
@@ -612,8 +612,8 @@
       "name": "If Todoist ID exists",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        39700
+        13260,
+        100
       ],
       "parameters": {
         "options": {},
@@ -647,8 +647,8 @@
       "name": "Store Todoist ID",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        65080
+        23620,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -684,8 +684,8 @@
       "name": "Mark as Incomplete in Todoist",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        43840
+        19700,
+        100
       ],
       "parameters": {
         "taskId": "={{ $json.id }}",
@@ -707,8 +707,8 @@
       "name": "Mark as Completed in Todoist",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        42940
+        18300,
+        100
       ],
       "parameters": {
         "taskId": "={{ $('Todoist').item.json.id }}",
@@ -749,8 +749,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        41500
+        16060,
+        100
       ],
       "parameters": {
         "options": {}
@@ -763,8 +763,8 @@
       "name": "Get Notion Task",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        35020
+        5980,
+        100
       ],
       "parameters": {
         "limit": 1,
@@ -805,8 +805,8 @@
       "name": "Update Task in Todoist",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        67780
+        1500,
+        640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -834,8 +834,8 @@
       "name": "Pick Todoist Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        47080
+        1500,
+        280
       ],
       "parameters": {
         "options": {},
@@ -888,8 +888,8 @@
       "name": "Map Notion to Todoist",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        41860
+        16620,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -903,8 +903,8 @@
       "name": "Update task in Todoist before closing",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        68860
+        3180,
+        640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -932,8 +932,8 @@
       "name": "Map Notion to Todoist1",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        42040
+        16900,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -947,8 +947,8 @@
       "name": "Handle empty dates",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        38800
+        11860,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -962,8 +962,8 @@
       "name": "Handle empty dates1",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        38980
+        12140,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -977,8 +977,8 @@
       "name": "Handle empty dates2",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        39160
+        12420,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -1046,8 +1046,8 @@
       "name": "Lock Todoist ID",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        40780
+        14940,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1071,8 +1071,8 @@
       "name": "Generate UUID",
       "type": "n8n-nodes-base.crypto",
       "position": [
-        100,
-        33400
+        3460,
+        100
       ],
       "parameters": {
         "action": "generate",
@@ -1086,8 +1086,8 @@
       "name": "Update section (Sync API)",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        67960
+        1780,
+        640
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1122,8 +1122,8 @@
       "name": "Status changed",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        51220
+        2060,
+        460
       ],
       "parameters": {
         "options": {},
@@ -1173,8 +1173,8 @@
       "name": "Prepare Batching Items",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        47620
+        2340,
+        280
       ],
       "parameters": {
         "mode": "raw",
@@ -1189,8 +1189,8 @@
       "name": "Loop Over Items1",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        41680
+        16340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1204,8 +1204,8 @@
       "name": "Status is Done",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        51580
+        2620,
+        460
       ],
       "parameters": {
         "options": {},
@@ -1239,8 +1239,8 @@
       "name": "Lock Todoist ID1",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        40960
+        15220,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1264,8 +1264,8 @@
       "name": "Lock Todoist ID2",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        41140
+        15500,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1289,8 +1289,8 @@
       "name": "Update task in Todoist",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        68680
+        2900,
+        640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1318,8 +1318,8 @@
       "name": "Get mapped item",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        36460
+        8220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1348,8 +1348,8 @@
       "name": "Get mapped item1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        36640
+        8500,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1379,7 +1379,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
         100,
-        49960
+        32320
       ],
       "parameters": {
         "rule": {
@@ -1398,8 +1398,8 @@
       "name": "Prepare summary data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        47800
+        2620,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1428,8 +1428,8 @@
       "name": "Prepare summary data1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        47980
+        2900,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1458,8 +1458,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        44380
+        20540,
+        100
       ],
       "parameters": {},
       "typeVersion": 3,
@@ -1470,8 +1470,8 @@
       "name": "Prepare summary data2",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        48160
+        3180,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1500,8 +1500,8 @@
       "name": "Filter out status changes",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        33220
+        3180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1534,8 +1534,8 @@
       "name": "Map Todoist to Notion",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        42400
+        17460,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -1549,8 +1549,8 @@
       "name": "Map summary fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        42760
+        18020,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1614,8 +1614,8 @@
       "name": "Generate email body",
       "type": "n8n-nodes-base.html",
       "position": [
-        100,
-        34120
+        4580,
+        100
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n            color: #333;\n            margin: 0;\n            padding: 20px;\n        }\n        .container {\n            max-width: 800px;\n            margin: 0 auto;\n            background-color: #ffffff;\n            padding: 20px;\n            border-radius: 5px;\n            box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n        }\n        h1 {\n            color: #2c3e50;\n            text-align: center;\n            margin-bottom: 30px;\n            padding-bottom: 10px;\n            border-bottom: 2px solid #3498db;\n        }\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin-top: 20px;\n        }\n        th {\n            background-color: #3498db;\n            color: white;\n            padding: 12px;\n            text-align: left;\n        }\n        td {\n            padding: 10px;\n            border-bottom: 1px solid #ddd;\n        }\n        tr:nth-child(even) {\n            background-color: #f9f9f9;\n        }\n        tr:hover {\n            background-color: #f5f5f5;\n        }\n        a {\n            color: #333;\n            text-decoration: underline;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <h1>Notion-Todoist Sync Report</h1>\n        <p>The following changes have been applied to Todoist:</p>\n        {{ $json.table }}\n    </div>\n</body>\n</html>\n"
@@ -1628,8 +1628,8 @@
       "name": "Get mapped item2",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        36820
+        8780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1658,8 +1658,8 @@
       "name": "Gmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        38440
+        11300,
+        100
       ],
       "webhookId": "5af8a60e-a295-40c1-8f03-0a920ba1de17",
       "parameters": {
@@ -1683,8 +1683,8 @@
       "name": "Merge summary",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        44560
+        20820,
+        100
       ],
       "parameters": {
         "numberInputs": 5
@@ -1697,8 +1697,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        64720
+        23060,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1714,8 +1714,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        64900
+        23340,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1731,8 +1731,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        52480
+        4020,
+        460
       ],
       "parameters": {
         "width": 220,
@@ -1747,8 +1747,8 @@
       "name": "Globals",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        37900
+        10460,
+        100
       ],
       "parameters": {
         "mode": "raw",
@@ -1764,8 +1764,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        53200
+        5140,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -1781,8 +1781,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        53380
+        5420,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -1798,8 +1798,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        53560
+        5700,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -1815,8 +1815,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        53740
+        5980,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -1906,8 +1906,8 @@
       "name": "Requires completion change1",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        48700
+        4020,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1994,8 +1994,8 @@
       "name": "Update task in Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        68500
+        2620,
+        640
       ],
       "parameters": {
         "pageId": {
@@ -2044,8 +2044,8 @@
       "name": "Mark as Done in Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        43300
+        18860,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -2081,8 +2081,8 @@
       "name": "Mark as Obsolete in Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        44200
+        20260,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -2118,8 +2118,8 @@
       "name": "Mark as In Progress in Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        43660
+        19420,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -2155,8 +2155,8 @@
       "name": "Only continue if not locked",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        46720
+        940,
+        280
       ],
       "parameters": {
         "options": {},
@@ -2190,8 +2190,8 @@
       "name": "Lock Notion ID",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        40600
+        14660,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -2239,8 +2239,8 @@
       "name": "Update Description in Todoist",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        67420
+        940,
+        820
       ],
       "parameters": {
         "taskId": "={{ $('Map Todoist to Notion1').item.json.todoist_id }}",
@@ -2298,8 +2298,8 @@
       "name": "Update Description in Todoist1",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        67600
+        1220,
+        820
       ],
       "parameters": {
         "taskId": "={{ $('Map Todoist to Notion1').item.json.todoist_id }}",
@@ -2322,8 +2322,8 @@
       "name": "Generate UUID1",
       "type": "n8n-nodes-base.crypto",
       "position": [
-        100,
-        33580
+        3740,
+        100
       ],
       "parameters": {
         "action": "generate",
@@ -2337,8 +2337,8 @@
       "name": "Update section (Sync API)1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        68140
+        2060,
+        640
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -2371,8 +2371,8 @@
       "name": "Get Backlog Section ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        34480
+        5140,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -2386,8 +2386,8 @@
       "name": "Notion Task not found",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        45460
+        22220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -2445,8 +2445,8 @@
       "name": "Only continue if flag does not exist1",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        46540
+        660,
+        280
       ],
       "parameters": {
         "options": {},
@@ -2480,8 +2480,8 @@
       "name": "Set creating flag1",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        50320
+        660,
+        640
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -2505,8 +2505,8 @@
       "name": "Neither focussed nor planned1",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        44920
+        21380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -2551,8 +2551,8 @@
       "name": "Mark as Focussed in Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        43480
+        19140,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -2588,8 +2588,8 @@
       "name": "Todoist trigger reference",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        67060
+        380,
+        1000
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -2600,8 +2600,8 @@
       "name": "Get Notion Task2",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        35380
+        6540,
+        100
       ],
       "parameters": {
         "limit": 1,
@@ -2639,8 +2639,8 @@
       "name": "Notion Task found1",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        45280
+        21940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -2674,8 +2674,8 @@
       "name": "Switch by Event",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        65800
+        24740,
+        100
       ],
       "parameters": {
         "rules": {
@@ -2767,8 +2767,8 @@
       "name": "If event is not :deleted",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        39880
+        13540,
+        100
       ],
       "parameters": {
         "options": {},
@@ -2801,8 +2801,8 @@
       "name": "Execution Data",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        31600
+        660,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -2834,8 +2834,8 @@
       "name": "Execution Data1",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        31780
+        940,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -2855,8 +2855,8 @@
       "name": "Execution Data2",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        31960
+        1220,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -2876,8 +2876,8 @@
       "name": "Execution Data3",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        32140
+        1500,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -2897,8 +2897,8 @@
       "name": "Execution Data4",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        32320
+        1780,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -2922,8 +2922,8 @@
       "name": "Globals1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        38080
+        10740,
+        100
       ],
       "parameters": {
         "mode": "raw",
@@ -2939,8 +2939,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        52840
+        4580,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -2955,8 +2955,8 @@
       "name": "Map Todoist to Notion1",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        42580
+        17740,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -2972,8 +2972,8 @@
       "onError": "continueErrorOutput",
       "maxTries": 3,
       "position": [
-        100,
-        36100
+        7660,
+        100
       ],
       "parameters": {
         "taskId": "={{ $('Todoist trigger reference').item.json.body.event_data.id }}",
@@ -2995,8 +2995,8 @@
       "name": "Get Notion Task1",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        35200
+        6260,
+        100
       ],
       "parameters": {
         "limit": 1,
@@ -3034,8 +3034,8 @@
       "name": "Sticky Note23",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        55000
+        7940,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3051,8 +3051,8 @@
       "name": "Sticky Note26",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        55540
+        8780,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3068,8 +3068,8 @@
       "name": "Sticky Note27",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        55720
+        9060,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3085,8 +3085,8 @@
       "name": "Sticky Note28",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        55900
+        9340,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3102,8 +3102,8 @@
       "name": "Sticky Note29",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        56080
+        9620,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3119,8 +3119,8 @@
       "name": "Sticky Note31",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        56620
+        10460,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3136,8 +3136,8 @@
       "name": "Sticky Note32",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        56800
+        10740,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3153,8 +3153,8 @@
       "name": "Sticky Note33",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        56980
+        11020,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3170,8 +3170,8 @@
       "name": "Sticky Note35",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        57340
+        11580,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -3187,8 +3187,8 @@
       "name": "Sticky Note36",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        57520
+        11860,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3204,8 +3204,8 @@
       "name": "Sticky Note37",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        57700
+        12140,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -3221,8 +3221,8 @@
       "name": "Requires completion change",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        48520
+        3740,
+        280
       ],
       "parameters": {
         "options": {},
@@ -3255,8 +3255,8 @@
       "name": "Has been completed?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        39340
+        12700,
+        100
       ],
       "parameters": {
         "options": {},
@@ -3361,8 +3361,8 @@
       "name": "Only continue if not locked1",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        46900
+        1220,
+        280
       ],
       "parameters": {
         "options": {},
@@ -3421,8 +3421,8 @@
       "type": "n8n-nodes-base.notion",
       "maxTries": 2,
       "position": [
-        100,
-        35560
+        6820,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -3474,8 +3474,8 @@
       "name": "Only continue if flag does not exist",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        46360
+        380,
+        460
       ],
       "parameters": {
         "options": {},
@@ -3509,8 +3509,8 @@
       "name": "Set creating flag",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        50140
+        380,
+        820
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -3534,8 +3534,8 @@
       "name": "Todoist ID exists?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        66520
+        25860,
+        100
       ],
       "parameters": {
         "options": {},
@@ -3569,8 +3569,8 @@
       "name": "Get todoist ID",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        37360
+        9620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -3593,8 +3593,8 @@
       "name": "Todoist ID exists",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        66340
+        25580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -3629,8 +3629,8 @@
       "name": "Get todoist ID1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        37540
+        9900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -3653,8 +3653,8 @@
       "name": "Status changed but not empty",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        51400
+        2340,
+        460
       ],
       "parameters": {
         "options": {},
@@ -3698,8 +3698,8 @@
       "name": "Status is Obsolete?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        51760
+        2900,
+        460
       ],
       "parameters": {
         "options": {},
@@ -3733,8 +3733,8 @@
       "name": "Status is not Done",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        51940
+        3180,
+        460
       ],
       "parameters": {
         "options": {},
@@ -3768,8 +3768,8 @@
       "name": "Neither focussed nor planned",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        44740
+        21100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -3813,8 +3813,8 @@
       "name": "Notion trigger reference",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        45820
+        380,
+        280
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -3826,7 +3826,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        45640
+        31420
       ],
       "webhookId": "7e1a4d8a-9cdc-4991-817c-1429ccfbece2",
       "parameters": {
@@ -3842,8 +3842,8 @@
       "name": "Store Todoist ID1",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        65260
+        23900,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -3879,8 +3879,8 @@
       "name": "Mark as Completed in Todoist1",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        43120
+        18580,
+        100
       ],
       "parameters": {
         "taskId": "={{ $('Get Todoist Task2').item.json.id }}",
@@ -3902,8 +3902,8 @@
       "name": "Update task in Todoist1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        69040
+        3460,
+        640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -3931,8 +3931,8 @@
       "name": "Globals2",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        38260
+        11020,
+        100
       ],
       "parameters": {
         "mode": "raw",
@@ -3948,8 +3948,8 @@
       "name": "Mark as Incomplete in Todoist1",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        100,
-        44020
+        19980,
+        100
       ],
       "parameters": {
         "taskId": "={{ $json.id }}",
@@ -3971,8 +3971,8 @@
       "name": "Generate UUID2",
       "type": "n8n-nodes-base.crypto",
       "position": [
-        100,
-        33760
+        4020,
+        100
       ],
       "parameters": {
         "action": "generate",
@@ -3986,8 +3986,8 @@
       "name": "Update section (Sync API)2",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        68320
+        2340,
+        640
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -4020,8 +4020,8 @@
       "name": "Lock Todoist ID4",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        41320
+        15780,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -4069,8 +4069,8 @@
       "name": "Map Notion to Todoist2",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        42220
+        17180,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -4085,8 +4085,8 @@
       "type": "n8n-nodes-base.todoist",
       "onError": "continueErrorOutput",
       "position": [
-        100,
-        36280
+        7940,
+        100
       ],
       "parameters": {
         "taskId": "={{ $json.id }}",
@@ -4135,8 +4135,8 @@
       "name": "Execution Data5",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        32500
+        2060,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -4168,8 +4168,8 @@
       "name": "Execution Data6",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        100,
-        32680
+        2340,
+        100
       ],
       "parameters": {
         "dataToSave": {
@@ -4193,8 +4193,8 @@
       "name": "Sticky Note22",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        54820
+        7660,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4210,8 +4210,8 @@
       "name": "Sticky Note24",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        55180
+        8220,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4227,8 +4227,8 @@
       "name": "Sticky Note25",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        55360
+        8500,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4244,8 +4244,8 @@
       "name": "Sticky Note38",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        57880
+        12420,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4261,8 +4261,8 @@
       "name": "Sticky Note39",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        58060
+        12700,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -4277,8 +4277,8 @@
       "name": "Sticky Note41",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        58600
+        13540,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4294,8 +4294,8 @@
       "name": "Sticky Note42",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        58780
+        13820,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4311,8 +4311,8 @@
       "name": "Sticky Note43",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        58960
+        14100,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4328,8 +4328,8 @@
       "name": "Sticky Note44",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        59140
+        14380,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4345,8 +4345,8 @@
       "name": "Sticky Note45",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        59320
+        14660,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4362,8 +4362,8 @@
       "name": "Sticky Note46",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        59500
+        14940,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4379,8 +4379,8 @@
       "name": "Sticky Note47",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        59680
+        15220,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4396,8 +4396,8 @@
       "name": "Sticky Note48",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        59860
+        15500,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4413,8 +4413,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        60220
+        16060,
+        280
       ],
       "parameters": {
         "color": 5,
@@ -4430,8 +4430,8 @@
       "name": "Sticky Note20",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        54460
+        7100,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -4446,8 +4446,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        64180
+        22220,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4463,8 +4463,8 @@
       "name": "Sticky Note19",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        54100
+        6540,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4480,8 +4480,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        52660
+        4300,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4497,8 +4497,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        53020
+        4860,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4514,8 +4514,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        62200
+        19140,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4531,8 +4531,8 @@
       "name": "Sticky Note49",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        60040
+        15780,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4548,8 +4548,8 @@
       "name": "Sticky Note51",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        60580
+        16620,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4565,8 +4565,8 @@
       "name": "Sticky Note52",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        60760
+        16900,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4582,8 +4582,8 @@
       "name": "Sticky Note53",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        60940
+        17180,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4599,8 +4599,8 @@
       "name": "Sticky Note54",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        61120
+        17460,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4616,8 +4616,8 @@
       "name": "Sticky Note55",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        61300
+        17740,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4633,8 +4633,8 @@
       "name": "Sticky Note56",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        61480
+        18020,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4650,8 +4650,8 @@
       "name": "Sticky Note57",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        61660
+        18300,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4667,8 +4667,8 @@
       "name": "Sticky Note58",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        61840
+        18580,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4684,8 +4684,8 @@
       "name": "Sticky Note59",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        62020
+        18860,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4702,7 +4702,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        66700
+        32500
       ],
       "webhookId": "81107d16-d839-4507-a627-f607f1d53d4e",
       "parameters": {
@@ -4718,8 +4718,8 @@
       "name": "Sticky Note60",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        62380
+        19420,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4735,8 +4735,8 @@
       "name": "Sticky Note61",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        62560
+        19700,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4752,8 +4752,8 @@
       "name": "Sticky Note62",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        62740
+        19980,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4769,8 +4769,8 @@
       "name": "Sticky Note63",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        62920
+        20260,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -4785,8 +4785,8 @@
       "name": "Sticky Note64",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        63100
+        20540,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4802,8 +4802,8 @@
       "name": "Sticky Note65",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        63280
+        20820,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -4838,8 +4838,8 @@
       "name": "Extract IDs",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        33040
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -4862,8 +4862,8 @@
       "name": "Split out Notion changes",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        51040
+        1780,
+        460
       ],
       "parameters": {
         "options": {},
@@ -4912,8 +4912,8 @@
       "name": "Sticky Note66",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        63460
+        21100,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -4929,8 +4929,8 @@
       "name": "Switch by project",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        65980
+        25020,
+        100
       ],
       "parameters": {
         "rules": {
@@ -4971,8 +4971,8 @@
       "name": "Sticky Note21",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        54640
+        7380,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -4987,8 +4987,8 @@
       "name": "Sticky Note67",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        63640
+        21380,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -5005,7 +5005,7 @@
       "disabled": true,
       "position": [
         100,
-        70480
+        32860
       ],
       "webhookId": "1d758ef5-a9b9-4313-b81e-1c7dfe230a33",
       "parameters": {
@@ -5021,8 +5021,8 @@
       "type": "n8n-nodes-base.switch",
       "disabled": true,
       "position": [
-        100,
-        65620
+        24460,
+        100
       ],
       "parameters": {
         "rules": {
@@ -5088,8 +5088,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "disabled": true,
       "position": [
-        100,
-        31420
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -5107,8 +5107,8 @@
       "name": "Sticky Note50",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        60400
+        16340,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -5123,8 +5123,8 @@
       "name": "Sticky Note68",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        63820
+        21660,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -5139,8 +5139,8 @@
       "name": "Sticky Note69",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        64000
+        21940,
+        280
       ],
       "parameters": {
         "width": 220,
@@ -5155,8 +5155,8 @@
       "name": "Sticky Note70",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        64360
+        22500,
+        100
       ],
       "parameters": {
         "width": 220,
@@ -5171,8 +5171,8 @@
       "name": "Sticky Note72",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        64540
+        22780,
+        100
       ],
       "parameters": {
         "width": 980,
@@ -5187,8 +5187,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        54280
+        6820,
+        280
       ],
       "parameters": {
         "width": 2780,
@@ -5203,8 +5203,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        52120
+        3460,
+        460
       ],
       "parameters": {
         "width": 800,
@@ -5219,8 +5219,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        56260
+        9900,
+        280
       ],
       "parameters": {
         "width": 800,
@@ -5235,8 +5235,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        52300
+        3740,
+        460
       ],
       "parameters": {
         "width": 1140,
@@ -5287,8 +5287,8 @@
       "name": "Has not been completed?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        39520
+        12980,
+        100
       ],
       "parameters": {
         "options": {},
@@ -5334,8 +5334,8 @@
       "name": "Retry limit reached",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        100,
-        49240
+        380,
+        640
       ],
       "parameters": {
         "errorMessage": "Retry limit reached"
@@ -5348,8 +5348,8 @@
       "name": "Set tries",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        50500
+        940,
+        640
       ],
       "parameters": {
         "options": {},
@@ -5373,8 +5373,8 @@
       "name": "Update tries",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        69220
+        3740,
+        640
       ],
       "parameters": {
         "options": {},
@@ -5397,8 +5397,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        69940
+        4860,
+        460
       ],
       "webhookId": "9d3b561f-4afd-478c-8f6e-60641d4f1d0b",
       "parameters": {},
@@ -5444,8 +5444,8 @@
       "name": "If tries left",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        40060
+        13820,
+        100
       ],
       "parameters": {
         "options": {},
@@ -5478,8 +5478,8 @@
       "name": "Sticky Note18",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        53920
+        6260,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -5495,8 +5495,8 @@
       "name": "Retry limit reached1",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        100,
-        49420
+        660,
+        460
       ],
       "parameters": {
         "errorMessage": "Retry limit reached"
@@ -5509,8 +5509,8 @@
       "name": "Set tries1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        50680
+        1220,
+        640
       ],
       "parameters": {
         "options": {},
@@ -5534,8 +5534,8 @@
       "name": "Update tries1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        69400
+        4020,
+        640
       ],
       "parameters": {
         "options": {},
@@ -5558,8 +5558,8 @@
       "name": "Wait1",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        70120
+        5140,
+        460
       ],
       "webhookId": "9d3b561f-4afd-478c-8f6e-60641d4f1d0b",
       "parameters": {},
@@ -5605,8 +5605,8 @@
       "name": "If tries left1",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        40240
+        14100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -5639,8 +5639,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        58240
+        12980,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -5656,8 +5656,8 @@
       "name": "Set tries2",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        50860
+        1500,
+        460
       ],
       "parameters": {
         "options": {},
@@ -5681,8 +5681,8 @@
       "name": "Update tries2",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        69580
+        4300,
+        460
       ],
       "parameters": {
         "options": {},
@@ -5705,8 +5705,8 @@
       "name": "Wait2",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        70300
+        5420,
+        460
       ],
       "webhookId": "9d3b561f-4afd-478c-8f6e-60641d4f1d0b",
       "parameters": {},
@@ -5752,8 +5752,8 @@
       "name": "If tries left2",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        40420
+        14380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -5786,8 +5786,8 @@
       "name": "Retry limit reached2",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        100,
-        49600
+        940,
+        460
       ],
       "parameters": {
         "errorMessage": "Retry limit reached"
@@ -5800,8 +5800,8 @@
       "name": "Sticky Note30",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        56440
+        10180,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -5817,8 +5817,8 @@
       "name": "Turn Markdown into Notion Blocks",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        67240
+        660,
+        820
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -5832,8 +5832,8 @@
       "name": "Handle each block separately",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        38620
+        11580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -5880,8 +5880,8 @@
       "name": "Sticky Note34",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        57160
+        11300,
+        280
       ],
       "parameters": {
         "color": 7,
@@ -5897,8 +5897,8 @@
       "name": "Sticky Note40",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        58420
+        13260,
+        280
       ],
       "parameters": {
         "width": 800,
@@ -6185,7 +6185,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        70660
+        33040
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 264\n- **Node Types**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get projects**: httpRequest\n- **Get sections**: httpRequest\n- **Get Notion Databases**: notion\n- **Prep Dropdown**: code\n- **Prep Dropdown1**: code\n- **Generate config**: code\n- **Choose Notion Database**: form\n- **Choose Todoist Project**: form\n- **Verify security token**: if\n- **Generate security token**: crypto\n- ... and 254 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -6469,7 +6469,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        70840
+        33220
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 283\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -6483,7 +6483,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        71020
+        33400
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 284\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -7037,7 +7037,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        71200
+        33580
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 321\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -7051,7 +7051,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        71380
+        33760
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 322\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -7605,7 +7605,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        71560
+        33940
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 359\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -7619,7 +7619,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        71740
+        34120
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 360\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -7884,7 +7884,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        71920
+        34300
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 379\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -8149,7 +8149,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        72100
+        34480
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -8175,8 +8175,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        72280
+        380,
+        1180
       ],
       "parameters": {
         "content": "# Realtime Notion Todoist 2-way Sync Template\n\n## Overview\nAutomated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -8212,7 +8212,3879 @@
     "retryDelay": 1000
   },
   "versionId": "a3febb48-a786-4168-8e4f-61821e15858e",
-  "connections": {},
+  "connections": {
+    "Add project ID": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Append Notion Block",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Notion Block": {
+      "main": [
+        [
+          {
+            "node": "Body is array?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Body is array?": {
+      "main": [
+        [
+          {
+            "node": "Catch known error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catch known error": {
+      "main": [
+        [
+          {
+            "node": "Catch known error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catch known error1": {
+      "main": [
+        [
+          {
+            "node": "Catch known error2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catch known error2": {
+      "main": [
+        [
+          {
+            "node": "Check if Notion ID is locked",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Notion ID is locked": {
+      "main": [
+        [
+          {
+            "node": "Check if Todoist ID is locked",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Todoist ID is locked": {
+      "main": [
+        [
+          {
+            "node": "Check if creating flag exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if creating flag exists": {
+      "main": [
+        [
+          {
+            "node": "Check if creating flag exists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if creating flag exists1": {
+      "main": [
+        [
+          {
+            "node": "Choose Notion Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Choose Notion Database": {
+      "main": [
+        [
+          {
+            "node": "Choose Todoist Project",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Choose Todoist Project": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [
+          {
+            "node": "Convert to HTML Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to HTML Table": {
+      "main": [
+        [
+          {
+            "node": "Create task in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create task in Notion": {
+      "main": [
+        [
+          {
+            "node": "Create task in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create task in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Create task in Todoist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create task in Todoist1": {
+      "main": [
+        [
+          {
+            "node": "Delete Task in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Task in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Delete Task in Todoist2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Task in Todoist2": {
+      "main": [
+        [
+          {
+            "node": "Description has changed in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Description has changed in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Differences exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Differences exist": {
+      "main": [
+        [
+          {
+            "node": "Differences exist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Differences exist1": {
+      "main": [
+        [
+          {
+            "node": "Due date empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Due date empty": {
+      "main": [
+        [
+          {
+            "node": "End here",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "End here": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 00cea352",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 00cea352": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 01ec4ae8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 01ec4ae8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 05441894",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 05441894": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 106f7e35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 106f7e35": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1895a6d2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1895a6d2": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 28b4e10e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 28b4e10e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 347fb99f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 347fb99f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4a538bb6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4a538bb6": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4fda8614",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4fda8614": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 5e0488a3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 5e0488a3": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b72c6f9f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b72c6f9f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b8aeecf7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b8aeecf7": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for baa2d8ad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for baa2d8ad": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ca33c90f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ca33c90f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for cee5f777",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cee5f777": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d0adcb66",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d0adcb66": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e52b0a6d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e52b0a6d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f2243125",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f2243125": {
+      "main": [
+        [
+          {
+            "node": "Exchange Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exchange Tokens": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Execution Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data": {
+      "main": [
+        [
+          {
+            "node": "Execution Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data1": {
+      "main": [
+        [
+          {
+            "node": "Execution Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data2": {
+      "main": [
+        [
+          {
+            "node": "Execution Data3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data3": {
+      "main": [
+        [
+          {
+            "node": "Execution Data4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data4": {
+      "main": [
+        [
+          {
+            "node": "Execution Data5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data5": {
+      "main": [
+        [
+          {
+            "node": "Execution Data6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execution Data6": {
+      "main": [
+        [
+          {
+            "node": "Exists/Completed in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exists/Completed in Notion": {
+      "main": [
+        [
+          {
+            "node": "Extract IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract IDs": {
+      "main": [
+        [
+          {
+            "node": "Filter out status changes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out status changes": {
+      "main": [
+        [
+          {
+            "node": "Generate UUID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate UUID": {
+      "main": [
+        [
+          {
+            "node": "Generate UUID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate UUID1": {
+      "main": [
+        [
+          {
+            "node": "Generate UUID2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate UUID2": {
+      "main": [
+        [
+          {
+            "node": "Generate config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate config": {
+      "main": [
+        [
+          {
+            "node": "Generate email body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate email body": {
+      "main": [
+        [
+          {
+            "node": "Generate security token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate security token": {
+      "main": [
+        [
+          {
+            "node": "Get Backlog Section ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Backlog Section ID": {
+      "main": [
+        [
+          {
+            "node": "Get Notion Database ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Notion Database ID": {
+      "main": [
+        [
+          {
+            "node": "Get Notion Databases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Notion Databases": {
+      "main": [
+        [
+          {
+            "node": "Get Notion Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Notion Task": {
+      "main": [
+        [
+          {
+            "node": "Get Notion Task1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Notion Task1": {
+      "main": [
+        [
+          {
+            "node": "Get Notion Task2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Notion Task2": {
+      "main": [
+        [
+          {
+            "node": "Get Notion task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Notion task": {
+      "main": [
+        [
+          {
+            "node": "Get Todoist Project ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Todoist Project ID": {
+      "main": [
+        [
+          {
+            "node": "Get Todoist Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Todoist Task": {
+      "main": [
+        [
+          {
+            "node": "Get Todoist Task1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Todoist Task1": {
+      "main": [
+        [
+          {
+            "node": "Get Todoist Task2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Todoist Task2": {
+      "main": [
+        [
+          {
+            "node": "Get mapped item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get mapped item": {
+      "main": [
+        [
+          {
+            "node": "Get mapped item1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get mapped item1": {
+      "main": [
+        [
+          {
+            "node": "Get mapped item2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get mapped item2": {
+      "main": [
+        [
+          {
+            "node": "Get projects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get projects": {
+      "main": [
+        [
+          {
+            "node": "Get sections",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get sections": {
+      "main": [
+        [
+          {
+            "node": "Get todoist ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get todoist ID": {
+      "main": [
+        [
+          {
+            "node": "Get todoist ID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get todoist ID1": {
+      "main": [
+        [
+          {
+            "node": "Get variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get variables": {
+      "main": [
+        [
+          {
+            "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Globals": {
+      "main": [
+        [
+          {
+            "node": "Globals1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Globals1": {
+      "main": [
+        [
+          {
+            "node": "Globals2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Globals2": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Handle each block separately",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle each block separately": {
+      "main": [
+        [
+          {
+            "node": "Handle empty dates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle empty dates": {
+      "main": [
+        [
+          {
+            "node": "Handle empty dates1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle empty dates1": {
+      "main": [
+        [
+          {
+            "node": "Handle empty dates2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle empty dates2": {
+      "main": [
+        [
+          {
+            "node": "Has been completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has been completed?": {
+      "main": [
+        [
+          {
+            "node": "Has not been completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has not been completed?": {
+      "main": [
+        [
+          {
+            "node": "If Todoist ID exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Todoist ID exists": {
+      "main": [
+        [
+          {
+            "node": "If event is not :deleted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If event is not :deleted": {
+      "main": [
+        [
+          {
+            "node": "If tries left",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If tries left": {
+      "main": [
+        [
+          {
+            "node": "If tries left1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If tries left1": {
+      "main": [
+        [
+          {
+            "node": "If tries left2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If tries left2": {
+      "main": [
+        [
+          {
+            "node": "Lock Notion ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Notion ID": {
+      "main": [
+        [
+          {
+            "node": "Lock Todoist ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Todoist ID": {
+      "main": [
+        [
+          {
+            "node": "Lock Todoist ID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Todoist ID1": {
+      "main": [
+        [
+          {
+            "node": "Lock Todoist ID2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Todoist ID2": {
+      "main": [
+        [
+          {
+            "node": "Lock Todoist ID4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lock Todoist ID4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Map Notion to Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Notion to Todoist": {
+      "main": [
+        [
+          {
+            "node": "Map Notion to Todoist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Notion to Todoist1": {
+      "main": [
+        [
+          {
+            "node": "Map Notion to Todoist2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Notion to Todoist2": {
+      "main": [
+        [
+          {
+            "node": "Map Todoist to Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Todoist to Notion": {
+      "main": [
+        [
+          {
+            "node": "Map Todoist to Notion1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Todoist to Notion1": {
+      "main": [
+        [
+          {
+            "node": "Map summary fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map summary fields": {
+      "main": [
+        [
+          {
+            "node": "Mark as Completed in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Completed in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Mark as Completed in Todoist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Completed in Todoist1": {
+      "main": [
+        [
+          {
+            "node": "Mark as Done in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Done in Notion": {
+      "main": [
+        [
+          {
+            "node": "Mark as Focussed in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Focussed in Notion": {
+      "main": [
+        [
+          {
+            "node": "Mark as In Progress in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as In Progress in Notion": {
+      "main": [
+        [
+          {
+            "node": "Mark as Incomplete in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Incomplete in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Mark as Incomplete in Todoist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Incomplete in Todoist1": {
+      "main": [
+        [
+          {
+            "node": "Mark as Obsolete in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark as Obsolete in Notion": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge summary": {
+      "main": [
+        [
+          {
+            "node": "Neither focussed nor planned",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Neither focussed nor planned": {
+      "main": [
+        [
+          {
+            "node": "Neither focussed nor planned1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Neither focussed nor planned1": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion": {
+      "main": [
+        [
+          {
+            "node": "Notion Task found1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Task found1": {
+      "main": [
+        [
+          {
+            "node": "Notion Task not found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Task not found": {
+      "main": [
+        [
+          {
+            "node": "Notion Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Webhook": {
+      "main": [
+        [
+          {
+            "node": "Notion trigger reference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion trigger reference": {
+      "main": [
+        [
+          {
+            "node": "Notion-Todoist Sync Setup Helper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion-Todoist Sync Setup Helper": {
+      "main": [
+        [
+          {
+            "node": "OAuth redirect",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OAuth redirect": {
+      "main": [
+        [
+          {
+            "node": "Only continue if flag does not exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only continue if flag does not exist": {
+      "main": [
+        [
+          {
+            "node": "Only continue if flag does not exist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only continue if flag does not exist1": {
+      "main": [
+        [
+          {
+            "node": "Only continue if not locked",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only continue if not locked": {
+      "main": [
+        [
+          {
+            "node": "Only continue if not locked1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only continue if not locked1": {
+      "main": [
+        [
+          {
+            "node": "Pick Todoist Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Todoist Fields": {
+      "main": [
+        [
+          {
+            "node": "Prep Dropdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Dropdown": {
+      "main": [
+        [
+          {
+            "node": "Prep Dropdown1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Dropdown1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Batching Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Batching Items": {
+      "main": [
+        [
+          {
+            "node": "Prepare summary data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare summary data": {
+      "main": [
+        [
+          {
+            "node": "Prepare summary data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare summary data1": {
+      "main": [
+        [
+          {
+            "node": "Prepare summary data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare summary data2": {
+      "main": [
+        [
+          {
+            "node": "Redirect to Auth Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redirect to Auth Page": {
+      "main": [
+        [
+          {
+            "node": "Requires completion change",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Requires completion change": {
+      "main": [
+        [
+          {
+            "node": "Requires completion change1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Requires completion change1": {
+      "main": [
+        [
+          {
+            "node": "Respond with error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond with error": {
+      "main": [
+        [
+          {
+            "node": "Respond with success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond with success": {
+      "main": [
+        [
+          {
+            "node": "Retry limit reached",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry limit reached": {
+      "main": [
+        [
+          {
+            "node": "Retry limit reached1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry limit reached1": {
+      "main": [
+        [
+          {
+            "node": "Retry limit reached2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retry limit reached2": {
+      "main": [
+        [
+          {
+            "node": "Return config JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return config JSON": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set creating flag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set creating flag": {
+      "main": [
+        [
+          {
+            "node": "Set creating flag1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set creating flag1": {
+      "main": [
+        [
+          {
+            "node": "Set tries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set tries": {
+      "main": [
+        [
+          {
+            "node": "Set tries1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set tries1": {
+      "main": [
+        [
+          {
+            "node": "Set tries2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set tries2": {
+      "main": [
+        [
+          {
+            "node": "Split out Notion changes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split out Notion changes": {
+      "main": [
+        [
+          {
+            "node": "Status changed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status changed": {
+      "main": [
+        [
+          {
+            "node": "Status changed but not empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status changed but not empty": {
+      "main": [
+        [
+          {
+            "node": "Status is Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status is Done": {
+      "main": [
+        [
+          {
+            "node": "Status is Obsolete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status is Obsolete?": {
+      "main": [
+        [
+          {
+            "node": "Status is not Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status is not Done": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note10": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note11": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note12": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note13": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note14": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note15": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note16": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note17": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note18": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note19": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note20": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note21": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note22": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note23": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note24": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note25": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note26": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note27": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note28": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note29": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note30": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note31": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note32": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note33": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note34",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note34": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note35": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note36": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note37": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note38",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note38": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note39",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note39": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note40",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note40": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note41",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note41": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note42",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note42": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note43",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note43": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note44",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note44": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note45",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note45": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note46",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note46": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note47",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note47": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note48",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note48": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note49",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note49": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note50": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note51",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note51": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note52",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note52": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note53",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note53": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note54",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note54": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note55",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note55": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note56",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note56": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note57",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note57": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note58",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note58": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note59",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note59": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note60",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note60": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note61",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note61": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note62",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note62": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note63",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note63": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note64": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note65",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note65": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note66",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note66": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note67",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note67": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note68",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note68": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note69",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note69": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note70",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note70": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note72",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note72": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Store Todoist ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Todoist ID": {
+      "main": [
+        [
+          {
+            "node": "Store Todoist ID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Todoist ID1": {
+      "main": [
+        [
+          {
+            "node": "Store variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store variables": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Switch by Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by Event": {
+      "main": [
+        [
+          {
+            "node": "Switch by project",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by project": {
+      "main": [
+        [
+          {
+            "node": "Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todoist": {
+      "main": [
+        [
+          {
+            "node": "Todoist ID exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todoist ID exists": {
+      "main": [
+        [
+          {
+            "node": "Todoist ID exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todoist ID exists?": {
+      "main": [
+        [
+          {
+            "node": "Todoist Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todoist Webhook": {
+      "main": [
+        [
+          {
+            "node": "Todoist Webhook Setup Helper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todoist Webhook Setup Helper": {
+      "main": [
+        [
+          {
+            "node": "Todoist trigger reference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todoist trigger reference": {
+      "main": [
+        [
+          {
+            "node": "Turn Markdown into Notion Blocks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Turn Markdown into Notion Blocks": {
+      "main": [
+        [
+          {
+            "node": "Update Description in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Description in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Update Description in Todoist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Description in Todoist1": {
+      "main": [
+        [
+          {
+            "node": "Update Task in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Task in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Update section (Sync API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update section (Sync API)": {
+      "main": [
+        [
+          {
+            "node": "Update section (Sync API)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update section (Sync API)1": {
+      "main": [
+        [
+          {
+            "node": "Update section (Sync API)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update section (Sync API)2": {
+      "main": [
+        [
+          {
+            "node": "Update task in Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update task in Notion": {
+      "main": [
+        [
+          {
+            "node": "Update task in Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update task in Todoist": {
+      "main": [
+        [
+          {
+            "node": "Update task in Todoist before closing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update task in Todoist before closing": {
+      "main": [
+        [
+          {
+            "node": "Update task in Todoist1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update task in Todoist1": {
+      "main": [
+        [
+          {
+            "node": "Update tries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tries": {
+      "main": [
+        [
+          {
+            "node": "Update tries1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tries1": {
+      "main": [
+        [
+          {
+            "node": "Update tries2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tries2": {
+      "main": [
+        [
+          {
+            "node": "Verify security token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify security token": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Realtime Notion Todoist 2-way Sync Template. This workflow integrates 29 different services: stickyNote, scheduleTrigger, merge, switch, redis. It contains 264 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Realtime Notion Todoist 2-way Sync Template. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

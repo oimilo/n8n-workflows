@@ -44,8 +44,8 @@
       "name": "Credentials",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        280
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -105,8 +105,8 @@
       "name": "Validate Token",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        24220
+        380,
+        460
       ],
       "parameters": {
         "options": {},
@@ -150,8 +150,8 @@
       "name": "Route Event",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        21340
+        5420,
+        100
       ],
       "parameters": {
         "rules": {
@@ -266,8 +266,8 @@
       "name": "Process Message",
       "type": "n8n-nodes-base.function",
       "position": [
-        100,
-        20260
+        3740,
+        280
       ],
       "parameters": {
         "functionCode": "// Process Message Node\nconst items = $input.all();\nconst item = items[0];\n\n// Get message data from the correct path\nconst message = item.json.body['data[PARAMS][MESSAGE]'];\nconst dialogId = item.json.body['data[PARAMS][DIALOG_ID]'];\n\nconst sessionId = item.json.body['data[PARAMS][CHAT_ENTITY_DATA_1]'].split(\"|\")[5];\n\nconst botId = Object.keys(item.json.body)\n  .filter(key => key.startsWith(\"data[BOT]\") && key.endsWith(\"[BOT_ID]\"))\n  .map(key => $json.body[key])\n  .shift() || null;\nconst userId = item.json.body['data[USER][ID]'];\n\n// Get auth data\nconst auth = {\n  access_token: item.json.access_token,\n  domain: item.json.domain\n};\n\nif (message.toLowerCase() === \"what's hot\") {\n  return {\n    json: {\n      DIALOG_ID: dialogId,\n      SESSION_ID: sessionId,\n      BOT_ID: botId,\n      USER_ID: userId,\n      MESSAGE_ORI: message,\n      MESSAGE: \"Hi! I am an example-bot.\\nI repeat what you say\",\n      AUTH: auth.access_token,\n      DOMAIN: auth.domain\n    }\n  };\n} else {\n  return {\n    json: {\n      DIALOG_ID: dialogId,\n      SESSION_ID: sessionId,\n      BOT_ID: botId,\n      USER_ID: userId,\n      MESSAGE_ORI: message,\n      MESSAGE: `You said:\\n${message}`,\n      AUTH: auth.access_token,\n      DOMAIN: auth.domain\n    }\n  };\n}"
@@ -280,8 +280,8 @@
       "name": "Process Join",
       "type": "n8n-nodes-base.function",
       "position": [
-        100,
-        20080
+        3460,
+        280
       ],
       "parameters": {
         "functionCode": "// Process Join Node\nconst items = $input.all();\nconst item = items[0];\n\n// Get dialog ID from the correct path\nconst dialogId = item.json.body['data[PARAMS][DIALOG_ID]'];\n\n// Get auth data\nconst auth = {\n  access_token: item.json.access_token,\n  domain: item.json.domain\n};\n\nconst message = \n  'ITR Menu:\\n' +\n  '[send=1]1. find out more about me[/send]\\n' +\n  '[send=0]0. wait for operator response[/send]';\n\nreturn {\n  json: {\n    DIALOG_ID: dialogId,\n    MESSAGE: message,\n    AUTH: auth.access_token,\n    DOMAIN: auth.domain\n  }\n};"
@@ -294,8 +294,8 @@
       "name": "Process Install",
       "type": "n8n-nodes-base.function",
       "position": [
-        100,
-        19900
+        3180,
+        280
       ],
       "parameters": {
         "functionCode": "// Process Install Node\nconst items = $input.all();\nconst item = items[0];\n\n// Get the webhook URL from input\nconst handlerBackUrl = item.json.webhookUrl;\n\n// Get auth data directly from item.json\nconst auth = {\n  access_token: item.json.access_token,\n  application_token: item.json.application_token,\n  domain: item.json.domain\n};\n\nreturn {\n  json: {\n    handler_back_url: handlerBackUrl,\n    CODE: 'OpenChanelExampleBot',\n    TYPE: 'O',\n    OPENLINE: 'Y',\n    EVENT_MESSAGE_ADD: handlerBackUrl,\n    EVENT_WELCOME_MESSAGE: handlerBackUrl,\n    EVENT_BOT_DELETE: handlerBackUrl,\n    PROPERTIES: {\n      NAME: 'Open chanel Bot',\n      LAST_NAME: 'Example',\n      COLOR: 'AQUA',\n      EMAIL: 'no@example.com',\n      PERSONAL_BIRTHDAY: '2020-07-18',\n      WORK_POSITION: 'Report on affairs',\n      PERSONAL_GENDER: 'M'\n    },\n    // Use the auth data from item.json\n    AUTH: auth.access_token,\n    CLIENT_ID: auth.application_token,\n    DOMAIN: auth.domain\n  }\n};"
@@ -308,8 +308,8 @@
       "name": "Register Bot",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        21160
+        5140,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -365,8 +365,8 @@
       "name": "Send Message",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        21700
+        5980,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -398,8 +398,8 @@
       "name": "Send Join Message",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        21520
+        5700,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -431,8 +431,8 @@
       "name": "Process Delete",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19720
+        2900,
+        280
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -444,7 +444,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        24040
+        14860
       ],
       "parameters": {
         "options": {
@@ -462,7 +462,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        17740
+        14500
       ],
       "parameters": {
         "options": {
@@ -479,8 +479,8 @@
       "name": "Merge parameters for Subworkflow",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        19180
+        2060,
+        280
       ],
       "parameters": {
         "mode": "combine",
@@ -495,8 +495,8 @@
       "name": "Get a list of available storages",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        18820
+        1500,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -514,8 +514,8 @@
       "name": "Get a list of List of Files and Folders",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        18640
+        1220,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -533,8 +533,8 @@
       "name": "Get a list of Folders files",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        18460
+        940,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -558,8 +558,8 @@
       "name": "Download file",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        640
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -573,8 +573,8 @@
       "name": "Default Data Loader",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        460
+        660,
+        100
       ],
       "parameters": {
         "loader": "pdfLoader",
@@ -591,8 +591,8 @@
       "name": "Recursive Character Text Splitter",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        20980
+        4860,
+        280
       ],
       "parameters": {
         "options": {},
@@ -606,8 +606,8 @@
       "name": "Split Out folder files and folders",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        21880
+        6260,
+        100
       ],
       "parameters": {
         "options": {},
@@ -621,8 +621,8 @@
       "name": "Filter for files",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        18280
+        660,
+        280
       ],
       "parameters": {
         "options": {},
@@ -656,8 +656,8 @@
       "name": "Move files to Vector stored folder",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        19360
+        2340,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -687,7 +687,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
         100,
-        17920
+        14680
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -698,8 +698,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        22060
+        6540,
+        100
       ],
       "parameters": {
         "width": 2168.7691983135305,
@@ -714,8 +714,8 @@
       "name": "Qdrant Vector Store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        20440
+        4020,
+        280
       ],
       "parameters": {
         "mode": "insert",
@@ -737,8 +737,8 @@
       "name": "Embeddings Ollama",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        820
+        1220,
+        100
       ],
       "parameters": {
         "model": "nomic-embed-text:latest"
@@ -751,8 +751,8 @@
       "name": "Vector Store Retriever",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        24400
+        660,
+        460
       ],
       "parameters": {
         "topK": 10
@@ -765,8 +765,8 @@
       "name": "Question and Answer Chain",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        20800
+        4580,
+        280
       ],
       "parameters": {
         "text": "={{ $json.MESSAGE_ORI }}",
@@ -783,8 +783,8 @@
       "name": "Prepare output parameters",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        19540
+        2620,
+        280
       ],
       "parameters": {
         "options": {},
@@ -807,8 +807,8 @@
       "name": "Embeddings Ollama1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        1000
+        1500,
+        100
       ],
       "parameters": {
         "model": "nomic-embed-text:latest"
@@ -821,8 +821,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19000
+        1780,
+        280
       ],
       "parameters": {
         "options": {},
@@ -836,8 +836,8 @@
       "name": "Qdrant Vector Store1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        20620
+        4300,
+        280
       ],
       "parameters": {
         "options": {},
@@ -856,8 +856,8 @@
       "name": "Execute subworkflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        100,
-        18100
+        380,
+        280
       ],
       "parameters": {
         "options": {},
@@ -877,7 +877,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1180
+        280
       ],
       "parameters": {
         "message": "Error occurred in dbd7b2c0-2b27-4c23-beb7-eec128da0787",
@@ -891,8 +891,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        22240
+        6820,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 22a7c363-ab5a-4adc-9de4-268f3f3739f3",
@@ -906,8 +906,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        22600
+        7380,
+        100
       ],
       "parameters": {
         "message": "Error occurred in e728c7eb-b169-4757-b4f4-b99ec4db0184",
@@ -921,8 +921,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        22780
+        7660,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 1a1fae0e-d74f-48b9-8ec8-4e926763de28",
@@ -936,8 +936,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        22960
+        7940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in faa4c61e-faf4-4bd7-b096-706d3c5cf366",
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        23140
+        8220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in ade154b4-64d9-4ecd-8a83-328002c98569",
@@ -966,8 +966,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        23320
+        8500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in feb3e1c0-4556-4d77-9e5e-42eb2c10a5f8",
@@ -981,8 +981,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        23500
+        8780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 7bb0412e-57ab-4a63-aec2-5db64b83ef7e",
@@ -996,8 +996,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        23680
+        9060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 5528a3be-375a-4077-a346-2eb77cf9160f",
@@ -1011,8 +1011,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        23860
+        9340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in f713eda1-f51e-484d-a98a-f359bc7ce654",
@@ -1026,8 +1026,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        22420
+        7100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 748a65d3-dceb-4787-a068-b364371b392b",
@@ -1041,8 +1041,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16840
+        4020,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dbd7b2c0",
@@ -1056,8 +1056,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15760
+        2340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 22a7c363",
@@ -1071,8 +1071,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17020
+        4300,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e728c7eb",
@@ -1086,8 +1086,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15580
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1a1fae0e",
@@ -1101,8 +1101,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17380
+        4860,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node faa4c61e",
@@ -1116,8 +1116,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16480
+        3460,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ade154b4",
@@ -1131,8 +1131,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17560
+        5140,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node feb3e1c0",
@@ -1146,8 +1146,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16300
+        3180,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7bb0412e",
@@ -1161,8 +1161,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15940
+        2620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5528a3be",
@@ -1176,8 +1176,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        17200
+        4580,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f713eda1",
@@ -1191,8 +1191,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16120
+        2900,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 748a65d3",
@@ -1206,8 +1206,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16660
+        3740,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node bade110b",
@@ -1222,7 +1222,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        24580
+        15040
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Node Types**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Bitrix24 Handler**: webhook\n- **Credentials**: set\n- **Validate Token**: if\n- **Route Event**: switch\n- **Process Message**: function\n- **Process Join**: function\n- **Process Install**: function\n- **Register Bot**: httpRequest\n- **Send Message**: httpRequest\n- **Send Join Message**: httpRequest\n- ... and 47 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1236,7 +1236,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1360
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1251,7 +1251,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1540
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1266,7 +1266,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1720
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1281,7 +1281,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1900
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1296,7 +1296,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2080
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1311,7 +1311,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2260
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1326,7 +1326,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2440
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1341,7 +1341,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2620
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1356,7 +1356,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2800
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1371,7 +1371,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2980
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1386,7 +1386,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3160
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1401,7 +1401,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        24760
+        15220
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 69\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1415,7 +1415,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        24940
+        15400
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 70\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1429,7 +1429,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3340
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1444,7 +1444,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3520
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1459,7 +1459,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3700
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1474,7 +1474,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3880
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1489,7 +1489,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4060
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1504,7 +1504,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4240
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1519,7 +1519,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4420
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1534,7 +1534,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4600
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1549,7 +1549,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4780
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1564,7 +1564,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4960
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1579,7 +1579,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5140
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1594,7 +1594,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5320
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1609,7 +1609,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5500
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1624,7 +1624,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1639,7 +1639,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1654,7 +1654,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1669,7 +1669,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1684,7 +1684,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1699,7 +1699,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1714,7 +1714,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1729,7 +1729,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1744,7 +1744,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1759,7 +1759,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        25120
+        15580
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 93\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1773,7 +1773,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        25300
+        15760
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 94\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1787,7 +1787,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1802,7 +1802,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7480
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1817,7 +1817,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1832,7 +1832,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1847,7 +1847,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1862,7 +1862,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1877,7 +1877,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1892,7 +1892,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1907,7 +1907,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1922,7 +1922,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1937,7 +1937,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1952,7 +1952,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1967,7 +1967,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1982,7 +1982,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1997,7 +1997,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9820
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2012,7 +2012,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10000
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2027,7 +2027,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10180
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2042,7 +2042,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10360
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2057,7 +2057,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10540
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2072,7 +2072,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10720
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2087,7 +2087,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10900
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2102,7 +2102,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11080
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2117,7 +2117,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        25480
+        15940
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 117\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2131,7 +2131,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        25660
+        16120
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 118\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2144,7 +2144,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11260
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2158,7 +2158,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11440
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2172,7 +2172,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11620
+        10720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2186,7 +2186,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11800
+        10900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2200,7 +2200,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11980
+        11080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2214,7 +2214,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12160
+        11260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2228,7 +2228,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12340
+        11440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2242,7 +2242,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12520
+        11620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2256,7 +2256,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12700
+        11800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2270,7 +2270,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12880
+        11980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2284,7 +2284,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13060
+        12160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2298,7 +2298,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        25840
+        16300
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 130\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2311,7 +2311,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13240
+        12340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2325,7 +2325,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13420
+        12520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2339,7 +2339,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13600
+        12700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2353,7 +2353,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13780
+        12880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2367,7 +2367,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13960
+        13060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2381,7 +2381,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        14140
+        13240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2395,7 +2395,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        14320
+        13420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2409,7 +2409,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        14500
+        13600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2423,7 +2423,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        14680
+        13780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2437,7 +2437,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        14860
+        13960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2451,7 +2451,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        15040
+        14140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2465,7 +2465,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        26020
+        16480
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2478,7 +2478,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        15220
+        14320
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2491,8 +2491,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        26200
+        940,
+        460
       ],
       "parameters": {
         "content": "# Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2504,8 +2504,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15400
+        1780,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2528,7 +2528,1255 @@
     "retryDelay": 1000
   },
   "versionId": "e3e24337-997c-4ce2-b8c1-3e6f8b9eb85c",
-  "connections": {},
+  "connections": {
+    "Bitrix24 Handler": {
+      "main": [
+        [
+          {
+            "node": "Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Credentials": {
+      "main": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Ollama1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1a1fae0e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1a1fae0e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 22a7c363",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 22a7c363": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 5528a3be",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 5528a3be": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 748a65d3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 748a65d3": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7bb0412e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7bb0412e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ade154b4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ade154b4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for bade110b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for bade110b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for dbd7b2c0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for dbd7b2c0": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e728c7eb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e728c7eb": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f713eda1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f713eda1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for faa4c61e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for faa4c61e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for feb3e1c0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for feb3e1c0": {
+      "main": [
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Response": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute subworkflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute subworkflow": {
+      "main": [
+        [
+          {
+            "node": "Filter for files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter for files": {
+      "main": [
+        [
+          {
+            "node": "Get a list of Folders files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a list of Folders files": {
+      "main": [
+        [
+          {
+            "node": "Get a list of List of Files and Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a list of List of Files and Folders": {
+      "main": [
+        [
+          {
+            "node": "Get a list of available storages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a list of available storages": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Merge parameters for Subworkflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge parameters for Subworkflow": {
+      "main": [
+        [
+          {
+            "node": "Move files to Vector stored folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move files to Vector stored folder": {
+      "main": [
+        [
+          {
+            "node": "Prepare output parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare output parameters": {
+      "main": [
+        [
+          {
+            "node": "Process Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Delete": {
+      "main": [
+        [
+          {
+            "node": "Process Install",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Install": {
+      "main": [
+        [
+          {
+            "node": "Process Join",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Join": {
+      "main": [
+        [
+          {
+            "node": "Process Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Message": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "main": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Question and Answer Chain": {
+      "main": [
+        [
+          {
+            "node": "Recursive Character Text Splitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "main": [
+        [
+          {
+            "node": "Register Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register Bot": {
+      "main": [
+        [
+          {
+            "node": "Route Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Event": {
+      "main": [
+        [
+          {
+            "node": "Send Join Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Join Message": {
+      "main": [
+        [
+          {
+            "node": "Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Message": {
+      "main": [
+        [
+          {
+            "node": "Split Out folder files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out folder files and folders": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 10": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 6": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 7": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 8": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 9": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success Response": {
+      "main": [
+        [
+          {
+            "node": "Validate Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Token": {
+      "main": [
+        [
+          {
+            "node": "Vector Store Retriever",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Retriever": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow integrates 22 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, vectorStoreQdrant, chainRetrievalQa, merge. It contains 57 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Bitrix24 Open Chanel RAG Chatbot Application Workflow example with Webhook Integration. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

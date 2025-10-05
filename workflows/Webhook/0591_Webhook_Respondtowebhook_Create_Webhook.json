@@ -17,8 +17,8 @@
       "name": "Session",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10900
+        380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -41,8 +41,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "{{ $env.API_BASE_URL }}\n\n{{ $env.API_BASE_URL }}",
       "position": [
-        100,
-        15400
+        2060,
+        280
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -77,8 +77,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "{{ $env.API_BASE_URL }}\n\n{{ $env.API_BASE_URL }}",
       "position": [
-        100,
-        14680
+        940,
+        280
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -128,8 +128,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        12340
+        2620,
+        100
       ],
       "parameters": {
         "rules": {
@@ -247,8 +247,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "{{ $env.API_BASE_URL }}\n\n{{ $env.API_BASE_URL }}",
       "position": [
-        100,
-        15040
+        1500,
+        280
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -283,8 +283,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "{{ $env.API_BASE_URL }}\n\n{{ $env.API_BASE_URL }}",
       "position": [
-        100,
-        14860
+        1220,
+        280
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -318,8 +318,8 @@
       "name": "gather masked email list",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        15220
+        1780,
+        280
       ],
       "parameters": {
         "options": {},
@@ -342,8 +342,8 @@
       "name": "create html template",
       "type": "n8n-nodes-base.html",
       "position": [
-        100,
-        14500
+        660,
+        280
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Masked Email Addresses</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 40px;\n            backgrouand-color: #f4f4f9;\n        }\n        h1 {\n            text-align: center;\n            color: #333;\n        }\n        .button-container, .filter-container, .table-container {\n            margin-bottom: 20px;\n            text-align: center;\n        }\n        button {\n            padding: 10px 20px;\n            margin: 0 10px;\n            font-size: 0.875em;\n            cursor: pointer;\n            background-color: #4CAF50;\n            color: white;\n            border: none;\n            border-radius: 3px;\n        }\n        .delete-button {\n            background-color: #f44336;\n        }\n        .disabled-button {\n            background-color: #ffa500;\n        }\n        select {\n            padding: 10px;\n            font-size: 0.875em;\n        }\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin: 20px 0;\n            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n            background: #fff;\n        }\n        th, td {\n            border: 1px solid #ddd;\n            padding: 12px 15px;\n            text-align: left;\n            white-space: nowrap; /* Prevent text from wrapping */\n        }\n        th {\n            background-color: #f5f5f5;\n            color: #333;\n            text-transform: uppercase;\n            letter-spacing: 0.1em;\n            font-size: 0.875em;\n        }\n        tr:nth-child(even) {\n            background-color: #f9f9f9;\n        }\n        tr:hover {\n            background-color: #f1f1f1;\n        }\n        td {\n            font-size: 0.875em;\n        }\n        .action-cell {\n            display: flex;\n            justify-content: flex-end;\n        }\n    </style>\n</head>\n<body>\n    <h1>Masked Email Addresses</h1>\n    <div class=\"button-container\">\n        <button id=\"add-pending\">Add Pending</button>\n        <button id=\"add-enabled\">Add Enabled</button>\n    </div>\n    <div class=\"filter-container\">\n        <label for=\"state-filter\">Filter by State: </label>\n        <select id=\"state-filter\">\n            <option value=\"all\">All</option>\n        </select>\n    </div>\n    <div class=\"table-container\">\n        <table>\n            <thead>\n                <tr>\n                    <th>Email</th>\n                    <th>Description</th>\n                    <th>State</th>\n                    <th>Created By</th>\n                    <th>Created At</th>\n                    <th>Last Message At</th>\n                    <th>For Domain</th>\n                    <th>ID</th>\n                    <th>Actions</th>\n                </tr>\n            </thead>\n            <tbody id=\"table-body\">\n                <!-- Table rows will be populated here -->\n            </tbody>\n        </table>\n    </div>\n    <script>\n        // Convert JSON string to object\n        const responseString = `{{ $json.data.toJsonString() }}`;\n        const maskedEmails = JSON.parse(responseString);\n\n        // Populate the table\n        const tableBody = document.getElementById('table-body');\n        const stateFilter = document.getElementById('state-filter');\n\n        // Extract unique states\n        const uniqueStates = [...new Set(maskedEmails.map(email => email.state))];\n        uniqueStates.forEach(state => {\n            const option = document.createElement('option');\n            option.value = state;\n            option.textContent = state;\n            stateFilter.appendChild(option);\n        });\n\n        function populateTable(filteredEmails) {\n            tableBody.innerHTML = ''; // Clear the table body\n\n            filteredEmails.forEach(email => {\n                const row = document.createElement('tr');\n\n                // Populate table cells\n                const cellKeys = ['email', 'description', 'state', 'createdBy', 'createdAt', 'lastMessageAt', 'forDomain', 'id'];\n                cellKeys.forEach(key => {\n                    const cell = document.createElement('td');\n                    cell.textContent = email[key] !== null && email[key] !== undefined ? email[key] : 'N/A';\n                    row.appendChild(cell);\n                });\n\n                // Add action cell with delete and disable buttons\n                const actionCell = document.createElement('td');\n                actionCell.className = 'action-cell';\n\n                const deleteButton = document.createElement('button');\n                deleteButton.className = 'delete-button';\n                deleteButton.textContent = 'Delete';\n                deleteButton.addEventListener('click', () => updateMaskedEmail(email.id, email.email, 'deleted'));\n                actionCell.appendChild(deleteButton);\n\n                const disabledButton = document.createElement('button');\n                disabledButton.className = 'disabled-button';\n                disabledButton.textContent = 'Disable';\n                disabledButton.addEventListener('click', () => updateMaskedEmail(email.id, email.email, 'disabled'));\n                actionCell.appendChild(disabledButton);\n\n                row.appendChild(actionCell);\n\n                tableBody.appendChild(row);\n            });\n        }\n\n        // Initial population\n        populateTable(maskedEmails);\n\n        // Add event listener to filter dropdown\n        stateFilter.addEventListener('change', function() {\n            const selectedState = this.value;\n            const filteredEmails = selectedState === 'all' ? maskedEmails : maskedEmails.filter(email => email.state === selectedState);\n            populateTable(filteredEmails);\n        });\n\n        // Function to make POST request\n        function createMaskedEmail(state) {\n            fetch('/webhook/MaskedEmail', {\n                method: 'POST',\n                headers: {\n                    'Content-Type': 'application/json'\n                },\n                body: JSON.stringify({ state: state })\n            }).then(response => {\n                if (response.ok) {\n                    alert('New masked email created successfully!');\n                    // Reload the page after successful creation\n                    location.reload();\n                } else {\n                    alert('Error creating masked email');\n                }\n            }).catch(error => {\n                alert('Error: ' + error);\n            });\n        }\n\n        // Function to update masked email\n        function updateMaskedEmail(id, email, state) {\n            fetch('/webhook/MaskedEmail', {\n                method: 'POST',\n                headers: {\n                    'Content-Type': 'application/json'\n                },\n                body: JSON.stringify({ id: id, email: email, state: state })\n            }).then(response => {\n                if (response.ok) {\n                    alert(`Masked email ${state} successfully!`);\n                    // Reload the page after successful update\n                    location.reload();\n                } else {\n                    alert(`Error ${state} masked email`);\n                }\n            }).catch(error => {\n                alert('Error: ' + error);\n            });\n        }\n\n        // Event listeners for the buttons\n        document.getElementById('add-pending').addEventListener('click', () => createMaskedEmail('pending'));\n        document.getElementById('add-enabled').addEventListener('click', () => createMaskedEmail('enabled'));\n\n    </script>\n</body>\n</html>"
@@ -357,7 +357,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        12520
+        10900
       ],
       "webhookId": "6eab7c57-8cb8-4f7e-be2d-e3c23a52683e",
       "parameters": {
@@ -381,8 +381,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        11080
+        660,
+        100
       ],
       "parameters": {
         "width": 810.0000000000002,
@@ -413,8 +413,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11260
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in aca05a94-07dd-4408-8d87-47e788a5f0a8",
@@ -428,8 +428,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11440
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in c4337bb4-1c16-4381-abe4-f0699099f326",
@@ -443,8 +443,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11620
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in bbfae2d8-d23a-4244-8566-c3da9cc2e34d",
@@ -458,8 +458,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11800
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in ceca9fc2-e2f4-4578-8313-c987d08e9393",
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11980
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in c0467dec-a29e-42a0-8f81-fb12b0428974",
@@ -488,8 +488,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        12160
+        2340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in a19b8aa6-b139-4011-8027-4cb1e7bef065",
@@ -609,7 +609,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12700
+        11080
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Session**: httpRequest\n- **get all masked emails**: httpRequest\n- **create random masked email**: httpRequest\n- **Respond to Webhook**: respondToWebhook\n- **Switch**: switch\n- **disabled**: httpRequest\n- **delete**: httpRequest\n- **gather masked email list**: set\n- **create html template**: html\n- **Webhook**: webhook\n- ... and 15 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -728,7 +728,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12880
+        11260
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -742,7 +742,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13060
+        11440
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -966,7 +966,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13240
+        11620
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -980,7 +980,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13420
+        11800
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1204,7 +1204,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13600
+        11980
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1218,7 +1218,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13780
+        12160
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 66\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1329,7 +1329,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        13960
+        12340
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1440,7 +1440,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        14140
+        12520
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1466,8 +1466,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        14320
+        380,
+        280
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, switch, set. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1489,7 +1489,703 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for a19b8aa6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a19b8aa6": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for aca05a94",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for aca05a94": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b1b6eb50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b1b6eb50": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for bbfae2d8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for bbfae2d8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c0467dec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c0467dec": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c4337bb4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c4337bb4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ceca9fc2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ceca9fc2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 6": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "create html template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create html template": {
+      "main": [
+        [
+          {
+            "node": "create random masked email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create random masked email": {
+      "main": [
+        [
+          {
+            "node": "delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete": {
+      "main": [
+        [
+          {
+            "node": "disabled",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "disabled": {
+      "main": [
+        [
+          {
+            "node": "gather masked email list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gather masked email list": {
+      "main": [
+        [
+          {
+            "node": "get all masked emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Httprequest Workflow",
   "settings": {
     "executionOrder": "v1",

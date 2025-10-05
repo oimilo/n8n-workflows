@@ -17,8 +17,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        3340
+        4860,
+        100
       ],
       "parameters": {
         "width": 780,
@@ -33,8 +33,8 @@
       "name": "Order Information",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        1720
+        2340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -82,8 +82,8 @@
       "name": "Return Orders",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        100,
-        2440
+        3460,
+        100
       ],
       "parameters": {
         "columns": {
@@ -611,8 +611,8 @@
       "name": "Outbound Orders",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        100,
-        2080
+        2900,
+        100
       ],
       "parameters": {
         "columns": {
@@ -1140,8 +1140,8 @@
       "name": "Order Type",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        1900
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1175,8 +1175,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2980
+        4300,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1192,8 +1192,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2800
+        4020,
+        100
       ],
       "parameters": {
         "width": 800,
@@ -1208,8 +1208,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        3160
+        4580,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1247,8 +1247,8 @@
       "name": "Subject includes EDI",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        3880
+        5700,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1281,8 +1281,8 @@
       "name": "Extract Body",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        1000
+        1220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1306,8 +1306,8 @@
       "name": "Get Email",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        1360
+        1780,
+        100
       ],
       "webhookId": "7476ecd4-e3ba-471d-a73a-ddef7b3ffd28",
       "parameters": {
@@ -1325,8 +1325,8 @@
       "name": "Parse EDI Message",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        2260
+        3180,
+        100
       ],
       "parameters": {
         "jsCode": "// EDI Parser function for n8n JavaScript node\nfunction parseEDI(ediMessage) {\n  // Define the data structure to store parsed results\n  const result = {\n    interchangeHeader: {},\n    messageHeader: {},\n    orderDetails: {},\n    dates: [],\n    parties: [],\n    lineItems: []\n  };\n  \n  // Split the message into lines and remove empty lines\n  const lines = ediMessage.split(\"'\").filter(line => line.trim().length > 0);\n  \n  // Parse each line\n  let currentLineItem = null;\n  \n  for (const line of lines) {\n    const segments = line.trim().split('+');\n    const segmentName = segments[0];\n    \n    switch (segmentName) {\n      case 'UNA':\n        // Service String Advice - contains delimiter information\n        break;\n        \n      case 'UNB':\n        // Interchange Header\n        // UNB+UNOC:3+SENDER_ID+RECEIVER_ID+240318:1200+ORDER54321\n        result.interchangeHeader = {\n          syntax: segments[1],\n          senderId: segments[2],\n          receiverId: segments[3],\n          dateTime: segments[4]?.split(':')[0] || '',\n          time: segments[4]?.split(':')[1] || '',\n          controlReference: segments[5] || ''\n        };\n        break;\n        \n      case 'UNH':\n        // Message Header\n        // UNH+1+ORDERS:D:96A:UN\n        if (segments.length > 2) {\n          const messageParts = segments[2].split(':');\n          result.messageHeader = {\n            messageReference: segments[1],\n            messageType: messageParts[0],\n            messageVersion: messageParts[1],\n            messageRelease: messageParts[2],\n            controlAgency: messageParts[3]\n          };\n        }\n        break;\n        \n      case 'BGM':\n        // Beginning of Message\n        // BGM+230+RT54321098+9\n        result.orderDetails = {\n          documentType: segments[1],\n          documentNumber: segments[2],\n          messageFunction: segments[3]\n        };\n        break;\n        \n      case 'DTM':\n        // Date/Time/Period\n        // DTM+137:20250319:102\n        if (segments[1]) {\n          const dateParts = segments[1].split(':');\n          const dateObj = {\n            qualifier: dateParts[0],\n            date: dateParts[1],\n            format: dateParts[2]\n          };\n          \n          // Add human-readable description based on qualifier\n          switch (dateParts[0]) {\n            case '137':\n              dateObj.description = 'Document Date';\n              break;\n            case '2':\n              dateObj.description = 'Delivery Date';\n              break;\n            case '10':\n              dateObj.description = 'Shipment Date';\n              break;\n            default:\n              dateObj.description = 'Other Date';\n          }\n          \n          result.dates.push(dateObj);\n        }\n        break;\n      \n      case 'NAD':\n        // Name and Address\n        // NAD+BY+CUSTOMER_123::91\n        if (segments.length > 1) {\n          const partyCode = segments[1];\n          const partyId = segments[2]?.split(':')[0] || '';\n          \n          const party = {\n            partyQualifier: partyCode,\n            partyId: partyId,\n            qualifierDescription: ''\n          };\n          \n          // Add human-readable description\n          switch (partyCode) {\n            case 'BY':\n              party.qualifierDescription = 'Buyer';\n              break;\n            case 'SU':\n              party.qualifierDescription = 'Supplier';\n              break;\n            case 'DP':\n              party.qualifierDescription = 'Delivery Party';\n              break;\n            default:\n              party.qualifierDescription = 'Other Party';\n          }\n          \n          // If there's a full name instead of a code (like \"Returns Processing Hub\")\n          if (segments[2] && !segments[2].includes(':')) {\n            party.partyName = segments[2];\n            party.partyId = '';\n          }\n          \n          result.parties.push(party);\n        }\n        break;\n      \n      case 'LIN':\n        // Line Item\n        // LIN+1++321654:IN\n        currentLineItem = {\n          lineNumber: segments[1],\n          productId: '',\n          productIdType: '',\n          description: '',\n          quantity: 0,\n          unit: '',\n          price: 0\n        };\n        \n        // Parse product ID if present\n        if (segments[3]) {\n          const productParts = segments[3].split(':');\n          currentLineItem.productId = productParts[0];\n          currentLineItem.productIdType = productParts[1] || '';\n        }\n        \n        result.lineItems.push(currentLineItem);\n        break;\n      \n      case 'IMD':\n        // Item Description\n        // IMD+F++:::Defective Product A\n        if (currentLineItem && segments.length > 3) {\n          // The description is typically in the last component after multiple colons\n          const descriptionParts = segments[3].split(':');\n          currentLineItem.description = descriptionParts[descriptionParts.length - 1];\n        }\n        break;\n      \n      case 'QTY':\n        // Quantity\n        // QTY+21:10:EA\n        if (currentLineItem && segments[1]) {\n          const quantityParts = segments[1].split(':');\n          currentLineItem.quantityQualifier = quantityParts[0];\n          currentLineItem.quantity = parseFloat(quantityParts[1] || '0');\n          currentLineItem.unit = quantityParts[2] || '';\n        }\n        break;\n      \n      case 'PRI':\n        // Price Details\n        // PRI+AAA:0.00\n        if (currentLineItem && segments[1]) {\n          const priceParts = segments[1].split(':');\n          currentLineItem.priceQualifier = priceParts[0];\n          currentLineItem.price = parseFloat(priceParts[1] || '0');\n        }\n        break;\n      \n      case 'UNT':\n        // Message Trailer\n        break;\n      \n      case 'UNZ':\n        // Interchange Trailer\n        break;\n    }\n  }\n  \n  // Add some summary info\n  result.summary = {\n    documentType: 'Return Order',\n    documentNumber: result.orderDetails.documentNumber,\n    orderDate: result.dates.find(d => d.qualifier === '137')?.date || '',\n    lineItemCount: result.lineItems.length,\n    totalQuantity: result.lineItems.reduce((sum, item) => sum + item.quantity, 0)\n  };\n  \n  return result;\n}\n\n// Return the parsed EDI data\nconst ediMessage =  $input.first().json.body;\n\nif (!ediMessage) {\n  throw new Error('No EDI message found in input. Please provide the EDI message in the \"ediMessage\" property.');\n}\n\nconst parsedData = parseEDI(ediMessage);\nreturn { json: parsedData };"
@@ -1339,8 +1339,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        3520
+        5140,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1356,8 +1356,8 @@
       "name": "Order Info + Orderlines",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        1540
+        2060,
+        100
       ],
       "parameters": {
         "mode": "combineBySql"
@@ -1370,8 +1370,8 @@
       "name": "Flatten Data to Orderlines",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        1180
+        1500,
+        100
       ],
       "parameters": {
         "jsCode": "// EDI to Flattened Tabular Data Transformer for n8n JavaScript node\nfunction transformToFlattened(parsedEDI) {\n  const flattened = [];\n  \n  // Create a header object with all order header fields\n  const headerObj = {\n    header_Document_Type: parsedEDI.orderDetails.documentType || '',\n    header_Document_Number: parsedEDI.orderDetails.documentNumber || '',\n    header_Message_Function: parsedEDI.orderDetails.messageFunction || '',\n    header_Sender_ID: parsedEDI.interchangeHeader.senderId || '',\n    header_Receiver_ID: parsedEDI.interchangeHeader.receiverId || '',\n    header_Date: parsedEDI.interchangeHeader.dateTime || '',\n    header_Time: parsedEDI.interchangeHeader.time || '',\n    header_Control_Reference: parsedEDI.interchangeHeader.controlReference || ''\n  };\n  \n  // Process all dates\n  const dateObjs = {};\n  if (parsedEDI.dates && Array.isArray(parsedEDI.dates)) {\n    parsedEDI.dates.forEach((date, index) => {\n      const prefix = `date${index + 1}_`;\n      dateObjs[`${prefix}Qualifier`] = date.qualifier || '';\n      dateObjs[`${prefix}Description`] = date.description || '';\n      dateObjs[`${prefix}Date`] = date.date || '';\n      dateObjs[`${prefix}Format`] = date.format || '';\n    });\n  }\n  \n  // Process all parties\n  const partyObjs = {};\n  if (parsedEDI.parties && Array.isArray(parsedEDI.parties)) {\n    parsedEDI.parties.forEach((party, index) => {\n      const prefix = `party${index + 1}_`;\n      partyObjs[`${prefix}Type`] = party.partyQualifier || '';\n      partyObjs[`${prefix}Description`] = party.qualifierDescription || '';\n      partyObjs[`${prefix}ID`] = party.partyId || '';\n      partyObjs[`${prefix}Name`] = party.partyName || '';\n    });\n  }\n  \n  // Create one row for each line item with all header, date, and party info\n  if (parsedEDI.lineItems && Array.isArray(parsedEDI.lineItems)) {\n    parsedEDI.lineItems.forEach((item) => {\n      const lineItem = {\n        line_Number: item.lineNumber || '',\n        line_Product_ID: item.productId || '',\n        line_Product_ID_Type: item.productIdType || '',\n        line_Description: item.description || '',\n        line_Quantity: item.quantity || 0,\n        line_Unit: item.unit || '',\n        line_Price: item.price || 0,\n        line_Price_Qualifier: item.priceQualifier || ''\n      };\n      \n      // Combine all information into one flat object\n      const flatRow = {\n        ...headerObj,\n        ...dateObjs,\n        ...partyObjs,\n        ...lineItem\n      };\n      \n      flattened.push(flatRow);\n    });\n  }\n  \n  // If there are no line items, create at least one row with header info\n  if (flattened.length === 0) {\n    flattened.push({\n      ...headerObj,\n      ...dateObjs,\n      ...partyObjs\n    });\n  }\n  \n  return flattened;\n}\n\nconst parsedEDI = $input.all()[0].json;\n\n// Make sure we have valid data\nif (!parsedEDI || !parsedEDI.orderDetails) {\n  throw new Error('Invalid EDI data format. Please ensure the input is from the EDI parser.');\n}\n\nconst flattenedData = transformToFlattened(parsedEDI);\n\n// Return the flattened data\nreturn { json: { data: flattenedData } };"
@@ -1384,8 +1384,8 @@
       "name": "Split Out by Line",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        2620
+        3740,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1399,8 +1399,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        3700
+        5420,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1417,8 +1417,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        640
+        660,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3598dc97",
@@ -1432,8 +1432,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        820
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node edfa5ef9",
@@ -1448,7 +1448,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4060
+        460
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, splitOut, merge. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note3**: stickyNote\n- **Order Information**: set\n- **Return Orders**: googleSheets\n- **Outbound Orders**: googleSheets\n- **Order Type**: if\n- **Sticky Note1**: stickyNote\n- **Sticky Note**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Email Trigger**: gmailTrigger\n- **Subject includes EDI**: if\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1462,7 +1462,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4240
+        640
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, splitOut, merge. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1476,7 +1476,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4420
+        820
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, splitOut, merge. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1490,7 +1490,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4600
+        1000
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, splitOut, merge. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1504,7 +1504,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4780
+        1180
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, splitOut, merge. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1530,8 +1530,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        4960
+        5980,
+        100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, splitOut, merge. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1543,8 +1543,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        460
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1553,7 +1553,285 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Email Trigger": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 3598dc97",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3598dc97": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for edfa5ef9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for edfa5ef9": {
+      "main": [
+        [
+          {
+            "node": "Extract Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Body": {
+      "main": [
+        [
+          {
+            "node": "Flatten Data to Orderlines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Flatten Data to Orderlines": {
+      "main": [
+        [
+          {
+            "node": "Get Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Email": {
+      "main": [
+        [
+          {
+            "node": "Order Info + Orderlines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Info + Orderlines": {
+      "main": [
+        [
+          {
+            "node": "Order Information",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Information": {
+      "main": [
+        [
+          {
+            "node": "Order Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Type": {
+      "main": [
+        [
+          {
+            "node": "Outbound Orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outbound Orders": {
+      "main": [
+        [
+          {
+            "node": "Parse EDI Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse EDI Message": {
+      "main": [
+        [
+          {
+            "node": "Return Orders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return Orders": {
+      "main": [
+        [
+          {
+            "node": "Split Out by Line",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out by Line": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Subject includes EDI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subject includes EDI": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Stickynote Workflow",
   "settings": {
     "executionOrder": "v1",

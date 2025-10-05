@@ -26,8 +26,8 @@
       "name": "Update workflow tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        16480
+        13260,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -53,8 +53,8 @@
       "name": "GET all workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        100,
-        11080
+        4860,
+        100
       ],
       "parameters": {
         "filters": {},
@@ -74,8 +74,8 @@
       "name": "List callers of subworkflows",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        11620
+        5700,
+        100
       ],
       "parameters": {
         "jsCode": "const workflows = $input.all();\nconst dependencyGraph = {};\n\n// Helper function to initialize a workflow entry\nconst getOrCreateWorkflowEntry = (id, name, tags) => {\n  if (!dependencyGraph[id]) {\n    dependencyGraph[id] = { id, name, callers: [], tags };\n  }\n  return dependencyGraph[id];\n};\n\n// Build lookup tables for workflow names and tags\nconst workflowNameMap = {};\nconst workflowTagsMap = {};\n\nworkflows.forEach(item => {\n  workflowNameMap[item.json.id] = item.json.name;\n  workflowTagsMap[item.json.id] = item.json.tags || [];\n});\n\n// Process each workflow\nworkflows.forEach(item => {\n  const { id: workflowId, name: workflowName, nodes = [], tags = [] } = item.json;\n  \n  // Ensure the workflow itself exists in the output, with its own tags\n  getOrCreateWorkflowEntry(workflowId, workflowName, tags);\n\n  // Process nodes that execute workflows\n  nodes.forEach(({ type, parameters }) => {\n    if (\n      type !== 'n8n-nodes-base.executeWorkflow' &&\n      type !== '@n8n/n8n-nodes-langchain.toolWorkflow'\n    ) return;\n\n    let subWorkflowId = parameters?.workflowId?.value || parameters?.workflowId;\n    if (subWorkflowId === \"={{ $workflow.id }}\") subWorkflowId = workflowId; // Handle self-referencing\n\n    if (subWorkflowId) {\n      const subWorkflowName = workflowNameMap[subWorkflowId] || \"Unknown Workflow\"; // Lookup name\n      const subWorkflowTags = workflowTagsMap[subWorkflowId] || []; // Lookup correct tags\n\n      const entry = getOrCreateWorkflowEntry(subWorkflowId, subWorkflowName, subWorkflowTags);\n\n      if (!entry.callers.includes(workflowId)) {\n        entry.callers.push(workflowId);\n      }\n    }\n  });\n});\n\n// Convert to an array format\nreturn Object.values(dependencyGraph);"
@@ -88,8 +88,8 @@
       "name": "Exclude uncalled workflows",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        10360
+        3740,
+        100
       ],
       "parameters": {
         "options": {},
@@ -122,8 +122,8 @@
       "name": "Exclude missing workflows",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        10180
+        3460,
+        100
       ],
       "parameters": {
         "options": {},
@@ -178,7 +178,7 @@
       "type": "n8n-nodes-base.n8nTrigger",
       "position": [
         100,
-        17020
+        8380
       ],
       "parameters": {
         "events": [
@@ -194,8 +194,8 @@
       "type": "n8n-nodes-base.n8n",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        11260
+        5140,
+        100
       ],
       "parameters": {
         "operation": "get",
@@ -220,8 +220,8 @@
       "name": "Count callers and identify new callers",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        460
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -268,8 +268,8 @@
       "name": "Loop through workflows",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        11800
+        5980,
+        100
       ],
       "parameters": {
         "options": {}
@@ -282,8 +282,8 @@
       "name": "GET all tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10720
+        4300,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -305,8 +305,8 @@
       "name": "Remove existing tags from new_callers list",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12160
+        6540,
+        100
       ],
       "parameters": {
         "options": {},
@@ -353,8 +353,8 @@
       "name": "If any new callers",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        11440
+        5420,
+        100
       ],
       "parameters": {
         "options": {},
@@ -388,8 +388,8 @@
       "name": "Split out new callers as new tags",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        13060
+        7940,
+        100
       ],
       "parameters": {
         "options": {
@@ -405,8 +405,8 @@
       "name": "Create new tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        640
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -438,8 +438,8 @@
       "name": "Return original pass through values",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        12700
+        7380,
+        100
       ],
       "parameters": {
         "jsCode": "return $('SET instance_url').all();"
@@ -452,8 +452,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        11980
+        6260,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -470,8 +470,8 @@
       "name": "GET all tags again",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10900
+        4580,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -493,8 +493,8 @@
       "name": "Create tag id:name dictionary",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        820
+        1220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -529,8 +529,8 @@
       "name": "Retrieve tag ids and names from dictionary",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12340
+        6820,
+        100
       ],
       "parameters": {
         "include": "selected",
@@ -579,8 +579,8 @@
       "name": "Return dependency graph data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12520
+        7100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -622,8 +622,8 @@
       "name": "Combine dependency graph values into labels",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        100,
-        280
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -649,8 +649,8 @@
       "name": "Visualize subworkflow dependency graph",
       "type": "n8n-nodes-base.quickChart",
       "position": [
-        100,
-        16840
+        380,
+        280
       ],
       "parameters": {
         "data": "={{ $json.callers_count }}",
@@ -675,8 +675,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13240
+        8220,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -692,8 +692,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13420
+        8500,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -709,8 +709,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14140
+        9620,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -726,8 +726,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14320
+        9900,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -743,8 +743,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14500
+        10180,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -760,8 +760,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15040
+        11020,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -777,8 +777,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14680
+        10460,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -794,8 +794,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14860
+        10740,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -811,8 +811,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15220
+        11300,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -828,8 +828,8 @@
       "name": "SET instance_url",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12880
+        7660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -854,7 +854,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        17200
+        8560
       ],
       "webhookId": "9ef127d4-bd1e-40db-999b-0881afbd2ab3",
       "parameters": {
@@ -870,8 +870,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15400
+        11580,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -887,8 +887,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13600
+        8780,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -904,8 +904,8 @@
       "name": "Format workflow relationship data for rendering",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        10540
+        4020,
+        100
       ],
       "parameters": {
         "jsCode": "// Assuming the incoming JSON data looks like this:\nconst workflows = $input.all(); // The input data passed to the Code Node\n\n// Function to build the Mermaid chart\nconst buildMermaidChart = (workflows) => {\n    let mermaidChart = 'graph TD\\n'; // Mermaid format for directed graph\n\n    // Iterate over workflows to build relationships\n    workflows.forEach(workflow => {\n        // Accessing the workflow JSON data\n        const workflowData = workflow.json;\n\n        // If the workflow has callers (i.e., workflows that call this one)\n        if (workflowData.callers && workflowData.callers.length > 0) {\n            workflowData.callers.forEach(callerId => {\n                // Add a directed edge in Mermaid format (caller --> current workflow)\n                mermaidChart += `  ${callerId} --> ${workflowData.id}\\n`;\n            });\n        }\n    });\n\n    return mermaidChart;\n};\n\n// Generate the Mermaid chart\nconst mermaidChart = buildMermaidChart(workflows);\n\n// Set the mermaid chart into the output JSON for the next node\nreturn [\n    {\n        json: {\n            mermaidChart: mermaidChart,\n        },\n    },\n];\n"
@@ -919,7 +919,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        16660
+        8200
       ],
       "parameters": {
         "options": {},
@@ -934,8 +934,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13780
+        9060,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -951,8 +951,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13960
+        9340,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -970,7 +970,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1000
+        280
       ],
       "parameters": {
         "message": "Error occurred in c3e6b9cb-4681-4778-b2f4-01c4a7d8c844",
@@ -984,8 +984,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15580
+        11860,
+        100
       ],
       "parameters": {
         "message": "Error occurred in dd5379fa-74be-44b7-9d49-9b1ae3fab425",
@@ -999,8 +999,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15760
+        12140,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 2af955b7-f50f-4422-b5a7-4b330a350f5d",
@@ -1014,8 +1014,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15940
+        12420,
+        100
       ],
       "parameters": {
         "message": "Error occurred in a1043d63-67e3-41d9-a5de-485068a9b5c7",
@@ -1029,8 +1029,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16120
+        12700,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 1ab2c9e9-fec1-4ab6-ace3-0bbe54a81058",
@@ -1044,8 +1044,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        16300
+        12980,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 3655d6bd-45a1-4c2e-856f-44104f0bd832",
@@ -1059,8 +1059,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9820
+        2900,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c3e6b9cb",
@@ -1074,8 +1074,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10000
+        3180,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dd5379fa",
@@ -1089,8 +1089,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9280
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2af955b7",
@@ -1104,8 +1104,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9640
+        2620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a1043d63",
@@ -1119,8 +1119,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9100
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1ab2c9e9",
@@ -1134,8 +1134,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9460
+        2340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3655d6bd",
@@ -1150,7 +1150,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17380
+        8740
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Update workflow tags**: httpRequest\n- **GET all workflows**: n8n\n- **List callers of subworkflows**: code\n- **Exclude uncalled workflows**: filter\n- **Exclude missing workflows**: filter\n- **And every Sunday**: scheduleTrigger\n- **When this workflow is activated**: n8nTrigger\n- **GET workflow(s)**: n8n\n- **Count callers and identify new callers**: set\n- **Loop through workflows**: splitInBatches\n- ... and 42 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1164,7 +1164,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1180
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1179,7 +1179,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1360
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1194,7 +1194,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1540
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1209,7 +1209,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1720
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1224,7 +1224,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1900
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1239,7 +1239,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2080
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1254,7 +1254,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17560
+        8920
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 59\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1268,7 +1268,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17740
+        9100
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1282,7 +1282,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2260
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1297,7 +1297,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2440
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1312,7 +1312,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2620
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1327,7 +1327,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2800
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1342,7 +1342,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2980
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1357,7 +1357,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3160
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1372,7 +1372,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3340
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1387,7 +1387,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3520
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1402,7 +1402,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3700
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1417,7 +1417,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3880
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1432,7 +1432,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4060
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1447,7 +1447,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4240
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1462,7 +1462,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17920
+        9280
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 73\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1476,7 +1476,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        18100
+        9460
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1490,7 +1490,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4420
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1505,7 +1505,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4600
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1520,7 +1520,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4780
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1535,7 +1535,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4960
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1550,7 +1550,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5140
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1565,7 +1565,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5320
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1580,7 +1580,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5500
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1595,7 +1595,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1610,7 +1610,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1625,7 +1625,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1640,7 +1640,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1655,7 +1655,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1670,7 +1670,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        18280
+        9640
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 87\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1684,7 +1684,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        18460
+        9820
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 88\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1697,7 +1697,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1711,7 +1711,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1725,7 +1725,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1739,7 +1739,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1753,7 +1753,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1767,7 +1767,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7480
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1781,7 +1781,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        18640
+        10000
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 95\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1794,7 +1794,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1808,7 +1808,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1822,7 +1822,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1836,7 +1836,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1850,7 +1850,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1864,7 +1864,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1878,7 +1878,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        18820
+        10180
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1891,7 +1891,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        8020
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1904,8 +1904,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        19000
+        380,
+        460
       ],
       "parameters": {
         "content": "# n8n Subworkflow Dependency Graph & Auto-Tagging\n\n## Overview\nAutomated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1917,8 +1917,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8920
+        1500,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1941,7 +1941,955 @@
     "retryDelay": 1000
   },
   "versionId": "f1c5dcd4-bcdb-4336-922f-656adc9c36a6",
-  "connections": {},
+  "connections": {
+    "And every Sunday": {
+      "main": [
+        [
+          {
+            "node": "Combine dependency graph values into labels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine dependency graph values into labels": {
+      "main": [
+        [
+          {
+            "node": "Count callers and identify new callers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Count callers and identify new callers": {
+      "main": [
+        [
+          {
+            "node": "Create new tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create new tags": {
+      "main": [
+        [
+          {
+            "node": "Create tag id:name dictionary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create tag id:name dictionary": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1ab2c9e9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1ab2c9e9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 2af955b7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2af955b7": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3655d6bd",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3655d6bd": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a1043d63",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a1043d63": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c3e6b9cb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c3e6b9cb": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for dd5379fa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for dd5379fa": {
+      "main": [
+        [
+          {
+            "node": "Exclude missing workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exclude missing workflows": {
+      "main": [
+        [
+          {
+            "node": "Exclude uncalled workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exclude uncalled workflows": {
+      "main": [
+        [
+          {
+            "node": "Format workflow relationship data for rendering",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format workflow relationship data for rendering": {
+      "main": [
+        [
+          {
+            "node": "GET all tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET all tags": {
+      "main": [
+        [
+          {
+            "node": "GET all tags again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET all tags again": {
+      "main": [
+        [
+          {
+            "node": "GET all workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET all workflows": {
+      "main": [
+        [
+          {
+            "node": "GET workflow(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET workflow(s)": {
+      "main": [
+        [
+          {
+            "node": "If any new callers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If any new callers": {
+      "main": [
+        [
+          {
+            "node": "List callers of subworkflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List callers of subworkflows": {
+      "main": [
+        [
+          {
+            "node": "Loop through workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop through workflows": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Remove existing tags from new_callers list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove existing tags from new_callers list": {
+      "main": [
+        [
+          {
+            "node": "Retrieve tag ids and names from dictionary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve tag ids and names from dictionary": {
+      "main": [
+        [
+          {
+            "node": "Return dependency graph data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return dependency graph data": {
+      "main": [
+        [
+          {
+            "node": "Return original pass through values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return original pass through values": {
+      "main": [
+        [
+          {
+            "node": "SET instance_url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET instance_url": {
+      "main": [
+        [
+          {
+            "node": "Split out new callers as new tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split out new callers as new tags": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note10": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note11": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note12": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "Update workflow tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update workflow tags": {
+      "main": [
+        [
+          {
+            "node": "Visualize dependency graph with MermaidJS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Visualize dependency graph with MermaidJS": {
+      "main": [
+        [
+          {
+            "node": "Visualize subworkflow dependency graph",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Visualize subworkflow dependency graph": {
+      "main": [
+        [
+          {
+            "node": "When this workflow is activated",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When this workflow is activated": {
+      "main": [
+        [
+          {
+            "node": "When viewed in a browser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When viewed in a browser": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow integrates 17 different services: webhook, filter, httpRequest, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: n8n Subworkflow Dependency Graph & Auto-Tagging. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

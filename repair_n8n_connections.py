@@ -30,6 +30,14 @@ from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
+import sys
+
+# Ensure UTF-8 output on Windows consoles
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
 
 def ensure_array_of_arrays(connections_list: Any) -> List[List[Dict[str, Any]]]:

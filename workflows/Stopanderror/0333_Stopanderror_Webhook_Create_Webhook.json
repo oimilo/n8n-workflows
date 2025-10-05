@@ -18,7 +18,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
         100,
-        6760
+        3160
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "Whether type is file",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        7480
+        1220,
+        280
       ],
       "parameters": {
         "conditions": {
@@ -50,8 +50,8 @@
       "name": "Set new path for subfolder",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4240
+        2340,
+        100
       ],
       "parameters": {
         "fields": {
@@ -77,8 +77,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        2900,
+        100
       ],
       "parameters": {
         "width": 1861.9238476953906,
@@ -93,8 +93,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        3180,
+        100
       ],
       "parameters": {
         "width": 695.2464929859717,
@@ -109,8 +109,8 @@
       "name": "Set new path for file",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4060
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "for (const item of $input.all()) {\n  const toPath = $('Set folder-paths for from and to').item.json.to;\n  const fromPath = $('Set folder-paths for from and to').item.json.from;\n\n   // Remove leading and trailing slashes\n  path = fromPath.replace(/^\\/|\\/$/g, '');\n  // Split the path into an array of folders\n  const folders = path.split('/');\n  // Remove empty strings (resulting from leading, trailing, or consecutive slashes)\n  const nonEmptyFoldersCount = folders.filter(folder => folder !== '').length;\n\n  newFilePathArray = item.json.path.replace(/^\\/|\\/$/g, '').split('/');\n  \n  item.json.newPath = toPath.replace(/^\\/|\\/$/g, '') + '/' + newFilePathArray.slice(nonEmptyFoldersCount).join(\"/\")\n}\n\nreturn $input.all();"
@@ -123,8 +123,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4960
+        3460,
+        100
       ],
       "parameters": {
         "width": 695.2464929859717,
@@ -139,8 +139,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5140
+        3740,
+        100
       ],
       "parameters": {
         "width": 695.2464929859717,
@@ -155,8 +155,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5320
+        4020,
+        100
       ],
       "parameters": {
         "width": 871.7450543093198,
@@ -171,8 +171,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5500
+        4300,
+        100
       ],
       "parameters": {
         "width": 723.2756594453772,
@@ -189,7 +189,7 @@
       "disabled": true,
       "position": [
         100,
-        6580
+        2980
       ],
       "webhookId": "285b2cba-587b-4131-82a8-cdd35a8d49e1",
       "parameters": {
@@ -207,8 +207,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5680
+        4580,
+        100
       ],
       "parameters": {
         "width": 723.2756594453772,
@@ -223,8 +223,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5860
+        4860,
+        100
       ],
       "parameters": {
         "width": 723.2756594453772,
@@ -252,8 +252,8 @@
       "name": "Set folder-paths for from and to",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        3880
+        1780,
+        100
       ],
       "parameters": {
         "fields": {
@@ -300,8 +300,8 @@
       "name": "Get all folders/files in from-folder",
       "type": "n8n-nodes-base.nextCloud",
       "position": [
-        100,
-        3160
+        660,
+        100
       ],
       "parameters": {
         "path": "={{ $('Set folder-paths for from and to').item.json.from }}",
@@ -322,8 +322,8 @@
       "name": "Loop over files and folders",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        3520
+        1220,
+        100
       ],
       "parameters": {
         "options": {}
@@ -370,8 +370,8 @@
       "name": "Get all folders/files in found subfolder",
       "type": "n8n-nodes-base.nextCloud",
       "position": [
-        100,
-        2980
+        380,
+        100
       ],
       "parameters": {
         "path": "={{$('Set new path for subfolder').item.json.from }}",
@@ -392,8 +392,8 @@
       "name": "Whether there is are more files or subfolders found",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        7300
+        940,
+        280
       ],
       "parameters": {
         "conditions": {
@@ -427,8 +427,8 @@
       "name": "Loop Over all files",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        3340
+        940,
+        100
       ],
       "parameters": {
         "options": {}
@@ -441,8 +441,8 @@
       "name": "Move file to destination",
       "type": "n8n-nodes-base.nextCloud",
       "position": [
-        100,
-        3700
+        1500,
+        100
       ],
       "parameters": {
         "path": "={{ decodeURIComponent($json.path) }}",
@@ -486,8 +486,8 @@
       "name": "Set paths",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4420
+        2620,
+        100
       ],
       "parameters": {
         "fields": {
@@ -512,8 +512,8 @@
       "name": "Whether the request is valid",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        6940
+        380,
+        280
       ],
       "parameters": {
         "conditions": {
@@ -533,8 +533,8 @@
       "name": "Stop and Error: request not valid",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        100,
-        6220
+        5420,
+        100
       ],
       "parameters": {
         "errorMessage": "The Request is not valid!"
@@ -547,8 +547,8 @@
       "name": "Whether the request is valid1",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        7120
+        660,
+        280
       ],
       "parameters": {
         "conditions": {
@@ -568,8 +568,8 @@
       "name": "Stop and Error: request not valid1",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        100,
-        6400
+        5700,
+        100
       ],
       "parameters": {
         "errorMessage": "The Request is not valid!"
@@ -582,8 +582,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6040
+        5140,
+        100
       ],
       "parameters": {
         "width": 770.5015081009478,
@@ -615,7 +615,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        3340
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking \"Execute Workflow\"**: manualTrigger\n- **Whether type is file**: if\n- **Set new path for subfolder**: set\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Set new path for file**: code\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Sticky Note4**: stickyNote\n- **Sticky Note5**: stickyNote\n- ... and 23 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -644,7 +644,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        3520
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -658,7 +658,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        3700
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -702,7 +702,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        3880
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -716,7 +716,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        4060
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -760,7 +760,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        4240
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -774,7 +774,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        4420
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -801,7 +801,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        4600
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -828,7 +828,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        4780
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9280
+        1500,
+        280
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -876,7 +876,505 @@
       }
     }
   ],
-  "connections": {},
+  "connections": {
+    "Consolidate all files and folders found": {
+      "main": [
+        [
+          {
+            "node": "Consolidate all found files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consolidate all found files": {
+      "main": [
+        [
+          {
+            "node": "Create subfolder in to-folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create subfolder in to-folder": {
+      "main": [
+        [
+          {
+            "node": "Create to folder if necessary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create to folder if necessary": {
+      "main": [
+        [
+          {
+            "node": "Delete from-folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete from-folder": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for c1e7754f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c1e7754f": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get all folders/files in found subfolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all folders/files in found subfolder": {
+      "main": [
+        [
+          {
+            "node": "Get all folders/files in from-folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all folders/files in from-folder": {
+      "main": [
+        [
+          {
+            "node": "Loop Over all files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over all files": {
+      "main": [
+        [
+          {
+            "node": "Loop over files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over files and folders": {
+      "main": [
+        [
+          {
+            "node": "Move file to destination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move file to destination": {
+      "main": [
+        [
+          {
+            "node": "Set folder-paths for from and to",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set folder-paths for from and to": {
+      "main": [
+        [
+          {
+            "node": "Set new path for file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set new path for file": {
+      "main": [
+        [
+          {
+            "node": "Set new path for subfolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set new path for subfolder": {
+      "main": [
+        [
+          {
+            "node": "Set paths",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set paths": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error: request not valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop and Error: request not valid": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error: request not valid1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop and Error: request not valid1": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "When clicking \"Execute Workflow\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Whether the request is valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whether the request is valid": {
+      "main": [
+        [
+          {
+            "node": "Whether the request is valid1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whether the request is valid1": {
+      "main": [
+        [
+          {
+            "node": "Whether there is are more files or subfolders found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whether there is are more files or subfolders found": {
+      "main": [
+        [
+          {
+            "node": "Whether type is file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whether type is file": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Manualtrigger Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -27,7 +27,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
         100,
-        5860
+        2620
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -56,8 +56,8 @@
       "name": "Search Properties API",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        4420
+        3180,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -96,8 +96,8 @@
       "name": "Filter Property Results",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        3700
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "// Process batch property results and filter according to criteria\nconst results = $input.all()[0].json.results || [];\n\n// Filter to find matching properties\nconst filteredProperties = results.filter(property => {\n  // Example filtering criteria - customize as needed\n  // Only include properties where:\n  // 1. Owner doesn't live at the property (absentee)\n  // 2. Property has been owned for 5+ years\n  // 3. No sales in the last 3 years\n  \n  const isAbsentee = property.owner_occupied === false;\n  \n  // Calculate years of ownership if purchase date exists\n  let yearsOwned = 0;\n  if (property.last_sale_date) {\n    const purchaseDate = new Date(property.last_sale_date);\n    const currentDate = new Date();\n    yearsOwned = currentDate.getFullYear() - purchaseDate.getFullYear();\n  }\n  \n  // Check if no recent sales (last 3 years)\n  let noRecentSales = true;\n  if (property.last_sale_date) {\n    const lastSale = new Date(property.last_sale_date);\n    const threeYearsAgo = new Date();\n    threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);\n    noRecentSales = lastSale < threeYearsAgo;\n  }\n  \n  return isAbsentee && yearsOwned >= 5 && noRecentSales;\n});\n\n// Add relevant score to each property\nconst scoredProperties = filteredProperties.map(property => {\n  // Create a simple scoring system from 0-100\n  // This helps prioritize the best leads\n  let score = 50; // Base score\n  \n  // Increase score for properties with more equity\n  if (property.equity_percentage) {\n    score += Math.min(property.equity_percentage / 2, 25);\n  }\n  \n  // Increase score for longer ownership\n  if (property.last_sale_date) {\n    const purchaseDate = new Date(property.last_sale_date);\n    const currentDate = new Date();\n    const yearsOwned = currentDate.getFullYear() - purchaseDate.getFullYear();\n    score += Math.min(yearsOwned, 15);\n  }\n  \n  // Increase score for tax delinquency\n  if (property.tax_delinquent) {\n    score += 10;\n  }\n  \n  return { ...property, lead_score: Math.round(score) };\n});\n\n// Sort by score descending\nscoredProperties.sort((a, b) => b.lead_score - a.lead_score);\n\n// Return the filtered and scored properties\nreturn scoredProperties.map(property => {\n  return {\n    json: property\n  };\n});"
@@ -110,8 +110,8 @@
       "name": "Get Owner Contact Info",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        4060
+        2620,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -128,8 +128,8 @@
       "name": "Format Lead Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        3880
+        2340,
+        100
       ],
       "parameters": {
         "jsCode": "// Process and format the property data with owner contact info\nreturn $input.all().map(item => {\n  const property = item.json;\n  const skipTraceData = property.skip_trace_data || {};\n  const ownerInfo = property.owner_info || {};\n  \n  return {\n    json: {\n      // Property Information\n      property_id: property.property_id,\n      address: property.address,\n      city: property.city,\n      state: property.state,\n      zip: property.zip,\n      property_type: property.property_type,\n      beds: property.beds,\n      baths: property.baths,\n      sqft: property.building_sqft,\n      lot_size: property.lot_size,\n      year_built: property.year_built,\n      last_sale_date: property.last_sale_date,\n      last_sale_price: property.last_sale_price,\n      estimated_value: property.estimated_value,\n      estimated_equity: property.estimated_equity,\n      equity_percentage: property.equity_percentage,\n      lead_score: property.lead_score,\n      \n      // Owner Information\n      owner_name: ownerInfo.full_name || `${ownerInfo.first_name || ''} ${ownerInfo.last_name || ''}`.trim(),\n      owner_mailing_address: ownerInfo.mailing_address,\n      owner_mailing_city: ownerInfo.mailing_city,\n      owner_mailing_state: ownerInfo.mailing_state,\n      owner_mailing_zip: ownerInfo.mailing_zip,\n      \n      // Contact Info from Skip Trace\n      email: skipTraceData.email,\n      phone: skipTraceData.phone_number,\n      mobile: skipTraceData.mobile_number,\n      alternate_phone: skipTraceData.alternate_phone,\n      \n      // Additional Details\n      absentee_owner: property.owner_occupied === false ? 'Yes' : 'No',\n      tax_delinquent: property.tax_delinquent ? 'Yes' : 'No',\n      years_owned: property.years_owned,\n      lead_source: 'BatchData Property Search',\n      date_added: new Date().toISOString().split('T')[0]\n    }\n  };\n});"
@@ -161,8 +161,8 @@
       "name": "Push to CRM",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        100,
-        4240
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -176,8 +176,8 @@
       "name": "Email Notification",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        100,
-        640
+        380,
+        100
       ],
       "webhookId": "e9459278-1cd9-47bb-bffd-88380d297217",
       "parameters": {
@@ -194,8 +194,8 @@
       "name": "Summarize Results",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5680
+        5140,
+        100
       ],
       "parameters": {
         "jsCode": "// Summarize the results of the property lead search\nconst leads = $input.all();\nconst totalLeads = leads.length;\n\n// Calculate the highest lead score\nlet highestScore = 0;\nif (totalLeads > 0) {\n  highestScore = Math.max(...leads.map(item => item.json.lead_score || 0));\n}\n\n// Return a summary object\nreturn {\n  json: {\n    total_leads: totalLeads,\n    highest_score: highestScore,\n    execution_date: new Date().toISOString(),\n    success: true\n  }\n};"
@@ -208,8 +208,8 @@
       "name": "Sticky Note - Workflow Overview",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5320
+        4580,
+        100
       ],
       "parameters": {
         "width": 800,
@@ -224,8 +224,8 @@
       "name": "Sticky Note - Triggers",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5140
+        4300,
+        100
       ],
       "parameters": {
         "color": 2,
@@ -241,8 +241,8 @@
       "name": "Sticky Note - Property Search",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4960
+        4020,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -258,8 +258,8 @@
       "name": "Sticky Note - Data Processing",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        3460,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -275,8 +275,8 @@
       "name": "Sticky Note - Output",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        3740,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -294,7 +294,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        820
+        640
       ],
       "parameters": {
         "message": "Error occurred in 3228372f-ac40-4898-8bf5-09a4f37fde85",
@@ -308,8 +308,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        5500
+        4860,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 2c183cc1-06a1-4528-82c3-df2585df58eb",
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3340
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3228372f",
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3160
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2c183cc1",
@@ -353,8 +353,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        2980
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 013469c2",
@@ -368,8 +368,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3520
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 61bfd72b",
@@ -384,7 +384,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        2800
       ],
       "parameters": {
         "content": "# Property Lead Contact Enrichment from CRM\n\n## Overview\nAutomated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking \"Execute Workflow\"**: manualTrigger\n- **Daily Schedule**: scheduleTrigger\n- **Search Properties API**: httpRequest\n- **Configure Search Parameters**: set\n- **Filter Property Results**: code\n- **Get Owner Contact Info**: httpRequest\n- **Format Lead Data**: code\n- **Create Excel Spreadsheet**: spreadsheetFile\n- **Push to CRM**: hubspot\n- **Email Notification**: emailSend\n- ... and 12 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -398,7 +398,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1000
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -413,7 +413,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1180
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -428,7 +428,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1360
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -443,7 +443,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        2980
       ],
       "parameters": {
         "content": "# Property Lead Contact Enrichment from CRM\n\n## Overview\nAutomated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -457,7 +457,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1540
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -472,7 +472,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1720
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -487,7 +487,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1900
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -502,7 +502,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        3160
       ],
       "parameters": {
         "content": "# Property Lead Contact Enrichment from CRM\n\n## Overview\nAutomated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -516,7 +516,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2080
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -531,7 +531,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2260
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -546,7 +546,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2440
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -561,7 +561,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        3340
       ],
       "parameters": {
         "content": "# Property Lead Contact Enrichment from CRM\n\n## Overview\nAutomated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -575,7 +575,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        3520
       ],
       "parameters": {
         "content": "# Property Lead Contact Enrichment from CRM\n\n## Overview\nAutomated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -588,7 +588,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2620
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        6940
+        380,
+        280
       ],
       "parameters": {
         "content": "# Property Lead Contact Enrichment from CRM\n\n## Overview\nAutomated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        2800
+        660,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -638,7 +638,366 @@
     "retryDelay": 1000
   },
   "versionId": "ff401fba-f56d-4d22-b259-d23a4e141a98",
-  "connections": {},
+  "connections": {
+    "Configure Search Parameters": {
+      "main": [
+        [
+          {
+            "node": "Create Excel Spreadsheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Excel Spreadsheet": {
+      "main": [
+        [
+          {
+            "node": "Daily Schedule",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "Email Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Notification": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 013469c2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 013469c2": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 2c183cc1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2c183cc1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3228372f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3228372f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 61bfd72b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 61bfd72b": {
+      "main": [
+        [
+          {
+            "node": "Filter Property Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Property Results": {
+      "main": [
+        [
+          {
+            "node": "Format Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Get Owner Contact Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Owner Contact Info": {
+      "main": [
+        [
+          {
+            "node": "Push to CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Push to CRM": {
+      "main": [
+        [
+          {
+            "node": "Search Properties API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Properties API": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note - Data Processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note - Data Processing": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note - Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note - Output": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note - Property Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note - Property Search": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note - Triggers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note - Triggers": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note - Workflow Overview",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note - Workflow Overview": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Summarize Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Results": {
+      "main": [
+        [
+          {
+            "node": "When clicking \"Execute Workflow\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Property Lead Contact Enrichment from CRM. This workflow integrates 10 different services: stickyNote, httpRequest, spreadsheetFile, code, scheduleTrigger. It contains 22 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Property Lead Contact Enrichment from CRM. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

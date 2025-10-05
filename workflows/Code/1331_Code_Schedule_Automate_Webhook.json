@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        2980
+        2060,
+        100
       ],
       "parameters": {
         "model": {
@@ -51,8 +51,8 @@
       "name": "Airtable2",
       "type": "n8n-nodes-base.airtableTool",
       "position": [
-        100,
-        280
+        380,
+        100
       ],
       "parameters": {
         "id": "=",
@@ -86,8 +86,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3160
+        2340,
+        100
       ],
       "parameters": {
         "model": {
@@ -132,8 +132,8 @@
       "name": "Pull List of Pinterest Pins From Account",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        3700
+        3180,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -166,8 +166,8 @@
       "name": "Update Data Field To Include Organic",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4600
+        4580,
+        100
       ],
       "parameters": {
         "jsCode": "// Initialize an array to hold the output formatted for Airtable\nconst outputItems = [];\n\nfor (const item of $input.all()) {\n if (item.json.items && Array.isArray(item.json.items)) {\n for (const subItem of item.json.items) {\n // Construct an object with only the required fields for Airtable\n outputItems.push({\n id: subItem.id || null,\n created_at: subItem.created_at || null,\n title: subItem.title || null,\n description: subItem.description || null,\n link: subItem.link || null,\n type: \"Organic\" // Assign the value \"Organic\" to the 'Type' field\n });\n }\n }\n}\n\n// Return the structured output\nreturn outputItems;\n"
@@ -180,8 +180,8 @@
       "name": "Create Record Within Pinterest Data Table",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        460
+        660,
+        100
       ],
       "parameters": {
         "base": {
@@ -342,8 +342,8 @@
       "name": "Pinterest Analysis AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3340
+        2620,
+        100
       ],
       "parameters": {
         "text": "You are a data analysis expert. You will pull data from the table and provide any information in regards to trends in the data. \n\nYour output should be suggestions of new pins that we can post to reach the target audiences. \n\nAnalyze the data and just summary of the pin suggestions that the team should build. ",
@@ -358,8 +358,8 @@
       "name": "Pinterest Data Analysis Summary LLM",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3520
+        2900,
+        100
       ],
       "parameters": {
         "options": {
@@ -378,8 +378,8 @@
       "name": "Send Marketing Trends & Pinterest Analysis To Marketing Manager",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        3880
+        3460,
+        100
       ],
       "webhookId": "f149c1b5-c028-4dff-9d22-a72951f2ef91",
       "parameters": {
@@ -403,8 +403,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4060
+        3740,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -420,8 +420,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4240
+        4020,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -437,8 +437,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4420
+        4300,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -456,7 +456,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        640
+        280
       ],
       "parameters": {
         "message": "Error occurred in 593a320d-825e-42f9-8ab6-adafd5288fa5",
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        2620
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7f582bb4",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        2800
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 85ea8bec",
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        2440
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 593a320d",
@@ -516,7 +516,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4780
+        1900
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Airtable2**: airtableTool\n- **OpenAI Chat Model1**: lmChatOpenAi\n- **8:00am Morning Scheduled Trigger**: scheduleTrigger\n- **Pull List of Pinterest Pins From Account**: httpRequest\n- **Update Data Field To Include Organic**: code\n- **Create Record Within Pinterest Data Table**: airtable\n- **Pinterest Analysis AI Agent**: agent\n- **Pinterest Data Analysis Summary LLM**: chainSummarization\n- **Send Marketing Trends & Pinterest Analysis To Marketing Manager**: gmail\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -530,7 +530,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        820
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -545,7 +545,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4960
+        2080
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -559,7 +559,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5140
+        2260
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -573,7 +573,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1000
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -588,7 +588,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1180
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -603,7 +603,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5320
+        2440
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -617,7 +617,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5500
+        2620
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -631,7 +631,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1360
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -646,7 +646,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1540
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -661,7 +661,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        2800
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -675,7 +675,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        2980
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -688,7 +688,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1720
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -702,7 +702,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        3160
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -715,7 +715,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1900
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -729,7 +729,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        3340
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -742,7 +742,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2080
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -755,8 +755,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        6400
+        4860,
+        100
       ],
       "parameters": {
         "content": "# Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API\n\n## Overview\nAutomated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -768,8 +768,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        2260
+        940,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -792,7 +792,325 @@
     "retryDelay": 1000
   },
   "versionId": "d6f64ee7-ae49-4a6b-8bf8-9a709c580357",
-  "connections": {},
+  "connections": {
+    "8:00am Morning Scheduled Trigger": {
+      "main": [
+        [
+          {
+            "node": "Airtable2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable2": {
+      "main": [
+        [
+          {
+            "node": "Create Record Within Pinterest Data Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Record Within Pinterest Data Table": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 593a320d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 593a320d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7f582bb4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7f582bb4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 85ea8bec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 85ea8bec": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "Pinterest Analysis AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinterest Analysis AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Pinterest Data Analysis Summary LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinterest Data Analysis Summary LLM": {
+      "main": [
+        [
+          {
+            "node": "Pull List of Pinterest Pins From Account",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull List of Pinterest Pins From Account": {
+      "main": [
+        [
+          {
+            "node": "Send Marketing Trends & Pinterest Analysis To Marketing Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Marketing Trends & Pinterest Analysis To Marketing Manager": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Update Data Field To Include Organic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Data Field To Include Organic": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow integrates 11 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 17 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Automate Pinterest Analysis & AI-Powered Content Suggestions With Pinterest API. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

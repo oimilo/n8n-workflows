@@ -50,8 +50,8 @@
       "name": "cleanedTranscript",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        2800
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -74,8 +74,8 @@
       "name": "processTranscript",
       "type": "n8n-nodes-base.function",
       "position": [
-        100,
-        3160
+        940,
+        100
       ],
       "parameters": {
         "functionCode": "// Extract and process the transcript\nconst data = $input.first().json;\n\nif (!data.transcript && !data.text) {\n  return {\n    json: {\n      success: false,\n      message: 'No transcript available for this video',\n      videoUrl: $input.first().json.body?.videoUrl || 'Unknown'\n    }\n  };\n}\n\n// Process the transcript text\nlet transcriptText = '';\n\n// Handle different API response formats\nif (data.transcript) {\n  // Format for array of transcript segments\n  if (Array.isArray(data.transcript)) {\n    data.transcript.forEach(segment => {\n      if (segment.text) {\n        transcriptText += segment.text + ' ';\n      }\n    });\n  } else if (typeof data.transcript === 'string') {\n    transcriptText = data.transcript;\n  }\n} else if (data.text) {\n  // Format for single transcript object with text property\n  transcriptText = data.text;\n}\n\n// Clean up the transcript (remove extra spaces, normalize punctuation)\nconst cleanedTranscript = transcriptText\n  .replace(/\\s+/g, ' ')\n  .replace(/\\s([.,!?])/g, '$1')\n  .trim();\n\nreturn {\n  json: {\n    success: true,\n    videoUrl: $input.first().json.body?.videoUrl || 'From transcript',\n    rawTranscript: data.text || data.transcript,\n    cleanedTranscript,\n    duration: data.duration,\n    offset: data.offset,\n    language: data.lang\n  }\n};"
@@ -88,8 +88,8 @@
       "name": "extractTranscript",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        2980
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -348,7 +348,159 @@
     "retryDelay": 1000
   },
   "versionId": "084b006b-36f9-46a7-8a0b-7656126b29cd",
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for cebf0fd7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cebf0fd7": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation 1": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation 2": {
+      "main": [
+        [
+          {
+            "node": "YoutubeVideoURL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YoutubeVideoURL": {
+      "main": [
+        [
+          {
+            "node": "cleanedTranscript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cleanedTranscript": {
+      "main": [
+        [
+          {
+            "node": "extractTranscript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extractTranscript": {
+      "main": [
+        [
+          {
+            "node": "processTranscript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Youtube Video Transcript Extraction. This workflow processes data and performs automated tasks.",
   "notes": "Excellent quality workflow: Youtube Video Transcript Extraction. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

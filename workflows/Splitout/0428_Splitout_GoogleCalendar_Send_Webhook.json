@@ -17,8 +17,8 @@
       "name": "Get recetn tweets",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5320
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -73,8 +73,8 @@
       "name": "Setup",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6040
+        3180,
+        100
       ],
       "parameters": {
         "fields": {
@@ -120,8 +120,8 @@
       "name": "Get meetings for today",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        100,
-        4960
+        1500,
+        100
       ],
       "parameters": {
         "options": {
@@ -145,8 +145,8 @@
       "name": "Get attendees email domains",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4780
+        1220,
+        100
       ],
       "parameters": {
         "fields": {
@@ -173,8 +173,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        6220
+        3460,
+        100
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -190,8 +190,8 @@
       "name": "Get recent LinkedIn posts",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5140
+        1780,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -250,8 +250,8 @@
       "name": "Gmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        5500
+        2340,
+        100
       ],
       "parameters": {
         "sendTo": "={{ $('Setup').first().json.emails }}",
@@ -273,8 +273,8 @@
       "name": "Format LinkedIn Posts",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4420
+        660,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -288,8 +288,8 @@
       "name": "Format Tweets",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4600
+        940,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -333,8 +333,8 @@
       "name": "Extract data for email",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4240
+        380,
+        100
       ],
       "parameters": {
         "fields": {
@@ -367,8 +367,8 @@
       "name": "Prepare email template",
       "type": "n8n-nodes-base.html",
       "position": [
-        100,
-        5860
+        2900,
+        100
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>Social media activity for company: {{ $json.name }}</title>\n</head>\n<body>\n  <div class=\"container\">\n     <h2 style=\"font-size: 1.2em\">\n      🗓️ Meeting with \n       <span>{{ $json.attendeeEmail }}</span> \n       at {{ $json.startHour }}:{{ $json.startMinute < 10 ? `0${$json.startMinute}` : $json.startMinute }}h\n    </h2>\n    {{ $json.html_linkedin ?? ''}}\n    {{ $json.html_twitter  ?? ''}}\n  </div>\n</body>\n</html>\n\n<style>\n.container {\n  font-family: sans-serif;\n}\n</style>"
@@ -381,8 +381,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        7120
+        4860,
+        100
       ],
       "parameters": {
         "rules": {
@@ -449,8 +449,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6400
+        3740,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -466,8 +466,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6580
+        4020,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -483,8 +483,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6760
+        4300,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -500,8 +500,8 @@
       "name": "Keep only ones with the domain",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        5680
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -550,8 +550,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        6940
+        4580,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 467308c9-c6a0-4d1c-a6e1-4598075e62a6",
@@ -611,7 +611,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        4240
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get recetn tweets**: httpRequest\n- **Setup**: set\n- **Every morning @ 7**: scheduleTrigger\n- **Get meetings for today**: googleCalendar\n- **Get attendees email domains**: set\n- **Split Out**: splitOut\n- **Get recent LinkedIn posts**: httpRequest\n- **Enrich attendee company**: clearbit\n- **Gmail**: gmail\n- **Format LinkedIn Posts**: code\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -655,7 +655,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7480
+        4420
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -669,7 +669,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        4600
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -743,7 +743,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        4780
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -757,7 +757,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        4960
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -831,7 +831,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        5140
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -845,7 +845,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        5320
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -886,7 +886,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        5500
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -927,7 +927,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        5680
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -953,8 +953,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        8920
+        5140,
+        100
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -976,7 +976,451 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Combine all activity for a company": {
+      "main": [
+        [
+          {
+            "node": "Enrich attendee company",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich attendee company": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 467308c9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 467308c9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for aff4dd6e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for aff4dd6e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f59411f9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f59411f9": {
+      "main": [
+        [
+          {
+            "node": "Every morning @ 7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every morning @ 7": {
+      "main": [
+        [
+          {
+            "node": "Extract data for email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract data for email": {
+      "main": [
+        [
+          {
+            "node": "Format LinkedIn Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format LinkedIn Posts": {
+      "main": [
+        [
+          {
+            "node": "Format Tweets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Tweets": {
+      "main": [
+        [
+          {
+            "node": "Get attendees email domains",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get attendees email domains": {
+      "main": [
+        [
+          {
+            "node": "Get meetings for today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get meetings for today": {
+      "main": [
+        [
+          {
+            "node": "Get recent LinkedIn posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get recent LinkedIn posts": {
+      "main": [
+        [
+          {
+            "node": "Get recetn tweets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get recetn tweets": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Keep only ones with the domain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep only ones with the domain": {
+      "main": [
+        [
+          {
+            "node": "Prepare email template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare email template": {
+      "main": [
+        [
+          {
+            "node": "Setup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Setup": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Httprequest Workflow",
   "settings": {
     "executionOrder": "v1",

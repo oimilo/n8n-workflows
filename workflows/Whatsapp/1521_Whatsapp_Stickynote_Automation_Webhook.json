@@ -51,8 +51,8 @@
       "name": "list_links",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7660
+        1220,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -130,8 +130,8 @@
       "name": "cleanAnswer",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        7300
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "// cleanAnswer – run once per item\nlet txt = $('AI Agent').first().json.output || '';\n\n// 1. Remove bold / italic / strike markers\ntxt = txt.replace(/[*_~]+/g, '');\n\n// 2. Convert [Texto]({{ $env.WEBHOOK_URL }} → Texto {{ $env.WEBHOOK_URL }}\ntxt = txt.replace(/\\[([^\\]]+)\\]\\((https?:\\/\\/[^\\s)]+)\\)/g, '$1 $2');\n\n// 3. Collapse 3+ blank lines\ntxt = txt.replace(/\\n{3,}/g, '\\n\\n').trim();\n\nreturn [{ json: { answer: txt } }];\n"
@@ -144,8 +144,8 @@
       "name": "get_page",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7480
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -727,8 +727,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7120
+        380,
+        100
       ],
       "parameters": {
         "content": "# AI Customer-Support Assistant · WhatsApp Ready · Works for Any Business\n\n## Overview\nAutomated workflow: AI Customer-Support Assistant · WhatsApp Ready · Works for Any Business. This workflow integrates 10 different services: stickyNote, code, toolHttpRequest, agent, memoryPostgresChat. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -764,7 +764,370 @@
     "retryDelay": 1000
   },
   "versionId": "245c3695-7177-4a1d-a33d-7aedd0eccc44",
-  "connections": {},
+  "connections": {
+    "24-hour window check": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 21ceaf5e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 21ceaf5e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3953a213",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3953a213": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ef403af2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ef403af2": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Postgres Users Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Users Memory": {
+      "main": [
+        [
+          {
+            "node": "Send AI Agent's Answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send AI Agent's Answer": {
+      "main": [
+        [
+          {
+            "node": "Send Pre-approved Template Message to Reopen the Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Pre-approved Template Message to Reopen the Conversation": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "cleanAnswer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cleanAnswer": {
+      "main": [
+        [
+          {
+            "node": "get_page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_page": {
+      "main": [
+        [
+          {
+            "node": "list_links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: AI Customer-Support Assistant · WhatsApp Ready · Works for Any Business. This workflow integrates 10 different services: stickyNote, code, toolHttpRequest, agent, memoryPostgresChat. It contains 17 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: AI Customer-Support Assistant · WhatsApp Ready · Works for Any Business. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

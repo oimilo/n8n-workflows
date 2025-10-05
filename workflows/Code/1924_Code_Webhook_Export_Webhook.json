@@ -75,8 +75,8 @@
       "name": "Set Date Folder ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        9640
+        2340,
+        100
       ],
       "parameters": {
         "jsCode": "// Log ข้อมูล input ทั้งหมด\n//console.log(\"Set Target Parent (Date) - Input:\", items);\n\nlet targetParentId = '';\n\nif (items.length > 0) {\n\t// ตรวจสอบจาก branch แรก (True Branch จาก IF node)\n\tif (items[0].json && items[0].json.id) {\n\t\ttargetParentId = items[0].json.id;\n\t} else if (items.length > 1 && items[1].json && items[1].json.id) {\n\t\t// ถ้าไม่พบจาก branch แรก ให้ลองดูจาก branch ที่สอง (False Branch หรือผลจากการสร้าง folder ใหม่)\n\t\ttargetParentId = items[1].json.id;\n\t}\n\t\n\t// เพิ่ม targetParentId ลงใน items[0].json\n\titems[0].json.targetParentId = targetParentId;\n\tconsole.log(\"Set Target Parent (Date) - Output:\", items);\n\treturn items;\n} else {\n\tconsole.log(\"Set Target Parent (Date) - No input items.\");\n\treturn [];\n}\n"
@@ -123,8 +123,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        11080
+        4580,
+        100
       ],
       "parameters": {
         "name": "={{ $('Merge Event and Config Data').item.json.body.events[0].timestamp }}.{{$node[\"Get File Binary Content\"].binary.data.fileExtension}}",
@@ -169,8 +169,8 @@
       "name": "Search Date Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        100,
-        9100
+        1500,
+        100
       ],
       "parameters": {
         "filter": {
@@ -199,8 +199,8 @@
       "name": "Merge Event and Config Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        8560
+        660,
+        100
       ],
       "parameters": {
         "mode": "mergeByIndex"
@@ -255,8 +255,8 @@
       "name": "Merge Final Parent Folder Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        8740
+        940,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -267,8 +267,8 @@
       "name": "Search File Type Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        100,
-        9280
+        1780,
+        100
       ],
       "parameters": {
         "filter": {
@@ -297,8 +297,8 @@
       "name": "Set File Type Folder ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        9820
+        2620,
+        100
       ],
       "parameters": {
         "jsCode": "// Log ข้อมูล input ทั้งหมด\n//console.log(\"Set Target Parent (Date) - Input:\", items);\n\nlet targetParentId = '';\n\nif (items.length > 0) {\n\t// ตรวจสอบจาก branch แรก (True Branch จาก IF node)\n\tif (items[0].json && items[0].json.id) {\n\t\ttargetParentId = items[0].json.id;\n\t} else if (items.length > 1 && items[1].json && items[1].json.id) {\n\t\t// ถ้าไม่พบจาก branch แรก ให้ลองดูจาก branch ที่สอง (False Branch หรือผลจากการสร้าง folder ใหม่)\n\t\ttargetParentId = items[1].json.id;\n\t}\n\t\n\t// เพิ่ม targetParentId ลงใน items[0].json\n\titems[0].json.targetParentId = targetParentId;\n\tconsole.log(\"Set Target Parent (Date) - Output:\", items);\n\treturn items;\n} else {\n\tconsole.log(\"Set Target Parent (Date) - No input items.\");\n\treturn [];\n}\n"
@@ -325,8 +325,8 @@
       "name": "Process Event and Config Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        8920
+        1220,
+        100
       ],
       "parameters": {
         "jsCode": "// ตรวจสอบว่า items มีอย่างน้อย 2 รายการหรือไม่\nconst eventData = items[0].json;\nlet config;\n\nif (items.length >= 2) {\n\t// ถ้ามี items[1] ให้ใช้เป็น config\n\tconst configData = items[1].json;\n\tconfig = Array.isArray(configData) ? configData[0] : configData;\n} else {\n\t// ถ้าไม่มี items[1] ให้ลองดึง config จาก eventData\n\t// สมมุติว่าฟิลด์ config ถูกส่งมาพร้อมกับ eventData ด้วยชื่อฟิลด์เหมือนที่ได้ใน output\n\tif (eventData[\"Parent Folder Path\"] && eventData[\"Parent Folder ID\"]) {\n\t\tconfig = {\n\t\t\t\"Parent Folder Path\": eventData[\"Parent Folder Path\"],\n\t\t\t\"Parent Folder ID\": eventData[\"Parent Folder ID\"],\n\t\t\t\"Store by Date\": eventData[\"Store by Date\"],\n\t\t\t\"Store by File Type\": eventData[\"Store by File Type\"],\n\t\t\t\"Allow File Types\": eventData[\"Allow File Types\"],\n\t\t\t\"CurrentDate\": eventData[\"CurrentDate\"],\n\t\t\t\"Reply Enabled\": eventData[\"Reply Enabled\"],\n\t\t\t\"CHANNEL ACCESS TOKEN\": eventData[\"CHANNEL ACCESS TOKEN\"]\n\t\t};\n\t} else {\n\t\tthrow new Error(\"ไม่พบข้อมูล config! กรุณาตรวจสอบว่า node ก่อนหน้านี้ส่งข้อมูล config มาด้วย\");\n\t}\n}\n\nreturn [{ json: { event: eventData, config: config } }];\n"
@@ -364,8 +364,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        8380
+        380,
+        100
       ],
       "parameters": {
         "columns": {
@@ -572,8 +572,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        9460
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.code",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        11260
+        4860,
+        100
       ],
       "parameters": {
         "jsCode": "// ดึงค่า allowed types จาก Node \"Get Config\"\nconst allowedTypes = $('Get Config').first().json[\"Allow File Types\"]\n  .split(\"|\")\n  .map(s => s.trim().toLowerCase());\n\n// ดึงค่า file type จากข้อมูลของ event (ปรับให้ตรงกับ structure ของข้อมูลคุณ)\nconst fileType = $('LINE Webhook Listener').first().json.body.events[0].message.type.toLowerCase();\n\n// ตรวจสอบว่า fileType อยู่ใน allowedTypes หรือไม่\nif (!allowedTypes.includes(fileType)) {\n  // สร้าง Error object พร้อมแนบข้อมูล replyToken และ errorMessage\n  const error = new Error(`File type '${fileType}' is not allowed.`);\n  error.json = {\n    replyToken: $('LINE Webhook Listener').first().json.body.events[0].replyToken,\n    errorMessage: error.message,\n  };\n  throw error;\n}\n\nreturn items;\n"
@@ -616,8 +616,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10000
+        2900,
+        100
       ],
       "parameters": {
         "width": 2320,
@@ -632,8 +632,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10180
+        3180,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -649,8 +649,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10540
+        3740,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -666,8 +666,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        10360
+        3460,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -699,8 +699,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10720
+        4020,
+        100
       ],
       "parameters": {
         "message": "Error occurred in f6b24396-a854-42c4-ae70-55095d637b9a",
@@ -714,8 +714,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10900
+        4300,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 3b1ca174-f5fc-4b01-90f4-be9240f8be77",
@@ -880,7 +880,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11440
+        8380
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get Config**: googleSheets\n- **Create Date Folder**: googleDrive\n- **Set Date Folder ID**: code\n- **Create File Type Folder**: googleDrive\n- **Upload File to Google Drive**: googleDrive\n- **Determine Folder Info**: code\n- **Search Date Folder**: googleDrive\n- **Merge Event and Config Data**: merge\n- **Check Existing Date Folder**: if\n- **Check Existing File Type Folder**: if\n- ... and 30 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -939,7 +939,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11620
+        8560
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -953,7 +953,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11800
+        8740
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1057,7 +1057,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11980
+        8920
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1071,7 +1071,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12160
+        9100
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1175,7 +1175,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12340
+        9280
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1189,7 +1189,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12520
+        9460
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1244,7 +1244,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12700
+        9640
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1299,7 +1299,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        12880
+        9820
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1325,8 +1325,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        13060
+        5140,
+        100
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1362,7 +1362,676 @@
     "retryDelay": 1000
   },
   "versionId": "10f96ecd-2a9e-48c6-91f6-b49c00e0ac90",
-  "connections": {},
+  "connections": {
+    "Check Existing Date Folder": {
+      "main": [
+        [
+          {
+            "node": "Check Existing File Type Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Existing File Type Folder": {
+      "main": [
+        [
+          {
+            "node": "Check Reply Enabled Flag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Reply Enabled Flag": {
+      "main": [
+        [
+          {
+            "node": "Check if Store by Date is Enabled",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Store by Date is Enabled": {
+      "main": [
+        [
+          {
+            "node": "Check if Store by File Type is Enabled",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Store by File Type is Enabled": {
+      "main": [
+        [
+          {
+            "node": "Configure Final Parent Folder ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configure Final Parent Folder ID": {
+      "main": [
+        [
+          {
+            "node": "Create Date Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Date Folder": {
+      "main": [
+        [
+          {
+            "node": "Create File Type Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create File Type Folder": {
+      "main": [
+        [
+          {
+            "node": "Determine Folder Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Folder Info": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1003b29d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1003b29d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1514cec1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1514cec1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3b1ca174",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3b1ca174": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 47c9f83b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 47c9f83b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for aa480dc9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for aa480dc9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d5ed8981",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d5ed8981": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f064ba27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f064ba27": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f4e30758",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f4e30758": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f6b24396",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f6b24396": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for fb5bd15c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for fb5bd15c": {
+      "main": [
+        [
+          {
+            "node": "Get Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Config": {
+      "main": [
+        [
+          {
+            "node": "Get File Binary Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get File Binary Content": {
+      "main": [
+        [
+          {
+            "node": "LINE Webhook Listener",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LINE Webhook Listener": {
+      "main": [
+        [
+          {
+            "node": "Log File Details to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log File Details to Google Sheet": {
+      "main": [
+        [
+          {
+            "node": "Merge Event and Config Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Event and Config Data": {
+      "main": [
+        [
+          {
+            "node": "Merge Final Parent Folder Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Final Parent Folder Data": {
+      "main": [
+        [
+          {
+            "node": "Process Event and Config Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Event and Config Data": {
+      "main": [
+        [
+          {
+            "node": "Search Date Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Date Folder": {
+      "main": [
+        [
+          {
+            "node": "Search File Type Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search File Type Folder": {
+      "main": [
+        [
+          {
+            "node": "Send LINE Reply Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send LINE Reply Message": {
+      "main": [
+        [
+          {
+            "node": "Set Date Folder ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Date Folder ID": {
+      "main": [
+        [
+          {
+            "node": "Set File Type Folder ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set File Type Folder ID": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Upload File to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload File to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Validate File Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate File Type": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Line Save File to Google Drive and Log File's URL. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

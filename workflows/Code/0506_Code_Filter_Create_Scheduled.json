@@ -5,8 +5,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4060
+        660,
+        100
       ],
       "parameters": {
         "width": 830.4857444594224,
@@ -76,8 +76,8 @@
       "name": "Take cover url",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        5140
+        2340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -206,8 +206,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4420
+        1220,
+        100
       ],
       "parameters": {
         "width": 777.880012347261,
@@ -222,8 +222,8 @@
       "name": "Sticky Note18",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        1500,
+        100
       ],
       "parameters": {
         "width": 218.00983675699544,
@@ -294,8 +294,8 @@
       "name": "Sticky Note19",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        1780,
+        100
       ],
       "parameters": {
         "width": 233.87813121439967,
@@ -310,8 +310,8 @@
       "name": "Update slug on posts1",
       "type": "n8n-nodes-base.notion",
       "position": [
-        100,
-        5680
+        3180,
+        100
       ],
       "parameters": {
         "pageId": {
@@ -347,8 +347,8 @@
       "type": "n8n-nodes-base.code",
       "notes": "Add a number to the slug if it's not unique",
       "position": [
-        100,
-        3880
+        380,
+        100
       ],
       "parameters": {
         "jsCode": "const data = $input.all().map(item => item.json)\nconst slugCount = {};\n\nreturn data.map(item => {\n  let slug = item.property_slug;\n  \n  if (slugCount[slug]) {\n    slugCount[slug] += 1;\n    slug = `${slug}-${slugCount[slug]}`;\n  } else {\n    slugCount[slug] = 1;\n  }\n  \n  item.property_slug = slug;\n  return item;\n});"
@@ -361,8 +361,8 @@
       "name": "Success message1",
       "type": "n8n-nodes-base.slack",
       "position": [
-        100,
-        4960
+        2060,
+        100
       ],
       "parameters": {
         "text": "=[Notion to Webflow] — \"{{ $json.name }}\" successfully synced 🎉",
@@ -514,8 +514,8 @@
       "name": "Turn blocks into HTML1",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5320
+        2620,
+        100
       ],
       "parameters": {
         "jsCode": "const blocks = $input.all().map(item => item.json);\nconst output = [];\n\nblocks.forEach(block => {\n  let html = '';\n  \n  switch (block.type) {\n    case 'heading_1':\n      html = block.heading_1.text.map(item => item.text.content).join(' ');\n      html = `<h1>${html}</h1>`;\n      break;\n    case 'heading_2':\n      html = block.heading_2.text.map(item => item.text.content).join(' ');\n      html = `<h2>${html}</h2>`;\n      break;\n    case 'heading_3':\n      html = block.heading_3.text.map(item => item.text.content).join(' ');\n      html = `<h3>${html}</h3>`;\n      break;\n    case 'paragraph':\n      html = `<p>${block.paragraph.text.map(item => {\n        let content = item.text.content.trim();\n        if (item.annotations.bold) content = `<b>${content}</b>`;\n        if (item.annotations.italic) content = `<i>${content}</i>`;\n        if (item.text.link) content = `<a href=\"${item.text.link.url}\">${content}</a>`;\n        return content;\n      }).join(' ') || '   '}</p>`; // the space inside the apostrophes is on purpose, otherwise Webflow will automatically delete the empty blocks\n      break;\n    case 'quote':\n      html = block.quote.text.map(item => item.text.content).join(' ');\n      html = `<blockquote>${html}</blockquote>`;\n      break;\n    case 'bulleted_list_item':\n      html = block.bulleted_list_item.text.map(item => item.text.content).join(' ');\n      html = `<li>${html}</li>`;\n      break;\n    case 'numbered_list_item':\n      html = block.numbered_list_item.text.map(item => item.text.content).join(' ');\n      html = `<li>${html}</li>`;\n      break;\n    case 'image':\n      const caption = block.image.caption.map(item => item.text.content).join(' ');\n      html = `<figure><img src=\"${block.image.file.url}\" alt=\"${caption}\" /><figcaption>${caption}</figcaption></figure>`;\n      break;\n    case 'code':\n      const codeContent = block.code.text.map(item => item.text.content).join('\\n')\n      html = `<pre><code>${codeContent}</code></pre>`\n      break\n    default:\n      html = block.content ? `<div>${block.content}</div>` : '';\n  }\n\n  if (html) {\n    output.push({\n      block_id: block.id,\n      type: block.type,\n      html\n    });\n  }\n});\n\nreturn output;\n"
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.webflow",
       "maxTries": 3,
       "position": [
-        100,
-        5500
+        2900,
+        100
       ],
       "parameters": {
         "itemId": "={{ $json.webflow_item_id }}",
@@ -646,8 +646,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4240
+        940,
+        100
       ],
       "parameters": {
         "width": 366.7438380520149,
@@ -697,7 +697,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        3880
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **Get simple page data**: notion\n- **Get all page data**: notion\n- **Take cover url**: set\n- **Merge1**: merge\n- **Data transporter1**: noOp\n- **Get all blog posts1**: notion\n- **Is sync checked?1**: filter\n- **For each blog post1**: splitInBatches\n- **Sticky Note17**: stickyNote\n- ... and 20 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -711,7 +711,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        4060
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -725,7 +725,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        4240
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -739,7 +739,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        4420
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -753,7 +753,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        4600
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -767,7 +767,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        4780
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -781,7 +781,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        4960
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -794,7 +794,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        5140
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -807,7 +807,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        5320
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -833,8 +833,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7480
+        3460,
+        100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 13 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -855,7 +855,423 @@
       }
     }
   ],
-  "connections": {},
+  "connections": {
+    "Add Webflow item id to Notion data": {
+      "main": [
+        [
+          {
+            "node": "Add slug to posts1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add slug to posts1": {
+      "main": [
+        [
+          {
+            "node": "Compare by slug1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare by slug1": {
+      "main": [
+        [
+          {
+            "node": "Craft the rich text element1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Craft the rich text element1": {
+      "main": [
+        [
+          {
+            "node": "Create post1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create post1": {
+      "main": [
+        [
+          {
+            "node": "Data transporter, Notion posts to sync1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data transporter, Notion posts to sync1": {
+      "main": [
+        [
+          {
+            "node": "Data transporter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data transporter1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 21755856",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 21755856": {
+      "main": [
+        [
+          {
+            "node": "Final Notion post data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Notion post data": {
+      "main": [
+        [
+          {
+            "node": "For each blog post1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "For each blog post1": {
+      "main": [
+        [
+          {
+            "node": "Get all blog posts1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all blog posts1": {
+      "main": [
+        [
+          {
+            "node": "Get all collection posts1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all collection posts1": {
+      "main": [
+        [
+          {
+            "node": "Get all page data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all page data": {
+      "main": [
+        [
+          {
+            "node": "Get blocks1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get blocks1": {
+      "main": [
+        [
+          {
+            "node": "Get simple page data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get simple page data": {
+      "main": [
+        [
+          {
+            "node": "Is sync checked?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is sync checked?1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Slug uniqueness checker and differentiator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slug uniqueness checker and differentiator1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note17": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note18": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note19": {
+      "main": [
+        [
+          {
+            "node": "Success message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success message1": {
+      "main": [
+        [
+          {
+            "node": "Take cover url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Take cover url": {
+      "main": [
+        [
+          {
+            "node": "Turn blocks into HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Turn blocks into HTML1": {
+      "main": [
+        [
+          {
+            "node": "Update in \"Blog Posts\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update in \"Blog Posts\"": {
+      "main": [
+        [
+          {
+            "node": "Update slug on posts1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update slug on posts1": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Stickynote Workflow",
   "settings": {
     "executionOrder": "v1",

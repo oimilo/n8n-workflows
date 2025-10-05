@@ -26,8 +26,8 @@
       "name": "Fetch Latest Videos",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        3340
+        380,
+        100
       ],
       "parameters": {
         "limit": 1,
@@ -51,8 +51,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        4240
+        1780,
+        100
       ],
       "parameters": {
         "options": {}
@@ -66,8 +66,8 @@
       "type": "n8n-nodes-base.noOp",
       "disabled": true,
       "position": [
-        100,
-        9460
+        940,
+        280
       ],
       "parameters": {
         "modelId": {
@@ -141,7 +141,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
         100,
-        7300
+        3340
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -152,8 +152,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5500
+        3740,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -168,8 +168,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5680
+        4020,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -184,8 +184,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5860
+        4300,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -222,8 +222,8 @@
       "name": "YT Tags",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        9280
+        660,
+        280
       ],
       "parameters": {
         "text": "=Nun folgt das eigentliche Thema/Transkript. Gib mir die Youtube Tags dafür:\n\n{{ $('Adjust Transcript Format').item.json.transcript }}",
@@ -240,8 +240,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6040
+        4580,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -257,8 +257,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        6940
+        5980,
+        100
       ],
       "webhookId": "1e75fe1f-e553-4530-a8bc-5e64208a1184",
       "parameters": {
@@ -272,8 +272,8 @@
       "name": "gettitle",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        10000
+        1780,
+        280
       ],
       "parameters": {
         "options": {},
@@ -295,8 +295,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5320
+        3460,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -311,8 +311,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6220
+        4860,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -328,8 +328,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6400
+        5140,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -345,8 +345,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6580
+        5420,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -362,8 +362,8 @@
       "name": "Set Publish Date",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        5140
+        3180,
+        100
       ],
       "parameters": {
         "title": "={{ $json.snippet.title }}",
@@ -413,8 +413,8 @@
       "name": "Get Videos to reschedule",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        3880
+        1220,
+        100
       ],
       "parameters": {
         "limit": 2,
@@ -438,8 +438,8 @@
       "name": "Get video Ids seperated",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4060
+        1500,
+        100
       ],
       "parameters": {
         "jsCode": "// Extract video IDs from YouTube search results\n// This function processes all input items and creates separate items for each videoId\n\n// Initialize empty array for our result items\nconst resultItems = [];\n\n// Process each input item\nfor (const item of items) {\n  // Check if the item has a valid structure\n  if (item.json && item.json.id && item.json.id.videoId) {\n    // Create a new item for each videoId\n    resultItems.push({\n      json: {\n        videoId: item.json.id.videoId\n      }\n    });\n  }\n}\n\n// Return each videoId as a separate item that can be processed individually\nreturn resultItems;"
@@ -452,8 +452,8 @@
       "name": "Loop over Video IDs",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        4600
+        2340,
+        100
       ],
       "parameters": {
         "options": {}
@@ -466,8 +466,8 @@
       "name": "Get Video Data",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        3700
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -489,8 +489,8 @@
       "name": "Return Private Videos",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4960
+        2900,
+        100
       ],
       "parameters": {
         "jsCode": "// Utility function to get next Friday at 17:00 UTC in YouTube ISO 8601 format (YYYY-MM-DDTHH:mm:ssZ)\nfunction getNextFridayUTC(startDate, weekOffset = 0) {\n  const date = new Date(startDate); // Work with a copy\n  \n  const currentUTCDay = date.getUTCDay(); // 0 for Sunday, ..., 5 for Friday\n  const daysUntilFriday = (5 - currentUTCDay + 7) % 7; // Calculate days to next Friday\n  \n  date.setUTCDate(date.getUTCDate() + daysUntilFriday + (weekOffset * 7));\n  date.setUTCHours(17, 0, 0, 0); // Set time to 17:00:00.000 UTC\n  \n  // toISOString() returns \"YYYY-MM-DDTHH:mm:ss.sssZ\"\n  // We split at '.' to remove milliseconds and add 'Z' back for \"YYYY-MM-DDTHH:mm:ssZ\"\n  return date.toISOString().split('.')[0] + \"Z\";\n}\n\n// INPUT `items` is an array from n8n.\n// Each item.json is expected to be a YouTube video object from a previous node.\nconst videosToSchedule = items.filter(item => \n  item.json && \n  item.json.status && \n  (item.json.status.privacyStatus === \"unlisted\" || item.json.status.privacyStatus === \"private\")\n  // Adjust this filter if you only want to process \"unlisted\" or only \"private\" videos\n);\n\nif (videosToSchedule.length === 0) {\n  // console.log(\"No videos found matching the filter criteria.\");\n  return []; // Return empty array if no videos to schedule\n}\n\n// Sort videos by their original published/uploaded date (snippet.publishedAt), earliest first.\nvideosToSchedule.sort((a, b) => {\n  const dateA = new Date(a.json?.snippet?.publishedAt || '1970-01-01T00:00:00Z');\n  const dateB = new Date(b.json?.snippet?.publishedAt || '1970-01-01T00:00:00Z');\n  return dateA - dateB;\n});\n\nconst now = new Date(); // Current date to calculate future Fridays\n\n// Map the filtered and sorted videos to the desired output structure for the YouTube update node.\nconst scheduledItems = videosToSchedule.map((item, index) => {\n  const videoData = item.json; // The actual video data object\n  const scheduleDate = getNextFridayUTC(now, index); // Calculate the publishAt date\n  \n  return {\n    json: { // This is the structure the next n8n YouTube node will receive\n      videoId: videoData.id,                             // ID of the video to update\n      publishAt: scheduleDate,                           // The calculated schedule time: YYYY-MM-DDTHH:mm:ssZ\n      title: videoData.snippet?.title || \"Untitled Video\", // Keep original title or use a default\n      \n      // --- CRITICAL PARAMETERS FOR THE YOUTUBE API ---\n      privacy: \"private\", // **MUST BE 'private' FOR 'publishAt' TO WORK!**\n                          // The API requires the video to be set to private when scheduling.\n      \n      // **VERY LIKELY REQUIRED: selfDeclaredMadeForKids**\n      // You MUST tell YouTube if the video is made for kids or not.\n      // Get it from existing data if available, otherwise set a default.\n      selfDeclaredMadeForKids: videoData.status?.selfDeclaredMadeForKids === true ? true : false,\n\n      // **POSSIBLY REQUIRED: categoryId (if updating snippet like title)**\n      // categoryId: videoData.snippet?.categoryId || \"YOUR_DEFAULT_CATEGORY_ID\", \n      // e.g., \"10\" for Music, \"22\" for People & Blogs.\n      // Check YouTube API docs for category IDs.\n      \n      // (Optional) You can include other fields like description if you want to update them\n      // description: videoData.snippet?.description || \"\" \n    }\n  };\n});\n\nreturn scheduledItems; // Return the array of video objects to be processed"
@@ -504,8 +504,8 @@
       "name": "Wait 1",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        7120
+        6260,
+        100
       ],
       "webhookId": "7d5c70f8-a592-4634-8c5a-0fbd0cebf6a4",
       "parameters": {
@@ -519,8 +519,8 @@
       "name": "Loop over All Videos not Published",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        4420
+        2060,
+        100
       ],
       "parameters": {
         "options": {}
@@ -533,8 +533,8 @@
       "name": "get video id",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        9640
+        1220,
+        280
       ],
       "parameters": {
         "options": {},
@@ -558,8 +558,8 @@
       "name": "Remove Duplicates from previous Runs",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        100,
-        4780
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -575,8 +575,8 @@
       "name": "new video?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        10180
+        2060,
+        280
       ],
       "parameters": {
         "options": {},
@@ -610,8 +610,8 @@
       "name": "getLatestVideoID",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        9820
+        1500,
+        280
       ],
       "parameters": {
         "options": {},
@@ -634,8 +634,8 @@
       "name": "Get Transcript",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        3520
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -677,8 +677,8 @@
       "name": "Update Video's Metadata",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        6760
+        5700,
+        100
       ],
       "parameters": {
         "title": "={{ $('Fetch Latest Videos').first().json.snippet.title }}",
@@ -783,7 +783,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7480
+        3520
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Fetch Latest Videos**: youTube\n- **Loop Over Items**: splitInBatches\n- **YT Title**: openAi\n- **Create Description**: openAi\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **2.5FlashPrev**: lmChatGoogleGemini\n- **YT Tags**: agent\n- ... and 28 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -812,7 +812,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        3700
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -826,7 +826,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        3880
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -870,7 +870,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        4060
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -884,7 +884,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        4240
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -928,7 +928,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        4420
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -942,7 +942,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        4600
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -969,7 +969,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        4780
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -996,7 +996,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        4960
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1022,8 +1022,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9100
+        380,
+        280
       ],
       "parameters": {
         "content": "# Youtube_Automation\n\n## Overview\nAutomated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1059,7 +1059,552 @@
     "retryDelay": 1000
   },
   "versionId": "268a8dc5-0408-458c-9dff-d7c91b223b76",
-  "connections": {},
+  "connections": {
+    "2.5FlashPrev": {
+      "main": [
+        [
+          {
+            "node": "Adjust Transcript Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adjust Transcript Format": {
+      "main": [
+        [
+          {
+            "node": "Create Description",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Description": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1a8cf640",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1a8cf640": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4c5667cf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4c5667cf": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 66814975",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 66814975": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ec6e5d83",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ec6e5d83": {
+      "main": [
+        [
+          {
+            "node": "Every Day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Day": {
+      "main": [
+        [
+          {
+            "node": "Fetch Latest Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Latest Videos": {
+      "main": [
+        [
+          {
+            "node": "Get Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcript": {
+      "main": [
+        [
+          {
+            "node": "Get Video Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video Data": {
+      "main": [
+        [
+          {
+            "node": "Get Videos to reschedule",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Videos to reschedule": {
+      "main": [
+        [
+          {
+            "node": "Get video Ids seperated",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get video Ids seperated": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Loop over All Videos not Published",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over All Videos not Published": {
+      "main": [
+        [
+          {
+            "node": "Loop over Video IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over Video IDs": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates from previous Runs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates from previous Runs": {
+      "main": [
+        [
+          {
+            "node": "Return Private Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return Private Videos": {
+      "main": [
+        [
+          {
+            "node": "Set Publish Date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Publish Date": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Update Video's Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Video's Metadata": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Wait 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 1": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "YT Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YT Tags": {
+      "main": [
+        [
+          {
+            "node": "YT Title",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YT Title": {
+      "main": [
+        [
+          {
+            "node": "get video id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get video id": {
+      "main": [
+        [
+          {
+            "node": "getLatestVideoID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getLatestVideoID": {
+      "main": [
+        [
+          {
+            "node": "gettitle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gettitle": {
+      "main": [
+        [
+          {
+            "node": "new video?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Youtube_Automation. This workflow integrates 15 different services: stickyNote, youTube, httpRequest, wait, code. It contains 38 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Youtube_Automation. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

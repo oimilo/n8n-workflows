@@ -54,8 +54,8 @@
       "name": "Unprocessed Requests",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        8380
+        2900,
+        100
       ],
       "parameters": {
         "jsCode": "let filter_method = \"POST\"\nlet last_processed = $json.value ? $json.value : 0\nlet data = $json.data\n\nfunction dateToTime(datetime){\n  return new Date(datetime.replace(\" \", \"T\") + \"Z\").getTime()\n}\n\n//Convert datetimes to timestamps\ndata.forEach(datum=>{datum.created_at = dateToTime(datum.created_at)})\n\n//Filter all new POST requests\nreturn data.filter(datum=>!last_processed || datum.created_at > last_processed).filter(datum=>!filter_method || datum.method==filter_method)"
@@ -159,8 +159,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6760
+        380,
+        100
       ],
       "parameters": {
         "width": 460.2964713549969,
@@ -175,8 +175,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6940
+        660,
+        100
       ],
       "parameters": {
         "width": 483.2839292355176,
@@ -191,8 +191,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7120
+        940,
+        100
       ],
       "parameters": {
         "width": 395.16534069351894,
@@ -207,8 +207,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7300
+        1220,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -224,8 +224,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7480
+        1500,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -241,8 +241,8 @@
       "name": "Store Auth Token",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        8020
+        2340,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -257,8 +257,8 @@
       "name": "Store Last Processed",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        8200
+        2620,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -355,8 +355,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7660
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 00a5c01c-0cc1-4a56-9b5b-b90cc778ee36",
@@ -370,8 +370,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7840
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 42fbb0c3-34c9-4d97-8761-1b9c84c2f8f7",
@@ -431,7 +431,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        6760
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Get Auth Token**: httpRequest\n- **Unprocessed Requests**: code\n- **Get Latest Requests**: httpRequest\n- **POST to n8n**: httpRequest\n- **Merge**: merge\n- **Local Webhook Address**: set\n- **Latest Update Time**: code\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -490,7 +490,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        6940
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -504,7 +504,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        7120
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -608,7 +608,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        7300
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -622,7 +622,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        7480
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -726,7 +726,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        7660
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -740,7 +740,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        7840
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -795,7 +795,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9820
+        8020
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -850,7 +850,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10000
+        8200
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -876,8 +876,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        10180
+        3180,
+        100
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -899,7 +899,500 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 00a5c01c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 00a5c01c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 42fbb0c3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 42fbb0c3": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for bfe180f2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for bfe180f2": {
+      "main": [
+        [
+          {
+            "node": "Get Auth Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Auth Token": {
+      "main": [
+        [
+          {
+            "node": "Get Latest Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Latest Requests": {
+      "main": [
+        [
+          {
+            "node": "If Auth Token Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Auth Token Exists": {
+      "main": [
+        [
+          {
+            "node": "Latest Update Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Latest Update Time": {
+      "main": [
+        [
+          {
+            "node": "Local Webhook Address",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Local Webhook Address": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "POST to n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST to n8n": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Auth Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Auth Token": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Last Processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Last Processed": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Store Auth Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Auth Token": {
+      "main": [
+        [
+          {
+            "node": "Store Last Processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Last Processed": {
+      "main": [
+        [
+          {
+            "node": "Unprocessed Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unprocessed Requests": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Scheduletrigger Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -17,8 +17,8 @@
       "name": "Window Buffer Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        20080
+        7940,
+        100
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -51,8 +51,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16120
+        1780,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -68,8 +68,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16300
+        2060,
+        100
       ],
       "parameters": {
         "width": 2820,
@@ -84,8 +84,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17560
+        4020,
+        100
       ],
       "parameters": {
         "width": 980,
@@ -100,8 +100,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19180
+        6540,
+        100
       ],
       "parameters": {
         "schemaType": "manual",
@@ -155,8 +155,8 @@
       "name": "Send Stock Analysis",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        100,
-        15220
+        380,
+        280
       ],
       "webhookId": "0de4d8cd-3519-4a4a-a05b-a9c973b64141",
       "parameters": {
@@ -195,8 +195,8 @@
       "name": "Think",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19540
+        7100,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -207,8 +207,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        18100
+        4860,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -238,8 +238,8 @@
       "name": "Set Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        15940
+        1500,
+        100
       ],
       "parameters": {
         "values": {
@@ -299,7 +299,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
         100,
-        22060
+        16480
       ],
       "parameters": {
         "workflowInputs": {
@@ -532,8 +532,8 @@
       "name": "Organizing Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        14680
+        380,
+        100
       ],
       "parameters": {
         "jsCode": "// Getting data from different sources\n// Checking existence of objects before trying to access them\nconst items = $input.all();\nconst fibData = $input.first().json;\n\n// Trying to locate bband and MACD data if they exist\nlet bbandsData = null;\nlet macdData = null;\n\n// Trying to check if there is data in additional items\nif (items.length > 1 && items[1] && items[1].json) {\n  bbandsData = items[1].json;\n}\n\nif (items.length > 2 && items[2] && items[2].json) {\n  macdData = items[2].json;\n}\n\n// Creating data structure for the response - ensure all fields exist\nconst result = {\n  ticker: fibData.ticker || \"לא ידוע\",\n  currentPrice: fibData.currentPrice || \"0\",\n  timestamp: new Date().toISOString(),\n  technicalAnalysis: {\n    fibonacci: fibData.fibonacci || {},\n    supportResistance: fibData.supportResistance || { support: [], resistance: [] },\n    bollingerBands: {},\n    macd: {}\n  }\n};\n\n// Adding Bollinger Bands data - only if they exist\nif (bbandsData && bbandsData.values && bbandsData.values.length > 0) {\n  const bbands = bbandsData.values[0];\n  result.technicalAnalysis.bollingerBands = {\n    upperBand: parseFloat(bbands.upper_band).toFixed(2),\n    middleBand: parseFloat(bbands.middle_band).toFixed(2),\n    lowerBand: parseFloat(bbands.lower_band).toFixed(2)\n  };\n} else if (bbandsData && bbandsData.status === \"ok\") {\n  // If returning another data format\n  result.technicalAnalysis.bollingerBands = {\n    upperBand: bbandsData.upperBand || bbandsData.upper_band || \"0\",\n    middleBand: bbandsData.middleBand || bbandsData.middle_band || \"0\",\n    lowerBand: bbandsData.lowerBand || bbandsData.lower_band || \"0\"\n  };\n}\n\n// Adding MACD data - only if they exist\nif (macdData && macdData.values && macdData.values.length > 0) {\n  const macd = macdData.values[0];\n  result.technicalAnalysis.macd = {\n    macd: parseFloat(macd.macd).toFixed(2),\n    signal: parseFloat(macd.signal).toFixed(2),\n    histogram: parseFloat(macd.hist).toFixed(2)\n  };\n} else if (macdData && macdData.status === \"ok\") {\n  // If returning another data format\n  result.technicalAnalysis.macd = {\n    macd: macdData.macd || \"0\",\n    signal: macdData.signal || \"0\",\n    histogram: macdData.histogram || macdData.hist || \"0\"\n  };\n}\n\n// Creating summary and recommendation\nlet bullishFactors = [];\nlet bearishFactors = [];\n\n// Analyzing Bollinger Bands - only if data exists\nconst bbands = result.technicalAnalysis.bollingerBands;\nif (bbands.upperBand && bbands.lowerBand) {\n  const currentPrice = parseFloat(result.currentPrice);\n  const upperBand = parseFloat(bbands.upperBand);\n  const lowerBand = parseFloat(bbands.lowerBand);\n  \n  if (!isNaN(currentPrice) && !isNaN(upperBand) && !isNaN(lowerBand)) {\n    if (currentPrice > upperBand) {\n      bearishFactors.push(\"מחיר מעל רצועת בולינגר העליונה - אפשרות לקנייה יתר\");\n    } else if (currentPrice < lowerBand) {\n      bullishFactors.push(\"מחיר מתחת לרצועת בולינגר התחתונה - אפשרות למכירה יתר\");\n    }\n  }\n}\n\n// Analyzing MACD - only if data exists\nconst macdInfo = result.technicalAnalysis.macd;\nif (macdInfo.macd && macdInfo.signal) {\n  const macd = parseFloat(macdInfo.macd);\n  const signal = parseFloat(macdInfo.signal);\n  \n  if (!isNaN(macd) && !isNaN(signal)) {\n    if (macd > signal) {\n      bullishFactors.push(\"MACD מעל קו האיתות - אינדיקציה חיובית\");\n    } else {\n      bearishFactors.push(\"MACD מתחת לקו האיתות - אינדיקציה שלילית\");\n    }\n  }\n}\n\n// Analyzing support and resistance levels - only if data exists\nconst supportResistance = result.technicalAnalysis.supportResistance;\nif (supportResistance.support && supportResistance.resistance) {\n  const currentPrice = parseFloat(result.currentPrice);\n  \n  if (!isNaN(currentPrice)) {\n    const supports = supportResistance.support.map(s => parseFloat(s)).filter(s => !isNaN(s));\n    const resistances = supportResistance.resistance.map(r => parseFloat(r)).filter(r => !isNaN(r));\n    \n    // Finding the closest support level\n    let closestSupport = null;\n    let minSupportDist = Infinity;\n    for (const support of supports) {\n      if (support < currentPrice) {\n        const dist = currentPrice - support;\n        if (dist < minSupportDist) {\n          minSupportDist = dist;\n          closestSupport = support;\n        }\n      }\n    }\n    \n    // Finding the closest resistance level\n    let closestResistance = null;\n    let minResistanceDist = Infinity;\n    for (const resistance of resistances) {\n      if (resistance > currentPrice) {\n        const dist = resistance - currentPrice;\n        if (dist < minResistanceDist) {\n          minResistanceDist = dist;\n          closestResistance = resistance;\n        }\n      }\n    }\n    \n    // Adding support/resistance analysis\n    if (closestSupport !== null) {\n      const supportPercentage = ((currentPrice - closestSupport) / currentPrice * 100).toFixed(2);\n      if (supportPercentage < 5) {\n        bullishFactors.push(`המחיר קרוב לרמת תמיכה (${supportPercentage}%) - אפשרות להיפוך כלפי מעלה`);\n      }\n    }\n    \n    if (closestResistance !== null) {\n      const resistancePercentage = ((closestResistance - currentPrice) / currentPrice * 100).toFixed(2);\n      if (resistancePercentage < 5) {\n        bearishFactors.push(`המחיר קרוב לרמת התנגדות (${resistancePercentage}%) - אפשרות להיפוך כלפי מטה`);\n      }\n    }\n  }\n}\n\n// Analyzing Fibonacci - only if data exists\nconst fibonacci = result.technicalAnalysis.fibonacci;\nif (fibonacci && Object.keys(fibonacci).length > 0) {\n  const currentPrice = parseFloat(result.currentPrice);\n  \n  if (!isNaN(currentPrice)) {\n    const fibLevels = Object.values(fibonacci).map(level => parseFloat(level)).filter(level => !isNaN(level));\n    fibLevels.sort((a, b) => a - b);\n    \n    // Checking which Fibonacci level the price is at\n    for (let i = 0; i < fibLevels.length - 1; i++) {\n      if (currentPrice >= fibLevels[i] && currentPrice <= fibLevels[i+1]) {\n        // If the price is close to a Fibonacci resistance level\n        if (Math.abs(currentPrice - fibLevels[i+1]) / currentPrice * 100 < 2) {\n          bearishFactors.push(`המחיר קרוב לרמת פיבונאצ'י ${[0, 23.6, 38.2, 50, 61.8, 78.6, 100][Math.min(i+1, 6)]}% - אפשרות להתנגדות`);\n        }\n        // If the price is close to a Fibonacci support level\n        if (Math.abs(currentPrice - fibLevels[i]) / currentPrice * 100 < 2) {\n          bullishFactors.push(`המחיר קרוב לרמת פיבונאצ'י ${[0, 23.6, 38.2, 50, 61.8, 78.6, 100][Math.min(i, 6)]}% - אפשרות לתמיכה`);\n        }\n        break;\n      }\n    }\n  }\n}\n\n// Adding general recommendation based on factors\nlet recommendation = \"\";\nif (bullishFactors.length > bearishFactors.length) {\n  recommendation = \"חיובית\";\n} else if (bearishFactors.length > bullishFactors.length) {\n  recommendation = \"שלילית\";\n} else {\n  recommendation = \"נייטרלית\";\n}\n\n// Adding summary to the result\nresult.summary = {\n  recommendation: recommendation,\n  bullishFactors: bullishFactors,\n  bearishFactors: bearishFactors\n};\n\nreturn { json: result };"
@@ -599,8 +599,8 @@
       "name": "Set Variable",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        15760
+        1220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -623,8 +623,8 @@
       "name": "Warp as JSON for GPT",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        19900
+        7660,
+        100
       ],
       "parameters": {
         "jsCode": "/**\n * INPUT: items[0].json (Original JSON)\n * OUTPUT: { textPayload: \"```json\\n{ ... }\\n```\" }\n */\n\nconst pretty = JSON.stringify(items[0].json, null, 2);\nconst wrapped = `\\`\\`\\`json\\n${pretty}\\n\\`\\`\\``;\n\nreturn [\n  {\n    json: {\n      textPayload: wrapped\n    }\n  }\n];\n"
@@ -637,8 +637,8 @@
       "name": "Set Final Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        15400
+        660,
+        280
       ],
       "parameters": {
         "options": {},
@@ -667,8 +667,8 @@
       "name": "Set Stock Symbol and API Key",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        15580
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -731,7 +731,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
         100,
-        15040
+        14680
       ],
       "parameters": {
         "rule": {
@@ -748,8 +748,8 @@
       "name": "Technical Analysis Tool",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19360
+        6820,
+        100
       ],
       "parameters": {
         "name": "technical_analysis",
@@ -799,8 +799,8 @@
       "name": "Trends Analysis Tool",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19720
+        7380,
+        100
       ],
       "parameters": {
         "name": "trends_analysis",
@@ -850,8 +850,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17020
+        3180,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -867,8 +867,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16660
+        2620,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -884,8 +884,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16840
+        2900,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -901,8 +901,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17200
+        3460,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -918,8 +918,8 @@
       "name": "Sticky Note19",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17380
+        3740,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -935,8 +935,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16480
+        2340,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -952,8 +952,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17740
+        4300,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -969,8 +969,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17920
+        4580,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1026,8 +1026,8 @@
       "name": "Refine Text",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14860
+        660,
+        100
       ],
       "parameters": {
         "modelId": {
@@ -1083,8 +1083,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18280
+        5140,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 8491ca61-2367-401e-9ff2-4f1d90f3ce59",
@@ -1098,8 +1098,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18460
+        5420,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 1250dca0-d4d6-4890-9aa4-110cd0f0fbb6",
@@ -1113,8 +1113,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18640
+        5700,
+        100
       ],
       "parameters": {
         "message": "Error occurred in cfc9c470-c284-4d58-b6be-260f36d3d2b7",
@@ -1128,8 +1128,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18820
+        5980,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 3974f7f8-99b3-43b2-83f3-05819cdde7b2",
@@ -1143,8 +1143,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        19000
+        6260,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 0d333729-3fe5-4253-9989-16adaf1166b8",
@@ -1324,7 +1324,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20260
+        14860
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 62\n- **Node Types**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Window Buffer Memory**: memoryBufferWindow\n- **AI Agent**: agent\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Structured Output Parser**: outputParserStructured\n- **GPT 4o**: lmChatOpenAi\n- **Generate HTML**: html\n- **Send Stock Analysis**: emailSend\n- **Adjust HTML Colors**: code\n- ... and 52 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1443,7 +1443,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20440
+        15040
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 70\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1457,7 +1457,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20620
+        15220
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 71\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1681,7 +1681,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20800
+        15400
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 86\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1695,7 +1695,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20980
+        15580
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 87\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1919,7 +1919,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21160
+        15760
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 102\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1933,7 +1933,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21340
+        15940
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 103\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2044,7 +2044,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21520
+        16120
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 111\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2155,7 +2155,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21700
+        16300
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2181,8 +2181,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        21880
+        8220,
+        100
       ],
       "parameters": {
         "content": "# Memorybufferwindow Workflow\n\n## Overview\nAutomated workflow: Memorybufferwindow Workflow. This workflow integrates 18 different services: stickyNote, httpRequest, formTrigger, code, scheduleTrigger. It contains 62 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2204,7 +2204,1110 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Adjust HTML Colors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adjust HTML Colors": {
+      "main": [
+        [
+          {
+            "node": "Analyse API Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyse API Input": {
+      "main": [
+        [
+          {
+            "node": "Calculate Support Resistance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Support Resistance": {
+      "main": [
+        [
+          {
+            "node": "ChatGPT 4o",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatGPT 4o": {
+      "main": [
+        [
+          {
+            "node": "Download Chart",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Chart": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0d333729",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0d333729": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1250dca0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1250dca0": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3974f7f8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3974f7f8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4ca4c3aa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4ca4c3aa": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4d9939ec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4d9939ec": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8491ca61",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8491ca61": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 84a2fe62",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 84a2fe62": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 884a7e3b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 884a7e3b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for bb5dd63a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for bb5dd63a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for cfc9c470",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cfc9c470": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f4eeb758",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f4eeb758": {
+      "main": [
+        [
+          {
+            "node": "First Technical Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "First Technical Analysis": {
+      "main": [
+        [
+          {
+            "node": "GPT 4o",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT 4o": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML": {
+      "main": [
+        [
+          {
+            "node": "Generate Variables For API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Variables For API": {
+      "main": [
+        [
+          {
+            "node": "Get Bollinger Bands",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Bollinger Bands": {
+      "main": [
+        [
+          {
+            "node": "Get Chart URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Chart URL": {
+      "main": [
+        [
+          {
+            "node": "Get MACD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get MACD": {
+      "main": [
+        [
+          {
+            "node": "Get News Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get News Data": {
+      "main": [
+        [
+          {
+            "node": "Get Price History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Price History": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge-2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge-2": {
+      "main": [
+        [
+          {
+            "node": "On form submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Organizing Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organizing Data": {
+      "main": [
+        [
+          {
+            "node": "Refine Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refine Text": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Send Stock Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Stock Analysis": {
+      "main": [
+        [
+          {
+            "node": "Set Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Final Response": {
+      "main": [
+        [
+          {
+            "node": "Set Stock Symbol and API Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Stock Symbol and API Key": {
+      "main": [
+        [
+          {
+            "node": "Set Variable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variable": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note13": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note14": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note15": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note16": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note17": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note19": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "main": [
+        [
+          {
+            "node": "Technical Analysis Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Technical Analysis Tool": {
+      "main": [
+        [
+          {
+            "node": "Think",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "main": [
+        [
+          {
+            "node": "Trends Analysis Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trends Analysis Tool": {
+      "main": [
+        [
+          {
+            "node": "Warp as JSON for GPT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Warp as JSON for GPT": {
+      "main": [
+        [
+          {
+            "node": "Window Buffer Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Input Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Memorybufferwindow Workflow",
   "settings": {
     "executionOrder": "v1",

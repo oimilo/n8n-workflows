@@ -195,8 +195,8 @@
       "name": "addGPS",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        9820
+        1500,
+        100
       ],
       "webhookId": "f50b0e4e-8a6b-4af8-bdb3-becec1f6ccaf",
       "parameters": {
@@ -219,8 +219,8 @@
       "name": "Welcome Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        7840
+        940,
+        100
       ],
       "webhookId": "5c54b2fa-f6ef-44ea-90db-af1822586d0f",
       "parameters": {
@@ -304,8 +304,8 @@
       "name": "addGPS result",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        10000
+        1780,
+        100
       ],
       "webhookId": "2a31bd25-91a1-449f-b018-b88eabaa4daf",
       "parameters": {
@@ -324,8 +324,8 @@
       "name": "addShipmentNumber",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        10360
+        2340,
+        100
       ],
       "webhookId": "fb230af6-f0e6-4e0b-bcf6-72a0b82e4322",
       "parameters": {
@@ -373,8 +373,8 @@
       "name": "addShipmentNumber result",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        10540
+        2620,
+        100
       ],
       "webhookId": "2f97d0e7-315e-4a65-ba9a-171f35d51e27",
       "parameters": {
@@ -435,8 +435,8 @@
       "name": "waitingShipmentNumber",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        11260
+        3740,
+        100
       ],
       "parameters": {
         "jsCode": "let workflowStaticData = $getWorkflowStaticData('global');\nif (!workflowStaticData.telegramStates) {\n    workflowStaticData.telegramStates = {};\n}\nworkflowStaticData.telegramStates[$json.message.chat.id.toString()] = { waitingShipmentNumber: true };\nreturn $input.all();"
@@ -449,8 +449,8 @@
       "name": "waitingGPS",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        10900
+        3180,
+        100
       ],
       "parameters": {
         "jsCode": "let workflowStaticData = $getWorkflowStaticData('global');\nif (!workflowStaticData.telegramStates) {\n    workflowStaticData.telegramStates = {};\n}\nworkflowStaticData.telegramStates[$json.message.chat.id.toString()] = { waitingGPS: true };\nreturn $input.all();"
@@ -483,8 +483,8 @@
       "name": "waitingPhoto",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        11080
+        3460,
+        100
       ],
       "parameters": {
         "jsCode": "let workflowStaticData = $getWorkflowStaticData('global');\nif (!workflowStaticData.telegramStates) {\n    workflowStaticData.telegramStates = {};\n}\nworkflowStaticData.telegramStates[$json.message.chat.id.toString()] = { waitingPhoto: true };\nreturn $input.all();"
@@ -497,8 +497,8 @@
       "name": "Waiting Conditions",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        7660
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "let globalData = $getWorkflowStaticData('global');\nlet state = \"none\"; // Default state\n\nif (globalData && globalData.telegramStates) {\n    let chatData = globalData.telegramStates[$json.message.chat.id.toString()];\n    if (chatData) {\n        if (chatData.waitingShipmentNumber === true) {\n            state = \"waitingShipmentNumber\";\n        } else if (chatData.waitingGPS === true) {\n            state = \"waitingGPS\";\n        } else if (chatData.waitingPhoto === true) {\n            state = \"waitingPhoto\";\n        }\n    }\n}\nreturn { state };"
@@ -511,8 +511,8 @@
       "name": "addPhoto result",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        10180
+        2060,
+        100
       ],
       "webhookId": "4f77a501-82b8-4046-8ac4-027c0874a7ae",
       "parameters": {
@@ -532,8 +532,8 @@
       "name": "sendPhoto",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        10720
+        2900,
+        100
       ],
       "webhookId": "aef2449a-c6bf-4956-a986-dce76deae089",
       "parameters": {
@@ -556,8 +556,8 @@
       "name": "Upload Picture",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        100,
-        7480
+        380,
+        100
       ],
       "parameters": {
         "name": "=",
@@ -1202,7 +1202,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        7480
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note3**: stickyNote\n- **Telegram Trigger**: telegramTrigger\n- **Check State**: switch\n- **Clear State**: code\n- **Sticky Note5**: stickyNote\n- **Sticky Note6**: stickyNote\n- **addGPS**: telegram\n- **Welcome Message**: telegram\n- **Command?**: if\n- **Store GPS Location**: set\n- ... and 41 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1216,7 +1216,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        7660
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1230,7 +1230,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        7840
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1244,7 +1244,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        8020
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 54\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1258,7 +1258,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        8200
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1272,7 +1272,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        8380
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1286,7 +1286,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        8560
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1299,7 +1299,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        8740
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1312,7 +1312,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        8920
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1338,8 +1338,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9640
+        1220,
+        100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: telegramTrigger, stickyNote, telegram, code, googleDrive. It contains 51 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1361,7 +1361,650 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Check State": {
+      "main": [
+        [
+          {
+            "node": "Clear State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear State": {
+      "main": [
+        [
+          {
+            "node": "Command?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Command?": {
+      "main": [
+        [
+          {
+            "node": "Confirmation Driver",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmation Driver": {
+      "main": [
+        [
+          {
+            "node": "Distribution Team Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Distribution Team Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0176a1ee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0176a1ee": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1ef71e46",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1ef71e46": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3898ff6c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3898ff6c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 5b147f24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 5b147f24": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 5dfae752",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 5dfae752": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7e1d37bc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7e1d37bc": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8594469e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8594469e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8e3b46c6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8e3b46c6": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 91269b35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 91269b35": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 95db3b8c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 95db3b8c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 994e6cda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 994e6cda": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9f0159ae",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9f0159ae": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ef960bb8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ef960bb8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for fd8c2f32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for fd8c2f32": {
+      "main": [
+        [
+          {
+            "node": "Extract FileName",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract FileName": {
+      "main": [
+        [
+          {
+            "node": "Get Picture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Picture": {
+      "main": [
+        [
+          {
+            "node": "Initiate Workflow Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initiate Workflow Data": {
+      "main": [
+        [
+          {
+            "node": "Instructions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instructions": {
+      "main": [
+        [
+          {
+            "node": "Load Delivery Information",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Delivery Information": {
+      "main": [
+        [
+          {
+            "node": "Load Workspace Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Workspace Data": {
+      "main": [
+        [
+          {
+            "node": "Save Public Image Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Public Image Link": {
+      "main": [
+        [
+          {
+            "node": "Share Picture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Share Picture": {
+      "main": [
+        [
+          {
+            "node": "Shipment Number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shipment Number": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Store GPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store GPS": {
+      "main": [
+        [
+          {
+            "node": "Store GPS Location",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store GPS Location": {
+      "main": [
+        [
+          {
+            "node": "Store Shipment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Shipment": {
+      "main": [
+        [
+          {
+            "node": "Store fileName",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store fileName": {
+      "main": [
+        [
+          {
+            "node": "Switch Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Command": {
+      "main": [
+        [
+          {
+            "node": "Telegram Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Upload Picture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Picture": {
+      "main": [
+        [
+          {
+            "node": "Waiting Conditions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Waiting Conditions": {
+      "main": [
+        [
+          {
+            "node": "Welcome Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Welcome Message": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "addGPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addGPS": {
+      "main": [
+        [
+          {
+            "node": "addGPS result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addGPS result": {
+      "main": [
+        [
+          {
+            "node": "addPhoto result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addPhoto result": {
+      "main": [
+        [
+          {
+            "node": "addShipmentNumber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addShipmentNumber": {
+      "main": [
+        [
+          {
+            "node": "addShipmentNumber result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addShipmentNumber result": {
+      "main": [
+        [
+          {
+            "node": "sendPhoto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sendPhoto": {
+      "main": [
+        [
+          {
+            "node": "waitingGPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "waitingGPS": {
+      "main": [
+        [
+          {
+            "node": "waitingPhoto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "waitingPhoto": {
+      "main": [
+        [
+          {
+            "node": "waitingShipmentNumber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Stickynote Workflow",
   "settings": {
     "executionOrder": "v1",

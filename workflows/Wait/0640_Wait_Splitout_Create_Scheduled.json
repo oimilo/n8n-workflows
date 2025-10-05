@@ -35,8 +35,8 @@
       "name": "List followers",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5500
+        3740,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -110,8 +110,8 @@
       "name": "Extract from File",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        100,
-        4960
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -125,8 +125,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        6580
+        5420,
+        100
       ],
       "parameters": {
         "options": {
@@ -142,8 +142,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        5680
+        4020,
+        100
       ],
       "parameters": {
         "options": {}
@@ -156,8 +156,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        8020
+        7660,
+        100
       ],
       "webhookId": "b1608475-db84-4f23-acd6-d003f5094afd",
       "parameters": {},
@@ -169,8 +169,8 @@
       "name": "Find new followers",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5140
+        3180,
+        100
       ],
       "parameters": {
         "jsCode": "// Datos de entrada\nconst listFollowers = $('List followers').all()[0].json.followers;\nconst extractFromFile = $('Extract from File').all()[0].json.data[0].followers;\n\n// Verificar que tenemos acceso a los datos\nconsole.log('listFollowers length:', Array.isArray(listFollowers) ? listFollowers.length : 'no es array');\nconsole.log('extractFromFile length:', Array.isArray(extractFromFile) ? extractFromFile.length : 'no es array');\n\n// Mostrar algunos ejemplos de cada lista\nconsole.log('Ejemplo de listFollowers:', listFollowers?.slice(0, 2));\nconsole.log('Ejemplo de extractFromFile:', extractFromFile?.slice(0, 2));\n\n// Crear conjunto de DIDs del archivo extraído\nconst existingDids = new Set(extractFromFile?.map(item => item.did) || []);\nconsole.log('DIDs existentes:', Array.from(existingDids).slice(0, 5));\n\n// Filtrar listFollowers\nconst newFollowers = listFollowers?.filter(follower => !existingDids.has(follower.did)) || [];\n\nreturn {\n  json: {\n    debug: {\n      listFollowersCount: listFollowers?.length || 0,\n      extractFromFileCount: extractFromFile?.length || 0,\n      existingDidsCount: existingDids.size,\n      newFollowersCount: newFollowers.length\n    },\n    newFollowers,\n    newDids: newFollowers.map(follower => follower.did),\n    count: newFollowers.length\n  }\n}"
@@ -184,8 +184,8 @@
       "name": "Read followers from file",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        100,
-        6040
+        4580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -199,8 +199,8 @@
       "name": "Save followers to file",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        100,
-        6220
+        4860,
+        100
       ],
       "parameters": {
         "options": {
@@ -247,8 +247,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7120
+        6260,
+        100
       ],
       "parameters": {
         "width": 230,
@@ -263,8 +263,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7300
+        6540,
+        100
       ],
       "parameters": {
         "width": 231,
@@ -279,8 +279,8 @@
       "name": "Send message",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        6400
+        5140,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -311,8 +311,8 @@
       "name": "Get conversation ID",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5320
+        3460,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -348,8 +348,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6760
+        5700,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -365,8 +365,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6940
+        5980,
+        100
       ],
       "parameters": {
         "width": 181,
@@ -402,8 +402,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5860
+        4300,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -430,8 +430,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7480
+        6820,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 143e37b0-de79-4329-99a2-51484c9609a8",
@@ -445,8 +445,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7660
+        7100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in c6e766cf-a118-4db0-8e3c-32662c40737b",
@@ -460,8 +460,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7840
+        7380,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 33aa7e0c-58fe-4527-a94e-49bec0e06325",
@@ -475,8 +475,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3880
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6aa059e4",
@@ -490,8 +490,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3520
+        660,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 143e37b0",
@@ -505,8 +505,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        4600
+        2340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f1436a63",
@@ -520,8 +520,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        4780
+        2620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f8beea47",
@@ -535,8 +535,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        4060
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a28accb5",
@@ -550,8 +550,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        4240
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node aa2ab5e1",
@@ -565,8 +565,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        4420
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c6e766cf",
@@ -580,8 +580,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3700
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 33aa7e0c",
@@ -596,7 +596,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        3340
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 13 different services: convertToFile, stickyNote, httpRequest, wait, splitInBatches. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Create Session**: httpRequest\n- **List followers**: httpRequest\n- **Convert to File**: convertToFile\n- **Extract from File**: extractFromFile\n- **Split Out**: splitOut\n- **Loop Over Items**: splitInBatches\n- **Wait**: wait\n- **Find new followers**: code\n- **Read followers from file**: readWriteFile\n- **Save followers to file**: readWriteFile\n- ... and 21 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -670,7 +670,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        3520
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 13 different services: convertToFile, stickyNote, httpRequest, wait, splitInBatches. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -744,7 +744,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        3700
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 13 different services: convertToFile, stickyNote, httpRequest, wait, splitInBatches. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -818,7 +818,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        3880
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 13 different services: convertToFile, stickyNote, httpRequest, wait, splitInBatches. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -832,7 +832,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        4060
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 13 different services: convertToFile, stickyNote, httpRequest, wait, splitInBatches. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -858,8 +858,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9100
+        7940,
+        100
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 13 different services: convertToFile, stickyNote, httpRequest, wait, splitInBatches. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -871,8 +871,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        3340
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -881,7 +881,486 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Create Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Session": {
+      "main": [
+        [
+          {
+            "node": "Define welcome message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Define welcome message": {
+      "main": [
+        [
+          {
+            "node": "Each 60 minutes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Each 60 minutes": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 143e37b0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 143e37b0": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 33aa7e0c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 33aa7e0c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 6aa059e4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6aa059e4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a28accb5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a28accb5": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for aa2ab5e1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for aa2ab5e1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c6e766cf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c6e766cf": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f1436a63",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f1436a63": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f8beea47",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f8beea47": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Find new followers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find new followers": {
+      "main": [
+        [
+          {
+            "node": "Get conversation ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get conversation ID": {
+      "main": [
+        [
+          {
+            "node": "List followers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List followers": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Read followers from file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read followers from file": {
+      "main": [
+        [
+          {
+            "node": "Save followers to file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save followers to file": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Httprequest Workflow",
   "settings": {
     "executionOrder": "v1",

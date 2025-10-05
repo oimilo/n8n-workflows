@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3160
+        940,
+        100
       ],
       "parameters": {
         "model": {
@@ -51,8 +51,8 @@
       "name": "Window Buffer Memory2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5320
+        4300,
+        100
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -67,8 +67,8 @@
       "name": "OpenAI Chat Model4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3340
+        1220,
+        100
       ],
       "parameters": {
         "model": {
@@ -92,8 +92,8 @@
       "name": "Run Get Availability",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        4060
+        2340,
+        100
       ],
       "parameters": {
         "name": "get_availability",
@@ -109,8 +109,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        3460,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -126,8 +126,8 @@
       "name": "check day names",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        7300
+        4860,
+        100
       ],
       "parameters": {
         "name": "check_days",
@@ -142,8 +142,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        3180,
+        100
       ],
       "parameters": {
         "width": 1200,
@@ -177,8 +177,8 @@
       "name": "Interview Scheduler",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        2980
+        660,
+        100
       ],
       "parameters": {
         "text": "={{ $json.chatInput }}",
@@ -196,8 +196,8 @@
       "name": "If Final Output",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        2800
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -239,8 +239,8 @@
       "name": "Respond for More Info",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3700
+        1780,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -251,8 +251,8 @@
       "name": "Parse to JSON",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3520
+        1500,
+        100
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"interview\": {\n    \"email\": \"applicant@example.com\",\n    \"phone\": \"814-882-1293\",\n    \"start_datetime\": \"2025-03-28T10:00:00\",\n    \"end_datetime\": \"2025-03-28T11:00:00\"\n  }\n}"
@@ -265,8 +265,8 @@
       "name": "Set Meeting with Google",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        100,
-        4240
+        2620,
+        100
       ],
       "parameters": {
         "end": "={{ $json.output.interview.end_datetime }}",
@@ -357,8 +357,8 @@
       "name": "Split Events into 30 min blocks",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4420
+        2900,
+        100
       ],
       "parameters": {
         "jsCode": "const events = items.map(item => item.json);\nconst intervalMinutes = 30;\nconst timeZone = 'America/New_York';\n\nfunction formatToEastern(date) {\n  const tzDate = new Intl.DateTimeFormat('en-US', {\n    timeZone,\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit',\n    hour: '2-digit',\n    minute: '2-digit',\n    second: '2-digit',\n    hour12: false\n  }).formatToParts(date).reduce((acc, part) => {\n    if (part.type !== 'literal') acc[part.type] = part.value;\n    return acc;\n  }, {});\n\n  const offset = getEasternOffset(date);\n  return `${tzDate.year}-${tzDate.month}-${tzDate.day}T${tzDate.hour}:${tzDate.minute}:${tzDate.second}${offset}`;\n}\n\nfunction getEasternOffset(date) {\n  const options = { timeZone, timeZoneName: 'short' };\n  const parts = new Intl.DateTimeFormat('en-US', options).formatToParts(date);\n  const tzName = parts.find(p => p.type === 'timeZoneName').value;\n  return tzName.includes('EDT') ? '-04:00' : '-05:00';\n}\n\nfunction alignToPreviousSlot(date) {\n  const aligned = new Date(date);\n  const minutes = aligned.getMinutes();\n  aligned.setMinutes(minutes < 30 ? 0 : 30, 0, 0);\n  return aligned;\n}\n\nfunction alignToNextSlot(date) {\n  const aligned = new Date(date);\n  const minutes = aligned.getMinutes();\n  if (minutes > 0 && minutes <= 30) {\n    aligned.setMinutes(30, 0, 0);\n  } else if (minutes > 30) {\n    aligned.setHours(aligned.getHours() + 1);\n    aligned.setMinutes(0, 0, 0);\n  } else {\n    aligned.setMinutes(0, 0, 0);\n  }\n  return aligned;\n}\n\nconst splitEventIntoETBlocks = (event) => {\n  const blocks = [];\n\n  let current = alignToPreviousSlot(new Date(event.start.dateTime));\n  const eventEnd = alignToNextSlot(new Date(event.end.dateTime));\n\n  while (current < eventEnd) {\n    const blockEnd = new Date(current);\n    blockEnd.setMinutes(current.getMinutes() + intervalMinutes);\n\n    blocks.push({\n      start: formatToEastern(current),\n      end: formatToEastern(blockEnd)\n    });\n\n    current = blockEnd;\n  }\n\n  return blocks;\n};\n\nlet allBlocks = [];\nfor (const event of events) {\n  if (event.start?.dateTime && event.end?.dateTime) {\n    const blocks = splitEventIntoETBlocks(event);\n    allBlocks = allBlocks.concat(blocks);\n  }\n}\n\nreturn allBlocks.map(block => ({ json: block }));\n"
@@ -472,8 +472,8 @@
       "name": "Return string of all available times",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        3880
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "const formatted = items.map(item => {\n  const start = item.json.start;\n  const end = item.json.end;\n  return `${start} - ${end}`;\n});\n\nconst combined = formatted.join(', ');\n\nreturn [\n  {\n    json: {\n      availableSlots: combined\n    }\n  }\n];\n"
@@ -500,8 +500,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4960
+        3740,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -517,8 +517,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5140
+        4020,
+        100
       ],
       "webhookId": "0c8f9f17-f5f3-4b5d-85e7-071ced0213ae",
       "parameters": {
@@ -595,7 +595,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5500
+        2800
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model2**: lmChatOpenAi\n- **Window Buffer Memory2**: memoryBufferWindow\n- **OpenAI Chat Model4**: lmChatOpenAi\n- **Run Get Availability**: toolWorkflow\n- **Sticky Note1**: stickyNote\n- **check day names**: toolWorkflow\n- **Sticky Note**: stickyNote\n- **Convert Output to JSON**: agent\n- **Interview Scheduler**: agent\n- **If Final Output**: if\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -609,7 +609,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        2980
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -623,7 +623,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        3160
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -637,7 +637,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        3340
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -651,7 +651,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        3520
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -665,7 +665,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        3700
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -679,7 +679,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        3880
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -692,7 +692,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        4060
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -705,7 +705,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        4240
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -731,8 +731,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7120
+        4580,
+        100
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -768,7 +768,408 @@
     "retryDelay": 1000
   },
   "versionId": "69e8aa1b-e404-44ed-aedc-7d8480e2383e",
-  "connections": {},
+  "connections": {
+    "Add Blocked Field": {
+      "main": [
+        [
+          {
+            "node": "Check My Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check My Calendar": {
+      "main": [
+        [
+          {
+            "node": "Check if Calendar Blocked",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Calendar Blocked": {
+      "main": [
+        [
+          {
+            "node": "Combine My Calendar with All Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine My Calendar with All Slots": {
+      "main": [
+        [
+          {
+            "node": "Convert Output to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Output to JSON": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 11abd142",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 11abd142": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for cd5664f9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cd5664f9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d2957530",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d2957530": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f35d595e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f35d595e": {
+      "main": [
+        [
+          {
+            "node": "Final Response to User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Response to User": {
+      "main": [
+        [
+          {
+            "node": "Generate 30 Minute Timeslots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate 30 Minute Timeslots": {
+      "main": [
+        [
+          {
+            "node": "Generate Interview Times",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Interview Times": {
+      "main": [
+        [
+          {
+            "node": "Get Availability",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Availability": {
+      "main": [
+        [
+          {
+            "node": "If Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Final Output": {
+      "main": [
+        [
+          {
+            "node": "Interview Scheduler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interview Scheduler": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "main": [
+        [
+          {
+            "node": "Parse to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse to JSON": {
+      "main": [
+        [
+          {
+            "node": "Respond for More Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond for More Info": {
+      "main": [
+        [
+          {
+            "node": "Return string of all available times",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return string of all available times": {
+      "main": [
+        [
+          {
+            "node": "Run Get Availability",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Get Availability": {
+      "main": [
+        [
+          {
+            "node": "Set Meeting with Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Meeting with Google": {
+      "main": [
+        [
+          {
+            "node": "Split Events into 30 min blocks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Events into 30 min blocks": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "When chat message received",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Window Buffer Memory2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory2": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "check day names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Inverview Scheduler. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

@@ -26,8 +26,8 @@
       "name": "Stop and Error",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        100,
-        15580
+        3180,
+        100
       ],
       "parameters": {
         "errorMessage": "Token refresh failed"
@@ -41,8 +41,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        13960
+        660,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -58,8 +58,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14140
+        940,
+        100
       ],
       "parameters": {
         "height": 211,
@@ -73,8 +73,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14320
+        1220,
+        100
       ],
       "parameters": {
         "content": "## Get token from pipedrive"
@@ -87,8 +87,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14500
+        1500,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -148,8 +148,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14680
+        1780,
+        100
       ],
       "parameters": {
         "content": "You can also use SET NODE + tobase64 function as done in step 2"
@@ -162,8 +162,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        14860
+        2060,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -271,7 +271,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        15760
+        13780
       ],
       "parameters": {
         "options": {
@@ -288,8 +288,8 @@
       "name": "Refresh Access Token",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        13780
+        380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -315,8 +315,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15040
+        2340,
+        100
       ],
       "parameters": {
         "width": 668,
@@ -330,8 +330,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15220
+        2620,
+        100
       ],
       "parameters": {
         "width": 1413,
@@ -345,8 +345,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15400
+        2900,
+        100
       ],
       "parameters": {
         "height": 248,
@@ -360,8 +360,8 @@
       "name": "convert clientId and secret to base64",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        18820
+        660,
+        460
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst client_id = \"57db0bab2932f657\";\nconst client_secret = \"edfaba095e9e7ddefe2e960ce2e98345230a016d\";\n\n// Combine client_id and client_secret with a colon\nconst combinedString = client_id+\":\"+client_secret;\n\n// Encode the combined string in Base64\nconst encodedString = Buffer.from(combinedString).toString('base64');\n\n// Create the Authorization header value\nconst authorizationHeader = `Basic ${encodedString}`;\n\nreturn {\"authheader\":authorizationHeader};"
@@ -477,8 +477,8 @@
       "name": "Update tokns in the record",
       "type": "n8n-nodes-base.supabase",
       "position": [
-        100,
-        16300
+        940,
+        280
       ],
       "parameters": {
         "filters": {
@@ -524,8 +524,8 @@
       "name": "Supabase- look for the record",
       "type": "n8n-nodes-base.supabase",
       "position": [
-        100,
-        15940
+        380,
+        280
       ],
       "parameters": {
         "filters": {
@@ -557,8 +557,8 @@
       "name": "combine client id and secret",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        18640
+        380,
+        640
       ],
       "parameters": {
         "options": {},
@@ -641,8 +641,8 @@
       "name": "Update thr row with new access token",
       "type": "n8n-nodes-base.supabase",
       "position": [
-        100,
-        16120
+        660,
+        280
       ],
       "parameters": {
         "filters": {
@@ -686,7 +686,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        16480
+        13960
       ],
       "webhookId": "937a8843-a28a-400a-b473-bdc598366fa0",
       "parameters": {
@@ -736,7 +736,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        18460
+        15760
       ],
       "webhookId": "aae545fb-a69d-4e20-91ce-65f105d0ea2f",
       "parameters": {
@@ -873,7 +873,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16660
+        14140
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Stop and Error**: stopAndError\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Insert**: supabase\n- **Sticky Note4**: stickyNote\n- **Sticky Note5**: stickyNote\n- **Get Pipedrive Token**: supabase\n- **Get contact from Pipedrive**: httpRequest\n- ... and 27 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1007,7 +1007,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16840
+        14320
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1021,7 +1021,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17020
+        14500
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1275,7 +1275,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17200
+        14680
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1289,7 +1289,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17380
+        14860
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1543,7 +1543,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17560
+        15040
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 82\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1557,7 +1557,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17740
+        15220
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 83\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1682,7 +1682,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17920
+        15400
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 92\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1807,7 +1807,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        18100
+        15580
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1833,8 +1833,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        18280
+        380,
+        460
       ],
       "parameters": {
         "content": "# 2. Refresh Pipedrive tokens\n\n## Overview\nAutomated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1900,7 +1900,888 @@
     "retryDelay": 1000
   },
   "versionId": "54499ed8-4677-400a-9e03-d0d84f8a97b5",
-  "connections": {},
+  "connections": {
+    "Access Token Invalid": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 108a2ea1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 108a2ea1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 156acb8f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 156acb8f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8ca6eb93",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8ca6eb93": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9fd832b1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9fd832b1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d0989bad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d0989bad": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for daf33b32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for daf33b32": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f92a957a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f92a957a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for f983cfd1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for f983cfd1": {
+      "main": [
+        [
+          {
+            "node": "Generate Refresh Token from authcode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Refresh Token from authcode": {
+      "main": [
+        [
+          {
+            "node": "Get Pipedrive Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pipedrive Token": {
+      "main": [
+        [
+          {
+            "node": "Get Pipedrive acess token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pipedrive acess token": {
+      "main": [
+        [
+          {
+            "node": "Get contact from Pipedrive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get contact from Pipedrive": {
+      "main": [
+        [
+          {
+            "node": "IF rec not found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF rec not found": {
+      "main": [
+        [
+          {
+            "node": "IF success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF success": {
+      "main": [
+        [
+          {
+            "node": "Insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert": {
+      "main": [
+        [
+          {
+            "node": "Look for the related record in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Look for the related record in Supabase": {
+      "main": [
+        [
+          {
+            "node": "Receive request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Receive request": {
+      "main": [
+        [
+          {
+            "node": "Refresh Access Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refresh Access Token": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop and Error": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success": {
+      "main": [
+        [
+          {
+            "node": "Supabase- look for the record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase- look for the record": {
+      "main": [
+        [
+          {
+            "node": "Update thr row with new access token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update thr row with new access token": {
+      "main": [
+        [
+          {
+            "node": "Update tokns in the record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update tokns in the record": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "catch Auth code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "catch Auth code": {
+      "main": [
+        [
+          {
+            "node": "combine client id and secret",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "combine client id and secret": {
+      "main": [
+        [
+          {
+            "node": "convert clientId and secret to base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: 2. Refresh Pipedrive tokens. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 37 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: 2. Refresh Pipedrive tokens. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

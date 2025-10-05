@@ -29,8 +29,8 @@
       "name": "Retrieve detailed call data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        6580
+        4020,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -57,8 +57,8 @@
       "name": "Get transcript",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5320
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -85,8 +85,8 @@
       "name": "Join Transcript to String",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        5860
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -109,8 +109,8 @@
       "name": "Isolate Notion Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        5500
+        2340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -211,8 +211,8 @@
       "name": "Join Affiliation",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5680
+        2620,
+        100
       ],
       "parameters": {
         "jsCode": "// Retrieve input data from all items\nconst inputData = $input.all();\nconst originalJson = inputData[0].json; // Get the original JSON data\nconst conversation = originalJson.Conversation;\nconst parties = originalJson.parties;\n\n// Create a mapping of speakerId to affiliation\nconst affiliationMap = {};\nparties.forEach(party => {\n  affiliationMap[party.speakerId] = party.affiliation;\n});\n\n// Replace speakerId with affiliation in the conversation data\nconst updatedConversation = conversation.map(entry => {\n  const affiliation = affiliationMap[entry.speaker] || 'Unknown'; // Fallback to 'Unknown' if not found\n  return {\n    ...entry,\n    speaker: affiliation, // Replace speakerId with affiliation\n  };\n});\n\n// Return the updated conversation along with the original JSON data\nreturn [{ json: { ...originalJson, updatedConversation } }];\n"
@@ -225,8 +225,8 @@
       "name": "Join conversation",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        6040
+        3180,
+        100
       ],
       "parameters": {
         "jsCode": "// Retrieve the original JSON data\nconst originalJson = $json;\nconst conversation = originalJson.updatedConversation;\n\n// Create an array to hold the formatted lines\nconst formattedLines = [];\n\n// Iterate over each entry in the conversation\nconversation.forEach(entry => {\n  const speaker = entry.speaker;\n  const texts = entry.text;\n\n  // Iterate over each text item and format it as \"speaker: text\"\n  texts.forEach(line => {\n    formattedLines.push(`${speaker}: ${line}`);\n  });\n});\n\n// Join the formatted lines with newline characters\nconst result = formattedLines.join('\\n');\n\n// Return the original JSON data along with the new conversationText field\nreturn [{ json: { ...originalJson, conversationText: result } }];\n"
@@ -239,8 +239,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7480
+        5420,
+        100
       ],
       "parameters": {
         "width": 340,
@@ -255,8 +255,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6760
+        4300,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -272,8 +272,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6940
+        4580,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -289,8 +289,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7120
+        4860,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -306,8 +306,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7300
+        5140,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -323,8 +323,8 @@
       "name": "Extract SF Opp Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4420
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -395,8 +395,8 @@
       "name": "Extract SF Opp Data1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4600
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -425,8 +425,8 @@
       "name": "Get Opp Data",
       "type": "n8n-nodes-base.salesforce",
       "position": [
-        100,
-        4960
+        1500,
+        100
       ],
       "parameters": {
         "resource": "opportunity",
@@ -447,8 +447,8 @@
       "name": "Get account data",
       "type": "n8n-nodes-base.salesforce",
       "position": [
-        100,
-        5140
+        1780,
+        100
       ],
       "parameters": {
         "resource": "account",
@@ -469,8 +469,8 @@
       "name": "Extract Call Data",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        4240
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -484,8 +484,8 @@
       "name": "Merge call and transcript Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        6400
+        3740,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -516,8 +516,8 @@
       "name": "Get External Attendees Emails",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4780
+        1220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -572,8 +572,8 @@
       "name": "Merge Enriched Transcript Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        6220
+        3460,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7660
+        5700,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 69c9ef1a-9ef4-4c3f-ab62-a5c9b2a10a4e",
@@ -650,7 +650,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        4240
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- **Retrieve detailed call data**: httpRequest\n- **Get transcript**: httpRequest\n- **Join Transcript to String**: set\n- **Isolate Notion Data**: set\n- **Join Affiliation**: code\n- **Join conversation**: code\n- **Sticky Note5**: stickyNote\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -694,7 +694,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        4420
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -708,7 +708,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        4600
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -782,7 +782,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        4780
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -796,7 +796,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        4960
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -870,7 +870,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        5140
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -884,7 +884,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        5320
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -925,7 +925,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        5500
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -966,7 +966,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        5680
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -992,8 +992,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        9460
+        5980,
+        100
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1015,7 +1015,484 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Aggregate Gong Call Transcript": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Salesforce data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Salesforce data": {
+      "main": [
+        [
+          {
+            "node": "Combine Salesforce Opp Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Salesforce Opp Data": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1c42e95b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1c42e95b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 69c9ef1a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 69c9ef1a": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Call Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Call Data": {
+      "main": [
+        [
+          {
+            "node": "Extract SF Opp Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract SF Opp Data": {
+      "main": [
+        [
+          {
+            "node": "Extract SF Opp Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract SF Opp Data1": {
+      "main": [
+        [
+          {
+            "node": "Get External Attendees Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get External Attendees Emails": {
+      "main": [
+        [
+          {
+            "node": "Get Opp Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Opp Data": {
+      "main": [
+        [
+          {
+            "node": "Get account data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get account data": {
+      "main": [
+        [
+          {
+            "node": "Get transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get transcript": {
+      "main": [
+        [
+          {
+            "node": "Isolate Notion Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Isolate Notion Data": {
+      "main": [
+        [
+          {
+            "node": "Join Affiliation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join Affiliation": {
+      "main": [
+        [
+          {
+            "node": "Join Transcript to String",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join Transcript to String": {
+      "main": [
+        [
+          {
+            "node": "Join conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join conversation": {
+      "main": [
+        [
+          {
+            "node": "Merge Enriched Transcript Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Enriched Transcript Data": {
+      "main": [
+        [
+          {
+            "node": "Merge call and transcript Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge call and transcript Data": {
+      "main": [
+        [
+          {
+            "node": "Retrieve detailed call data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve detailed call data": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Executeworkflowtrigger Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -6,7 +6,7 @@
       "type": "n8n-nodes-base.webhook",
       "position": [
         100,
-        9820
+        6580
       ],
       "webhookId": "06d29616-8fa9-42cf-8b5f-abe856083c75",
       "parameters": {
@@ -22,8 +22,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7660
+        2060,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -39,8 +39,8 @@
       "name": "Try Again",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        9460
+        4860,
+        100
       ],
       "parameters": {
         "options": {},
@@ -63,8 +63,8 @@
       "name": "Success",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        9100
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -226,8 +226,8 @@
       "name": "Update Event",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
-        100,
-        9640
+        5140,
+        100
       ],
       "parameters": {
         "eventId": "={{ $fromAI(\"eventID\") }}",
@@ -258,7 +258,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
         100,
-        10000
+        6760
       ],
       "parameters": {
         "inputSource": "passthrough"
@@ -271,8 +271,8 @@
       "name": "OpenAI Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        6760
+        660,
+        100
       ],
       "parameters": {
         "model": {
@@ -296,8 +296,8 @@
       "name": "calendarAgent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        12160
+        940,
+        280
       ],
       "parameters": {
         "workflowId": {
@@ -324,8 +324,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        8920
+        4020,
+        100
       ],
       "parameters": {
         "jsonSchemaExample": "{\n\t\"subject\": \"\",\n\t\"body\": \"\"\n}"
@@ -361,8 +361,8 @@
       "name": "Split Out owners",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        7480
+        1780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -410,8 +410,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7840
+        2340,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -496,8 +496,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8020
+        2620,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -513,8 +513,8 @@
       "name": "If a contact is created",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        6580
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -575,8 +575,8 @@
       "name": "Write a personalized message",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        11980
+        660,
+        280
       ],
       "parameters": {
         "text": "=Your task is to write a personalized Welcome email to a recipient.\nWrite also to indicate him that he will receive shortly an invitation for a meeting to resolve his doubts. Use for that the calendarAgent.\nUse the \"Sender's calendar ID\" as the Calendar. And the \"Recipient email\" as an attendee\n\n## Tools\n- calendarAgent: Use this tool to take action in calendar. Send it a query like \"Schedule a meeting with attendee 'Recipient email' on 'Sender's calendar ID' calendar.\"\n\n## Rules\n- Some actions require you to look up contact information first. For the following actions, you must get contact information and send that to the agent who needs it:\n- creating calendar event with attendee, create it as son as there is some free slot\n\nreturn the message as a json like this one:{\"subject\":\"Subject of the message\",\"body\":\"Body of the message\"}\n\n## Use the variables below\nSender's name:  {{ $('Enter your company data here').item.json.sender_name }}\nSender's email: {{ $('Enter your company data here').item.json.sender_email }}\nSender's company name: {{ $('Enter your company data here').item.json.company_name }}\nSender's company activity: {{ $('Enter your company data here').item.json.company_activity }}\nSender's calendar ID: zeerobug@gmail.com\nRecipient first name: {{ $json.properties.firstname.value }}\nRecipient last name: {{ $json.properties.lastname }}\nRecipient email: {{ $json.properties.email.value }}",
@@ -594,8 +594,8 @@
       "name": "Send the message",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        7120
+        1220,
+        100
       ],
       "webhookId": "d1d18d77-71ad-4eab-91c6-08b6a9f5d736",
       "parameters": {
@@ -620,8 +620,8 @@
       "name": "Set owner to contact",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        100,
-        7300
+        1500,
+        100
       ],
       "parameters": {
         "email": "={{ $('Get all info about the contact').item.json.properties.email.value }}",
@@ -645,8 +645,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8200
+        2900,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -662,8 +662,8 @@
       "name": "Transforms markdown to HTML",
       "type": "n8n-nodes-base.markdown",
       "position": [
-        100,
-        9280
+        4580,
+        100
       ],
       "parameters": {
         "mode": "markdownToHtml",
@@ -678,8 +678,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8380
+        3180,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -695,8 +695,8 @@
       "name": "OpenAI Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        6940
+        940,
+        100
       ],
       "parameters": {
         "model": "gpt-4o",
@@ -716,8 +716,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8560
+        3460,
+        100
       ],
       "parameters": {
         "width": 320,
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8740
+        3740,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 359d7296-a8e9-494c-b519-cca62c0805df",
@@ -899,7 +899,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10180
+        6940
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Node Types**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Webhook**: webhook\n- **Sticky Note**: stickyNote\n- **Try Again**: set\n- **Success**: set\n- **Calendar Agent**: agent\n- **Create Event with Attendee**: googleCalendarTool\n- **Create Event**: googleCalendarTool\n- **Get Events**: googleCalendarTool\n- **Delete Event**: googleCalendarTool\n- **Update Event**: googleCalendarTool\n- ... and 32 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -943,7 +943,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10360
+        7120
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -957,7 +957,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10540
+        7300
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1031,7 +1031,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10720
+        7480
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1045,7 +1045,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10900
+        7660
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1119,7 +1119,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11080
+        7840
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1133,7 +1133,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11260
+        8020
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1174,7 +1174,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11440
+        8200
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1215,7 +1215,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        11620
+        8380
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1241,8 +1241,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        11800
+        380,
+        280
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 18 different services: webhook, stickyNote, httpRequest, filter, markdown. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1263,7 +1263,645 @@
       }
     }
   ],
-  "connections": {},
+  "connections": {
+    "Calendar Agent": {
+      "main": [
+        [
+          {
+            "node": "Create Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event": {
+      "main": [
+        [
+          {
+            "node": "Create Event with Attendee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event with Attendee": {
+      "main": [
+        [
+          {
+            "node": "Delete Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "main": [
+        [
+          {
+            "node": "Enter your company data here",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enter your company data here": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 359d7296",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 359d7296": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7ce45da8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7ce45da8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8c088b37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8c088b37": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8cfb90e5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8cfb90e5": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 91a0e49a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 91a0e49a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for aedbe138",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for aedbe138": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b9256d00",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b9256d00": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c0e5511a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c0e5511a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c5cc3550",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c5cc3550": {
+      "main": [
+        [
+          {
+            "node": "Get Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events": {
+      "main": [
+        [
+          {
+            "node": "Get all info about the contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all info about the contact": {
+      "main": [
+        [
+          {
+            "node": "Get current owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get current owner": {
+      "main": [
+        [
+          {
+            "node": "Get list of owners",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get list of owners": {
+      "main": [
+        [
+          {
+            "node": "HubSpot Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot Trigger": {
+      "main": [
+        [
+          {
+            "node": "If a contact is created",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If a contact is created": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Model": {
+      "main": [
+        [
+          {
+            "node": "Send the message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send the message": {
+      "main": [
+        [
+          {
+            "node": "Set owner to contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set owner to contact": {
+      "main": [
+        [
+          {
+            "node": "Split Out owners",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out owners": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Success": {
+      "main": [
+        [
+          {
+            "node": "Transforms markdown to HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transforms markdown to HTML": {
+      "main": [
+        [
+          {
+            "node": "Try Again",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Try Again": {
+      "main": [
+        [
+          {
+            "node": "Update Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event": {
+      "main": [
+        [
+          {
+            "node": "Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "When Executed by Another Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Write a personalized message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write a personalized message": {
+      "main": [
+        [
+          {
+            "node": "calendarAgent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Webhook Workflow",
   "settings": {
     "executionOrder": "v1",

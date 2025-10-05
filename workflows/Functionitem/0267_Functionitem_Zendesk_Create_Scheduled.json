@@ -17,8 +17,8 @@
       "name": "NoOp",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3880
+        1500,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "Get last execution timestamp",
       "type": "n8n-nodes-base.functionItem",
       "position": [
-        100,
-        3340
+        660,
+        100
       ],
       "parameters": {
         "functionCode": "// Code here will run once per input item.\n// More info and help: {{ $env.WEBHOOK_URL }}\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\n// Add a new field called 'myNewField' to the JSON of the item\nconst staticData = getWorkflowStaticData('global');\n\nif(!staticData.lastExecution){\n  staticData.lastExecution = new Date().toISOString();\n}\n\nitem.executionTimeStamp = new Date().toISOString();\nitem.lastExecution = staticData.lastExecution;\n\n\nreturn item;"
@@ -43,8 +43,8 @@
       "name": "Set new last execution timestamp",
       "type": "n8n-nodes-base.functionItem",
       "position": [
-        100,
-        5320
+        3740,
+        100
       ],
       "parameters": {
         "functionCode": "// Code here will run once per input item.\n// More info and help: {{ $env.WEBHOOK_URL }}\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\n// Add a new field called 'myNewField' to the JSON of the item\nconst staticData = getWorkflowStaticData('global');\n\nstaticData.lastExecution = $item(0).$node[\"Get last execution timestamp\"].executionTimeStamp;\n\nreturn item;"
@@ -58,8 +58,8 @@
       "name": "Pipedrive person Id found",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        4420
+        2340,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -79,8 +79,8 @@
       "name": "NoOp1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        4060
+        1780,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -91,8 +91,8 @@
       "name": "Get Zendesk comments for tickets",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        3160
+        380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -145,8 +145,8 @@
       "name": "Get tickets updated after last execution",
       "type": "n8n-nodes-base.zendesk",
       "position": [
-        100,
-        3520
+        940,
+        100
       ],
       "parameters": {
         "options": {
@@ -191,8 +191,8 @@
       "name": "Rename fields and keep only needed fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4960
+        3180,
+        100
       ],
       "parameters": {
         "values": {
@@ -220,8 +220,8 @@
       "name": "Search persons by email",
       "type": "n8n-nodes-base.pipedrive",
       "position": [
-        100,
-        5140
+        3460,
+        100
       ],
       "parameters": {
         "term": "={{ $json[\"SearchEmail\"] }}",
@@ -245,8 +245,8 @@
       "name": "Remove duplicates to make search efficient",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        100,
-        4780
+        2900,
+        100
       ],
       "parameters": {
         "compare": "selectedFields",
@@ -268,8 +268,8 @@
       "name": "Set search email",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        5500
+        4020,
+        100
       ],
       "parameters": {
         "values": {
@@ -291,8 +291,8 @@
       "name": "Process commenst per ticket",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        4600
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -306,8 +306,8 @@
       "name": "New comment",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        3700
+        1220,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -328,8 +328,8 @@
       "name": "Split comments to seperate items",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        100,
-        5680
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -367,8 +367,8 @@
       "name": "NoOp2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        4240
+        2060,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7480
+        4860,
+        100
       ],
       "parameters": {
         "content": "# Noop Workflow\n\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 22 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -466,8 +466,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7660
+        5140,
+        100
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **NoOp**: noOp\n- **Get last execution timestamp**: functionItem\n- **Set new last execution timestamp**: functionItem\n- **Pipedrive person Id found**: if\n- **NoOp1**: noOp\n- **Get Zendesk comments for tickets**: httpRequest\n- **Add comments to tickets**: merge\n- **Add Pipedrive person Id to Zendesk tickets**: merge\n- **Get tickets updated after last execution**: zendesk\n- **Channel is email**: if\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -496,7 +496,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        3160
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -510,7 +510,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        3340
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -554,7 +554,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        3520
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -568,7 +568,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        3700
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -612,7 +612,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        3880
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -626,7 +626,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        4060
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -653,7 +653,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        4240
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -680,7 +680,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        4420
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -706,8 +706,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7300
+        4580,
+        100
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -728,7 +728,402 @@
       }
     }
   ],
-  "connections": {},
+  "connections": {
+    "Add Pipedrive person Id to Zendesk tickets": {
+      "main": [
+        [
+          {
+            "node": "Add comment as a note in Pipedrive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add comment as a note in Pipedrive": {
+      "main": [
+        [
+          {
+            "node": "Add comments to tickets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add comments to tickets": {
+      "main": [
+        [
+          {
+            "node": "Channel is email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Channel is email": {
+      "main": [
+        [
+          {
+            "node": "Done processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Done processing": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for e8a01cec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e8a01cec": {
+      "main": [
+        [
+          {
+            "node": "Every day at 09:00",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every day at 09:00": {
+      "main": [
+        [
+          {
+            "node": "Get Zendesk comments for tickets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Zendesk comments for tickets": {
+      "main": [
+        [
+          {
+            "node": "Get last execution timestamp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get last execution timestamp": {
+      "main": [
+        [
+          {
+            "node": "Get tickets updated after last execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get tickets updated after last execution": {
+      "main": [
+        [
+          {
+            "node": "New comment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New comment": {
+      "main": [
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp": {
+      "main": [
+        [
+          {
+            "node": "NoOp1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp1": {
+      "main": [
+        [
+          {
+            "node": "NoOp2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp2": {
+      "main": [
+        [
+          {
+            "node": "Pipedrive person Id found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pipedrive person Id found": {
+      "main": [
+        [
+          {
+            "node": "Process commenst per ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process commenst per ticket": {
+      "main": [
+        [
+          {
+            "node": "Remove duplicates to make search efficient",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove duplicates to make search efficient": {
+      "main": [
+        [
+          {
+            "node": "Rename fields and keep only needed fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename fields and keep only needed fields": {
+      "main": [
+        [
+          {
+            "node": "Search persons by email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search persons by email": {
+      "main": [
+        [
+          {
+            "node": "Set new last execution timestamp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set new last execution timestamp": {
+      "main": [
+        [
+          {
+            "node": "Set search email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set search email": {
+      "main": [
+        [
+          {
+            "node": "Split comments to seperate items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split comments to seperate items": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation 1": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Noop Workflow",
   "description": "Automated workflow: Noop Workflow. This workflow processes data and performs automated tasks.",
   "settings": {

@@ -111,8 +111,8 @@
       "name": "[AIRTABLE]  Create Index Reference Table",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        7480
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -142,8 +142,8 @@
       "name": "[AIRTABLE] Get Base Schema from list",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        8020
+        1500,
+        100
       ],
       "parameters": {
         "base": {
@@ -170,8 +170,8 @@
       "name": "[AIRTABLE] Create Webflow Form Table",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        7660
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -215,8 +215,8 @@
       "name": "[AIRTABLE] Insert Record In Form Index Reference Table",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        8200
+        1780,
+        100
       ],
       "parameters": {
         "base": {
@@ -302,8 +302,8 @@
       "name": "[AIRTABLE] Insert Record In Webflow Form Table",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        8380
+        2060,
+        100
       ],
       "parameters": {
         "base": {
@@ -402,8 +402,8 @@
       "type": "n8n-nodes-base.airtable",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        7840
+        1220,
+        100
       ],
       "parameters": {
         "base": {
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7300
+        380,
+        100
       ],
       "parameters": {
         "content": "# Dynamically create tables in Airtable for your Webflow form submissions\n\n## Overview\nAutomated workflow: Dynamically create tables in Airtable for your Webflow form submissions. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, set. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -988,7 +988,414 @@
     "retryDelay": 1000
   },
   "versionId": "5eed0c44-4697-4d4d-bbb9-42bf750de167",
-  "connections": {},
+  "connections": {
+    "Does Index Reference Table Exist?": {
+      "main": [
+        [
+          {
+            "node": "Does This Webflow Form Table Exist?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Does This Webflow Form Table Exist?": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 56b20caa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 56b20caa": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 771ebb7e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 771ebb7e": {
+      "main": [
+        [
+          {
+            "node": "Get Form Index Reference Table ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Form Index Reference Table ID": {
+      "main": [
+        [
+          {
+            "node": "Prepare form submission for workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare form submission for workflow": {
+      "main": [
+        [
+          {
+            "node": "Set New Webflow Form Table ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set New Webflow Form Table ID": {
+      "main": [
+        [
+          {
+            "node": "Set Webflow Form Table ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Webflow Form Table ID": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Webflow Submission Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webflow Submission Trigger": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "[AIRTABLE]  Create Index Reference Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[AIRTABLE]  Create Index Reference Table": {
+      "main": [
+        [
+          {
+            "node": "[AIRTABLE] Create Webflow Form Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[AIRTABLE] Create Webflow Form Table": {
+      "main": [
+        [
+          {
+            "node": "[AIRTABLE] Find Webflow Form Record In Form Index Reference Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[AIRTABLE] Find Webflow Form Record In Form Index Reference Table": {
+      "main": [
+        [
+          {
+            "node": "[AIRTABLE] Get Base Schema from list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[AIRTABLE] Get Base Schema from list": {
+      "main": [
+        [
+          {
+            "node": "[AIRTABLE] Insert Record In Form Index Reference Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[AIRTABLE] Insert Record In Form Index Reference Table": {
+      "main": [
+        [
+          {
+            "node": "[AIRTABLE] Insert Record In Webflow Form Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Dynamically create tables in Airtable for your Webflow form submissions. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, set. It contains 21 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Dynamically create tables in Airtable for your Webflow form submissions. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

@@ -83,8 +83,8 @@
       "name": "reply to warn that file is missing",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        3160
+        940,
+        100
       ],
       "parameters": {
         "text": "There is no file in message.Please check.",
@@ -101,8 +101,8 @@
       "name": "rename file to as attachment out email",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        2800
+        380,
+        100
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.binary.data.fileName = item.json.message.document.file_name;\n}\n\nreturn $input.all();"
@@ -115,8 +115,8 @@
       "name": "send email with the file as attchament to kindle",
       "type": "n8n-nodes-base.microsoftOutlook",
       "position": [
-        100,
-        3340
+        1220,
+        100
       ],
       "parameters": {
         "subject": "book from telegram bot",
@@ -141,8 +141,8 @@
       "name": "reply to telegram chat that the file has been sent successfully",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        2980
+        660,
+        100
       ],
       "parameters": {
         "text": "file  is sent to kindle successfully!",
@@ -355,7 +355,182 @@
     "retryDelay": 1000
   },
   "versionId": "624798e9-5f62-4c14-9bf3-5ad92b8713e6",
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 5dec7f0b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 5dec7f0b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 6e581437",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6e581437": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8c927ee3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8c927ee3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "check if there is a file in the message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check if there is a file in the message": {
+      "main": [
+        [
+          {
+            "node": "receive file message from telegram bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "receive file message from telegram bot": {
+      "main": [
+        [
+          {
+            "node": "rename file to as attachment out email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "rename file to as attachment out email": {
+      "main": [
+        [
+          {
+            "node": "reply to telegram chat that the file has been sent successfully",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reply to telegram chat that the file has been sent successfully": {
+      "main": [
+        [
+          {
+            "node": "reply to warn that file is missing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reply to warn that file is missing": {
+      "main": [
+        [
+          {
+            "node": "send email with the file as attchament to kindle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: send file to kindle through telegram bot. This workflow integrates 7 different services: telegramTrigger, microsoftOutlook, stickyNote, telegram, code. It contains 11 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: send file to kindle through telegram bot. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

@@ -76,8 +76,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        15760
+        4580,
+        100
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -93,8 +93,8 @@
       "name": "Summarize & Analyze Transcript",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        19000
+        9620,
+        100
       ],
       "parameters": {
         "text": "=Please analyze the given text and create a structured summary following these guidelines:\n\n1. Break down the content into main topics using Level 2 headers (##)\n2. Under each header:\n   - List only the most essential concepts and key points\n   - Use bullet points for clarity\n   - Keep explanations concise\n   - Preserve technical accuracy\n   - Highlight key terms in bold\n3. Format requirements:\n   - Use markdown formatting\n   - Keep bullet points simple (no nesting)\n   - Bold important terms using **term**\n   - Use tables for comparisons\n   - Include relevant technical details\n\nPlease provide a clear, structured summary that captures the core concepts while maintaining technical accuracy.\n\n**Make sure the summary is 300-400 max characters long.**\n\nInclude metadata such as video number, id, and title in the summary.\n\n**Here is the text**\n\nVideo number: {{ $json.video_number }}\nTitle: {{ $json.title }}\nYoutube ID: {{ $json.youtubeId }}\nTranscript:\n{{ $json.transcript_text }}",
@@ -132,8 +132,8 @@
       "name": "Split Out1",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        15940
+        4860,
+        100
       ],
       "parameters": {
         "options": {},
@@ -161,8 +161,8 @@
       "name": "Qdrant Vector Store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14320
+        2340,
+        100
       ],
       "parameters": {
         "mode": "insert",
@@ -187,8 +187,8 @@
       "name": "Recursive Character Text Splitter",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15040
+        3460,
+        100
       ],
       "parameters": {
         "options": {},
@@ -283,8 +283,8 @@
       "name": "Video Titles",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        19900
+        11020,
+        100
       ],
       "parameters": {
         "options": {},
@@ -298,8 +298,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        13060
+        380,
+        100
       ],
       "parameters": {
         "mode": "combineBySql",
@@ -522,8 +522,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17020
+        6540,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -539,8 +539,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17200
+        6820,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -572,8 +572,8 @@
       "name": "YouTube Transcript",
       "type": "n8n-nodes-youtube-transcription-dmr.youtubeTranscripter",
       "position": [
-        100,
-        21880
+        11580,
+        100
       ],
       "parameters": {
         "videoId": "={{ $json.id }}",
@@ -587,8 +587,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17380
+        7100,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -604,8 +604,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17560
+        7380,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -621,8 +621,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17740
+        7660,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -639,8 +639,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        13240
+        660,
+        100
       ],
       "parameters": {
         "text": "= {{ $('Chat').item.json.chatInput }}",
@@ -660,8 +660,8 @@
       "name": "Structured Output Parser1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        18820
+        9340,
+        100
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"intent\": \"PLAYLIST|VIDEO|NONE\",\n  \"url\": \"Youtube Playlist or Video URL or empty string,\",\n  \"id\": \"Youtube Playlist or Video ID or empty string,\",\n  \"limit\": \"number of playlist videos to process or 0\",\n  \"status\": \"PENDING|READY|DONE\"\n}"
@@ -674,8 +674,8 @@
       "name": "Update Context Intent",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        19180
+        9900,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -727,8 +727,8 @@
       "name": "Route Message Intent",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        15220
+        3740,
+        100
       ],
       "parameters": {
         "rules": {
@@ -797,8 +797,8 @@
       "name": "Process Status",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        14140
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nif ($input.last().json.output.intent == 'VIDEO') {\n  $input.last().json.output.status = 'READY'\n}\n\nelse if ($input.last().json.output.intent == 'PLAYLIST' && parseInt($input.last().json.output.limit) > 0) {\n  $input.last().json.output.status = 'READY'\n}\n\nelse {\n  $input.last().json.output = {\n    intent: $('Default Intent').first().json.output.intent,\n    url: $('Default Intent').first().json.output.url,\n    id: $('Default Intent').first().json.output.id,\n    limit: $('Default Intent').first().json.output.limit,\n    status: 'PENDING',\n  }\n}\n\n\nreturn $input.all();"
@@ -811,8 +811,8 @@
       "name": "Simple Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15400
+        4020,
+        100
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -826,8 +826,8 @@
       "name": "Simple Memory3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15580
+        4300,
+        100
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -841,8 +841,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17920
+        7940,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -879,8 +879,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        18280
+        8500,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -896,8 +896,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16660
+        5980,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -913,8 +913,8 @@
       "name": "Numb of Videos",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        13420
+        940,
+        100
       ],
       "parameters": {
         "text": "={{ $('Chat').item.json.chatInput }}",
@@ -945,8 +945,8 @@
       "name": "Playlist Limit",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        13780
+        1500,
+        100
       ],
       "parameters": {
         "options": {},
@@ -989,8 +989,8 @@
       "name": "Playlist or Video",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        13960
+        1780,
+        100
       ],
       "parameters": {
         "rules": {
@@ -1070,8 +1070,8 @@
       "name": "Update Context Process Done1",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        19540
+        10460,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1116,8 +1116,8 @@
       "name": "Playlist HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        13600
+        1220,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1131,8 +1131,8 @@
       "name": "YouTube Transcript1",
       "type": "n8n-nodes-youtube-transcription-dmr.youtubeTranscripter",
       "position": [
-        100,
-        22060
+        11860,
+        100
       ],
       "parameters": {
         "videoId": "={{ $('Update Context Intent').item.json.output.id }}",
@@ -1146,8 +1146,8 @@
       "name": "Video HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        19720
+        10740,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1178,8 +1178,8 @@
       "name": "Split Out2",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        100,
-        16120
+        5140,
+        100
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -1219,8 +1219,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16840
+        6260,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1287,8 +1287,8 @@
       "name": "Qdrant Vector Store3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14680
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1328,8 +1328,8 @@
       "name": "Qdrant Vector Store4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14860
+        3180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1411,8 +1411,8 @@
       "name": "Qdrant Vector Store2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14500
+        2620,
+        100
       ],
       "parameters": {
         "mode": "load",
@@ -1514,8 +1514,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16300
+        5420,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1531,8 +1531,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16480
+        5700,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -1548,8 +1548,8 @@
       "name": "Update Context Intent1",
       "type": "n8n-nodes-base.redis",
       "position": [
-        100,
-        19360
+        10180,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1572,8 +1572,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        18100
+        8220,
+        100
       ],
       "parameters": {
         "width": 1080,
@@ -1604,8 +1604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18460
+        8780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in fa6b8a79-436e-4742-9732-cd5c1b2d3c88",
@@ -1619,8 +1619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18640
+        9060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 41a07802-3fba-42fa-8482-f526a7e1b173",
@@ -1845,7 +1845,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20080
+        13060
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 89\n- **Node Types**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Gemini Chat Model1**: lmChatGoogleGemini\n- **Handle Queries**: agent\n- **Split Out**: splitOut\n- **Summarize & Analyze Transcript**: chainLlm\n- **Concatenate**: summarize\n- **Split Out1**: splitOut\n- **Limit**: limit\n- **Qdrant Vector Store**: vectorStoreQdrant\n- **Recursive Character Text Splitter**: textSplitterRecursiveCharacterTextSplitter\n- **Embeddings Google Gemini**: embeddingsGoogleGemini\n- ... and 79 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1904,7 +1904,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20260
+        13240
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 93\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1918,7 +1918,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20440
+        13420
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 94\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2022,7 +2022,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20620
+        13600
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 101\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2036,7 +2036,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20800
+        13780
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 102\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2140,7 +2140,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20980
+        13960
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 109\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2154,7 +2154,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21160
+        14140
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 110\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2209,7 +2209,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21340
+        14320
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 114\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2264,7 +2264,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21520
+        14500
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2290,8 +2290,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        21700
+        11300,
+        100
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2327,7 +2327,1222 @@
     "retryDelay": 1000
   },
   "versionId": "7c1d0978-ccea-4618-bcbf-560b34f77023",
-  "connections": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "main": [
+        [
+          {
+            "node": "Answer questions with a vector store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store1": {
+      "main": [
+        [
+          {
+            "node": "Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat": {
+      "main": [
+        [
+          {
+            "node": "Chat Buffer Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Buffer Memory": {
+      "main": [
+        [
+          {
+            "node": "Chat Buffer Memory1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Buffer Memory1": {
+      "main": [
+        [
+          {
+            "node": "Concatenate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Concatenate": {
+      "main": [
+        [
+          {
+            "node": "Concatenate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Concatenate1": {
+      "main": [
+        [
+          {
+            "node": "Count Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Count Content": {
+      "main": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "main": [
+        [
+          {
+            "node": "Default Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Intent": {
+      "main": [
+        [
+          {
+            "node": "Delete Collection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Collection": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Google Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Google Gemini1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Google Gemini2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini2": {
+      "main": [
+        [
+          {
+            "node": "Embeddings Google Gemini4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini4": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 1cbcec5e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1cbcec5e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 22f18788",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 22f18788": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 2aa52dd2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2aa52dd2": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 41a07802",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 41a07802": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 505077d1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 505077d1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 6f4ee00d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6f4ee00d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 71b60b8e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 71b60b8e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 75442631",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 75442631": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7c289d61",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7c289d61": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a3b23c6b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a3b23c6b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c0ecf826",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c0ecf826": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for cf1e5c50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cf1e5c50": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d3f71d59",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d3f71d59": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for fa6b8a79",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for fa6b8a79": {
+      "main": [
+        [
+          {
+            "node": "Full Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Full Summary": {
+      "main": [
+        [
+          {
+            "node": "Get Fields for Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Fields for Summary": {
+      "main": [
+        [
+          {
+            "node": "Get Playlist Videos Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Playlist Videos Data": {
+      "main": [
+        [
+          {
+            "node": "Get Previous Context Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Previous Context Intent": {
+      "main": [
+        [
+          {
+            "node": "Get Title and Desc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Title and Desc": {
+      "main": [
+        [
+          {
+            "node": "Get Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Videos": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model6": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model8": {
+      "main": [
+        [
+          {
+            "node": "Handle Queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Queries": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Manual Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Message Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message Intent": {
+      "main": [
+        [
+          {
+            "node": "Numb of Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Numb of Videos": {
+      "main": [
+        [
+          {
+            "node": "Playlist HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Playlist HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Playlist Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Playlist Limit": {
+      "main": [
+        [
+          {
+            "node": "Playlist or Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Playlist or Video": {
+      "main": [
+        [
+          {
+            "node": "Process Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Status": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store2": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store3": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store4": {
+      "main": [
+        [
+          {
+            "node": "Recursive Character Text Splitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "main": [
+        [
+          {
+            "node": "Route Message Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Message Intent": {
+      "main": [
+        [
+          {
+            "node": "Simple Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "main": [
+        [
+          {
+            "node": "Simple Memory3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory3": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note10": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note12": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Structured Output Parser1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "main": [
+        [
+          {
+            "node": "Summarize & Analyze Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize & Analyze Transcript": {
+      "main": [
+        [
+          {
+            "node": "Update Context Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Context Intent": {
+      "main": [
+        [
+          {
+            "node": "Update Context Intent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Context Intent1": {
+      "main": [
+        [
+          {
+            "node": "Update Context Process Done1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Context Process Done1": {
+      "main": [
+        [
+          {
+            "node": "Video HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Video Titles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video Titles": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "YouTube Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube Transcript": {
+      "main": [
+        [
+          {
+            "node": "YouTube Transcript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

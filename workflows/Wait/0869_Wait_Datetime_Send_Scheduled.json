@@ -39,8 +39,8 @@
       "type": "n8n-nodes-base.mySql",
       "onError": "continueRegularOutput",
       "position": [
-        100,
-        6760
+        2620,
+        100
       ],
       "parameters": {
         "query": "SELECT\n  --  budget_data.fiscal_year AS `Year`,\n  --  budget_data.cost_center AS `Cost Center`,\n    budget_data.budget_group AS `Budget Group`,\n--    budget_data.sort_order AS `Sort Order`,\n\n    -- YTD Totals up to previous month (up to dynamic month)\n    SUM(budget_data.budget_amount) AS `Budget YTD`,\n    SUM(COALESCE(actual_data.actual_amount, 0)) AS `Actual YTD`,\n    SUM(COALESCE(actual_data.actual_amount, 0)) - SUM(budget_data.budget_amount) AS `Variance YTD`,\n\n    -- Previous Month Totals Only\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN budget_data.budget_amount ELSE 0 END) AS `Budget PM`,\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN COALESCE(actual_data.actual_amount, 0) ELSE 0 END) AS `Actual PM`,\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN COALESCE(actual_data.actual_amount, 0) ELSE 0 END) -\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN budget_data.budget_amount ELSE 0 END) AS `Variance PM`\n\nFROM\n    (\n        SELECT\n            bg.budget_group_name AS budget_group,\n            bg.sort_order,\n            bgd.fiscal_year,\n            bgd.budget_month,\n            bgd.cost_center,\n            CAST(bgd.budget_amount AS DECIMAL(18,6)) AS budget_amount\n        FROM\n            `tabBudget Group Detail` bgd\n        JOIN\n            `tabBudget Group` bg ON bg.name = bgd.parent\n        WHERE\n            bgd.fiscal_year = {{ $('PreviousMonth').item.json.year }}\n            AND bgd.budget_month <= {{ $('PreviousMonth').item.json.previousMonth }}\n            AND bgd.cost_center = '{{ $json.CostCenter }}'\n    ) AS budget_data\n\nLEFT JOIN (\n    SELECT\n        acc.budget_group AS budget_group,\n        YEAR(gl.posting_date) AS fiscal_year,\n        MONTH(gl.posting_date) AS budget_month,\n        gl.cost_center,\n        SUM(\n            CASE \n                WHEN acc.root_type = 'Income' THEN gl.credit - gl.debit\n                WHEN acc.root_type = 'Expense' THEN gl.debit - gl.credit\n                ELSE 0\n            END\n        ) AS actual_amount\n    FROM\n        `tabGL Entry` gl\n    JOIN\n        `tabAccount` acc ON gl.account = acc.name\n    WHERE\n        acc.budget_group IS NOT NULL\n        AND acc.root_type IN ('Income', 'Expense')\n        AND gl.docstatus = 1\n        AND YEAR(gl.posting_date) = {{ $('PreviousMonth').item.json.year }}\n        AND MONTH(gl.posting_date) <= {{ $('PreviousMonth').item.json.previousMonth }}\n        AND gl.cost_center = '{{ $('Filter').item.json['Cost Center'] }}'\n    GROUP BY\n        acc.budget_group,\n        YEAR(gl.posting_date),\n        MONTH(gl.posting_date),\n        gl.cost_center\n) AS actual_data\nON\n    budget_data.budget_group = actual_data.budget_group AND\n    budget_data.fiscal_year = actual_data.fiscal_year AND\n    budget_data.budget_month = actual_data.budget_month AND\n    budget_data.cost_center = actual_data.cost_center\n\nGROUP BY\n    budget_data.fiscal_year,\n    budget_data.cost_center,\n    budget_data.budget_group,\n    budget_data.sort_order\n\nORDER BY\n    budget_data.cost_center,\n    budget_data.sort_order,\n    budget_data.budget_group;\n",
@@ -122,8 +122,8 @@
       "name": "Selected Cost Center",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4420
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -223,8 +223,8 @@
       "name": "verticalPL",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        6940
+        2900,
+        100
       ],
       "parameters": {
         "jsCode": "const rows = items;\n\n// Get column names from the first row\nconst headers = Object.keys(rows[0].json);\n\n// Build header HTML\nlet headerHtml = headers.map(col => `<th>${col}</th>`).join('');\n\n// Build rows\nlet bodyHtml = rows.map(row => {\n  return `<tr>${headers.map(col => `<td>${row.json[col]}</td>`).join('')}</tr>`;\n}).join('');\n\n// Combine into one table\nconst tableHtml = `\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">\n  <thead><tr>${headerHtml}</tr></thead>\n  <tbody>${bodyHtml}</tbody>\n</table>\n`;\n\nreturn [{ json: { table: tableHtml } }];\n"
@@ -299,8 +299,8 @@
       "name": "WIP1",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5320
+        1780,
+        100
       ],
       "parameters": {
         "jsCode": "const rows = items;\n\n// Get column names from the first row\nconst headers = Object.keys(rows[0].json);\n\n// Build header HTML\nlet headerHtml = headers.map(col => `<th>${col}</th>`).join('');\n\n// Build rows\nlet bodyHtml = rows.map(row => {\n  return `<tr>${headers.map(col => `<td>${row.json[col]}</td>`).join('')}</tr>`;\n}).join('');\n\n// Combine into one table\nconst tableHtml = `\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">\n  <thead><tr>${headerHtml}</tr></thead>\n  <tbody>${bodyHtml}</tbody>\n</table>\n`;\n\nreturn [{ json: { table: tableHtml } }];\n"
@@ -345,8 +345,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        100,
-        5500
+        2060,
+        100
       ],
       "webhookId": "83d7ae9a-e309-4bac-a0b4-5ff651e3afe3",
       "parameters": {
@@ -439,8 +439,8 @@
       "name": "Think",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5140
+        1500,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -502,8 +502,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        660,
+        100
       ],
       "parameters": {
         "width": 1120,
@@ -518,8 +518,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        940,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -535,8 +535,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4960
+        1220,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -569,7 +569,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        4420
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **YTD vs Prevoius Month1**: mySql\n- **Loop Over Items**: splitInBatches\n- **CostCentrs**: set\n- **Date & Time**: dateTime\n- **PreviousMonth**: code\n- **Selected Cost Center**: set\n- **Get Cost Centers with Budgets**: mySql\n- **Filter**: filter\n- **HTML**: html\n- ... and 21 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -583,7 +583,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        4600
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -597,7 +597,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        4780
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -611,7 +611,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        4960
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -625,7 +625,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        5140
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        6580
+        2340,
+        100
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -674,7 +674,402 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Business Performance AI Agent (Analyst)": {
+      "main": [
+        [
+          {
+            "node": "Calculator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "CostCenter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CostCenter": {
+      "main": [
+        [
+          {
+            "node": "CostCentrs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CostCentrs": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Departments ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Departments ": {
+      "main": [
+        [
+          {
+            "node": "Email Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Data": {
+      "main": [
+        [
+          {
+            "node": "Employees",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Employees": {
+      "main": [
+        [
+          {
+            "node": "Employees1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Employees1": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 97bac1cb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 97bac1cb": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Financial Performance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Financial Performance": {
+      "main": [
+        [
+          {
+            "node": "Get Cost Centers with Budgets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Cost Centers with Budgets": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Microsoft Outlook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft Outlook2": {
+      "main": [
+        [
+          {
+            "node": "PreviousMonth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PreviousMonth": {
+      "main": [
+        [
+          {
+            "node": "Projects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Projects": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Selected Cost Center",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Selected Cost Center": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note11": {
+      "main": [
+        [
+          {
+            "node": "Think",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "main": [
+        [
+          {
+            "node": "WIP1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WIP1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "YTD vs Prevoius Month1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YTD vs Prevoius Month1": {
+      "main": [
+        [
+          {
+            "node": "verticalPL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Scheduletrigger Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -82,8 +82,8 @@
       "name": "Mistral Cloud Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        1720
+        380,
+        100
       ],
       "parameters": {
         "model": "mistral-small-2402",
@@ -103,8 +103,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3340
+        2900,
+        100
       ],
       "parameters": {
         "schemaType": "manual",
@@ -118,8 +118,8 @@
       "name": "Set Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        2080
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -142,8 +142,8 @@
       "name": "Move Files into Folders",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        100,
-        1900
+        660,
+        100
       ],
       "parameters": {
         "command": "=directory=\"{{ $('Set Variables').item.json.directory }}\"\nsubdirectory=\"$directory/{{ $json.folder }}\";\nfile_list=\"{{ $json.files.join(' ') }}\";\n\n# create subdirectory if not exists\nmkdir -p $subdirectory;\n\n# for each suggestion, move the file into the subdirectory.\n# If the file in the subdirectory exists, then we'll rename the current file by adding a small random string to the end of the filename.\nfor filename in $file_list; do\n    if [ -e \"$subdirectory/$filename\" ]; then\n        mv \"$directory/$filename-$RANDOM\" -t $subdirectory;\n    else\n        mv \"$directory/$filename\" -t $subdirectory;\n    fi\ndone",
@@ -157,8 +157,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2260
+        1220,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -174,8 +174,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2440
+        1500,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -225,8 +225,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2620
+        1780,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -257,8 +257,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2800
+        2060,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -274,8 +274,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2980
+        2340,
+        100
       ],
       "parameters": {
         "width": 372.51107341403605,
@@ -290,8 +290,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        3160
+        2620,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -347,7 +347,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3520
+        1720
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Local File Trigger**: localFileTrigger\n- **Get Files and Folders**: executeCommand\n- **Files and Folders to Array**: set\n- **Mistral Cloud Chat Model**: lmChatMistralCloud\n- **Structured Output Parser**: outputParserStructured\n- **Set Variables**: set\n- **Move Files into Folders**: executeCommand\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **If Has Target Files...**: if\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -361,7 +361,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3700
+        1900
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -375,7 +375,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3880
+        2080
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -389,7 +389,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4060
+        2260
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -403,7 +403,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4240
+        2440
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -417,7 +417,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4420
+        2620
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -431,7 +431,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4600
+        2800
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -444,7 +444,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4780
+        2980
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -457,7 +457,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4960
+        3160
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -483,8 +483,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        5140
+        3180,
+        100
       ],
       "parameters": {
         "content": "# Localfiletrigger Workflow\n\n## Overview\nAutomated workflow: Localfiletrigger Workflow. This workflow integrates 10 different services: stickyNote, lmChatMistralCloud, splitOut, chainLlm, outputParserStructured. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -506,7 +506,280 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "AI File Manager": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for c92e3d01",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c92e3d01": {
+      "main": [
+        [
+          {
+            "node": "Files and Folders to Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Files and Folders to Array": {
+      "main": [
+        [
+          {
+            "node": "Get Files and Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Files and Folders": {
+      "main": [
+        [
+          {
+            "node": "Get Suggestions to List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Suggestions to List": {
+      "main": [
+        [
+          {
+            "node": "If Has Target Files...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Has Target Files...": {
+      "main": [
+        [
+          {
+            "node": "Local File Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Local File Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mistral Cloud Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Move Files into Folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move Files into Folders": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Localfiletrigger Workflow",
   "settings": {
     "executionOrder": "v1",

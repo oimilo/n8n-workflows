@@ -47,8 +47,8 @@
       "name": "scrap url",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        5860
+        1780,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -115,8 +115,8 @@
       "name": "url",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        6040
+        2060,
+        100
       ],
       "parameters": {
         "options": {}
@@ -129,8 +129,8 @@
       "name": "get urls to scrape",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        100,
-        5680
+        1500,
+        100
       ],
       "parameters": {
         "options": {},
@@ -151,8 +151,8 @@
       "name": "clean html",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5320
+        940,
+        100
       ],
       "parameters": {
         "jsCode": "// CleanHtmlFunction.js\n// Purpose: n8n Function node to clean HTML: remove doctype, scripts, styles, head, comments, classes, extra blank lines, and non-whitelisted tags\n\nreturn items.map(item => {\n  const rawHtml = item.json.data;\n\n  // 1) remove doctype, scripts, styles, comments and head section, and strip class attributes\n  let cleaned = rawHtml\n    .replace(/<!doctype html>/gi, '')\n    .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n    .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n    .replace(/<!--[\\s\\S]*?-->/g, '')\n    .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n    .replace(/\\sclass=\"[^\"]*\"/gi, '');\n\n  // 2) define whitelist of tags to keep\n  const allowedTags = [\n    'h1','h2','h3','h4','h5','h6',\n    'p','ul','ol','li',\n    'strong','em','a','blockquote',\n    'code','pre'\n  ];\n\n  // 3) strip out all tags not in the whitelist, reconstruct allowed tags cleanly\n  cleaned = cleaned.replace(\n    /<\\/?([a-z][a-z0-9]*)\\b[^>]*>/gi,\n    (match, tagName) => {\n      const name = tagName.toLowerCase();\n      if (allowedTags.includes(name)) {\n        return match.startsWith('</') ? `</${name}>` : `<${name}>`;\n      }\n      return '';\n    }\n  );\n\n  // 4) collapse multiple blank or whitespace-only lines into a single newline\n  cleaned = cleaned.replace(/(\\s*\\r?\\n\\s*){2,}/g, '\\n');\n\n  // 5) trim leading/trailing whitespace\n  cleaned = cleaned.trim();\n\n  return {\n    json: { cleanedHtml: cleaned }\n  };\n});"
@@ -165,8 +165,8 @@
       "name": "extract data",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5500
+        1220,
+        100
       ],
       "parameters": {
         "text": "={{ $json.cleanedHtml }}",
@@ -188,8 +188,8 @@
       "name": "add results",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        100,
-        5140
+        660,
+        100
       ],
       "parameters": {
         "columns": {
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        4960
+        380,
+        100
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -583,7 +583,299 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 21b6d21c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 21b6d21c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8b4af1bb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8b4af1bb": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e4800c1d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e4800c1d": {
+      "main": [
+        [
+          {
+            "node": "OpenRouter Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Split items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split items": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "add results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add results": {
+      "main": [
+        [
+          {
+            "node": "clean html",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clean html": {
+      "main": [
+        [
+          {
+            "node": "extract data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract data": {
+      "main": [
+        [
+          {
+            "node": "get urls to scrape",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get urls to scrape": {
+      "main": [
+        [
+          {
+            "node": "scrap url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "scrap url": {
+      "main": [
+        [
+          {
+            "node": "url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Lmchatopenrouter Workflow",
   "settings": {
     "executionOrder": "v1",

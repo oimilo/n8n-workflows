@@ -17,8 +17,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2080
+        1220,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -69,8 +69,8 @@
       "name": "syncbricks information",
       "type": "n8n-nodes-base.googleDocsTool",
       "position": [
-        100,
-        3700
+        2340,
+        100
       ],
       "parameters": {
         "operation": "get",
@@ -86,8 +86,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        1540
+        380,
+        100
       ],
       "parameters": {
         "model": {
@@ -129,8 +129,8 @@
       "name": "Youtube Meta Generator",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3520
+        2060,
+        100
       ],
       "parameters": {
         "text": "=You are an AI content generator specialized in crafting high-converting YouTube metadata for videos related to stores, shops, memberships, and business promotions. Your task is to generate a **structured JSON output** optimized for YouTube SEO and audience engagement based on the provided video transcript and focus keywords. Use \"syncbricks information\" tool to collect relevant social media, courses, website and affilite links and ensure to add the relavent links in description. Major course or affilite link should be used as hook in the beginning of the description.\n\n### **Output Requirements:**\n1. **Title:** A compelling, SEO-friendly title optimized for search and audience interest.\n2. **Description:** A detailed, keyword-rich summary of the video, incorporating relevant keywords naturally and including a clear value proposition.\n3. **Keywords:** Single line of all possible keywords with  at least 450 characters in total with comma in between each keyword relevant to the video content to enhance discoverability.\n4. **Hashtags:** Single line of 5 to 10 relevant hashtags, without the comma that align with the video's theme.\n5. **Affiliate Links:** Contextually relevant affiliate links that match the video content. Only provide link don't add unnessary boxes.\n7. **Call to Action (CTA):** A persuasive CTA encouraging viewers to **subscribe, like, share, visit a store, or sign up for membership**.\n8. **Additional Promotional Links:** Gather and include relevant **course links, business website links, or related references** that add value to the audience.\n9. **Channel Hashtags:** Append **#EnterpriseIT #BusinessIntelligence #TechSolutions #ITInsights #HomeLab #Gadgets #TechReview #ITTips #SyncBricks #AmjidAli** at the end of the description.\n\n### **Instructions:**\n- Ensure that **affiliate links are directly related** to the video topic.\n- Use **natural language and avoid keyword stuffing** to maintain a user-friendly tone.\n- Don't add social media profiles, and syncbricks websit link, only add the affilaite and promotion links\n- The description should be **at least 150 words properly formatted with lines and paragraphs** for better YouTube SEO.\n - Avoid adding [] brackets\n- Structure the output in a **well-formatted JSON format** for automation.\n\n##Example of Affialite and promotion Links ##\nn8n : {{ $env.WEBHOOK_URL }}\nFull Course : {{ $env.WEBHOOK_URL }} or udemy link\n\n\n### **Here is the existing Video Details:**\n- **Transcript:** {{ $json['Video Transcript'] }}\n- **Focus Keywords:** {{ $json['Focus Keywords'] }}",
@@ -148,8 +148,8 @@
       "name": "YouTube",
       "type": "n8n-nodes-base.youTube",
       "position": [
-        100,
-        3340
+        1780,
+        100
       ],
       "parameters": {
         "title": "={{ $('Youtube Meta Generator').item.json.output.youtube_metadata.title }}",
@@ -195,8 +195,8 @@
       "name": "Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        1720
+        660,
+        100
       ],
       "parameters": {
         "schemaType": "manual",
@@ -228,8 +228,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        1900
+        940,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -277,7 +277,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2260
+        1540
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, formTrigger, youTube, agent, outputParserStructured. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note11**: stickyNote\n- **On form submission**: formTrigger\n- **syncbricks information**: googleDocsTool\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Extract Video ID**: set\n- **Youtube Meta Generator**: agent\n- **YouTube**: youTube\n- **Format Tags**: set\n- **Output Parser**: outputParserStructured\n- **Form**: form\n- ... and 3 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -291,7 +291,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2440
+        1720
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, formTrigger, youTube, agent, outputParserStructured. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -305,7 +305,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2620
+        1900
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, formTrigger, youTube, agent, outputParserStructured. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -319,7 +319,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2800
+        2080
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, formTrigger, youTube, agent, outputParserStructured. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -333,7 +333,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2980
+        2260
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, formTrigger, youTube, agent, outputParserStructured. It contains 13 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -359,8 +359,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        3160
+        1500,
+        100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 10 different services: stickyNote, formTrigger, youTube, agent, outputParserStructured. It contains 13 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -382,7 +382,204 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for d3c5df7c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d3c5df7c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e31ea741",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e31ea741": {
+      "main": [
+        [
+          {
+            "node": "Extract Video ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Video ID": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form": {
+      "main": [
+        [
+          {
+            "node": "Format Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Tags": {
+      "main": [
+        [
+          {
+            "node": "On form submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Output Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Output Parser": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note11": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube": {
+      "main": [
+        [
+          {
+            "node": "Youtube Meta Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Youtube Meta Generator": {
+      "main": [
+        [
+          {
+            "node": "syncbricks information",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Stickynote Workflow",
   "settings": {
     "executionOrder": "v1",

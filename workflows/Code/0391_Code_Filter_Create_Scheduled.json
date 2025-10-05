@@ -18,7 +18,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
         100,
-        6220
+        4420
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -58,8 +58,8 @@
       "name": "Transform data in the right format",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5680
+        2340,
+        100
       ],
       "parameters": {
         "jsCode": "console.log($input.all())\n\n\nconst data = $input.all()\n\nconsole.log(\"error\",data)\n\nfunction mergeData(data) {\n    let merged = [];\n    data.forEach(entry => {\n        for (const key in entry.json) {\n            merged.push(entry.json[key]);\n        }\n    });\n    return merged;\n}\n\nconst mergedData = mergeData(data);\nconsole.log(mergedData);\n\n\nreturn mergedData.filter(item => item !== null);"
@@ -361,8 +361,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueErrorOutput",
       "position": [
-        100,
-        4420
+        380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -426,8 +426,8 @@
       "name": "Split out items",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        100,
-        4600
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -527,8 +527,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4960
+        1220,
+        100
       ],
       "parameters": {
         "width": 312.2965981499806,
@@ -563,8 +563,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5140
+        1500,
+        100
       ],
       "parameters": {
         "height": 511.2196121145973,
@@ -578,8 +578,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5320
+        1780,
+        100
       ],
       "parameters": {
         "height": 535.9388810024284,
@@ -593,8 +593,8 @@
       "name": "Update Status to Success",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        100,
-        6040
+        2900,
+        100
       ],
       "parameters": {
         "columns": {
@@ -669,8 +669,8 @@
       "name": "Update Status to Error",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        100,
-        5860
+        2620,
+        100
       ],
       "parameters": {
         "columns": {
@@ -745,8 +745,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        940,
+        100
       ],
       "parameters": {
         "width": 312.2965981499806,
@@ -788,8 +788,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        5500
+        2060,
+        100
       ],
       "parameters": {
         "width": 357.33341618921213,
@@ -896,7 +896,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        4600
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking \"Execute Workflow\"**: manualTrigger\n- **Extract next start value**: code\n- **Merge all values from SERPAPI**: code\n- **Transform data in the right format**: code\n- **Add rows in Google Sheets**: googleSheets\n- **SERPAPI - Scrape Google Maps URL**: httpRequest\n- **Remove duplicate items**: itemLists\n- **Split out items**: itemLists\n- **Remove empty values**: filter\n- **Google Sheets - Get searches  to scrap**: googleSheets\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -925,7 +925,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        4780
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -939,7 +939,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        4960
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -983,7 +983,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        5140
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -997,7 +997,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        5320
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1041,7 +1041,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        5500
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1055,7 +1055,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7480
+        5680
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1082,7 +1082,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        5860
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1109,7 +1109,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        6040
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1135,8 +1135,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        8020
+        380,
+        280
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: itemLists, httpRequest, filter, stickyNote, code. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1158,7 +1158,424 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Add rows in Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Continue IF Loop is complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Continue IF Loop is complete": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 2bdc5b63",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2bdc5b63": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 4e8e9ae9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 4e8e9ae9": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 90194aa3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 90194aa3": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a5a63861",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a5a63861": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for bd7ca3a5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for bd7ca3a5": {
+      "main": [
+        [
+          {
+            "node": "Extract keyword and location from URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract keyword and location from URL": {
+      "main": [
+        [
+          {
+            "node": "Extract next start value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract next start value": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Get searches  to scrap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Get searches  to scrap": {
+      "main": [
+        [
+          {
+            "node": "Merge all values from SERPAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge all values from SERPAPI": {
+      "main": [
+        [
+          {
+            "node": "Remove duplicate items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove duplicate items": {
+      "main": [
+        [
+          {
+            "node": "Remove empty values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove empty values": {
+      "main": [
+        [
+          {
+            "node": "Run workflow every hours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run workflow every hours": {
+      "main": [
+        [
+          {
+            "node": "SERPAPI - Scrape Google Maps URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SERPAPI - Scrape Google Maps URL": {
+      "main": [
+        [
+          {
+            "node": "Split out items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split out items": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Transform data in the right format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform data in the right format": {
+      "main": [
+        [
+          {
+            "node": "Update Status to Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status to Error": {
+      "main": [
+        [
+          {
+            "node": "Update Status to Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status to Success": {
+      "main": [
+        [
+          {
+            "node": "When clicking \"Execute Workflow\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Manualtrigger Workflow",
   "settings": {
     "executionOrder": "v1",

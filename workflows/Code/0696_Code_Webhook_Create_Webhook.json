@@ -5,8 +5,8 @@
       "name": "Event Type",
       "type": "n8n-nodes-base.switch",
       "position": [
-        100,
-        10720
+        4020,
+        100
       ],
       "parameters": {
         "rules": {
@@ -98,8 +98,8 @@
       "name": "Get Prompt Fields",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        13060
+        7660,
+        100
       ],
       "parameters": {
         "jsCode": "const fields = $input.first().json.fields\n    .filter(item => item.description)\n    .map((item, idx) => ({\n      id: item.id,\n      order: idx,\n      name: item.name,\n      type: item.type,\n      description: item.description,\n    }));\n\nreturn { json: { fields } };"
@@ -112,8 +112,8 @@
       "name": "Get File Data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        12700
+        7100,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -127,8 +127,8 @@
       "name": "Extract from File",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        100,
-        10900
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -142,8 +142,8 @@
       "name": "Get Result",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        13240
+        7940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -172,8 +172,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        14320
+        9620,
+        100
       ],
       "parameters": {
         "options": {}
@@ -186,8 +186,8 @@
       "name": "Row Reference",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15580
+        11580,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -198,8 +198,8 @@
       "name": "Generate Field Value",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        12160
+        6260,
+        100
       ],
       "parameters": {
         "text": "=<file>\n{{ $json.text }}\n</file>\n\nData to extract: {{ $('Event Ref').first().json.field.description }}\noutput format is: {{ $('Event Ref').first().json.field.type }}",
@@ -220,8 +220,8 @@
       "name": "Fields to Update",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        11440
+        5140,
+        100
       ],
       "parameters": {
         "jsCode": "const row = $('Row Ref').first().json;\nconst fields = $('Get Prompt Fields').first().json.fields;\nconst missingFields = fields\n  .filter(field => field.description && !row[field.name]);\n\nreturn missingFields;"
@@ -234,8 +234,8 @@
       "name": "Loop Over Items1",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        100,
-        14500
+        9900,
+        100
       ],
       "parameters": {
         "options": {}
@@ -248,8 +248,8 @@
       "name": "Row Ref",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        15400
+        11300,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -260,8 +260,8 @@
       "name": "Get File Data1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        12880
+        7380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -275,8 +275,8 @@
       "name": "Extract from File1",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        100,
-        11080
+        4580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -290,8 +290,8 @@
       "name": "Get Result1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        13420
+        8220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -314,8 +314,8 @@
       "name": "Generate Field Value1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        12340
+        6540,
+        100
       ],
       "parameters": {
         "text": "=<file>\n{{ $('Extract from File1').first().json.text }}\n</file>\n\nData to extract: {{ $json.description }}\noutput format is: {{ $json.type }}",
@@ -336,8 +336,8 @@
       "name": "Filter Valid Rows",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        11980
+        5980,
+        100
       ],
       "parameters": {
         "options": {},
@@ -371,8 +371,8 @@
       "name": "Filter Valid Fields",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        11800
+        5700,
+        100
       ],
       "parameters": {
         "options": {},
@@ -406,8 +406,8 @@
       "name": "Event Ref",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        10360
+        3460,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -418,8 +418,8 @@
       "name": "Event Ref1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        10540
+        3740,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -430,8 +430,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        15940
+        12140,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -447,8 +447,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16120
+        12420,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -464,8 +464,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17200
+        14100,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -481,8 +481,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17380
+        14380,
+        100
       ],
       "parameters": {
         "width": 520,
@@ -497,8 +497,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17560
+        14660,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -514,8 +514,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17740
+        14940,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -531,8 +531,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        18100
+        15500,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -548,8 +548,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        18280
+        15780,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -565,8 +565,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        18460
+        16060,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -582,8 +582,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16300
+        12700,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -599,8 +599,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16480
+        12980,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -616,8 +616,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14680
+        10180,
+        100
       ],
       "parameters": {
         "options": {}
@@ -636,8 +636,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16660
+        13260,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -653,8 +653,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        14860
+        10460,
+        100
       ],
       "parameters": {
         "options": {}
@@ -673,8 +673,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        16840
+        13540,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -690,8 +690,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17920
+        15220,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -707,8 +707,8 @@
       "name": "Get Webhook Payload",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        14140
+        9340,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -730,8 +730,8 @@
       "name": "Parse Event",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        15040
+        10740,
+        100
       ],
       "parameters": {
         "jsCode": "const webhook = $('Airtable Webhook').first().json;\nconst schema = $('Get Prompt Fields').first().json;\nconst { payloads } = $input.first().json;\nif (!payloads.length) return [];\n\nconst event = payloads[payloads.length - 1];\nconst baseId = webhook.body.base.id;\nconst tableId = Object.keys(event.changedTablesById)[0];\nconst table = event.changedTablesById[tableId];\n\nreturn {\n  baseId,\n  tableId,\n  event_type: getEventType(table),\n  fieldId: getFieldId(table),\n  field: getField(getFieldId(table)),\n  rowId: getRecordId(table),\n}\n\nfunction getEventType(changedTableByIdObject) {\n  if (changedTableByIdObject['createdFieldsById']) return 'field.created';\n  if (changedTableByIdObject['changedFieldsById']) return 'field.updated'\n  if (changedTableByIdObject['changedRecordsById']) return 'row.updated';\n  return 'unknown';\n}\n\nfunction getFieldId(changedTableByIdObject) {\n  const field = changedTableByIdObject.createdFieldsById\n    || changedTableByIdObject.changedFieldsById\n    || null;\n\n  return field ? Object.keys(field)[0] : null;\n}\n\nfunction getField(id) {\n  return schema.fields.find(field => field.id === id);\n}\n\nfunction getRecordId(changedTableByIdObject) {\n  const record = changedTableByIdObject.changedRecordsById\n    || null;\n\n  return record ? Object.keys(record)[0] : null;\n}"
@@ -744,8 +744,8 @@
       "name": "Get Table Schema",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        13780
+        8780,
+        100
       ],
       "parameters": {
         "base": {
@@ -770,8 +770,8 @@
       "name": "Fetch Records",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        11260
+        4860,
+        100
       ],
       "parameters": {
         "base": {
@@ -802,8 +802,8 @@
       "name": "Update Row",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        19720
+        18020,
+        100
       ],
       "parameters": {
         "base": {
@@ -918,8 +918,8 @@
       "name": "Get Row",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        13600
+        8500,
+        100
       ],
       "parameters": {
         "id": "={{ $json.rowId }}",
@@ -966,8 +966,8 @@
       "name": "Update Record",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        19540
+        17740,
+        100
       ],
       "parameters": {
         "base": {
@@ -1100,7 +1100,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
         100,
-        19900
+        8380
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -1111,8 +1111,8 @@
       "name": "Set Airtable Vars",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        15760
+        11860,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1153,8 +1153,8 @@
       "name": "Get Table Schema1",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        13960
+        9060,
+        100
       ],
       "parameters": {
         "base": {
@@ -1179,8 +1179,8 @@
       "name": "Get \"Input\" Field",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12520
+        6820,
+        100
       ],
       "parameters": {
         "mode": "raw",
@@ -1196,8 +1196,8 @@
       "name": "RecordsChanged Webhook",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        15220
+        11020,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1223,8 +1223,8 @@
       "name": "FieldsChanged Webhook",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        11620
+        5420,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1250,8 +1250,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        17020
+        13820,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -1283,8 +1283,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18640
+        16340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 7b82cc73-67cb-46d7-a1d4-19712c86890a",
@@ -1298,8 +1298,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        18820
+        16620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 9d293b3a-954d-4e3b-8773-b6c3dded9520",
@@ -1313,8 +1313,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        19000
+        16900,
+        100
       ],
       "parameters": {
         "message": "Error occurred in ac01ec4b-e030-4608-af38-64558408832f",
@@ -1328,8 +1328,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        19180
+        17180,
+        100
       ],
       "parameters": {
         "message": "Error occurred in a3de141f-0ce8-4f8e-ae8e-f10f635d14ec",
@@ -1343,8 +1343,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        19360
+        17460,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 21b0fae8-2046-4647-83c4-132d1d63503a",
@@ -1358,8 +1358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8920
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3b73b2f5",
@@ -1373,8 +1373,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10180
+        3180,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e96edca8",
@@ -1388,8 +1388,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9100
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7b82cc73",
@@ -1403,8 +1403,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9280
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7ef1556c",
@@ -1418,8 +1418,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8560
+        660,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0665fe56",
@@ -1433,8 +1433,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10000
+        2900,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c2799ded",
@@ -1448,8 +1448,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9460
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9d293b3a",
@@ -1463,8 +1463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9820
+        2620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ac01ec4b",
@@ -1478,8 +1478,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9640
+        2340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a3de141f",
@@ -1493,8 +1493,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8740
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 21b0fae8",
@@ -1509,7 +1509,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20080
+        8560
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 67\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Event Type**: switch\n- **Get Prompt Fields**: code\n- **Get File Data**: httpRequest\n- **Extract from File**: extractFromFile\n- **Get Result**: set\n- **Loop Over Items**: splitInBatches\n- **Row Reference**: noOp\n- **Generate Field Value**: chainLlm\n- **Fields to Update**: code\n- **Loop Over Items1**: splitInBatches\n- ... and 57 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1613,7 +1613,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20260
+        8740
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1627,7 +1627,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20440
+        8920
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 75\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1821,7 +1821,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20620
+        9100
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 88\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1835,7 +1835,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20800
+        9280
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 89\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2029,7 +2029,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        20980
+        9460
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 102\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2043,7 +2043,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21160
+        9640
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 103\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2140,7 +2140,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21340
+        9820
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 110\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2237,7 +2237,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        21520
+        10000
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2263,8 +2263,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        21700
+        380,
+        280
       ],
       "parameters": {
         "content": "# Switch Workflow\n\n## Overview\nAutomated workflow: Switch Workflow. This workflow integrates 15 different services: webhook, filter, httpRequest, stickyNote, splitInBatches. It contains 67 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2276,8 +2276,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8380
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2286,7 +2286,1120 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Add Row ID to Payload": {
+      "main": [
+        [
+          {
+            "node": "Airtable Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Webhook": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0665fe56",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0665fe56": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 21b0fae8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 21b0fae8": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 3b73b2f5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 3b73b2f5": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7b82cc73",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7b82cc73": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7ef1556c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7ef1556c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 9d293b3a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 9d293b3a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a3de141f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a3de141f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ac01ec4b",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ac01ec4b": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c2799ded",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c2799ded": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for e96edca8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for e96edca8": {
+      "main": [
+        [
+          {
+            "node": "Event Ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Event Ref": {
+      "main": [
+        [
+          {
+            "node": "Event Ref1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Event Ref1": {
+      "main": [
+        [
+          {
+            "node": "Event Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Event Type": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Fetch Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Records": {
+      "main": [
+        [
+          {
+            "node": "Fields to Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields to Update": {
+      "main": [
+        [
+          {
+            "node": "FieldsChanged Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FieldsChanged Webhook": {
+      "main": [
+        [
+          {
+            "node": "Filter Valid Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Valid Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter Valid Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Valid Rows": {
+      "main": [
+        [
+          {
+            "node": "Generate Field Value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Field Value": {
+      "main": [
+        [
+          {
+            "node": "Generate Field Value1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Field Value1": {
+      "main": [
+        [
+          {
+            "node": "Get \"Input\" Field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get \"Input\" Field": {
+      "main": [
+        [
+          {
+            "node": "Get File Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get File Data": {
+      "main": [
+        [
+          {
+            "node": "Get File Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get File Data1": {
+      "main": [
+        [
+          {
+            "node": "Get Prompt Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Prompt Fields": {
+      "main": [
+        [
+          {
+            "node": "Get Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Result": {
+      "main": [
+        [
+          {
+            "node": "Get Result1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Result1": {
+      "main": [
+        [
+          {
+            "node": "Get Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Row": {
+      "main": [
+        [
+          {
+            "node": "Get Table Schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Table Schema": {
+      "main": [
+        [
+          {
+            "node": "Get Table Schema1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Table Schema1": {
+      "main": [
+        [
+          {
+            "node": "Get Webhook Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Webhook Payload": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "Parse Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Event": {
+      "main": [
+        [
+          {
+            "node": "RecordsChanged Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RecordsChanged Webhook": {
+      "main": [
+        [
+          {
+            "node": "Row Ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Row Ref": {
+      "main": [
+        [
+          {
+            "node": "Row Reference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Row Reference": {
+      "main": [
+        [
+          {
+            "node": "Set Airtable Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Airtable Vars": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note10": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note11": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note12": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note13": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note14": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "Update Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Record": {
+      "main": [
+        [
+          {
+            "node": "Update Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Row": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Switch Workflow",
   "settings": {
     "executionOrder": "v1",

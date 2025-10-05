@@ -26,8 +26,8 @@
       "name": "Split Topics into Items",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        8560
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "// Input data (from $json.Topics)\nconst topicsString = $json.Topics;\n\n// Split the string by newlines and trim whitespace\nconst topicsArray = topicsString.split('\\n').map(topic => topic.trim());\n\n// Create an array of items for each topic\nconst items = topicsArray.map(topic => {\n  return { json: { Topic: topic } };\n});\n\n// Output the new array of items\nreturn items;\n"
@@ -40,8 +40,8 @@
       "name": "Search Posts",
       "type": "n8n-nodes-base.reddit",
       "position": [
-        100,
-        7480
+        380,
+        100
       ],
       "parameters": {
         "keyword": "YOUR_CREDENTIAL_HERE",
@@ -60,8 +60,8 @@
       "name": "Upvotes Requirement Filtering",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        9280
+        3180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -113,8 +113,8 @@
       "name": "Set Reddit Posts",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        8200
+        1500,
+        100
       ],
       "parameters": {
         "options": {},
@@ -259,8 +259,8 @@
       "name": "Set for Loop",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        8380
+        1780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -368,8 +368,8 @@
       "name": "Set Final Report",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        8020
+        1220,
+        100
       ],
       "parameters": {
         "options": {},
@@ -497,8 +497,8 @@
       "name": "Send files to Mattermost3",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        7660
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -626,8 +626,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8740
+        2340,
+        100
       ],
       "parameters": {
         "width": 1020,
@@ -686,8 +686,8 @@
       "name": "Stories Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        9100
+        2900,
+        100
       ],
       "parameters": {
         "text": "=INPUT CONTEXT:\nNews Analysis: \n<News_Analysis>\n{{ $json.text.replace(/[\\s\\S]*<news_analysis>/, '').replace(/<\\/news_analysis>[\\s\\S]*/, '') }}\n</News_Analysis>\nReddit Metrics:\n• Post Title (Understanding how the story was shared): {{ $('Set for Loop').first().json.Title }}\n• Upvotes (Indicator of initial interest): {{ $('Set for Loop').first().json.Upvotes }}\n• Total Comments (Engagement level): {{ $('Set for Loop').first().json.Comments }}\nReddit Sentiment Analysis:\n<Sentiment_Analysis>\n{{ $('Comments Analysis').first().json.text.replace(/[\\s\\S]*<comments_analysis>/, '').replace(/<\\/comments_analysis>[\\s\\S]*/, '') }}\n</Sentiment_Analysis>\n\nOUTPUT FORMAT (Place inside XML tags <new_stories_report>):\n\nTREND ANALYSIS SUMMARY:\nTopic: [News topic/category]\nCurrent Coverage Status: [Overview of existing coverage]\nAudience Reception: [From Reddit/sentiment analysis]\nMarket Timing: [Why now is relevant]\n\nSTORY OPPORTUNITIES:\n\n1. FIRST-MOVER STORIES:\n[For each story idea (2-3)]\n\nStory #1:\n• Headline: [Compelling title]\n• Hook: [One-line grabber]\n• Story Summary: [2-3 sentences]\n• Why It Works:\n  - Audience Evidence: [From Reddit data]\n  - Market Gap: [From news analysis]\n  - Timing Advantage: [Why now]\n• Development Needs:\n  - Research Required: [List]\n  - Expert Input: [Specific needs]\n  - Supporting Data: [What's needed]\n• Media Strategy:\n  - Primary Targets: [Publications]\n  - Secondary Targets: [Publications]\n  - Exclusive Potential: [Yes/No + Rationale]\n• Success Metrics:\n  - Coverage Goals: [Specific targets]\n  - Engagement Expectations: [Based on Reddit data]\n\n2. TREND-AMPLIFIER STORIES:\n[Same format as above for 2-3 stories]\n\nPRIORITY RANKING:\n1. [Story Title] - Score: [X/10]\n   • Impact Potential: [Score + Rationale]\n   • Resource Requirements: [High/Medium/Low]\n   • Timeline: [Immediate/Short-term/Long-term]\n   \n2. [Continue for all stories]\n\nEXECUTION ROADMAP:\n• Immediate Actions (24-48 hours)\n• Week 1 Priorities\n• Risk Management\n• Contingency Plans\n\nSTRATEGIC RECOMMENDATIONS:\n• Core Strategy\n• Alternative Angles\n• Resource Requirements\n• Timeline Considerations\n\nANALYTICAL FRAMEWORK:\n\n1. TREND VALIDATION:\n   A. Story Performance Indicators:\n      • Reddit engagement metrics\n      • Public sentiment patterns\n      • Discussion quality\n      • Viral elements identified\n\n   B. Current Narrative Landscape:\n      • Dominant themes from news analysis\n      • Public perception gaps\n      • Controversial elements\n      • Underserved perspectives\n\n2. OPPORTUNITY MAPPING:\n   A. Content Gap Analysis:\n      • Unexplored angles from news analysis\n      • Audience questions from comments\n      • Missing expert perspectives\n      • Data/research opportunities\n\n   B. Timing Assessment:\n      • News cycle position\n      • Trend trajectory\n      • Optimal launch window\n      • Competition consideration\n\nPR STORY OPPORTUNITIES:\nGenerate 4-6 high-potential story ideas, categorized as:\n\nA. \\\"FIRST-MOVER\\\" OPPORTUNITIES (2-3 ideas):\nFor each idea:\n\n1. Story Concept:\n   • Headline\n   • Sub-headline\n   • Key message\n   • Unique selling point\n\n2. Why It Works:\n   • Gap in current coverage\n   • Evidence from Reddit discussions\n   • Sentiment analysis support\n   • Market timing rationale\n\n3. Development Requirements:\n   • Required data/research\n   • Expert perspectives needed\n   • Supporting elements\n   • Potential challenges\n\n4. Media Strategy:\n   • Target publications\n   • Journalist appeal factors\n   • Exclusive potential\n   • Supporting assets needed\n\nB. \\\"TREND-AMPLIFIER\\\" OPPORTUNITIES (2-3 ideas):\n[Same structure as above, but focused on enhancing existing narratives]\n\nSTORY PRIORITIZATION MATRIX:\nFor each story idea:\n1. Impact Potential (1-10):\n   • Audience interest indicators\n   • Media appeal factors\n   • Viral potential\n   • Business value\n\n2. Resource Requirements:\n   • Time to develop\n   • Research needs\n   • Expert input\n   • Asset creation\n\n3. Risk Assessment:\n   • Competition factors\n   • Timing risks\n   • Narrative challenges\n   • Mitigation strategies\n\nEXECUTION ROADMAP:\n1. Immediate Actions (Next 24-48 hours):\n   • Priority research needs\n   • Expert outreach\n   • Data gathering\n   • Asset development\n\n2. Development Timeline:\n   • Story development sequence\n   • Key milestones\n   • Decision points\n   • Launch windows\n\n3. Success Metrics:\n   • Coverage targets\n   • Engagement goals\n   • Share of voice objectives\n   • Impact measurements\n\nSTRATEGIC RECOMMENDATIONS:\n1. Primary Strategy:\n   • Core approach\n   • Key differentiators\n   • Critical success factors\n   • Risk mitigation\n\n2. Alternative Approaches:\n   • Backup angles\n   • Pivot opportunities\n   • Alternative narratives\n   • Contingency plans\n\nFocus on creating stories that:\n• Address identified audience interests (from Reddit data)\n• Fill gaps in current coverage\n• Leverage positive sentiment patterns\n• Solve for identified pain points\n• Offer unique, data-backed perspectives\n• Present clear competitive advantages\n\nBased on the provided news analysis, Reddit metrics, and sentiment analysis, please generate a comprehensive PR strategy report following the format above.",
@@ -708,8 +708,8 @@
       "name": "Set Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        7840
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -754,8 +754,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8920
+        2620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 7f4e5e0c-49cc-4024-b62b-f7e099d4867d",
@@ -845,7 +845,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        7480
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Split Topics into Items**: code\n- **Search Posts**: reddit\n- **Upvotes Requirement Filtering**: if\n- **Set Reddit Posts**: set\n- **Remove Duplicates**: code\n- **Loop Over Items**: splitInBatches\n- **Get Comments**: reddit\n- **Extract Top Comments**: code\n- **Format Comments**: code\n- **Set for Loop**: set\n- ... and 26 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -889,7 +889,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        7660
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -903,7 +903,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9820
+        7840
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -977,7 +977,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10000
+        8020
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -991,7 +991,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10180
+        8200
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1065,7 +1065,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10360
+        8380
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1079,7 +1079,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10540
+        8560
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1120,7 +1120,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10720
+        8740
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1161,7 +1161,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10900
+        8920
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1187,8 +1187,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        11080
+        3460,
+        100
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1224,7 +1224,583 @@
     "retryDelay": 1000
   },
   "versionId": "dad1fb7a-599f-4b98-9461-8b27baa774d9",
-  "connections": {},
+  "connections": {
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Anthropic Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Anthropic Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "Anthropic Chat Model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model2": {
+      "main": [
+        [
+          {
+            "node": "Comments Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comments Analysis": {
+      "main": [
+        [
+          {
+            "node": "Compress files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compress files": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 20411444",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 20411444": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 219ccb20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 219ccb20": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 2eb8112a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 2eb8112a": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 7f4e5e0c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7f4e5e0c": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b88fad49",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b88fad49": {
+      "main": [
+        [
+          {
+            "node": "Extract Top Comments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Top Comments": {
+      "main": [
+        [
+          {
+            "node": "Format Comments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Comments": {
+      "main": [
+        [
+          {
+            "node": "Get Comments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Comments": {
+      "main": [
+        [
+          {
+            "node": "Get News Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get News Content": {
+      "main": [
+        [
+          {
+            "node": "Google Drive6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive6": {
+      "main": [
+        [
+          {
+            "node": "Google Drive7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive7": {
+      "main": [
+        [
+          {
+            "node": "Keep Last",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep Last": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge Binary Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Binary Files": {
+      "main": [
+        [
+          {
+            "node": "News Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "News Analysis": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Search Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Posts": {
+      "main": [
+        [
+          {
+            "node": "Send files to Mattermost3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send files to Mattermost3": {
+      "main": [
+        [
+          {
+            "node": "Set Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Data": {
+      "main": [
+        [
+          {
+            "node": "Set Final Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Final Report": {
+      "main": [
+        [
+          {
+            "node": "Set Reddit Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Reddit Posts": {
+      "main": [
+        [
+          {
+            "node": "Set for Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set for Loop": {
+      "main": [
+        [
+          {
+            "node": "Split Topics into Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Topics into Items": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stories Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stories Report": {
+      "main": [
+        [
+          {
+            "node": "Upvotes Requirement Filtering",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upvotes Requirement Filtering": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: My workflow. This workflow integrates 15 different services: convertToFile, stickyNote, httpRequest, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: My workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

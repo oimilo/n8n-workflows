@@ -27,7 +27,7 @@
       "type": "n8n-nodes-base.formTrigger",
       "position": [
         100,
-        5320
+        4240
       ],
       "webhookId": "f6b3bbf7-b6e9-4ade-add4-12004d70b61c",
       "parameters": {
@@ -79,8 +79,8 @@
       "name": "Get Channel Ids",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        4240
+        380,
+        100
       ],
       "parameters": {
         "options": {},
@@ -117,8 +117,8 @@
       "name": "Get YouTube Video Details",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        4600
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -132,8 +132,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7480
+        3460,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -149,8 +149,8 @@
       "name": "Workflow Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        11260
+        660,
+        460
       ],
       "parameters": {
         "options": {},
@@ -179,8 +179,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7300
+        3180,
+        100
       ],
       "parameters": {
         "width": 340,
@@ -195,8 +195,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5680
+        660,
+        280
       ],
       "parameters": {
         "model": {
@@ -220,8 +220,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        4960
+        1500,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -245,8 +245,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5860
+        940,
+        280
       ],
       "parameters": {
         "model": {
@@ -295,8 +295,8 @@
       "name": "YouTube Channel Ids",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        11440
+        940,
+        460
       ],
       "parameters": {
         "options": {},
@@ -319,8 +319,8 @@
       "name": "RSS Read  - Max 15 Latest Videos per Channel",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        100,
-        6400
+        1780,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -336,8 +336,8 @@
       "name": "Label New Videos",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4780
+        1220,
+        100
       ],
       "parameters": {
         "jsCode": "/**\n * Processes YouTube video items and adds recent_videos flag based on publication date\n * @param {Object[]} $input.all() - Array of input items from previous node\n * @param {number} days - Number of days to check for recent videos (default: 3)\n * @returns {Object[]} - Processed video items with additional properties\n */\ntry {\n  // Get all input items from previous node\n  const items = $input.all();\n  \n  // Define the threshold for recent videos (in days)\n  const days = 3;\n\n  // Validate inputs\n  if (!Array.isArray(items)) {\n    throw new Error('Input must be an array of items');\n  }\n\n  // Process each video item\n  const videos = items.map((item, index) => {\n    try {\n      // Validate required properties\n      if (!item?.json?.id || !item?.json?.pubDate) {\n        throw new Error(`Missing required properties in item ${index}`);\n      }\n\n      // Extract YouTube video ID from the full ID string\n      const videoId = item.json.id.split(':')[2];\n\n      // Calculate if video is recent based on publication date\n      const pubDate = new Date(item.json.pubDate);\n      const thresholdDate = DateTime.now()\n        .setZone('America/New_York')\n        .startOf('day')\n        .minus({days: days});\n\n      // Return processed item with additional properties\n      return {\n        json: {\n          ...item.json,\n          id: videoId,\n          recent_videos: pubDate > new Date(thresholdDate)\n        }\n      };\n    } catch (itemError) {\n      // Handle individual item processing errors\n      console.error(`Error processing item ${index}:`, itemError.message);\n      // Return original item if processing fails\n      return item;\n    }\n  });\n\n  return videos;\n\n} catch (error) {\n  // Handle general execution errors\n  console.error('Error in code execution:', error.message);\n  throw new Error(`Failed to process video items: ${error.message}`);\n}\n"
@@ -350,8 +350,8 @@
       "name": "Get New Videos",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        4420
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -385,8 +385,8 @@
       "name": "Prepare For Telegram Message",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6040
+        1220,
+        280
       ],
       "parameters": {
         "options": {},
@@ -427,8 +427,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        6940
+        2620,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -444,8 +444,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7120
+        2900,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -461,8 +461,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7660
+        3740,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -478,8 +478,8 @@
       "name": "One List Object",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        100,
-        5500
+        380,
+        280
       ],
       "parameters": {
         "options": {},
@@ -493,8 +493,8 @@
       "name": "Prepare YouTube Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        6220
+        1500,
+        280
       ],
       "parameters": {
         "options": {},
@@ -541,8 +541,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7840
+        4020,
+        100
       ],
       "parameters": {
         "color": 3,
@@ -558,8 +558,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8020
+        4300,
+        100
       ],
       "parameters": {
         "width": 880,
@@ -574,8 +574,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8200
+        4580,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -591,8 +591,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8380
+        4860,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -643,8 +643,8 @@
       "name": "Multiple Emails",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        5140
+        1780,
+        100
       ],
       "webhookId": "c016d26a-1c8a-4564-b715-a65bfcc902ea",
       "parameters": {
@@ -667,8 +667,8 @@
       "name": "Single Email",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        100,
-        6760
+        2340,
+        100
       ],
       "webhookId": "c016d26a-1c8a-4564-b715-a65bfcc902ea",
       "parameters": {
@@ -691,8 +691,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8560
+        5140,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -738,8 +738,8 @@
       "name": "Telegram",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        9100
+        5980,
+        100
       ],
       "webhookId": "93342863-02c0-42ee-98c3-a2ec72b3bf12",
       "parameters": {
@@ -788,8 +788,8 @@
       "name": "RSS Read  - Max 15 Latest Videos per Channel1",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        100,
-        6580
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -822,8 +822,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8740
+        5420,
+        100
       ],
       "parameters": {
         "color": 2,
@@ -841,7 +841,7 @@
       "disabled": true,
       "position": [
         100,
-        9280
+        4420
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -852,8 +852,8 @@
       "name": "YouTube Channel Ids1",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        11620
+        1220,
+        460
       ],
       "parameters": {
         "options": {},
@@ -876,8 +876,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        8920
+        5700,
+        100
       ],
       "parameters": {
         "width": 540,
@@ -969,7 +969,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        4600
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **On form submission**: formTrigger\n- **Create RSS Feed URLs1**: set\n- **Get Channel Ids**: set\n- **Create YouTube API URL**: code\n- **Get YouTube Video Details**: httpRequest\n- **Sticky Note14**: stickyNote\n- **Workflow Variables**: set\n- **Sticky Note12**: stickyNote\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Merge**: merge\n- ... and 36 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -998,7 +998,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        4780
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1012,7 +1012,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9820
+        4960
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1056,7 +1056,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10000
+        5140
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1070,7 +1070,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10180
+        5320
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1114,7 +1114,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10360
+        5500
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1128,7 +1128,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10540
+        5680
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1155,7 +1155,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10720
+        5860
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 59\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1182,7 +1182,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10900
+        6040
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1208,8 +1208,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        11080
+        380,
+        460
       ],
       "parameters": {
         "content": "# 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels\n\n## Overview\nAutomated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1245,7 +1245,640 @@
     "retryDelay": 1000
   },
   "versionId": "7d101e72-043a-42f0-a28a-4253d204869e",
-  "connections": {},
+  "connections": {
+    "Create Email per Video": {
+      "main": [
+        [
+          {
+            "node": "Create List of Channel Ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create List of Channel Ids": {
+      "main": [
+        [
+          {
+            "node": "Create List of Channel Ids1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create List of Channel Ids1": {
+      "main": [
+        [
+          {
+            "node": "Create One Email for All Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create One Email for All Videos": {
+      "main": [
+        [
+          {
+            "node": "Create RSS Feed URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create RSS Feed URLs": {
+      "main": [
+        [
+          {
+            "node": "Create RSS Feed URLs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create RSS Feed URLs1": {
+      "main": [
+        [
+          {
+            "node": "Create YouTube API URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create YouTube API URL": {
+      "main": [
+        [
+          {
+            "node": "Default YouTube Channel Ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default YouTube Channel Ids": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0a6bc236",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0a6bc236": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 1941d169",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 1941d169": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 290bbc35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 290bbc35": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a3f82f16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a3f82f16": {
+      "main": [
+        [
+          {
+            "node": "Every Day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Day": {
+      "main": [
+        [
+          {
+            "node": "Get Channel Ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Channel Ids": {
+      "main": [
+        [
+          {
+            "node": "Get New Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get New Videos": {
+      "main": [
+        [
+          {
+            "node": "Get YouTube Video Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get YouTube Video Details": {
+      "main": [
+        [
+          {
+            "node": "Label New Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Label New Videos": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Multiple Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Multiple Emails": {
+      "main": [
+        [
+          {
+            "node": "On form submission",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "One List Object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One List Object": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat Model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "main": [
+        [
+          {
+            "node": "Prepare For Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare For Telegram Message": {
+      "main": [
+        [
+          {
+            "node": "Prepare YouTube Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare YouTube Data": {
+      "main": [
+        [
+          {
+            "node": "RSS Read  - Max 15 Latest Videos per Channel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read  - Max 15 Latest Videos per Channel": {
+      "main": [
+        [
+          {
+            "node": "RSS Read  - Max 15 Latest Videos per Channel1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read  - Max 15 Latest Videos per Channel1": {
+      "main": [
+        [
+          {
+            "node": "Single Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Single Email": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note12": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note14": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note3": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note4": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note5": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note6": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note7": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note8": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note9": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "When clicking ‘Test workflow’",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Variables": {
+      "main": [
+        [
+          {
+            "node": "YouTube Channel Ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube Channel Ids": {
+      "main": [
+        [
+          {
+            "node": "YouTube Channel Ids1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow integrates 17 different services: stickyNote, httpRequest, formTrigger, filter, telegram. It contains 46 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: 🎦💌Advanced YouTube RSS Feed Buddy for Your Favorite Channels. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

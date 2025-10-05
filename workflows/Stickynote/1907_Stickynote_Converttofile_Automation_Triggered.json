@@ -37,8 +37,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5680
+        3460,
+        100
       ],
       "webhookId": "5ac01b33-5538-4c54-b1a1-33ecc9c40a29",
       "parameters": {
@@ -86,8 +86,8 @@
       "name": "Value Proposition Generator",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        5320
+        2900,
+        100
       ],
       "parameters": {
         "text": "=You're a value-driven strategist. Based on the provided business idea, write 6-7 concise bullet points that define the \"Value Proposition\" section of the Business Model Canvas. Address these key questions:\n\n- What value do we deliver to the customer?\n- What customer problems are we solving?\n- What bundles of products/services are we offering?\n- What needs are we satisfying?\n\nUse these attributes to shape your ideas:\n- Newness, Performance, Customization, Job completion, Design, Brand/Status\n- Price, Cost reduction, Risk reduction, Accessibility, Convenience\n\nFormat your answer as bullet points, separated by a pipe symbol. Write only the points without numbering or explanations or titling, just body bullet points, and each item of bullet points should be less than 10 words, preferably 4-5 words (each of the should be meaningfull.\n\nthe only acceptable output structure is like this:\npoint1 | point2 | point3 ...\n\ndo not include header or title, do not use any enter (\\n)\n\nThis is the goal and idea of the project : \n{{ $json.chatInput }}",
@@ -134,8 +134,8 @@
       "name": "Ollama Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        3880
+        660,
+        100
       ],
       "parameters": {
         "model": "llama3.1:latest",
@@ -203,8 +203,8 @@
       "name": "Title Generator",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        4960
+        2340,
+        100
       ],
       "parameters": {
         "text": "=Make a simple business name with this idea (maximum 5 words)\n{{ $json.chatInput }}\n\nonly write the name, do not add anything to the output.",
@@ -219,8 +219,8 @@
       "name": "Revenue Streams Generator",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        4060
+        940,
+        100
       ],
       "parameters": {
         "text": "=Act as a monetization expert. Based on the business idea, generate 6-7 revenue strategies for the \"Revenue Streams\" section of the Business Model Canvas. Reflect on:\n\n- What value are customers willing to pay for?\n- What are they paying for now?\n- How do they pay?\n- How would they prefer to pay?\n- What is the contribution of each stream?\n\nFormat your answer as bullet points, separated by a pipe symbol. Write only the points without numbering or explanations or titling, just body bullet points, and each item of bullet points should be less than 10 words, preferably 4-5 words (each of the should be meaningfull.\n\nthe only acceptable output structure is like this:\npoint1 | point2 | point3 ...\n\ndo not include header or title, do not use any enter (\\n)\nThis is the goal and idea of the project : \n{{ $json.chatInput }}",
@@ -263,8 +263,8 @@
       "name": "Values proposition HTML Transformer",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5500
+        3180,
+        100
       ],
       "parameters": {
         "jsCode": "function formatToHtmlList(inputString) {\n  const items = inputString.split('|').map(item => item.trim());\n\n  let htmlOutput = '';\n  for (let i = 0; i < items.length; i++) {\n    if (items[i]) {\n      htmlOutput += `<p>• ${items[i]}</p>`;\n    }\n  }\n\n  return htmlOutput;\n}\n\nconst input = $input.first().json.output\n\nconst result = formatToHtmlList(input);\nreturn {\n  \"value_proposition\":result\n}"
@@ -333,8 +333,8 @@
       "name": "Revenue streams HTML Transformer",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        4240
+        1220,
+        100
       ],
       "parameters": {
         "jsCode": "function formatToHtmlList(inputString) {\n  const items = inputString.split('|').map(item => item.trim());\n\n  let htmlOutput = '';\n  for (let i = 0; i < items.length; i++) {\n    if (items[i]) {\n      htmlOutput += `<p>• ${items[i]}</p>`;\n    }\n  }\n\n  return htmlOutput;\n}\n\nconst input = $input.first().json.output\n\nconst result = formatToHtmlList(input);\nreturn {\n  \"revenue_streams\":result\n}"
@@ -375,8 +375,8 @@
       "name": "Turn to HTML",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        5140
+        2620,
+        100
       ],
       "parameters": {
         "jsCode": "const input = $input.all()\n// Simple merge\n\nconst output = {\n  title: input[0].json.title,\n  key_partners: input[1].json.key_partners,\n  key_activities: input[2].json.key_activities, // combining both\n  value_proposition: input[3].json.value_proposition,\n  customer_relationship: input[4].json.customer_relationship,\n  customer_segments: input[5].json.customer_segments,\n  key_resources: input[6].json.key_resources,\n  channels: input[7].json.channels,\n  cost_structure : input[8].json.cost_structure,\n  revenue_streams: input[9].json.revenue_streams\n};\n\n\nconsole.log(output);\nreturn {\n  \"final_html\": `<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\" /> <title>Business Model Canvas</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /> <link href=\"{{ $env.API_BASE_URL }}\" rel=\"stylesheet\" /> <style> body { font-family: sans-serif; margin-top: 2.5vh; padding: 10px; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 95vh; /* Full viewport height */ overflow: hidden; } .container { height: 100%; /* Fit the height of the screen */ aspect-ratio: 297 / 210; /* Maintain A4 aspect ratio (landscape) */ background: #fff; margin-bottom: 20px; padding: 10px 10px 80px; /* Added extra padding at the bottom */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px; box-sizing: border-box; overflow: hidden; } h1 { text-align: center; font-size: 24px; /* Reduced font size */ margin-bottom: 20px; color: #333; } p { padding-top: 2px; } table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; } table td { border: 1px solid #ddd; padding: 5px; /* Reduced padding */ vertical-align: top; font-size: 14px; /* Reduced font size */ word-wrap: break-word; background-color: transparent; /* No background color */ } table td h4 { padding: 5px; margin: 0 0 5px; /* Reduced margin */ font-size: 17px; /* Reduced font size */ color: #1b1b1b; } table td p { margin: 3px 0; /* Reduced margin */ line-height: 1.2; /* Reduced line height */ color: #555; } table td p strong { color: #000; } /* Adjust row heights */ #business-model-canvas tr:first-child { height: 30%; /* Reduced height for the upper part */ } #business-model-canvas tr:nth-child(2) { height: 25%; /* Reduced height for the second row */ } #business-model-canvas tr:last-child { height: 25%; /* Increased height for the bottom part */ } /* Print-specific styles */ @media print { body { background: none; margin: 0; } .container { box-shadow: none; margin: 0; padding: 0; } table td { font-size: 11px; /* Further reduced font size for print */ } } </style> </head> <body> <div class=\"container\"> <h1>`+output.title+` Business Model Canvas</h1> <!-- Canvas --> <table id=\"business-model-canvas\" cellspacing=\"0\"> <!-- Upper part --> <tr> <td id=\"key-partners\" colspan=\"2\" rowspan=\"2\"> <h4>Key Partners</h4> `+output.key_partners+` </td> <td id=\"key-activities\" colspan=\"2\"> <h4>Key Activities</h4> `+output.key_activities+` </td> <td id=\"value-propositions\" colspan=\"2\" rowspan=\"2\"> <h4>Value Proposition</h4> `+output.value_proposition+` </td> <td id=\"customer-relationships\" colspan=\"2\"> <h4>Customer Relationships</h4> `+output.customer_relationship+` </td> <td id=\"customer-segments\" colspan=\"2\" rowspan=\"2\"> <h4>Customer Segments</h4> `+output.customer_segments+` </td> </tr> <!-- Lower part --> <tr> <td id=\"key-resources\" colspan=\"2\"> <h4>Key Resources</h4> `+output.key_resources+` </td> <td id=\"channels\" colspan=\"2\"> <h4>Channels</h4> `+output.channels+` </td> </tr> <tr> <td id=\"cost-structure\" colspan=\"5\"> <h4>Cost Structure</h4> `+output.cost_structure+` </td> <td id=\"revenue-streams\" colspan=\"5\"> <h4>Revenue Streams</h4> `+output.revenue_streams+` </td> </tr> </table> <!-- /Canvas --> </div> </body> </html>`,\n  \"title\" : $input.first().json.title\n}"
@@ -408,8 +408,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4420
+        1500,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -425,8 +425,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4600
+        1780,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -442,8 +442,8 @@
       "name": "Merge All Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        3700
+        380,
+        100
       ],
       "parameters": {
         "numberInputs": 10
@@ -458,8 +458,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        4780
+        2060,
+        100
       ],
       "parameters": {
         "width": 460,
@@ -491,7 +491,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        3700
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When chat message received**: chatTrigger\n- **Key Partners Generator**: agent\n- **Key Activities Generator**: agent\n- **Value Proposition Generator**: agent\n- **Customer Relationship Generator**: agent\n- **Customer Segments Generator**: agent\n- **Ollama Chat Model**: lmChatOllama\n- **Key Resources Generator**: agent\n- **Channels Generator**: agent\n- **Cost Structure Generator**: agent\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -505,7 +505,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        3880
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -519,7 +519,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        4060
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -533,7 +533,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        4240
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -547,7 +547,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        4420
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -561,7 +561,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        4600
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -575,7 +575,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        4780
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -588,7 +588,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        4960
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -601,7 +601,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        5140
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -627,8 +627,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        7480
+        3740,
+        100
       ],
       "parameters": {
         "content": "# Business Canvas Generator\n\n## Overview\nAutomated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -664,7 +664,423 @@
     "retryDelay": 1000
   },
   "versionId": "782619e6-0ab1-4a22-b224-98b080614647",
-  "connections": {},
+  "connections": {
+    "Channels Generator": {
+      "main": [
+        [
+          {
+            "node": "Channels HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Channels HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Cost Structure Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cost Structure Generator": {
+      "main": [
+        [
+          {
+            "node": "Cost Structure HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cost Structure HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Customer Relationship Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Relationship Generator": {
+      "main": [
+        [
+          {
+            "node": "Customer Relationship HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Relationship HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Customer Segments Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Segments Generator": {
+      "main": [
+        [
+          {
+            "node": "Customer Segments HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Segments HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 7a5b2b06",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 7a5b2b06": {
+      "main": [
+        [
+          {
+            "node": "HTML code to HTML file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML code to HTML file": {
+      "main": [
+        [
+          {
+            "node": "Key Activities Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Activities Generator": {
+      "main": [
+        [
+          {
+            "node": "Key Activities HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Activities HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Key Partners Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Partners Generator": {
+      "main": [
+        [
+          {
+            "node": "Key Partners HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Partners HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Key Resources Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Resources Generator": {
+      "main": [
+        [
+          {
+            "node": "Key Resources HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Resources HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Manual Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Merge All Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge All Data": {
+      "main": [
+        [
+          {
+            "node": "Ollama Chat Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "main": [
+        [
+          {
+            "node": "Revenue Streams Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revenue Streams Generator": {
+      "main": [
+        [
+          {
+            "node": "Revenue streams HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Revenue streams HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note2": {
+      "main": [
+        [
+          {
+            "node": "Title Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Title Generator": {
+      "main": [
+        [
+          {
+            "node": "Turn to HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Turn to HTML": {
+      "main": [
+        [
+          {
+            "node": "Value Proposition Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Value Proposition Generator": {
+      "main": [
+        [
+          {
+            "node": "Values proposition HTML Transformer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Values proposition HTML Transformer": {
+      "main": [
+        [
+          {
+            "node": "When chat message received",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Business Canvas Generator. This workflow integrates 8 different services: convertToFile, stickyNote, code, agent, merge. It contains 29 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Business Canvas Generator. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

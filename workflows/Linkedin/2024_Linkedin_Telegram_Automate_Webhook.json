@@ -62,8 +62,8 @@
       "name": "Update the used node",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        100,
-        8380
+        1780,
+        100
       ],
       "parameters": {
         "base": {
@@ -131,8 +131,8 @@
       "name": "map used articls ids",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        11260
+        3740,
+        100
       ],
       "parameters": {
         "jsCode": "let values = $input.all().map(item => item.json.value);\n\nreturn [\n    {\n      json: {\n        values: values\n      }\n    }\n  ];"
@@ -145,8 +145,8 @@
       "name": "filter only unused Ids",
       "type": "n8n-nodes-base.filter",
       "position": [
-        100,
-        10720
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -180,8 +180,8 @@
       "name": "get random tags",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        10900
+        3180,
+        100
       ],
       "parameters": {
         "jsCode": "const devToTags = [\n  \"android\",\n        \"androiddev\",\n        \"kotlin\",\n        \"jetpack-compose\",\n        \"android-appdevelopment\",\n        \"app-development\"\n];\n\n\nfunction getRandomValuesAsObjects(list, count) {\n  const randomValues = [];\n  for (let i = 0; i < count; i++) {\n    const randomIndex = Math.floor(Math.random() * list.length);\n    randomValues.push({ json: { value: list[randomIndex] } });\n  }\n  return randomValues;\n}\n\nreturn getRandomValuesAsObjects(devToTags, 1);\n"
@@ -194,8 +194,8 @@
       "name": "sent the status",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        11440
+        4020,
+        100
       ],
       "webhookId": "9373d46a-d5ad-40f4-93c0-7a44ff5fea37",
       "parameters": {
@@ -241,8 +241,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7480
+        380,
+        100
       ],
       "parameters": {
         "width": 920,
@@ -257,8 +257,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        7660
+        660,
+        100
       ],
       "parameters": {
         "width": 580,
@@ -273,8 +273,8 @@
       "name": "fetch article ids from tag",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10540
+        2620,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -364,8 +364,8 @@
       "name": "make Linkedin post",
       "type": "n8n-nodes-base.linkedIn",
       "position": [
-        100,
-        11080
+        3460,
+        100
       ],
       "parameters": {
         "text": "={{ $('Fetch Medium post content').item.json.content.substring(0, 600) }} ...\n\nArticle link : {{ $env.WEBHOOK_URL }}{{ $('If').item.json.url }}\n\n#AndroidDevelopment #MobileAppDevelopment #AppDevelopment #Programming #SoftwareEngineering #TechCommunity #DeveloperLife #Kotlin #LinkedInDevelopers \n#Mr4rogrammer #isharewhatilearn",
@@ -418,8 +418,8 @@
       "name": "download image for post",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        10360
+        2340,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -461,8 +461,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        7840
+        940,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 6382e23e-e214-48b4-8d93-06fc2c74e7cc",
@@ -476,8 +476,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8020
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in b5026d10-0bcf-4ef4-a42e-0d8162a7eccc",
@@ -491,8 +491,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        8200
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in d25bf5d7-0258-4f07-b0b7-54ace75ef697",
@@ -582,7 +582,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        7480
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get List of records used**: airtable\n- **Update the used node**: airtable\n- **map used articls ids**: code\n- **filter only unused Ids**: filter\n- **get random tags**: code\n- **sent the status**: telegram\n- **Morning  9 Clock**: scheduleTrigger\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **fetch article ids from tag**: httpRequest\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -656,7 +656,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        7660
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -670,7 +670,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        7840
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -804,7 +804,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        8020
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -818,7 +818,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        8200
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -952,7 +952,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        8380
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -966,7 +966,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        8560
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1035,7 +1035,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9820
+        8740
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1104,7 +1104,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        10000
+        8920
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1130,8 +1130,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        10180
+        2060,
+        100
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1167,7 +1167,545 @@
     "retryDelay": 1000
   },
   "versionId": "cc2275e5-a8d2-468c-be91-5e14ad568e3a",
-  "connections": {},
+  "connections": {
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 6382e23e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6382e23e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 6b16bc15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 6b16bc15": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b5026d10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b5026d10": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c6712f11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c6712f11": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for d25bf5d7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for d25bf5d7": {
+      "main": [
+        [
+          {
+            "node": "Fetch Medium post content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Medium post content": {
+      "main": [
+        [
+          {
+            "node": "Fetch Medium post using Article Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Medium post using Article Id": {
+      "main": [
+        [
+          {
+            "node": "Get List of records used",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get List of records used": {
+      "main": [
+        [
+          {
+            "node": "If Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Node": {
+      "main": [
+        [
+          {
+            "node": "Morning  9 Clock",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Morning  9 Clock": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Update the used node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update the used node": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "download image for post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download image for post": {
+      "main": [
+        [
+          {
+            "node": "fetch article ids from tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fetch article ids from tag": {
+      "main": [
+        [
+          {
+            "node": "filter only unused Ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "filter only unused Ids": {
+      "main": [
+        [
+          {
+            "node": "get random tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get random tags": {
+      "main": [
+        [
+          {
+            "node": "make Linkedin post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "make Linkedin post": {
+      "main": [
+        [
+          {
+            "node": "map used articls ids",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "map used articls ids": {
+      "main": [
+        [
+          {
+            "node": "sent the status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.",
   "notes": "Excellent quality workflow: Linkedin Automation. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }

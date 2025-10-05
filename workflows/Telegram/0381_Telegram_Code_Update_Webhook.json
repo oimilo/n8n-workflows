@@ -37,8 +37,8 @@
       "name": "Send Telegram Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        100,
-        2260
+        380,
+        100
       ],
       "parameters": {
         "text": "={{ $json.data.replaceAll(/(Last Price: \\S+)$/gm,\"$1\\n\").slice(0,1000) }}",
@@ -101,8 +101,8 @@
       "type": "n8n-nodes-base.code",
       "notes": "Split them for telegram message limit",
       "position": [
-        100,
-        2440
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "// Function to split the data into chunks of approximately 1000 characters\nfunction splitDataIntoChunks(data) {\n    const chunks = [];\n    let currentChunk = \"\";\n\n    data.forEach(item => {\n        // Ensure that each item has a 'message' property\n        if (item && item.message) {\n            const message = item.message + \"\\n\"; // Adding a newline for separation\n            // Check if adding this message to the current chunk would exceed the 1000 characters limit\n            if (currentChunk.length + message.length > 1000) {\n                // If so, push the current chunk to the chunks array and start a new chunk\n                chunks.push({ json: { data: currentChunk } });\n                currentChunk = message;\n            } else {\n                // Otherwise, add the message to the current chunk\n                currentChunk += message;\n            }\n        }\n    });\n\n    // Add the last chunk if it's not empty\n    if (currentChunk) {\n        chunks.push({ json: { data: currentChunk } });\n    }\n\n    return chunks;\n}\n\n// The input data is passed from the previous node\nconst inputData = items[0].json.data; // Accessing the 'data' property\n\n// Process the data\nconst result = splitDataIntoChunks(inputData);\n\n// Output the result\nreturn result;\n"
@@ -115,8 +115,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        100,
-        2620
+        940,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -179,7 +179,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2800
+        2260
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, telegram, code, scheduleTrigger. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 10\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Send Telegram Message**: telegram\n- **Aggregate**: aggregate\n- **Binance 24h Price Change**: httpRequest\n- **Filter by 10% Change rate**: function\n- **Split By 1K chars**: code\n- **Sticky Note**: stickyNote\n- **Error Handler**: stopAndError\n- **Error Handler for abac20ef**: stopAndError\n- **Error Handler for ba174e7f**: stopAndError\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -208,7 +208,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2980
+        2440
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, telegram, code, scheduleTrigger. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -237,7 +237,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3160
+        2620
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, telegram, code, scheduleTrigger. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -266,7 +266,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3340
+        2800
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, telegram, code, scheduleTrigger. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -280,7 +280,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3520
+        2980
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, telegram, code, scheduleTrigger. It contains 10 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -306,8 +306,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        3700
+        1220,
+        100
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, telegram, code, scheduleTrigger. It contains 10 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -329,7 +329,192 @@
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Binance 24h Price Change",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Binance 24h Price Change": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for abac20ef",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for abac20ef": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for ba174e7f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for ba174e7f": {
+      "main": [
+        [
+          {
+            "node": "Filter by 10% Change rate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter by 10% Change rate": {
+      "main": [
+        [
+          {
+            "node": "Schedule Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Telegram Message": {
+      "main": [
+        [
+          {
+            "node": "Split By 1K chars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split By 1K chars": {
+      "main": [
+        [
+          {
+            "node": "Sticky Note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticky Note": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "name": "Scheduletrigger Workflow",
   "settings": {
     "executionOrder": "v1",

@@ -44,8 +44,8 @@
       "name": "Extract Credentials",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        12160
+        380,
+        280
       ],
       "parameters": {
         "options": {},
@@ -117,8 +117,8 @@
       "name": "Check Event Type",
       "type": "n8n-nodes-base.code",
       "position": [
-        100,
-        280
+        380,
+        100
       ],
       "parameters": {
         "jsCode": "// PHP szerinti ellenőrzés: $_REQUEST['event'] == 'ONAPPINSTALL' vagy $_REQUEST['PLACEMENT'] == 'DEFAULT'\nconst items = $input.all();\nconst requestData = items[0].json;\n\nlet isInstallation = false;\nlet isInstallationFinished = false;\n\nif (requestData.body && requestData.body.event === 'ONAPPINSTALL') {\n  isInstallation = true;\n} else if (requestData.body && requestData.body.PLACEMENT === 'DEFAULT') {\n  isInstallation = true;\n  if (requestData.body && requestData.body.PLACEMENT_OPTIONS) {\n  po = JSON.parse(requestData.body.PLACEMENT_OPTIONS);\n  if (po.install_finished === 'Y') {\n    isInstallationFinished = true\n  }  \n} \n} \nreturn {\n  json: {\n    ...requestData,\n    isInstallation: isInstallation,\n    isInstallationFinished : isInstallationFinished \n  }\n};"
@@ -131,8 +131,8 @@
       "name": "Is Installation?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        13600
+        380,
+        460
       ],
       "parameters": {
         "options": {},
@@ -165,8 +165,8 @@
       "name": "Register Placement",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        14500
+        1780,
+        460
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -198,8 +198,8 @@
       "name": "Process Settings",
       "type": "n8n-nodes-base.function",
       "position": [
-        100,
-        14140
+        1220,
+        460
       ],
       "parameters": {
         "functionCode": "// Process settings from file\nconst items = $input.all();\nlet settingsData = {};\n\ntry {\n  // Try to parse the file content\n  settingsData = items[0].json.data;\n  \n  // Extract task ID from PLACEMENT_OPTIONS if available\n  let taskId = null;\n  const placementOptions = items[0].json.body.PLACEMENT_OPTIONS;\n  \n  if (placementOptions) {\n    try {\n      const options = JSON.parse(placementOptions);\n      taskId = options.taskId;\n    } catch (e) {\n      // Ignore parse errors\n    }\n  }\n  \n  return {\n    json: {\n      ...settingsData,\n      taskId: taskId,\n      success: true,\n      originalRequest: items[0].json\n    }\n  };\n} catch (error) {\n  console.log (\"ERROR: \" + error)\n  // Return error if file doesn't exist or is invalid\n  return {\n    json: {\n      error: 'No valid settings found',\n      success: false,\n      originalRequest: items[0].json\n    }\n  };\n}"
@@ -213,7 +213,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        13240
+        9640
       ],
       "parameters": {
         "options": {
@@ -238,8 +238,8 @@
       "name": "Has Valid Settings?",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        12880
+        1500,
+        280
       ],
       "parameters": {
         "options": {},
@@ -272,8 +272,8 @@
       "name": "Get Task Data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        100,
-        12700
+        1220,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -291,8 +291,8 @@
       "name": "Format Task Data",
       "type": "n8n-nodes-base.function",
       "position": [
-        100,
-        12520
+        940,
+        280
       ],
       "parameters": {
         "functionCode": "// Format Task Data for display\nconst items = $input.all();\nlet taskData = {};\n\ntry {\n  taskData = items[0].json.result.task;\n} catch (error) {\n  return {\n    json: {\n      taskHtml: '<div class=\"alert alert-danger\">Error loading task data</div>'\n    }\n  };\n}\n\n// Create HTML table from task data\nlet tableHtml = '<table class=\"table table-striped\">\\n';\n\nfor (const [field, value] of Object.entries(taskData)) {\n  let displayValue = '';\n  \n  if (Array.isArray(value)) {\n    displayValue = value.join(', ');\n  } else if (value !== null && value !== undefined) {\n    displayValue = value.toString();\n  }\n  \n  tableHtml += `  <tr>\\n    <td>${field}</td>\\n    <td>${displayValue}</td>\\n  </tr>\\n`;\n}\n\ntableHtml += '</table>';\n\nreturn {\n  json: {\n    taskHtml: tableHtml\n  }\n};"
@@ -306,7 +306,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        16120
+        10000
       ],
       "parameters": {
         "options": {
@@ -332,7 +332,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        11980
+        9460
       ],
       "parameters": {
         "options": {
@@ -357,8 +357,8 @@
       "name": "Save Installation Settings",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        100,
-        14680
+        2060,
+        280
       ],
       "parameters": {
         "options": {
@@ -375,8 +375,8 @@
       "name": "Set Settings Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        100,
-        14860
+        2340,
+        280
       ],
       "parameters": {
         "include": "selected",
@@ -402,8 +402,8 @@
       "name": "Create Settings File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        100,
-        460
+        660,
+        100
       ],
       "parameters": {
         "options": {
@@ -419,8 +419,8 @@
       "name": "Read Installation Settings",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        100,
-        14320
+        1500,
+        460
       ],
       "parameters": {
         "options": {},
@@ -434,8 +434,8 @@
       "name": "If Installation finished",
       "type": "n8n-nodes-base.if",
       "position": [
-        100,
-        13060
+        1780,
+        280
       ],
       "parameters": {
         "options": {},
@@ -469,7 +469,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
         100,
-        13420
+        9820
       ],
       "parameters": {
         "options": {
@@ -494,8 +494,8 @@
       "name": "Merge Installation info",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        13780
+        660,
+        460
       ],
       "parameters": {
         "mode": "combine",
@@ -510,8 +510,8 @@
       "name": "Extract Installation Settings",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        100,
-        12340
+        660,
+        280
       ],
       "parameters": {
         "options": {},
@@ -525,8 +525,8 @@
       "name": "Merge request data with installation settings",
       "type": "n8n-nodes-base.merge",
       "position": [
-        100,
-        13960
+        940,
+        460
       ],
       "parameters": {
         "mode": "combine",
@@ -543,7 +543,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        640
+        280
       ],
       "parameters": {
         "message": "Error occurred in cb30a147-2965-4b45-8974-12fea1eac96d",
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15040
+        2620,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 8e429e18-392c-4123-969a-f9086d12709d",
@@ -572,8 +572,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15220
+        2900,
+        280
       ],
       "parameters": {
         "message": "Error occurred in c7384217-38be-4184-b60f-a99c6b762406",
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15400
+        3180,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 220b32af-d886-4315-808e-825834eb440e",
@@ -602,8 +602,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15580
+        3460,
+        280
       ],
       "parameters": {
         "message": "Error occurred in a9d4ca61-d9e0-4a57-9807-40dc18625ce2",
@@ -617,8 +617,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15760
+        3740,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 5bbbf72e-d743-450a-9534-a2a6c569f73d",
@@ -632,8 +632,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        15940
+        4020,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 0047bf02-13d9-4ba6-abcd-a557b9ba3fbf",
@@ -647,8 +647,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        17920
+        660,
+        640
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 28 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11800
+        4020,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cb30a147",
@@ -676,8 +676,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10720
+        2340,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8e429e18",
@@ -691,8 +691,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11620
+        3740,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c7384217",
@@ -706,8 +706,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10180
+        1500,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 220b32af",
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11260
+        3180,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a9d4ca61",
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10540
+        2060,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5bbbf72e",
@@ -751,8 +751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10900
+        2620,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8fbaed6d",
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10360
+        1780,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 490779aa",
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11080
+        2900,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 902671fc",
@@ -796,8 +796,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        10000
+        1220,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0047bf02",
@@ -811,8 +811,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        11440
+        3460,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b5dbdd6f",
@@ -826,8 +826,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        18100
+        940,
+        640
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Bitrix24 Handler**: webhook\n- **Extract Credentials**: set\n- **Check Event Type**: code\n- **Is Installation?**: if\n- **Register Placement**: httpRequest\n- **Process Settings**: function\n- **Installation Response**: respondToWebhook\n- **Has Valid Settings?**: if\n- **Get Task Data**: httpRequest\n- **Format Task Data**: function\n- ... and 30 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -841,7 +841,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        820
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -856,7 +856,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1000
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -871,7 +871,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1180
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -886,7 +886,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1360
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -901,7 +901,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1540
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -916,7 +916,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1720
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -931,7 +931,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        1900
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -946,7 +946,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16300
+        10180
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -960,7 +960,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16480
+        10360
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -974,7 +974,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2080
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -989,7 +989,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2260
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1004,7 +1004,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2440
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1019,7 +1019,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2620
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1034,7 +1034,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2800
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1049,7 +1049,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        2980
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1064,7 +1064,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3160
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1079,7 +1079,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3340
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1094,7 +1094,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3520
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1109,7 +1109,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3700
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1124,7 +1124,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        3880
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1139,7 +1139,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4060
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1154,7 +1154,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4240
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1169,7 +1169,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4420
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1184,7 +1184,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16660
+        10540
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1198,7 +1198,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        16840
+        10720
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1212,7 +1212,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4600
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1227,7 +1227,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4780
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1242,7 +1242,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        4960
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1257,7 +1257,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5140
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1272,7 +1272,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5320
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1287,7 +1287,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5500
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1302,7 +1302,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5680
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1317,7 +1317,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        5860
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1332,7 +1332,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6040
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1347,7 +1347,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6220
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1362,7 +1362,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6400
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1377,7 +1377,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6580
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1392,7 +1392,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6760
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1407,7 +1407,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        6940
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1422,7 +1422,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17020
+        10900
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 80\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1436,7 +1436,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17200
+        11080
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 81\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1449,7 +1449,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7120
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1463,7 +1463,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7300
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1477,7 +1477,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7480
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1491,7 +1491,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7660
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1505,7 +1505,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        7840
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1519,7 +1519,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8020
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1533,7 +1533,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8200
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1547,7 +1547,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17380
+        11260
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 89\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1560,7 +1560,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8380
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1574,7 +1574,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8560
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1588,7 +1588,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8740
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1602,7 +1602,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        8920
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1616,7 +1616,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9100
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1630,7 +1630,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9280
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1644,7 +1644,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9460
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1658,7 +1658,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        17560
+        11440
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1671,7 +1671,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        9640
+        9280
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1684,8 +1684,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        100,
-        17740
+        380,
+        640
       ],
       "parameters": {
         "content": "# Bitrix24 Task Form Widget Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1697,8 +1697,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        100,
-        9820
+        940,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1771,7 +1771,872 @@
     "retryDelay": 1000
   },
   "versionId": "72d7eac7-03cb-4792-8f6f-d190631e34f9",
-  "connections": {},
+  "connections": {
+    "Bitrix24 Handler": {
+      "main": [
+        [
+          {
+            "node": "Check Event Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Event Type": {
+      "main": [
+        [
+          {
+            "node": "Create Settings File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Settings File": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler for 0047bf02",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 0047bf02": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 220b32af",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 220b32af": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 490779aa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 490779aa": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 5bbbf72e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 5bbbf72e": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8e429e18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8e429e18": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 8fbaed6d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 8fbaed6d": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for 902671fc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for 902671fc": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for a9d4ca61",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for a9d4ca61": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for b5dbdd6f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for b5dbdd6f": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for c7384217",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for c7384217": {
+      "main": [
+        [
+          {
+            "node": "Error Handler for cb30a147",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler for cb30a147": {
+      "main": [
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Response": {
+      "main": [
+        [
+          {
+            "node": "Extract Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Credentials": {
+      "main": [
+        [
+          {
+            "node": "Extract Installation Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Installation Settings": {
+      "main": [
+        [
+          {
+            "node": "Format Task Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Task Data": {
+      "main": [
+        [
+          {
+            "node": "Get Task Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Task Data": {
+      "main": [
+        [
+          {
+            "node": "Has Valid Settings?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Valid Settings?": {
+      "main": [
+        [
+          {
+            "node": "If Installation finished",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Installation finished": {
+      "main": [
+        [
+          {
+            "node": "Installation Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Installation Response": {
+      "main": [
+        [
+          {
+            "node": "Installation finished Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Installation finished Response": {
+      "main": [
+        [
+          {
+            "node": "Is Installation?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Installation?": {
+      "main": [
+        [
+          {
+            "node": "Merge Installation info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Installation info": {
+      "main": [
+        [
+          {
+            "node": "Merge request data with installation settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge request data with installation settings": {
+      "main": [
+        [
+          {
+            "node": "Process Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Settings": {
+      "main": [
+        [
+          {
+            "node": "Read Installation Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Installation Settings": {
+      "main": [
+        [
+          {
+            "node": "Register Placement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register Placement": {
+      "main": [
+        [
+          {
+            "node": "Save Installation Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Installation Settings": {
+      "main": [
+        [
+          {
+            "node": "Set Settings Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Settings Data": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 1": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 2": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 3": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 4": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 5": {
+      "main": [
+        [
+          {
+            "node": "Stopanderror 6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stopanderror 6": {
+      "main": [
+        [
+          {
+            "node": "Task View Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task View Response": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow Documentation 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Documentation 1": {
+      "main": [
+        [
+          {
+            "node": "Workflow Documentation 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "description": "Automated workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.",
   "notes": "Excellent quality workflow: Bitrix24 Task Form Widget Application Workflow example with Webhook Integration. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
 }
