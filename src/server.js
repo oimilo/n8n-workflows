@@ -82,6 +82,50 @@ app.get('/api/stats', async (req, res) => {
   }
 });
 
+// Categories list compatible with static UI (returns {categories: []})
+app.get('/api/categories', async (req, res) => {
+  try {
+    await db.initialize();
+    // Use distinct folders as categories fallback
+    const sqlite3 = require('sqlite3').verbose();
+    const sqliteDb = new sqlite3.Database(db.dbPath);
+    sqliteDb.all('SELECT DISTINCT folder FROM workflows WHERE folder IS NOT NULL AND folder != ""', (err, rows) => {
+      sqliteDb.close();
+      if (err) {
+        console.error('Error loading categories:', err);
+        return res.json({ categories: ['Uncategorized'] });
+      }
+      const categories = rows.map(r => r.folder).filter(Boolean).sort();
+      res.json({ categories: categories.length ? categories : ['Uncategorized'] });
+    });
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ categories: ['Uncategorized'] });
+  }
+});
+
+// Filename -> category mappings (returns {mappings: {filename: category}})
+app.get('/api/category-mappings', async (req, res) => {
+  try {
+    await db.initialize();
+    const sqlite3 = require('sqlite3').verbose();
+    const sqliteDb = new sqlite3.Database(db.dbPath);
+    sqliteDb.all('SELECT filename, COALESCE(NULLIF(folder, ""), "Uncategorized") AS category FROM workflows', (err, rows) => {
+      sqliteDb.close();
+      if (err) {
+        console.error('Error loading category mappings:', err);
+        return res.json({ mappings: {} });
+      }
+      const mappings = {};
+      rows.forEach(r => { mappings[r.filename] = r.category || 'Uncategorized'; });
+      res.json({ mappings });
+    });
+  } catch (error) {
+    console.error('Error fetching category mappings:', error);
+    res.status(500).json({ mappings: {} });
+  }
+});
+
 // Search workflows
 app.get('/api/workflows', async (req, res) => {
   try {
@@ -251,54 +295,7 @@ app.get('/api/integrations', async (req, res) => {
   }
 });
 
-// Get categories (based on integrations)
-app.get('/api/categories', async (req, res) => {
-  try {
-    const { workflows } = await db.searchWorkflows('', 'all', 'all', false, 1000, 0);
-    
-    const categories = {
-      'Communication': ['Slack', 'Discord', 'Telegram', 'Mattermost', 'Teams'],
-      'CRM': ['HubSpot', 'Salesforce', 'Pipedrive', 'Copper'],
-      'Data': ['GoogleSheets', 'Airtable', 'Mysql', 'Postgres'],
-      'Development': ['GitHub', 'GitLab', 'Jira', 'Trello'],
-      'Marketing': ['Mailchimp', 'Sendinblue', 'Typeform', 'Webflow'],
-      'Storage': ['GoogleDrive', 'Dropbox', 'OneDrive', 'AWS S3'],
-      'Other': []
-    };
-    
-    // Categorize workflows
-    const categorizedWorkflows = {};
-    Object.keys(categories).forEach(category => {
-      categorizedWorkflows[category] = [];
-    });
-    
-    workflows.forEach(workflow => {
-      let categorized = false;
-      
-      // Check each integration against categories
-      workflow.integrations.forEach(integration => {
-        Object.entries(categories).forEach(([category, services]) => {
-          if (services.some(service => 
-            integration.toLowerCase().includes(service.toLowerCase())
-          )) {
-            categorizedWorkflows[category].push(workflow);
-            categorized = true;
-          }
-        });
-      });
-      
-      // If not categorized, add to Other
-      if (!categorized) {
-        categorizedWorkflows['Other'].push(workflow);
-      }
-    });
-    
-    res.json(categorizedWorkflows);
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    res.status(500).json({ error: 'Error fetching categories', details: error.message });
-  }
-});
+// Note: legacy category endpoint above replaced by UI-compatible endpoints
 
 // Error handler
 app.use((error, req, res, next) => {
@@ -351,11 +348,15 @@ if (require.main === module) {
   const host = options.host;
   
   // Check if database needs initialization
-  db.initialize().then(() => {
-    return db.getStats();
-  }).then(stats => {
+  db.initialize().then(() => db.getStats()).then(async (stats) => {
     if (stats.total === 0) {
-      console.log('⚠️  Warning: No workflows found. Run "npm run index" to index workflows.');
+      console.log('⚠️  No workflows indexed. Indexing now...');
+      try {
+        const result = await db.indexWorkflows(true);
+        console.log(`✅ Indexed ${result.processed} workflows (skipped: ${result.skipped}, errors: ${result.errors})`);
+      } catch (e) {
+        console.error('❌ Indexing failed:', e.message);
+      }
     } else {
       console.log(`✅ Database ready: ${stats.total} workflows indexed`);
     }
