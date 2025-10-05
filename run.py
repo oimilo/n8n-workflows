@@ -58,6 +58,17 @@ def setup_database(force_reindex: bool = False) -> str:
     """Setup and initialize the database."""
     from workflow_db import WorkflowDatabase
     
+    # Run startup cleaner first
+    try:
+        from startup_cleaner import WorkflowStartupCleaner
+        print("🧹 Running startup workflow cleaner...")
+        cleaner = WorkflowStartupCleaner()
+        stats = cleaner.clean_all_workflows()
+        print(f"✅ Startup cleanup complete: {stats['cleaned']} workflows cleaned")
+    except Exception as e:
+        print(f"⚠️ Startup cleaner failed: {e}")
+        print("Continuing with database setup...")
+    
     db_path = "database/workflows.db"
     
     print(f"🔄 Setting up database: {db_path}")
