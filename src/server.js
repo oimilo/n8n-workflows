@@ -312,7 +312,9 @@ app.post('/api/reindex', async (req, res) => {
     const { force = false } = req.body;
     
     // Run indexing in background
-    db.indexWorkflows(force).then(results => {
+    db.cleanupMissingFiles()
+      .then(() => db.indexWorkflows(force))
+      .then(results => {
       console.log('Indexing completed:', results);
     }).catch(error => {
       console.error('Indexing error:', error);

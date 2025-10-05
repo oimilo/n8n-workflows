@@ -619,6 +619,34 @@ class WorkflowDatabase {
     });
   }
 
+  async cleanupMissingFiles() {
+    if (!this.initialized) {
+      await this.initialize();
+    }
+
+    return new Promise((resolve, reject) => {
+      this.db.all("SELECT id, filename, folder FROM workflows", async (err, rows) => {
+        if (err) return reject(err);
+
+        let removed = 0;
+        for (const row of rows) {
+          const candidate1 = path.join(this.workflowsDir, row.folder || "", row.filename);
+          const candidate2 = path.join(this.workflowsDir, row.filename);
+          if (!fs.existsSync(candidate1) && !fs.existsSync(candidate2)) {
+            await new Promise((res, rej) => {
+              this.db.run("DELETE FROM workflows WHERE id = ?", [row.id], (e) => {
+                if (e) return rej(e);
+                removed++;
+                res();
+              });
+            });
+          }
+        }
+        resolve({ removed });
+      });
+    });
+  }
+
   async getWorkflowDetail(filename) {
     return new Promise((resolve, reject) => {
       this.db.get(
