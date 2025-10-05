@@ -26,8 +26,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        560,
-        -500
+        100,
+        7120
       ],
       "webhookId": "[CENSORED]",
       "parameters": {
@@ -43,8 +43,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        460,
-        -220
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.Prompt }}",
@@ -62,8 +62,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        460,
-        -20
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -83,8 +83,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        780,
-        -500
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -119,8 +119,8 @@
       "name": "HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1276,
-        -220
+        100,
+        4780
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -151,8 +151,8 @@
       "name": "Get History",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1000,
-        -500
+        100,
+        4420
       ],
       "parameters": {
         "options": {
@@ -206,8 +206,8 @@
       "name": "Prepare Prompt",
       "type": "n8n-nodes-base.set",
       "position": [
-        1220,
-        -500
+        100,
+        4960
       ],
       "parameters": {
         "options": {},
@@ -230,8 +230,8 @@
       "name": "Save History",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1056,
-        -220
+        100,
+        5140
       ],
       "parameters": {
         "columns": {
@@ -361,8 +361,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        -560
+        100,
+        5500
       ],
       "parameters": {
         "content": "### Connect to Line Official Account's API"
@@ -375,8 +375,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        -560
+        100,
+        5680
       ],
       "parameters": {
         "width": 180,
@@ -390,8 +390,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        960,
-        -560
+        100,
+        5860
       ],
       "parameters": {
         "width": 180,
@@ -405,8 +405,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1180,
-        -560
+        100,
+        6040
       ],
       "parameters": {
         "width": 180,
@@ -420,8 +420,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        -280
+        100,
+        6220
       ],
       "parameters": {
         "content": "Get input with this command.   \"{{ $json.Prompt }}\""
@@ -434,8 +434,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        780,
-        -280
+        100,
+        6400
       ],
       "parameters": {
         "width": 180,
@@ -449,8 +449,8 @@
       "name": "Split History",
       "type": "n8n-nodes-base.code",
       "position": [
-        840,
-        -220
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "// Get the current history, new message, and response\nlet history = $('Get History').item.json.History || '';\nlet message = $('Edit Fields').item.json.body.events[0].message.text;\nlet response = $json.output;\nlet newExchange = `ผู้ใช้: ${message}\\nลลิตา: ${response}`;\nlet updatedHistory = history + (history ? '\\n' : '') + newExchange;\n\n// Threshold: 70% of Google Sheets cell limit (50,000 characters * 0.7 = 35,000)\nconst threshold = 35000;\nlet historyToSave = updatedHistory;\nlet archive1 = $('Get History').item.json.History_Archive_1 || '';\nlet archive2 = $('Get History').item.json.History_Archive_2 || '';\nlet archive3 = $('Get History').item.json.History_Archive_3 || '';\nlet archive4 = $('Get History').item.json.History_Archive_4 || '';\n\n// If history exceeds threshold, split it\nif (updatedHistory.length > threshold) {\n  // Keep the last 17,500 characters in History (half of threshold for balance)\n  const keepLength = 17500;\n  const archiveChunk = updatedHistory.substring(0, updatedHistory.length - keepLength);\n  historyToSave = updatedHistory.substring(updatedHistory.length - keepLength);\n\n  // Distribute to archive cells, ensuring none exceed 35,000 characters\n  if (archive1.length < threshold) {\n    archive1 = (archive1 ? archive1 + '\\n' : '') + archiveChunk;\n    if (archive1.length > threshold) {\n      const excess = archive1.substring(threshold);\n      archive1 = archive1.substring(0, threshold);\n      if (archive2.length < threshold) {\n        archive2 = (archive2 ? archive2 + '\\n' : '') + excess;\n      }\n    }\n  }\n  if (archive2.length < threshold && archive1.length >= threshold) {\n    archive2 = (archive2 ? archive2 + '\\n' : '') + archiveChunk;\n    if (archive2.length > threshold) {\n      const excess = archive2.substring(threshold);\n      archive2 = archive2.substring(0, threshold);\n      if (archive3.length < threshold) {\n        archive3 = (archive3 ? archive3 + '\\n' : '') + excess;\n      }\n    }\n  }\n  if (archive3.length < threshold && archive2.length >= threshold) {\n    archive3 = (archive3 ? archive3 + '\\n' : '') + archiveChunk;\n    if (archive3.length > threshold) {\n      const excess = archive3.substring(threshold);\n      archive3 = archive3.substring(0, threshold);\n      if (archive4.length < threshold) {\n        archive4 = (archive4 ? archive4 + '\\n' : '') + excess;\n      }\n    }\n  }\n  if (archive4.length < threshold && archive3.length >= threshold) {\n    archive4 = (archive4 ? archive4 + '\\n' : '') + archiveChunk;\n    if (archive4.length > threshold) {\n      archive4 = archive4.substring(0, threshold);\n    }\n  }\n}\n\n// Return the values to update\nreturn [\n  {\n    json: {\n      historyToSave: historyToSave,\n      historyArchive1: archive1,\n      historyArchive2: archive2,\n      historyArchive3: archive3,\n      historyArchive4: archive4,\n      lastUpdated: new Date().toISOString()\n    }\n  }\n];"
@@ -463,8 +463,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        -280
+        100,
+        6580
       ],
       "parameters": {
         "width": 180,
@@ -478,8 +478,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        -280
+        100,
+        6760
       ],
       "parameters": {
         "width": 180,
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in [CENSORED]",
@@ -509,8 +509,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in [CENSORED]",
@@ -524,8 +524,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node [CENSORE",
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node [CENSORE",
@@ -554,8 +554,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node [CENSORE",
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node [CENSORE",
@@ -584,8 +584,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node [CENSORE",
@@ -599,8 +599,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Webhook**: webhook\n- **AI Agent**: agent\n- **Google Gemini Chat Model**: lmChatGoogleGemini\n- **Edit Fields**: set\n- **HTTP Request**: httpRequest\n- **Get History**: googleSheets\n- **Prepare Prompt**: set\n- **Save History**: googleSheets\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -613,8 +613,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -657,8 +657,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -671,8 +671,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -701,8 +701,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -716,8 +716,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -731,8 +731,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -745,8 +745,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -759,8 +759,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -789,8 +789,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -804,8 +804,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -819,8 +819,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -833,8 +833,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -846,8 +846,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -860,8 +860,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -874,8 +874,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -887,8 +887,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -901,8 +901,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -915,8 +915,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -928,8 +928,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -942,8 +942,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# (G) LineChatBot + Google Sheets (as a memory)\n\n## Overview\nAutomated workflow: (G) LineChatBot + Google Sheets (as a memory). This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, lmChatGoogleGemini. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Workflow execution error",

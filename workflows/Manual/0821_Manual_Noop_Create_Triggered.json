@@ -17,8 +17,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -1180,
-        0
+        100,
+        3700
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        -120,
-        0
+        100,
+        3520
       ],
       "parameters": {
         "options": {},
@@ -71,8 +71,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        520,
-        160
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -92,8 +92,8 @@
       "name": "Google Gemini Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1120,
-        160
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -113,8 +113,8 @@
       "name": "Create Draft Email For Review",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1680,
-        180
+        100,
+        460
       ],
       "webhookId": "8b3d78e5-8cea-4205-a9db-c66ec01f9558",
       "parameters": {
@@ -140,8 +140,8 @@
       "name": "Generate Sales Email",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        0
+        100,
+        1540
       ],
       "parameters": {
         "text": "=# Profile of {{ $('Variables').first().json.firstname }} {{ $('Variables').first().json.lastname }}\n{{ Object.keys($json.output).map(key => `## ${key}\\n${$json.output[key]}`).join('\\n') }}",
@@ -171,8 +171,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -220,
-        -200
+        100,
+        2440
       ],
       "parameters": {
         "color": 7,
@@ -188,8 +188,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        320,
-        -200
+        100,
+        2620
       ],
       "parameters": {
         "color": 7,
@@ -205,8 +205,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        880,
-        -200
+        100,
+        2800
       ],
       "parameters": {
         "color": 7,
@@ -222,8 +222,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1480,
-        -40
+        100,
+        2980
       ],
       "parameters": {
         "color": 7,
@@ -239,8 +239,8 @@
       "name": "Analyse and Build Persona",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        440,
-        0
+        100,
+        100
       ],
       "parameters": {
         "text": "={{\n$input.all()\n  .map(item => `subject: ${item.json.subject}\ndate: ${$json.headers.date}\nmessage: ${item.json.text.substr(0, item.json.text.indexOf('> wrote:') ?? item.json.text.length).replace(/^On[\\w\\W]+$/im, '')}`\n  ).join('\\n---\\n')\n}}",
@@ -306,8 +306,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1400,
-        -860
+        100,
+        3160
       ],
       "parameters": {
         "width": 480,
@@ -322,8 +322,8 @@
       "name": "Get All Customer's Correspondence",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        80,
-        0
+        100,
+        1720
       ],
       "webhookId": "4d8c4b7a-da0b-49aa-bda8-7b1d89c62636",
       "parameters": {
@@ -349,8 +349,8 @@
       "name": "Get Contacts",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        -820,
-        0
+        100,
+        1900
       ],
       "parameters": {
         "operation": "search",
@@ -385,8 +385,8 @@
       "name": "For Each Contact",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -620,
-        0
+        100,
+        1360
       ],
       "parameters": {
         "options": {}
@@ -399,8 +399,8 @@
       "name": "Contact Ref",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -420,
-        0
+        100,
+        280
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -411,8 +411,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -880,
-        -200
+        100,
+        3340
       ],
       "parameters": {
         "color": 7,
@@ -429,8 +429,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f21c0147",
@@ -444,8 +444,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 27aaa070",
@@ -459,8 +459,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Variables**: set\n- **Google Gemini Chat Model**: lmChatGoogleGemini\n- **Google Gemini Chat Model1**: lmChatGoogleGemini\n- **Create Draft Email For Review**: gmail\n- **Generate Sales Email**: informationExtractor\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- ... and 9 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -487,8 +487,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -501,8 +501,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -529,8 +529,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -543,8 +543,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -556,8 +556,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -582,8 +582,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 10 different services: stickyNote, hubspot, lmChatGoogleGemini, informationExtractor, set. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -609,8 +609,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",

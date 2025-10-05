@@ -17,8 +17,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1040,
-        -540
+        100,
+        5680
       ],
       "parameters": {
         "rule": {
@@ -37,8 +37,8 @@
       "name": "Get Subscribers",
       "type": "n8n-nodes-base.microsoftExcel",
       "position": [
-        -860,
-        -540
+        100,
+        4240
       ],
       "parameters": {
         "options": {},
@@ -69,8 +69,8 @@
       "name": "Get Unique Categories",
       "type": "n8n-nodes-base.set",
       "position": [
-        -400,
-        -160
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -94,8 +94,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        760,
-        80
+        100,
+        5140
       ],
       "parameters": {
         "model": {
@@ -119,8 +119,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1180,
-        40
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -134,8 +134,8 @@
       "name": "Collect Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        980,
-        -60
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -200,8 +200,8 @@
       "name": "Categories to Items",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        -220,
-        -160
+        100,
+        460
       ],
       "parameters": {
         "options": {
@@ -217,8 +217,8 @@
       "name": "For Each Category",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        320,
-        -160
+        100,
+        3520
       ],
       "parameters": {
         "options": {}
@@ -231,8 +231,8 @@
       "name": "Workflows to Items",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        500,
-        -60
+        100,
+        9820
       ],
       "parameters": {
         "options": {
@@ -248,8 +248,8 @@
       "name": "Workflow Summarizer",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        660,
-        -60
+        100,
+        9460
       ],
       "parameters": {
         "text": "=## Description\n```\n{{ $json.workflow.description.replaceAll('#', '') }}\n```",
@@ -270,8 +270,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        660,
-        -460
+        100,
+        4780
       ],
       "parameters": {
         "mode": "chooseBranch"
@@ -284,8 +284,8 @@
       "name": "Fetch Latest 10 per Category",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -40,
-        -160
+        100,
+        3160
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -320,8 +320,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1560,
-        -460
+        100,
+        4960
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -332,8 +332,8 @@
       "name": "Get Relevant Workflows",
       "type": "n8n-nodes-base.set",
       "position": [
-        1380,
-        -280
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -356,8 +356,8 @@
       "name": "Flatten Workflows",
       "type": "n8n-nodes-base.set",
       "position": [
-        500,
-        -280
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -381,8 +381,8 @@
       "name": "Remove Already Seen",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        1740,
-        -280
+        100,
+        5500
       ],
       "parameters": {
         "options": {},
@@ -397,8 +397,8 @@
       "name": "Workflow to Items",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1560,
-        -280
+        100,
+        9640
       ],
       "parameters": {
         "options": {},
@@ -412,8 +412,8 @@
       "name": "Combine Workflows",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1920,
-        -280
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -427,8 +427,8 @@
       "name": "Has New Workflows?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1380,
-        -600
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -462,8 +462,8 @@
       "name": "With User Reference",
       "type": "n8n-nodes-base.set",
       "position": [
-        2100,
-        -280
+        100,
+        7480
       ],
       "parameters": {
         "options": {},
@@ -499,8 +499,8 @@
       "name": "Generate HTML Template",
       "type": "n8n-nodes-base.html",
       "position": [
-        1740,
-        -720
+        100,
+        3880
       ],
       "parameters": {
         "html": "<h1>New Workflows for {{ $now.format('DD') }}</h1>\n{{\n$json.categories\n  .filter(cat =>\n    $json.data.filter(item => item.category === cat).length > 0\n  )\n  .map(category => `\n    <h2>${category.toSentenceCase()}</h2>\n    <ul>\n    ${$json.data\n      .filter(workflow => workflow.category === category)\n      .map(workflow => `\n      <li>\n        <a href=\"{{ $env.WEBHOOK_URL }}{workflow.workflow_id}\">\n          <h3>${workflow.workflow_name}</h3>\n        </a>\n        <p>\n          by\n          <a href=\"{{ $env.WEBHOOK_URL }}{workflow.author_username}\">\n            ${workflow.author_name}\n          </a>\n          &middot;\n          created on ${DateTime.fromISO(workflow.workflow_created_at).toFormat('DD')}\n        </p>\n        <p>${workflow.workflow_desc}</p>\n      </li>\n    `).join('\\n')}\n    </ul>\n  `)\n  .join('\\n')\n}}"
@@ -513,8 +513,8 @@
       "name": "Parse Rows",
       "type": "n8n-nodes-base.set",
       "position": [
-        -660,
-        -540
+        100,
+        5320
       ],
       "parameters": {
         "options": {},
@@ -549,8 +549,8 @@
       "name": "Send Daily Digest",
       "type": "n8n-nodes-base.microsoftOutlook",
       "position": [
-        1920,
-        -720
+        100,
+        5860
       ],
       "webhookId": "8cd83f97-1e5f-4280-9a9d-26d1ee05c45e",
       "parameters": {
@@ -577,8 +577,8 @@
       "name": "Append Category",
       "type": "n8n-nodes-base.set",
       "position": [
-        140,
-        -160
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -602,8 +602,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1060,
-        -740
+        100,
+        6040
       ],
       "parameters": {
         "color": 7,
@@ -618,8 +618,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -400,
-        -420
+        100,
+        6220
       ],
       "parameters": {
         "color": 7,
@@ -635,8 +635,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        260
+        100,
+        6400
       ],
       "parameters": {
         "color": 7,
@@ -652,8 +652,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1680,
-        -60
+        100,
+        6580
       ],
       "parameters": {
         "color": 7,
@@ -669,8 +669,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1740,
-        -960
+        100,
+        6760
       ],
       "parameters": {
         "color": 7,
@@ -686,8 +686,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -500,
-        0
+        100,
+        6940
       ],
       "parameters": {
         "color": 5,
@@ -703,8 +703,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -940,
-        -360
+        100,
+        7120
       ],
       "parameters": {
         "color": 5,
@@ -720,8 +720,8 @@
       "name": "For Each Subscriber",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1180,
-        -460
+        100,
+        3700
       ],
       "parameters": {
         "options": {}
@@ -734,8 +734,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1600,
-        -1400
+        100,
+        7300
       ],
       "parameters": {
         "width": 500,
@@ -751,8 +751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in f95fb28c-875c-4105-aa83-9fea257ea440",
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a874ae4e",
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f95fb28c",
@@ -796,8 +796,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Get Subscribers**: microsoftExcel\n- **Get Unique Categories**: set\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Aggregate**: aggregate\n- **Collect Fields**: set\n- **Categories to Items**: splitOut\n- **For Each Category**: splitInBatches\n- **Workflows to Items**: splitOut\n- **Workflow Summarizer**: chainLlm\n- ... and 26 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -810,8 +810,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -825,8 +825,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -839,8 +839,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -853,8 +853,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -868,8 +868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -883,8 +883,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -897,8 +897,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -911,8 +911,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -926,8 +926,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -941,8 +941,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -968,8 +968,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -982,8 +982,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -995,8 +995,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1009,8 +1009,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1022,8 +1022,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1036,8 +1036,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: microsoftOutlook, httpRequest, stickyNote, microsoftExcel, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1049,8 +1049,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Workflow execution error",

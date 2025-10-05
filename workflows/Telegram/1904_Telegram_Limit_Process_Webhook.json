@@ -26,8 +26,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -2320,
-        80
+        100,
+        16480
       ],
       "webhookId": "a9668054-5bd3-427d-8f18-932436441e42",
       "parameters": {
@@ -43,8 +43,8 @@
       "name": "Gmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        -2040,
-        -1260
+        100,
+        8380
       ],
       "webhookId": "344de9dc-4062-4552-ae29-1e9150322cdb",
       "parameters": {
@@ -69,8 +69,8 @@
       "name": "Gmail Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
       "position": [
-        -2360,
-        -1260
+        100,
+        8560
       ],
       "parameters": {
         "filters": {},
@@ -97,8 +97,8 @@
       "name": "Limit",
       "type": "n8n-nodes-base.limit",
       "position": [
-        -1840,
-        -1260
+        100,
+        9460
       ],
       "parameters": {
         "keep": "lastItems"
@@ -111,8 +111,8 @@
       "name": "Get Message",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        -1640,
-        -1260
+        100,
+        8020
       ],
       "webhookId": "13036143-6e5b-47c1-84a4-a92cbc33b37f",
       "parameters": {
@@ -138,8 +138,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -920,
-        -1500
+        100,
+        12340
       ],
       "parameters": {
         "color": 6,
@@ -155,8 +155,8 @@
       "name": "Parse Document with LlamaParse",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -800,
-        -1360
+        100,
+        10360
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -219,8 +219,8 @@
       "name": "Summarize Email",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -820,
-        -680
+        100,
+        16120
       ],
       "parameters": {
         "text": "={{ $('Is there an Email Attachement').item.json.text }}",
@@ -241,8 +241,8 @@
       "name": "gpt-4o-mini",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -720,
-        -540
+        100,
+        18460
       ],
       "parameters": {
         "model": {
@@ -266,8 +266,8 @@
       "name": "Save LlamaParse ID and Summary to Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -140,
-        -1020
+        100,
+        11080
       ],
       "parameters": {
         "columns": {
@@ -526,8 +526,8 @@
       "name": "Save Document to Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        -820,
-        -1020
+        100,
+        10900
       ],
       "parameters": {
         "name": "={{ $('Is there an Email Attachement').item.json.id }}_{{ $('Is there an Email Attachement').item.binary.file0.fileName }}",
@@ -561,8 +561,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueErrorOutput",
       "position": [
-        -1180,
-        500
+        100,
+        7840
       ],
       "parameters": {
         "text": "=Analyze this markdown content and convert it to JSON following this exact schema:\n{\n    \"invoice_details\": {\n        \"statement_date\": \"\",\n        \"organization\": {\n            \"name\": \"\",\n            \"address\": \"\",\n            \"gst_number\": \"\"\n        },\n        \"member\": {\n            \"name\": \"\",\n            \"company\": \"\",\n            \"address\": \"\",\n            \"contact_number\": \"\",\n            \"organization_number\": \"\"\n        }\n    },\n    \"transactions\": [\n        {\n            \"date\": \"\",\n            \"document_number\": \"\",\n            \"description\": \"\",\n            \"base_amount\": 0.00,\n            \"gst\": 0.00,\n            \"bc_pst\": 0.00,\n            \"bc_pst_liquor\": 0.00,  # Added for liquor PST\n            \"container_deposit\": 0.00,  # Added for bottle deposits\n            \"service_fee\": 0.00,\n            \"tip_amount\": 0.00,\n            \"regular_price\": 0.00,  # Added for regular price tracking\n            \"savings_amount\": 0.00,  # Added for savings tracking\n            \"total_charge\": 0.00,\n            \"transaction_type\": \"\"\n        }\n    ],\n    \"payment_details\": {\n        \"previous_balance\": 0.00,\n        \"payment_amount\": 0.00,\n        \"payment_reference\": \"\",\n        \"payment_date\": \"\",\n        \"payment_method\": \"\",\n        \"payment_status\": \"\",\n        \"card_number\": \"\",  # Added for card details\n        \"auth_number\": \"\",  # Added for authorization\n        \"transaction_number\": \"\"\n    },\n    \"invoice_summary\": {\n        \"subtotal\": 0.00,\n        \"service_fees_total\": 0.00,\n        \"tips_total\": 0.00,\n        \"current_excl_gst\": 0.00,\n        \"container_deposit_total\": 0.00,  # Added for deposits\n        \"outstanding_gst\": 0.00,\n        \"paid_gst\": 0.00,\n        \"total_gst\": 0.00,\n        \"total_bc_pst\": 0.00,\n        \"total_bc_pst_liquor\": 0.00,  # Added for liquor PST if shown in markdown content\n        \"total_savings\": 0.00,  # Added for savings\n        \"final_amount_due\": 0.00\n    },\n    \"payment_terms\": {\n        \"due_date\": \"\",\n        \"processing_date\": \"\",\n        \"special_notices\": [],\n        \"cancellation_policy\": \"\",\n        \"refund_policy\": \"\",\n        \"return_policy\": \"\"  # Added for return policy\n    },\n    \"additional_info\": {\n        \"booking_number\": \"\",\n        \"transaction_time\": \"\",  # Added for transaction time\n        \"register_info\": \"\",     # Added for register details\n        \"event_details\": {\n            \"date\": \"\",\n            \"time\": \"\",\n            \"location\": \"\"\n        },\n        \"special_instructions\": []\n    },\n    \"summary\": \"\" # The natural language summary of the invoice\n}\n\nMarkdown Content:\n{{ $json.data }}\n\nImportant:\n- Extract exact values from the markdown\n- Return only valid JSON\n- Include all fields even if empty\n- Format numbers as floats with 2 decimal places\n- Track container deposits separately\n- Show liquor PST (10%) separately from regular PST if provided in markdown content\n- Include regular prices and savings amounts\n- Track transaction details including card info and authorization\n- Parse return policy information\n- Include register and transaction time details\n- Ensure final_amount_due equals the sum of all applicable charges and taxes\n- Summarize the markdown contents\n- Only output valid JSON without any preamble or further explanation.  Remove any ```json and ``` from response.",
@@ -577,8 +577,8 @@
       "name": "gpt-4o-mini1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1600,
-        240
+        100,
+        18640
       ],
       "parameters": {
         "options": {}
@@ -597,8 +597,8 @@
       "name": "gpt-4o-mini2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1080,
-        640
+        100,
+        18820
       ],
       "parameters": {
         "model": "gpt-4o",
@@ -618,8 +618,8 @@
       "name": "Update Google Sheet by LlamaParse ID",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -540,
-        600
+        100,
+        16300
       ],
       "parameters": {
         "columns": {
@@ -883,8 +883,8 @@
       "name": "Invoice Details",
       "type": "n8n-nodes-base.set",
       "position": [
-        -780,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "options": {},
@@ -907,8 +907,8 @@
       "name": "Prepare Message",
       "type": "n8n-nodes-base.set",
       "position": [
-        -540,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "options": {},
@@ -961,8 +961,8 @@
       "name": "Send Invoice Details as Telegram Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -340,
-        400
+        100,
+        12160
       ],
       "webhookId": "04464e72-2be3-4df9-8a08-18d23cb75d72",
       "parameters": {
@@ -987,8 +987,8 @@
       "name": "gpt-4o-mini3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1080,
-        60
+        100,
+        19000
       ],
       "parameters": {
         "model": "gpt-4o",
@@ -1008,8 +1008,8 @@
       "name": "Send Error Message 2",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -780,
-        600
+        100,
+        11980
       ],
       "webhookId": "3ba1ee6d-1648-4421-823b-e68ae14d769b",
       "parameters": {
@@ -1034,8 +1034,8 @@
       "name": "Send Error Message 1",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -780,
-        60
+        100,
+        11800
       ],
       "webhookId": "3ba1ee6d-1648-4421-823b-e68ae14d769b",
       "parameters": {
@@ -1060,8 +1060,8 @@
       "name": "Send Document Summary as Telegram Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -540,
-        -200
+        100,
+        11620
       ],
       "webhookId": "04464e72-2be3-4df9-8a08-18d23cb75d72",
       "parameters": {
@@ -1087,8 +1087,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueErrorOutput",
       "position": [
-        -1180,
-        -80
+        100,
+        15940
       ],
       "parameters": {
         "text": "=Please analyze this document and provide:\n\n## Document Analysis\n- A concise executive summary (2-3 sentences)\n- Key themes and main points\n- Notable findings or insights\n- Data highlights and important statistics (if applicable)\n\n## Recommendations\n- Action items or next steps\n- Areas requiring further investigation\n- Potential implications\n\n## Format Requirements\n- Structure the analysis using clear headers and sections\n- Include relevant quotes to support key points\n- Present any numerical data in tables or bullet points\n- Highlight critical information using bold text\n\nPlease maintain the original document's context while making the content more accessible and actionable.\n\nHere is the document: {{ $json.data }}\n",
@@ -1103,8 +1103,8 @@
       "name": "Classify Parsed Document",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1680,
-        80
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1130,8 +1130,8 @@
       "name": "Get Parsed Markdown",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1980,
-        80
+        100,
+        8200
       ],
       "parameters": {
         "options": {},
@@ -1154,8 +1154,8 @@
       "name": "Prepare Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        -640,
-        -1020
+        100,
+        10540
       ],
       "parameters": {
         "options": {},
@@ -1184,8 +1184,8 @@
       "name": "HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -2040,
-        -860
+        100,
+        8740
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1199,8 +1199,8 @@
       "name": "Is there an Email Attachement",
       "type": "n8n-nodes-base.if",
       "position": [
-        -1420,
-        -1260
+        100,
+        9280
       ],
       "parameters": {
         "options": {},
@@ -1234,8 +1234,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        -1840,
-        -860
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -1250,8 +1250,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1620,
-        -860
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -1274,8 +1274,8 @@
       "name": "Merge Email Processing",
       "type": "n8n-nodes-base.merge",
       "position": [
-        -380,
-        -1020
+        100,
+        9820
       ],
       "parameters": {
         "mode": "combine",
@@ -1291,8 +1291,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        -1120,
-        -1020
+        100,
+        9640
       ],
       "parameters": {
         "mode": "combine",
@@ -1307,8 +1307,8 @@
       "name": "If Supported File Extensions",
       "type": "n8n-nodes-base.if",
       "position": [
-        -1420,
-        -860
+        100,
+        8920
       ],
       "parameters": {
         "options": {},
@@ -1342,8 +1342,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1120,
-        -1260
+        100,
+        10000
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -1354,8 +1354,8 @@
       "name": "No Operation, do nothing1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1120,
-        -780
+        100,
+        10180
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -1366,8 +1366,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2140,
-        -980
+        100,
+        12520
       ],
       "parameters": {
         "width": 920,
@@ -1382,8 +1382,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2140,
-        -1420
+        100,
+        14140
       ],
       "parameters": {
         "color": 3,
@@ -1399,8 +1399,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -920,
-        -1120
+        100,
+        14320
       ],
       "parameters": {
         "color": 4,
@@ -1416,8 +1416,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -920,
-        -780
+        100,
+        14500
       ],
       "parameters": {
         "color": 5,
@@ -1433,8 +1433,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -220,
-        -1120
+        100,
+        14680
       ],
       "parameters": {
         "color": 4,
@@ -1450,8 +1450,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3060,
-        -1540
+        100,
+        15400
       ],
       "parameters": {
         "width": 540,
@@ -1466,8 +1466,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2440,
-        -1340
+        100,
+        15220
       ],
       "parameters": {
         "color": 4,
@@ -1483,8 +1483,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2480,
-        -1540
+        100,
+        14860
       ],
       "parameters": {
         "color": 7,
@@ -1500,8 +1500,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1280,
-        280
+        100,
+        15040
       ],
       "parameters": {
         "color": 6,
@@ -1517,8 +1517,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1220,
-        360
+        100,
+        12700
       ],
       "parameters": {
         "width": 360,
@@ -1533,8 +1533,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1280,
-        -280
+        100,
+        12880
       ],
       "parameters": {
         "color": 5,
@@ -1550,8 +1550,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1220,
-        -200
+        100,
+        13060
       ],
       "parameters": {
         "width": 360,
@@ -1566,8 +1566,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1760,
-        -40
+        100,
+        13240
       ],
       "parameters": {
         "color": 4,
@@ -1583,8 +1583,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2060,
-        -40
+        100,
+        13420
       ],
       "parameters": {
         "color": 3,
@@ -1600,8 +1600,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2440,
-        -40
+        100,
+        13600
       ],
       "parameters": {
         "width": 340,
@@ -1616,8 +1616,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2480,
-        -320
+        100,
+        13780
       ],
       "parameters": {
         "color": 7,
@@ -1633,8 +1633,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1760,
-        420
+        100,
+        13960
       ],
       "parameters": {
         "color": 5,
@@ -1650,8 +1650,8 @@
       "name": "Save Summarized Document to Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        -540,
-        0
+        100,
+        11440
       ],
       "parameters": {
         "name": "={{ $('Webhook').item.json.body.jobId }}-summary.md",
@@ -1685,8 +1685,8 @@
       "name": "Save Parsed Document to Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        -1600,
-        560
+        100,
+        11260
       ],
       "parameters": {
         "name": "={{ $('Webhook').item.json.body.jobId }}-parsed.md",
@@ -1721,8 +1721,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in ea7670da-896e-4b9c-b0c2-b3a3dbb6f88f",
@@ -1736,8 +1736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15580
       ],
       "parameters": {
         "message": "Error occurred in 85e72267-7be0-49ac-b305-4c07356ce244",
@@ -1751,8 +1751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15760
       ],
       "parameters": {
         "message": "Error occurred in b64a21ab-0e1f-4d6c-b718-a9aaaa27ae19",
@@ -1766,8 +1766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ea7670da",
@@ -1781,8 +1781,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 85e72267",
@@ -1796,8 +1796,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1405f933",
@@ -1811,8 +1811,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ea299469",
@@ -1826,8 +1826,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d8454cf2",
@@ -1841,8 +1841,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3c371677",
@@ -1856,8 +1856,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9ff3f86f",
@@ -1871,8 +1871,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 69a0505f",
@@ -1886,8 +1886,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 333f42a7",
@@ -1901,8 +1901,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node faa0768f",
@@ -1916,8 +1916,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d1a54284",
@@ -1931,8 +1931,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b1b50042",
@@ -1946,8 +1946,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a365c8a1",
@@ -1961,8 +1961,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b64a21ab",
@@ -1976,8 +1976,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 33ca5eaf",
@@ -1991,8 +1991,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a1e8264f",
@@ -2006,8 +2006,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16660
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 73\n- **Node Types**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Webhook**: webhook\n- **Gmail**: gmail\n- **Gmail Trigger**: gmailTrigger\n- **Limit**: limit\n- **Get Message**: gmail\n- **Sticky Note**: stickyNote\n- **Parse Document with LlamaParse**: httpRequest\n- **Summarize Email**: chainLlm\n- **gpt-4o-mini**: lmChatOpenAi\n- **Save LlamaParse ID and Summary to Google Sheets**: googleSheets\n- ... and 63 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -2020,8 +2020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2035,8 +2035,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2050,8 +2050,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2065,8 +2065,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16840
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 77\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2079,8 +2079,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17020
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 78\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2093,8 +2093,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2108,8 +2108,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2123,8 +2123,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2138,8 +2138,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2153,8 +2153,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2168,8 +2168,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2183,8 +2183,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17200
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 85\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2197,8 +2197,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17380
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 86\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2211,8 +2211,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2226,8 +2226,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2241,8 +2241,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2256,8 +2256,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2271,8 +2271,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2286,8 +2286,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2301,8 +2301,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17560
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 93\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2315,8 +2315,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17740
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 94\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2328,8 +2328,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2342,8 +2342,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2356,8 +2356,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2370,8 +2370,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17920
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 98\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2383,8 +2383,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2397,8 +2397,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2411,8 +2411,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2425,8 +2425,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18100
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2438,8 +2438,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2452,8 +2452,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18280
       ],
       "parameters": {
         "content": "# ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse\n\n## Overview\nAutomated workflow: ✨🔪 Advanced AI Powered Document Parsing & Text Extraction with Llama Parse. This workflow integrates 18 different services: textClassifier, webhook, stickyNote, httpRequest, telegram. It contains 73 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2465,8 +2465,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Workflow execution error",

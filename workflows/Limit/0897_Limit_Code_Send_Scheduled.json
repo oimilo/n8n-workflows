@@ -17,8 +17,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        460,
-        -20
+        100,
+        2980
       ],
       "parameters": {
         "rule": {
@@ -38,8 +38,8 @@
       "name": "Get all n8n Workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        680,
-        -20
+        100,
+        2080
       ],
       "parameters": {
         "filters": {},
@@ -60,8 +60,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueErrorOutput",
       "position": [
-        1260,
-        400
+        100,
+        100
       ],
       "parameters": {
         "fileId": {
@@ -89,8 +89,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        920,
-        -20
+        100,
+        2620
       ],
       "parameters": {
         "options": {}
@@ -104,8 +104,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueErrorOutput",
       "position": [
-        1380,
-        720
+        100,
+        280
       ],
       "parameters": {
         "name": "={{  $('Workflow Data').item.json.name + \"_\" + $('Workflow Data').item.json.id+ \".json\"}}",
@@ -138,8 +138,8 @@
       "name": "ifDriveEmpty",
       "type": "n8n-nodes-base.if",
       "position": [
-        680,
-        420
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -173,8 +173,8 @@
       "name": "firstWorkflowJson",
       "type": "n8n-nodes-base.set",
       "position": [
-        1000,
-        720
+        100,
+        7480
       ],
       "parameters": {
         "mode": "raw",
@@ -189,8 +189,8 @@
       "name": "JsonToFile",
       "type": "n8n-nodes-base.code",
       "position": [
-        1180,
-        720
+        100,
+        2260
       ],
       "parameters": {
         "jsCode": "return items.map(item => {\n  const jsonData = JSON.stringify(item.json);\n  const binaryData = Buffer.from(jsonData).toString('base64');\n  item.binary = {\n    data: {\n      data: binaryData,\n      mimeType: 'application/json',\n      fileName: 'data.json'\n    }\n  };\n  return item;\n});"
@@ -203,8 +203,8 @@
       "name": "CodeJsonToFile1",
       "type": "n8n-nodes-base.code",
       "position": [
-        1080,
-        400
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "return items.map(item => {\n  const jsonData = JSON.stringify( $('Workflow Data').item.json);\n  const binaryData = Buffer.from(jsonData).toString('base64');\n  item.binary = {\n    data: {\n      data: binaryData,\n      mimeType: 'application/json',\n      fileName: 'data.json'\n    }\n  };\n  return item;\n});"
@@ -217,8 +217,8 @@
       "name": "Limit",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1100,
-        -40
+        100,
+        2440
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -229,8 +229,8 @@
       "name": "Workflow Data",
       "type": "n8n-nodes-base.executionData",
       "position": [
-        -140,
-        420
+        100,
+        5320
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -241,8 +241,8 @@
       "name": "successEmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1360,
-        -40
+        100,
+        8020
       ],
       "webhookId": "b6cdbf4b-3abf-4eda-aa49-c19012e3133b",
       "parameters": {
@@ -266,8 +266,8 @@
       "name": "failureEmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1620,
-        420
+        100,
+        7300
       ],
       "webhookId": "f38fba13-3970-43a5-8afd-ea873289015b",
       "parameters": {
@@ -291,8 +291,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        600,
-        -80
+        100,
+        4420
       ],
       "parameters": {
         "color": 5,
@@ -308,8 +308,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        600,
-        -180
+        100,
+        4600
       ],
       "parameters": {
         "color": 4,
@@ -325,8 +325,8 @@
       "name": "getDriveFileData",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        300,
-        420
+        100,
+        7660
       ],
       "parameters": {
         "filter": {
@@ -358,8 +358,8 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -300,
-        420
+        100,
+        5140
       ],
       "parameters": {
         "inputSource": "passthrough"
@@ -372,8 +372,8 @@
       "name": "Execute Workflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        1100,
-        100
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -399,8 +399,8 @@
       "name": "Parameters",
       "type": "n8n-nodes-base.set",
       "position": [
-        20,
-        420
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -429,8 +429,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        300
+        100,
+        4240
       ],
       "parameters": {
         "color": 4,
@@ -446,8 +446,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1240,
-        -100
+        100,
+        3340
       ],
       "parameters": {
         "width": 340,
@@ -462,8 +462,8 @@
       "name": "Discord",
       "type": "n8n-nodes-base.discord",
       "position": [
-        1360,
-        80
+        100,
+        640
       ],
       "webhookId": "65ce702c-8f03-4016-b192-a2503a7fbca7",
       "parameters": {
@@ -499,8 +499,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        -280
+        100,
+        4780
       ],
       "parameters": {
         "color": 7,
@@ -516,8 +516,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -380,
-        -280
+        100,
+        4960
       ],
       "parameters": {
         "color": 7,
@@ -533,8 +533,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        920,
-        600
+        100,
+        3160
       ],
       "parameters": {
         "color": 3,
@@ -550,8 +550,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        920,
-        300
+        100,
+        3520
       ],
       "parameters": {
         "color": 6,
@@ -567,8 +567,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
-        300
+        100,
+        3700
       ],
       "parameters": {
         "width": 440,
@@ -583,8 +583,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        580,
-        300
+        100,
+        3880
       ],
       "parameters": {
         "color": 4,
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "disabled": true,
       "position": [
-        -380,
-        -380
+        100,
+        4060
       ],
       "parameters": {
         "color": 6,
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b23cd260",
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ddee56fd",
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a3f1669b",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cabf9b91",
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Get all n8n Workflows**: n8n\n- **Backup to Google Drive2**: googleDrive\n- **Loop Over Items**: splitInBatches\n- **Backup to Google Drive4**: googleDrive\n- **ifDriveEmpty**: if\n- **firstWorkflowJson**: set\n- **JsonToFile**: code\n- **CodeJsonToFile1**: code\n- **Limit**: limit\n- ... and 23 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -735,8 +735,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -749,8 +749,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -789,8 +789,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -802,8 +802,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -816,8 +816,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 15 different services: stickyNote, executionData, code, scheduleTrigger, n8n. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -829,8 +829,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

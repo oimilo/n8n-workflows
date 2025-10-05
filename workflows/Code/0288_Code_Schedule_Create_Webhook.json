@@ -17,8 +17,8 @@
       "name": "If charge has customer",
       "type": "n8n-nodes-base.if",
       "position": [
-        1560,
-        880
+        100,
+        5140
       ],
       "parameters": {
         "conditions": {
@@ -38,8 +38,8 @@
       "name": "Get customer",
       "type": "n8n-nodes-base.stripe",
       "position": [
-        2160,
-        920
+        100,
+        4960
       ],
       "parameters": {
         "resource": "customer",
@@ -59,8 +59,8 @@
       "name": "On schedule",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -400,
-        1400
+        100,
+        7300
       ],
       "parameters": {
         "rule": {
@@ -77,8 +77,8 @@
       "name": "Remove duplicate customers",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        1880,
-        920
+        100,
+        7480
       ],
       "parameters": {
         "compare": "selectedFields",
@@ -102,8 +102,8 @@
       "name": "Aggregate `amount_captured`",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        1880,
-        540
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -124,8 +124,8 @@
       "name": "Aggregate totals",
       "type": "n8n-nodes-base.code",
       "position": [
-        2820,
-        1360
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// aggregate `amounts_captured` with the customer, taking note \n// that `aggregateAmountsPerContact` is the value in cents\nconst aggregateAmountsPerContact = new Object();\nfor (const item of $input.all()) {\n  if (aggregateAmountsPerContact[item.json.email] == null) {\n    aggregateAmountsPerContact[item.json.email] = 0;\n  }\n  aggregateAmountsPerContact[item.json.email] += item.json.amount_captured;\n}\n\n// parse the data in a way that is usable in future nodes, and\n// converts amounts from cents to dollars\nconst parsed = [];\nfor (const contact of Object.keys(aggregateAmountsPerContact)) {\n    parsed.push({\n        email: contact,\n        amount_captured: aggregateAmountsPerContact[contact] / 100\n    });\n}\n\nreturn parsed;"
@@ -138,8 +138,8 @@
       "name": "Create or update customer",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        3140,
-        1360
+        100,
+        820
       ],
       "parameters": {
         "email": "={{$node[\"Aggregate totals\"].json[\"email\"]}}",
@@ -171,8 +171,8 @@
       "name": "Merge data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2520,
-        1360
+        100,
+        5500
       ],
       "parameters": {
         "mode": "combine",
@@ -194,8 +194,8 @@
       "name": "Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2460,
-        1160
+        100,
+        5680
       ],
       "parameters": {
         "width": 219.61431588546765,
@@ -210,8 +210,8 @@
       "name": "Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2760,
-        1160
+        100,
+        5860
       ],
       "parameters": {
         "width": 218.46574043407196,
@@ -226,8 +226,8 @@
       "name": "Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "width": 297.57428772569784,
@@ -242,8 +242,8 @@
       "name": "Get all charges",
       "type": "n8n-nodes-base.stripe",
       "position": [
-        1300,
-        1380
+        100,
+        4780
       ],
       "parameters": {
         "resource": "charge",
@@ -264,8 +264,8 @@
       "name": "Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -960,
-        1220
+        100,
+        6220
       ],
       "parameters": {
         "width": 504,
@@ -280,8 +280,8 @@
       "name": "Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        760
+        100,
+        6400
       ],
       "parameters": {
         "width": 298.2919335506821,
@@ -296,8 +296,8 @@
       "name": "Get HubSpot field",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        580,
-        1540
+        100,
+        4600
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -320,8 +320,8 @@
       "name": "Create field in HubSpot",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        980,
-        1660
+        100,
+        640
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -383,8 +383,8 @@
       "name": "Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        1480
+        100,
+        6580
       ],
       "parameters": {
         "width": 656.5118956254801,
@@ -399,8 +399,8 @@
       "name": "Configure",
       "type": "n8n-nodes-base.set",
       "position": [
-        -80,
-        1400
+        100,
+        460
       ],
       "parameters": {
         "values": {
@@ -431,8 +431,8 @@
       "name": "Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -200,
-        1340
+        100,
+        6760
       ],
       "parameters": {
         "width": 338.8262165118159,
@@ -447,8 +447,8 @@
       "name": "Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3080,
-        1160
+        100,
+        6940
       ],
       "parameters": {
         "width": 219.86482940052417,
@@ -463,8 +463,8 @@
       "name": "Skip field checking",
       "type": "n8n-nodes-base.if",
       "position": [
-        240,
-        1400
+        100,
+        7660
       ],
       "parameters": {
         "conditions": {
@@ -484,8 +484,8 @@
       "name": "Do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1880,
-        1240
+        100,
+        1000
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -496,8 +496,8 @@
       "name": "Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        1140
+        100,
+        7120
       ],
       "parameters": {
         "width": 298.2919335506821,
@@ -512,8 +512,8 @@
       "name": "If field exists",
       "type": "n8n-nodes-base.if",
       "position": [
-        780,
-        1540
+        100,
+        5320
       ],
       "parameters": {
         "conditions": {
@@ -535,8 +535,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in 02d46492-f3ba-47fe-ba88-f2baad30fc73",
@@ -550,8 +550,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in 827882c4-5d3f-4cc6-b876-ae575a9a1b36",
@@ -565,8 +565,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 02d46492",
@@ -580,8 +580,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 827882c4",
@@ -595,8 +595,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **If charge has customer**: if\n- **Get customer**: stripe\n- **On schedule**: scheduleTrigger\n- **Remove duplicate customers**: itemLists\n- **Aggregate `amount_captured`**: itemLists\n- **Aggregate totals**: code\n- **Create or update customer**: hubspot\n- **Merge data**: merge\n- **Note**: stickyNote\n- **Note1**: stickyNote\n- ... and 18 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -609,8 +609,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -624,8 +624,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -639,8 +639,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -653,8 +653,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -667,8 +667,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -682,8 +682,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -697,8 +697,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -712,8 +712,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -727,8 +727,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -741,8 +741,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -755,8 +755,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -770,8 +770,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -785,8 +785,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -800,8 +800,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -815,8 +815,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -829,8 +829,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -842,8 +842,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -856,8 +856,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -870,8 +870,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -883,8 +883,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -897,8 +897,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -911,8 +911,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -924,8 +924,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -938,8 +938,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 12 different services: itemLists, stickyNote, httpRequest, hubspot, code. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Workflow execution error",

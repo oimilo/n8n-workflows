@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        320,
-        1480
+        100,
+        3160
       ],
       "parameters": {
         "model": {
@@ -51,8 +51,8 @@
       "name": "Window Buffer Memory2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        520,
-        1480
+        100,
+        5320
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -67,8 +67,8 @@
       "name": "OpenAI Chat Model4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1220,
-        1440
+        100,
+        3340
       ],
       "parameters": {
         "model": {
@@ -92,8 +92,8 @@
       "name": "Run Get Availability",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        720,
-        1520
+        100,
+        4060
       ],
       "parameters": {
         "name": "get_availability",
@@ -109,8 +109,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1440,
-        1660
+        100,
+        4780
       ],
       "parameters": {
         "color": 3,
@@ -126,8 +126,8 @@
       "name": "check day names",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        880,
-        1480
+        100,
+        7300
       ],
       "parameters": {
         "name": "check_days",
@@ -142,8 +142,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        180,
-        1660
+        100,
+        4600
       ],
       "parameters": {
         "width": 1200,
@@ -158,8 +158,8 @@
       "name": "Convert Output to JSON",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1240,
-        1260
+        100,
+        820
       ],
       "parameters": {
         "text": "={{ $json.output }}",
@@ -177,8 +177,8 @@
       "name": "Interview Scheduler",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        520,
-        1220
+        100,
+        2980
       ],
       "parameters": {
         "text": "={{ $json.chatInput }}",
@@ -196,8 +196,8 @@
       "name": "If Final Output",
       "type": "n8n-nodes-base.if",
       "position": [
-        960,
-        1160
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -239,8 +239,8 @@
       "name": "Respond for More Info",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        1400
+        100,
+        3700
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -251,8 +251,8 @@
       "name": "Parse to JSON",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1400,
-        1500
+        100,
+        3520
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"interview\": {\n    \"email\": \"applicant@example.com\",\n    \"phone\": \"814-882-1293\",\n    \"start_datetime\": \"2025-03-28T10:00:00\",\n    \"end_datetime\": \"2025-03-28T11:00:00\"\n  }\n}"
@@ -265,8 +265,8 @@
       "name": "Set Meeting with Google",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        1640,
-        1280
+        100,
+        4240
       ],
       "parameters": {
         "end": "={{ $json.output.interview.end_datetime }}",
@@ -299,8 +299,8 @@
       "name": "Final Response to User",
       "type": "n8n-nodes-base.code",
       "position": [
-        1640,
-        1500
+        100,
+        2080
       ],
       "parameters": {
         "jsCode": "const email = $('Convert Output to JSON').first().json.output.interview.email;\nconst phone = $('Convert Output to JSON').first().json.output.interview.phone;\nconst start_datetime = $('Convert Output to JSON').first().json.output.interview.start_datetime;\nconst end_datetime = $('Convert Output to JSON').first().json.output.interview.end_datetime;\n\nlet text = `✅ Interview Confirmed!\\n\\n📧 Email: ${email}\\n📞 Phone: ${phone}\\n🕒 Start: ${start_datetime}\\n🕕 End: ${end_datetime}`;\n\nreturn { text };\n"
@@ -313,8 +313,8 @@
       "name": "Generate Interview Times",
       "type": "n8n-nodes-base.code",
       "position": [
-        1620,
-        1920
+        100,
+        2440
       ],
       "parameters": {
         "jsCode": "function getWeekdaysNextTwoWeeks() {\n  const items = [];\n  const longDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];\n\n  const today = new Date();\n  const endDate = new Date();\n  endDate.setDate(today.getDate() + 14); // 2 weeks ahead\n\n  const current = new Date(today);\n\n  while (current <= endDate) {\n    const dayOfWeek = current.getDay(); // 0 = Sunday, 6 = Saturday\n\n    // Only weekdays (Mon–Fri)\n    if (dayOfWeek >= 1 && dayOfWeek <= 5) {\n      const dateStr = current.toISOString().split('T')[0]; // YYYY-MM-DD\n      const output = `${longDayNames[dayOfWeek]} - ${dateStr}`;\n\n      items.push({\n        json: {\n          day: output\n        }\n      });\n    }\n\n    current.setDate(current.getDate() + 1); // Go to next day\n  }\n\n  return items;\n}\n\n// Example usage:\nreturn getWeekdaysNextTwoWeeks();\n"
@@ -327,8 +327,8 @@
       "name": "Check My Calendar",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        420,
-        1820
+        100,
+        280
       ],
       "parameters": {
         "options": {
@@ -357,8 +357,8 @@
       "name": "Split Events into 30 min blocks",
       "type": "n8n-nodes-base.code",
       "position": [
-        620,
-        1820
+        100,
+        4420
       ],
       "parameters": {
         "jsCode": "const events = items.map(item => item.json);\nconst intervalMinutes = 30;\nconst timeZone = 'America/New_York';\n\nfunction formatToEastern(date) {\n  const tzDate = new Intl.DateTimeFormat('en-US', {\n    timeZone,\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit',\n    hour: '2-digit',\n    minute: '2-digit',\n    second: '2-digit',\n    hour12: false\n  }).formatToParts(date).reduce((acc, part) => {\n    if (part.type !== 'literal') acc[part.type] = part.value;\n    return acc;\n  }, {});\n\n  const offset = getEasternOffset(date);\n  return `${tzDate.year}-${tzDate.month}-${tzDate.day}T${tzDate.hour}:${tzDate.minute}:${tzDate.second}${offset}`;\n}\n\nfunction getEasternOffset(date) {\n  const options = { timeZone, timeZoneName: 'short' };\n  const parts = new Intl.DateTimeFormat('en-US', options).formatToParts(date);\n  const tzName = parts.find(p => p.type === 'timeZoneName').value;\n  return tzName.includes('EDT') ? '-04:00' : '-05:00';\n}\n\nfunction alignToPreviousSlot(date) {\n  const aligned = new Date(date);\n  const minutes = aligned.getMinutes();\n  aligned.setMinutes(minutes < 30 ? 0 : 30, 0, 0);\n  return aligned;\n}\n\nfunction alignToNextSlot(date) {\n  const aligned = new Date(date);\n  const minutes = aligned.getMinutes();\n  if (minutes > 0 && minutes <= 30) {\n    aligned.setMinutes(30, 0, 0);\n  } else if (minutes > 30) {\n    aligned.setHours(aligned.getHours() + 1);\n    aligned.setMinutes(0, 0, 0);\n  } else {\n    aligned.setMinutes(0, 0, 0);\n  }\n  return aligned;\n}\n\nconst splitEventIntoETBlocks = (event) => {\n  const blocks = [];\n\n  let current = alignToPreviousSlot(new Date(event.start.dateTime));\n  const eventEnd = alignToNextSlot(new Date(event.end.dateTime));\n\n  while (current < eventEnd) {\n    const blockEnd = new Date(current);\n    blockEnd.setMinutes(current.getMinutes() + intervalMinutes);\n\n    blocks.push({\n      start: formatToEastern(current),\n      end: formatToEastern(blockEnd)\n    });\n\n    current = blockEnd;\n  }\n\n  return blocks;\n};\n\nlet allBlocks = [];\nfor (const event of events) {\n  if (event.start?.dateTime && event.end?.dateTime) {\n    const blocks = splitEventIntoETBlocks(event);\n    allBlocks = allBlocks.concat(blocks);\n  }\n}\n\nreturn allBlocks.map(block => ({ json: block }));\n"
@@ -371,8 +371,8 @@
       "name": "Add Blocked Field",
       "type": "n8n-nodes-base.set",
       "position": [
-        800,
-        1840
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -407,8 +407,8 @@
       "name": "Generate 30 Minute Timeslots",
       "type": "n8n-nodes-base.code",
       "position": [
-        440,
-        2020
+        100,
+        2260
       ],
       "parameters": {
         "jsCode": "const slots = [];\nconst slotMinutes = 30;\nconst timeZone = 'America/New_York';\nconst businessStartHour = 9;\nconst businessEndHour = 17;\n\n// Get offset like -04:00 or -05:00\nfunction getEasternOffset(date) {\n  const options = { timeZone, timeZoneName: 'short' };\n  const parts = new Intl.DateTimeFormat('en-US', options).formatToParts(date);\n  const tz = parts.find(p => p.type === 'timeZoneName')?.value || 'EST';\n  return tz.includes('EDT') ? '-04:00' : '-05:00';\n}\n\n// Format Date as ISO with Eastern offset\nfunction formatToEasternISO(date) {\n  const formatter = new Intl.DateTimeFormat('en-CA', {\n    timeZone,\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit',\n    hour: '2-digit',\n    minute: '2-digit',\n    second: '2-digit',\n    hour12: false,\n  });\n\n  const parts = formatter.formatToParts(date).reduce((acc, part) => {\n    if (part.type !== 'literal') acc[part.type] = part.value;\n    return acc;\n  }, {});\n\n  const offset = getEasternOffset(date);\n  return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}${offset}`;\n}\n\n// Convert a Date to the hour/minute of its Eastern time\nfunction getEasternTimeParts(date) {\n  const formatter = new Intl.DateTimeFormat('en-US', {\n    timeZone,\n    hour: '2-digit',\n    minute: '2-digit',\n    hour12: false,\n  });\n  const [hourStr, minStr] = formatter.format(date).split(':');\n  return { hour: parseInt(hourStr), minute: parseInt(minStr) };\n}\n\nconst now = new Date();\nconst endDate = new Date(now);\nendDate.setDate(now.getDate() + 7);\n\n// Set current time to 24 hours in the future\nconst current = new Date(now);\ncurrent.setHours(current.getHours() + 24);\n\n// Round to the next 30-minute block in Eastern time\nconst { minute } = getEasternTimeParts(current);\nif (minute < 30) {\n  current.setMinutes(30, 0, 0);\n} else {\n  current.setHours(current.getHours() + 1);\n  current.setMinutes(0, 0, 0);\n}\n\n// Generate 30-minute blocks only during business hours & weekdays\nwhile (current < endDate) {\n  const dayOfWeek = current.getDay(); // 0 = Sunday, 6 = Saturday\n\n  // Skip weekends\n  if (dayOfWeek !== 0 && dayOfWeek !== 6) {\n    const { hour } = getEasternTimeParts(current);\n\n    if (hour >= businessStartHour && hour < businessEndHour) {\n      const start = new Date(current);\n      const end = new Date(start);\n      end.setMinutes(start.getMinutes() + slotMinutes);\n\n      slots.push({\n        start: formatToEasternISO(start),\n        end: formatToEasternISO(end),\n      });\n    }\n  }\n\n  current.setMinutes(current.getMinutes() + slotMinutes);\n}\n\nreturn slots.map(slot => ({ json: slot }));\n"
@@ -421,8 +421,8 @@
       "name": "Combine My Calendar with All Slots",
       "type": "n8n-nodes-base.merge",
       "position": [
-        780,
-        2020
+        100,
+        640
       ],
       "parameters": {
         "mode": "combine",
@@ -438,8 +438,8 @@
       "name": "Check if Calendar Blocked",
       "type": "n8n-nodes-base.if",
       "position": [
-        1100,
-        1820
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -472,8 +472,8 @@
       "name": "Return string of all available times",
       "type": "n8n-nodes-base.code",
       "position": [
-        1160,
-        2000
+        100,
+        3880
       ],
       "parameters": {
         "jsCode": "const formatted = items.map(item => {\n  const start = item.json.start;\n  const end = item.json.end;\n  return `${start} - ${end}`;\n});\n\nconst combined = formatted.join(', ');\n\nreturn [\n  {\n    json: {\n      availableSlots: combined\n    }\n  }\n];\n"
@@ -486,8 +486,8 @@
       "name": "Get Availability",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        220,
-        1920
+        100,
+        2620
       ],
       "parameters": {
         "inputSource": "passthrough"
@@ -500,8 +500,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -420,
-        1160
+        100,
+        4960
       ],
       "parameters": {
         "color": 5,
@@ -517,8 +517,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        280,
-        1220
+        100,
+        5140
       ],
       "webhookId": "0c8f9f17-f5f3-4b5d-85e7-071ced0213ae",
       "parameters": {
@@ -534,8 +534,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cd5664f9",
@@ -549,8 +549,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d2957530",
@@ -564,8 +564,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 11abd142",
@@ -579,8 +579,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f35d595e",
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model2**: lmChatOpenAi\n- **Window Buffer Memory2**: memoryBufferWindow\n- **OpenAI Chat Model4**: lmChatOpenAi\n- **Run Get Availability**: toolWorkflow\n- **Sticky Note1**: stickyNote\n- **check day names**: toolWorkflow\n- **Sticky Note**: stickyNote\n- **Convert Output to JSON**: agent\n- **Interview Scheduler**: agent\n- **If Final Output**: if\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -608,8 +608,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -622,8 +622,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -636,8 +636,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -650,8 +650,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -691,8 +691,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -704,8 +704,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -717,8 +717,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -731,8 +731,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Inverview Scheduler\n\n## Overview\nAutomated workflow: Inverview Scheduler. This workflow integrates 15 different services: stickyNote, code, agent, outputParserStructured, merge. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -744,8 +744,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Workflow execution error",

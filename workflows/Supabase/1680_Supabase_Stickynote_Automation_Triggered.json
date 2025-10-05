@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        1720
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1460,
-        -140
+        100,
+        3520
       ],
       "webhookId": "334e3a8d-73d2-4d3c-9927-158c1169ef5e",
       "parameters": {
@@ -52,8 +52,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        220,
-        -160
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $('When chat message received').item.json.chatInput }}",
@@ -70,8 +70,8 @@
       "name": "Check If Session Exists",
       "type": "n8n-nodes-base.supabase",
       "position": [
-        -960,
-        -140
+        100,
+        460
       ],
       "parameters": {
         "filters": {
@@ -101,8 +101,8 @@
       "name": "If Session Does Exist",
       "type": "n8n-nodes-base.if",
       "position": [
-        -720,
-        -140
+        100,
+        1540
       ],
       "parameters": {
         "options": {},
@@ -136,8 +136,8 @@
       "name": "Assign Path To Session",
       "type": "n8n-nodes-base.supabase",
       "position": [
-        -400,
-        -20
+        100,
+        280
       ],
       "parameters": {
         "tableId": "split_test_sessions",
@@ -168,8 +168,8 @@
       "name": "Define Path Values",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1200,
-        -140
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -198,8 +198,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        300,
-        60
+        100,
+        1900
       ],
       "parameters": {
         "model": {
@@ -223,8 +223,8 @@
       "name": "Postgres Chat Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        480,
-        60
+        100,
+        2080
       ],
       "parameters": {
         "tableName": "n8n_split_test_chat_histories",
@@ -245,8 +245,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1520,
-        -260
+        100,
+        2440
       ],
       "parameters": {
         "color": 7,
@@ -262,8 +262,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1280,
-        -340
+        100,
+        2260
       ],
       "parameters": {
         "color": 7,
@@ -279,8 +279,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        80,
-        -240
+        100,
+        2620
       ],
       "parameters": {
         "color": 7,
@@ -296,8 +296,8 @@
       "name": "Get Correct Prompt",
       "type": "n8n-nodes-base.set",
       "position": [
-        -80,
-        -160
+        100,
+        1360
       ],
       "parameters": {
         "options": {},
@@ -320,8 +320,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1260,
-        -240
+        100,
+        3160
       ],
       "parameters": {
         "color": 5,
@@ -338,7 +338,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         100,
-        40
+        3340
       ],
       "parameters": {
         "color": 5,
@@ -354,8 +354,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1480,
-        -600
+        100,
+        2980
       ],
       "parameters": {
         "width": 520,
@@ -370,8 +370,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2120,
-        -360
+        100,
+        2800
       ],
       "parameters": {
         "width": 560,
@@ -387,8 +387,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 23c1b4e2",
@@ -402,8 +402,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When chat message received**: chatTrigger\n- **AI Agent**: agent\n- **Check If Session Exists**: supabase\n- **If Session Does Exist**: if\n- **Assign Path To Session**: supabase\n- **Define Path Values**: set\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Postgres Chat Memory**: memoryPostgresChat\n- **Sticky Note1**: stickyNote\n- **Sticky Note**: stickyNote\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -416,8 +416,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -430,8 +430,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -444,8 +444,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -458,8 +458,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -472,8 +472,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -486,8 +486,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -499,8 +499,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -512,8 +512,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# A/B Split Testing\n\n## Overview\nAutomated workflow: A/B Split Testing. This workflow integrates 9 different services: stickyNote, agent, memoryPostgresChat, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -552,8 +552,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -17,8 +17,8 @@
       "name": "get node types",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        820,
-        240
+        100,
+        5680
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -40,8 +40,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        380,
-        240
+        100,
+        3340
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -52,8 +52,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1040,
-        480
+        100,
+        2440
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -71,8 +71,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        1240,
-        480
+        100,
+        2260
       ],
       "parameters": {
         "options": {
@@ -115,8 +115,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1240,
-        240
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -130,8 +130,8 @@
       "name": "extract name and latest version",
       "type": "n8n-nodes-base.code",
       "position": [
-        1040,
-        240
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all().map(({json}) => {\n  const typeVersion = Array.isArray(json.version) ? Math.max(...json.version) : json.version;\n  return {\n    name: json.name,\n    version: typeVersion\n  }\n})"
@@ -144,8 +144,8 @@
       "name": "Summarize",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        820,
-        720
+        100,
+        3160
       ],
       "parameters": {
         "options": {},
@@ -167,8 +167,8 @@
       "name": "get all workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        600,
-        480
+        100,
+        5500
       ],
       "parameters": {
         "filters": {},
@@ -188,8 +188,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        553.7882961480204,
-        420
+        100,
+        2620
       ],
       "parameters": {
         "width": 433.34242668485376,
@@ -204,8 +204,8 @@
       "name": "prettify output",
       "type": "n8n-nodes-base.set",
       "position": [
-        1040,
-        720
+        100,
+        6400
       ],
       "parameters": {
         "options": {},
@@ -240,8 +240,8 @@
       "name": "instance base url",
       "type": "n8n-nodes-base.set",
       "position": [
-        600,
-        240
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -264,8 +264,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        548.1243191057811,
-        152.6859339432964
+        100,
+        2800
       ],
       "parameters": {
         "width": 228.883554909967,
@@ -280,8 +280,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        800,
-        159.81134247982766
+        100,
+        2980
       ],
       "parameters": {
         "width": 192.26610453220889,
@@ -297,8 +297,8 @@
       "type": "n8n-nodes-base.n8n",
       "disabled": true,
       "position": [
-        820,
-        480
+        100,
+        5860
       ],
       "parameters": {
         "operation": "get",
@@ -324,8 +324,8 @@
       "name": "node names that needs update",
       "type": "n8n-nodes-base.set",
       "position": [
-        600,
-        720
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -361,8 +361,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in a6d8c7aa-c75c-4aaa-8fe2-e23f3da2b8f5",
@@ -376,8 +376,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a6d8c7aa",
@@ -391,8 +391,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **get node types**: httpRequest\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Split Out**: splitOut\n- **If Node**: if\n- **Aggregate**: aggregate\n- **extract name and latest version**: code\n- **Summarize**: summarize\n- **get all workflows**: n8n\n- **Sticky Note**: stickyNote\n- **prettify output**: set\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -405,8 +405,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -420,8 +420,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -448,8 +448,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -463,8 +463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -492,8 +492,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -536,8 +536,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -550,8 +550,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -563,8 +563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -590,8 +590,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -617,8 +617,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -631,8 +631,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -644,8 +644,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",

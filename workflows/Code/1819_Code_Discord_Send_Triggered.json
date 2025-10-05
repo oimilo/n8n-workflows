@@ -26,8 +26,8 @@
       "name": "Does the channel exist?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1420,
-        360
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -60,8 +60,8 @@
       "name": "Transform data to send message",
       "type": "n8n-nodes-base.set",
       "position": [
-        1880,
-        540
+        100,
+        3160
       ],
       "parameters": {
         "fields": {
@@ -95,8 +95,8 @@
       "name": "Webflow Form Submission Trigger",
       "type": "n8n-nodes-base.webflowTrigger",
       "position": [
-        780,
-        360
+        100,
+        3340
       ],
       "webhookId": "4f11dae8-d23f-43c7-992b-04460b38f488",
       "parameters": {
@@ -116,8 +116,8 @@
       "name": "Compose Slack message",
       "type": "n8n-nodes-base.code",
       "position": [
-        2140,
-        340
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "const webflowFormData = $input.all()[0].json.formData;\n\nconst objectToMarkdown = (obj) => {\n  return Object.entries(obj)\n    .map(([key, value]) => `**${key}**: ${value}`)\n    .join('\\n');\n}\n\nconst discordChannelMessage = {\n\t\"content\": `New form submission: \\n ${objectToMarkdown(webflowFormData)}`\n\t\n};\nconst data = {...$input.all()[0].json, discordChannelMessage: discordChannelMessage};\nreturn data;\n"
@@ -130,8 +130,8 @@
       "name": "List Discord Channels",
       "type": "n8n-nodes-base.discord",
       "position": [
-        1000,
-        360
+        100,
+        1900
       ],
       "parameters": {
         "guildId": {
@@ -158,8 +158,8 @@
       "name": "Filter existing Discord channel",
       "type": "n8n-nodes-base.code",
       "position": [
-        1200,
-        360
+        100,
+        1720
       ],
       "parameters": {
         "jsCode": "\nconst transformedFormName = (inputString)=> {\n    // Convert to lowercase\n  const lowercaseString = inputString.toLowerCase();\n\n  // Split by space\n  const wordsArray = lowercaseString.split(' ');\n\n  // Join with hyphens\n  const resultString = wordsArray.join('-');\n\n  return resultString;\n}\n\nconst currentForm = transformedFormName($('Webflow Form Submission Trigger').all()[0].json[\"name\"]);\n\nconst doesChannelExist = (channelName)=> {\n  return channelName == currentForm\n}\n\nlet channels = [];\nfor (const item of $input.all()) {\n  let channel = {\n    name: item.json[\"name\"],\n    id: item.json[\"id\"],\n    channelExists: doesChannelExist(item.json[\"name\"]),\n  };\n  channels.push(channel);\n}\n\nlet data = [ { \n  channel: channels.filter((c)=>{return c.channelExists === true})[0],\n  formName: currentForm,\n  formData: $('Webflow Form Submission Trigger').all()[0].json[\"data\"]\n}\n  \n]\n\nreturn data;"
@@ -172,8 +172,8 @@
       "name": "Create Discord channel with form name",
       "type": "n8n-nodes-base.discord",
       "position": [
-        1640,
-        540
+        100,
+        280
       ],
       "parameters": {
         "name": "={{ $json.formName }}",
@@ -200,8 +200,8 @@
       "name": "Notify #general channel of newly created channel1",
       "type": "n8n-nodes-base.discord",
       "position": [
-        1880,
-        780
+        100,
+        2080
       ],
       "parameters": {
         "content": "=A new channel was created <#{{ $json['id']  }}>",
@@ -236,8 +236,8 @@
       "name": "Send form submission to Discord channel",
       "type": "n8n-nodes-base.discord",
       "position": [
-        2360,
-        340
+        100,
+        2260
       ],
       "parameters": {
         "content": "={{ $json.discordChannelMessage.content }}",
@@ -270,8 +270,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        200
+        100,
+        2440
       ],
       "parameters": {
         "color": 6,
@@ -287,8 +287,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2080,
-        242.97574123989227
+        100,
+        2620
       ],
       "parameters": {
         "width": 224.58139534883728,
@@ -303,8 +303,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1320,
-        740
+        100,
+        2800
       ],
       "parameters": {
         "width": 323.0232558139535,
@@ -319,8 +319,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1160,
-        160
+        100,
+        2980
       ],
       "parameters": {
         "width": 224.58139534883728,
@@ -336,8 +336,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 76dd8d4f",
@@ -351,8 +351,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node df38e67b",
@@ -366,8 +366,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8a4fb8af",
@@ -381,8 +381,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1c1a20ee",
@@ -396,8 +396,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Does the channel exist?**: if\n- **Transform data to send message**: set\n- **Webflow Form Submission Trigger**: webflowTrigger\n- **Compose Slack message**: code\n- **List Discord Channels**: discord\n- **Filter existing Discord channel**: code\n- **Create Discord channel with form name**: discord\n- **Notify #general channel of newly created channel1**: discord\n- **Send form submission to Discord channel**: discord\n- **Sticky Note**: stickyNote\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -410,8 +410,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -424,8 +424,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -438,8 +438,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -452,8 +452,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -466,8 +466,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -480,8 +480,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -493,8 +493,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -519,8 +519,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Send Discord message from Webflow form submission\n\n## Overview\nAutomated workflow: Send Discord message from Webflow form submission. This workflow integrates 7 different services: stickyNote, code, set, discord, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",

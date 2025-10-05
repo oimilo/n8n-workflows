@@ -26,8 +26,8 @@
       "name": "Bitrix24 Handler",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        0,
-        0
+        100,
+        100
       ],
       "webhookId": "c3ae607d-41f0-42bc-b669-c2c77936d443",
       "parameters": {
@@ -44,8 +44,8 @@
       "name": "Credentials",
       "type": "n8n-nodes-base.set",
       "position": [
-        200,
-        0
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -93,8 +93,8 @@
       "name": "Validate Token",
       "type": "n8n-nodes-base.if",
       "position": [
-        400,
-        0
+        100,
+        12340
       ],
       "parameters": {
         "options": {},
@@ -138,8 +138,8 @@
       "name": "Route Event",
       "type": "n8n-nodes-base.switch",
       "position": [
-        600,
-        0
+        100,
+        10720
       ],
       "parameters": {
         "rules": {
@@ -254,8 +254,8 @@
       "name": "Process Message",
       "type": "n8n-nodes-base.function",
       "position": [
-        800,
-        0
+        100,
+        10360
       ],
       "parameters": {
         "functionCode": "// Process Message Node\nconst items = $input.all();\nconst item = items[0];\n\n// Get message data from the correct path\nconst message = item.json.body['data[PARAMS][MESSAGE]'];\nconst dialogId = item.json.body['data[PARAMS][DIALOG_ID]'];\n\n// Get auth data\nconst auth = {\n  access_token: item.json.access_token,\n  domain: item.json.domain\n};\n\nif (message.toLowerCase() === \"what's hot\") {\n  return {\n    json: {\n      DIALOG_ID: dialogId,\n      MESSAGE: \"Hi! I am an example-bot.\\nI repeat what you say\",\n      AUTH: auth.access_token,\n      DOMAIN: auth.domain\n    }\n  };\n} else {\n  return {\n    json: {\n      DIALOG_ID: dialogId,\n      MESSAGE: `You said:\\n${message}`,\n      AUTH: auth.access_token,\n      DOMAIN: auth.domain\n    }\n  };\n}"
@@ -268,8 +268,8 @@
       "name": "Process Join",
       "type": "n8n-nodes-base.function",
       "position": [
-        800,
-        160
+        100,
+        10180
       ],
       "parameters": {
         "functionCode": "// Process Join Node\nconst items = $input.all();\nconst item = items[0];\n\n// Get dialog ID from the correct path\nconst dialogId = item.json.body['data[PARAMS][DIALOG_ID]'];\n\n// Get auth data\nconst auth = {\n  access_token: item.json.access_token,\n  domain: item.json.domain\n};\n\nreturn {\n  json: {\n    DIALOG_ID: dialogId,\n    MESSAGE: 'Hi! I am an example-bot. I repeat what you say',\n    AUTH: auth.access_token,\n    DOMAIN: auth.domain\n  }\n};"
@@ -282,8 +282,8 @@
       "name": "Process Install",
       "type": "n8n-nodes-base.function",
       "position": [
-        800,
-        320
+        100,
+        10000
       ],
       "parameters": {
         "functionCode": "// Process Install Node\nconst items = $input.all();\nconst item = items[0];\n\n// Get the webhook URL from input\nconst handlerBackUrl = item.json.webhookUrl;\n\n// Get auth data directly from item.json\nconst auth = {\n  access_token: item.json.access_token,\n  application_token: item.json.application_token,\n  domain: item.json.domain\n};\n\nreturn {\n  json: {\n    handler_back_url: handlerBackUrl,\n    CODE: 'LocalExampleBot',\n    TYPE: 'B',\n    EVENT_MESSAGE_ADD: handlerBackUrl,\n    EVENT_WELCOME_MESSAGE: handlerBackUrl,\n    EVENT_BOT_DELETE: handlerBackUrl,\n    PROPERTIES: {\n      NAME: 'Bot',\n      LAST_NAME: 'Example',\n      COLOR: 'AQUA',\n      EMAIL: 'no@example.com',\n      PERSONAL_BIRTHDAY: '2020-07-18',\n      WORK_POSITION: 'Report on affairs',\n      PERSONAL_GENDER: 'M'\n    },\n    // Use the auth data from item.json\n    AUTH: auth.access_token,\n    CLIENT_ID: auth.application_token,\n    DOMAIN: auth.domain\n  }\n};"
@@ -296,8 +296,8 @@
       "name": "Register Bot",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1000,
-        320
+        100,
+        10540
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -349,8 +349,8 @@
       "name": "Send Message",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1000,
-        0
+        100,
+        11080
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -382,8 +382,8 @@
       "name": "Send Join Message",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1000,
-        160
+        100,
+        10900
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -415,8 +415,8 @@
       "name": "Process Delete",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        800,
-        480
+        100,
+        9820
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -427,8 +427,8 @@
       "name": "Success Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1200,
-        0
+        100,
+        12160
       ],
       "parameters": {
         "options": {
@@ -445,8 +445,8 @@
       "name": "Error Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        400,
-        160
+        100,
+        9640
       ],
       "parameters": {
         "options": {
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in ddd802bb-0da0-474d-b1e9-74f247e603e0",
@@ -479,8 +479,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in 30922462-255b-4ba6-8167-88aec244fdb1",
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in 8c1c7ebf-d5b3-472e-9d98-34cc65ba86ba",
@@ -509,8 +509,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in af0d2b44-53f7-4c4c-9428-d54ebcf41bff",
@@ -524,8 +524,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "message": "Error occurred in 81a5fc23-47a4-4ef8-bfb4-31593aed12fd",
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11980
       ],
       "parameters": {
         "message": "Error occurred in a19f3b0b-496f-4f3d-a9c2-044356070e32",
@@ -555,7 +555,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        14140
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 19 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -568,8 +568,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ddd802bb",
@@ -583,8 +583,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 30922462",
@@ -598,8 +598,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8c1c7ebf",
@@ -613,8 +613,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node af0d2b44",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 81a5fc23",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a19f3b0b",
@@ -658,8 +658,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14320
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Bitrix24 Handler**: webhook\n- **Credentials**: set\n- **Validate Token**: if\n- **Route Event**: switch\n- **Process Message**: function\n- **Process Join**: function\n- **Process Install**: function\n- **Register Bot**: httpRequest\n- **Send Message**: httpRequest\n- **Send Join Message**: httpRequest\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -672,8 +672,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -687,8 +687,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -702,8 +702,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -717,8 +717,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -762,8 +762,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -805,8 +805,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -820,8 +820,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -835,8 +835,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -850,8 +850,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -865,8 +865,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -925,8 +925,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -940,8 +940,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -970,8 +970,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -984,8 +984,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -998,8 +998,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1013,8 +1013,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1028,8 +1028,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1043,8 +1043,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1058,8 +1058,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1073,8 +1073,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1088,8 +1088,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1103,8 +1103,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1118,8 +1118,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1133,8 +1133,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1148,8 +1148,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1163,8 +1163,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1178,8 +1178,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13240
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1192,8 +1192,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13420
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 62\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1205,8 +1205,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1219,8 +1219,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1233,8 +1233,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1247,8 +1247,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1261,8 +1261,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1275,8 +1275,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1289,8 +1289,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13600
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 69\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1302,8 +1302,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1316,8 +1316,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1330,8 +1330,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1344,8 +1344,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1358,8 +1358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1372,8 +1372,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1386,8 +1386,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13780
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1399,8 +1399,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1413,8 +1413,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13960
       ],
       "parameters": {
         "content": "# Bitrix24 Chatbot Application Workflow example with Webhook Integration\n\n## Overview\nAutomated workflow: Bitrix24 Chatbot Application Workflow example with Webhook Integration. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1426,8 +1426,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Workflow execution error",

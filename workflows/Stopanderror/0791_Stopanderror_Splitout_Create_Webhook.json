@@ -18,8 +18,8 @@
       "type": "n8n-nodes-base.youTube",
       "notes": "Make a call to the YouTube API so that we have the thumbnail for the email and the duration to filter out shorts.",
       "position": [
-        1000,
-        -60
+        100,
+        4240
       ],
       "parameters": {
         "part": [
@@ -45,8 +45,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -840,
-        -160
+        100,
+        4960
       ],
       "parameters": {
         "rule": {
@@ -68,8 +68,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "Sometime, some live broadcasts that are then posted as regular videos do not have a duration. That is why we check if `duration` is present in `contentDetails`.",
       "position": [
-        1180,
-        -60
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -112,8 +112,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -900,
-        -340
+        100,
+        5500
       ],
       "parameters": {
         "color": 7,
@@ -129,8 +129,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -660,
-        -340
+        100,
+        5680
       ],
       "parameters": {
         "color": 5,
@@ -146,8 +146,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        480,
-        -160
+        100,
+        5860
       ],
       "parameters": {
         "color": 4,
@@ -163,8 +163,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        940,
-        -160
+        100,
+        6040
       ],
       "parameters": {
         "color": 3,
@@ -180,8 +180,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1360,
-        -160
+        100,
+        6220
       ],
       "parameters": {
         "color": 6,
@@ -198,8 +198,8 @@
       "type": "n8n-nodes-base.rssFeedRead",
       "notes": "YouTube provides an RSS feed for each channel with the 15 latest videos.\nWe use this instead of the YouTube Data v3 API, as search requests cost a lot of \"quota points\" and would easily put us over the daily limit with just one workflow run.",
       "position": [
-        540,
-        -60
+        100,
+        3880
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -213,8 +213,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "Get subscriptions from YouTube Data v3 API",
       "position": [
-        -600,
-        -160
+        100,
+        4060
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -268,8 +268,8 @@
       "name": "Check for errors",
       "type": "n8n-nodes-base.if",
       "position": [
-        -400,
-        -160
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -304,8 +304,8 @@
       "type": "n8n-nodes-base.filter",
       "notes": "It's not a perfect indicator for new videos but helps reduce the amount of channels to process.",
       "position": [
-        40,
-        -60
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.filter",
       "notes": "We dynamically figure out the last run's execution time through the settings of the \"Schedule Trigger\" node.",
       "position": [
-        740,
-        -60
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -372,8 +372,8 @@
       "type": "n8n-nodes-base.emailSend",
       "notes": "The expression in the HTML for the thumbnail simply selects the last element of the thumbnails array so that we get the best possible resolution thumbnail available.",
       "position": [
-        1440,
-        -60
+        100,
+        5140
       ],
       "webhookId": "44bf0e95-98e5-4b5b-a7c5-c802379ab3b0",
       "parameters": {
@@ -399,8 +399,8 @@
       "name": "If the HTTP request failed, throw the error",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        -180,
-        -260
+        100,
+        4420
       ],
       "parameters": {
         "errorMessage": "=Status code: {{ $json.error.code }}\nMessage: {{ $json.error.message }}"
@@ -413,8 +413,8 @@
       "name": "Split out subscriptions to process individually",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        -180,
-        -60
+        100,
+        5320
       ],
       "parameters": {
         "options": {},
@@ -428,8 +428,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        240,
-        -240
+        100,
+        6400
       ],
       "parameters": {
         "width": 220,
@@ -445,8 +445,8 @@
       "type": "n8n-nodes-base.filter",
       "notes": "Optional step",
       "position": [
-        300,
-        -60
+        100,
+        3520
       ],
       "parameters": {
         "options": {},
@@ -481,8 +481,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 34823384",
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 72341b1f",
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get video details**: youTube\n- **Schedule Trigger**: scheduleTrigger\n- **Filter out shorts**: if\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Sticky Note4**: stickyNote\n- **Get latest 15 videos of each channel**: rssFeedRead\n- **Get my subscriptions**: httpRequest\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -540,8 +540,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -555,8 +555,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -583,8 +583,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -598,8 +598,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -613,8 +613,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -657,8 +657,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -671,8 +671,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -701,8 +701,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -716,8 +716,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -731,8 +731,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -745,8 +745,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -758,8 +758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -772,8 +772,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -786,8 +786,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -799,8 +799,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -813,8 +813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -827,8 +827,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -840,8 +840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Youtube Workflow\n\n## Overview\nAutomated workflow: Youtube Workflow. This workflow integrates 10 different services: stickyNote, youTube, httpRequest, filter, scheduleTrigger. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -867,8 +867,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",

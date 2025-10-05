@@ -17,8 +17,8 @@
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        120,
-        460
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -59,8 +59,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        1800,
-        440
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -95,8 +95,8 @@
       "name": "Filter",
       "type": "n8n-nodes-base.filter",
       "position": [
-        2020,
-        440
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -130,8 +130,8 @@
       "name": "Deduplicate Keep First",
       "type": "n8n-nodes-base.code",
       "position": [
-        1580,
-        560
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Sort files by creation time (oldest first)\nconst sorted = items.sort((a, b) => \n  new Date(a.json.createdTime) - new Date(b.json.createdTime));\n\nconst seen = {};\nfor (const item of sorted) {\n  const md5 = item.json.md5Checksum;\n\n  // Failsafe: Skip if md5Checksum is missing or empty\n  if (!md5) {\n    item.json.isDuplicate = false; // Mark as not duplicate to avoid issues\n    continue; // Skip to the next item\n  }\n\n  item.json.isDuplicate = md5 in seen;\n  if (!item.json.isDuplicate) seen[md5] = true;\n}\nreturn items;"
@@ -145,8 +145,8 @@
       "name": "Deduplicate Keep Last",
       "type": "n8n-nodes-base.code",
       "position": [
-        1580,
-        360
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Sort files by creation time (latest first)\nconst sorted = items.sort((a, b) => \n  new Date(b.json.createdTime) - new Date(a.json.createdTime));\n\nconst seen = {};\nfor (const item of sorted) {\n  const md5 = item.json.md5Checksum;\n\n  // Failsafe: Skip if md5Checksum is missing or empty\n  if (!md5) {\n    item.json.isDuplicate = false; // Mark as not duplicate to avoid issues\n    continue; // Skip to the next item\n  }\n\n  if (md5 in seen) {\n    item.json.isDuplicate = true;\n  } else {\n    item.json.isDuplicate = false;\n    seen[md5] = true;\n  }\n}\nreturn items;"
@@ -160,8 +160,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -40,
-        -120
+        100,
+        3880
       ],
       "parameters": {
         "color": 5,
@@ -177,8 +177,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        180
+        100,
+        4060
       ],
       "parameters": {
         "color": 7,
@@ -194,8 +194,8 @@
       "name": "Send Duplicates to Trash",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        2760,
-        320
+        100,
+        3160
       ],
       "parameters": {
         "fileId": {
@@ -220,8 +220,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2800,
-        600
+        100,
+        2980
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -232,8 +232,8 @@
       "name": "Is Flagged",
       "type": "n8n-nodes-base.if",
       "position": [
-        2540,
-        620
+        100,
+        2620
       ],
       "parameters": {
         "options": {},
@@ -266,8 +266,8 @@
       "name": "Google Drive Trigger",
       "type": "n8n-nodes-base.googleDriveTrigger",
       "position": [
-        -360,
-        460
+        100,
+        2440
       ],
       "parameters": {
         "event": "fileCreated",
@@ -304,8 +304,8 @@
       "name": "Drop Google Apps files",
       "type": "n8n-nodes-base.filter",
       "position": [
-        940,
-        460
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -338,8 +338,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        840,
-        180
+        100,
+        3340
       ],
       "parameters": {
         "color": 7,
@@ -355,8 +355,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -520,
-        -120
+        100,
+        4240
       ],
       "parameters": {
         "color": 5,
@@ -372,8 +372,8 @@
       "name": "Working Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        560,
-        460
+        100,
+        6400
       ],
       "parameters": {
         "filter": {
@@ -408,8 +408,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2500,
-        540
+        100,
+        3520
       ],
       "parameters": {
         "color": 7,
@@ -425,8 +425,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2500,
-        780
+        100,
+        3700
       ],
       "parameters": {
         "color": 7,
@@ -442,8 +442,8 @@
       "name": "Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        2880,
-        800
+        100,
+        2260
       ],
       "parameters": {
         "fileId": {
@@ -469,8 +469,8 @@
       "name": "Keep First/Last",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1300,
-        460
+        100,
+        2800
       ],
       "parameters": {
         "rules": {
@@ -536,8 +536,8 @@
       "name": "Trash/Flag Duplicates",
       "type": "n8n-nodes-base.switch",
       "position": [
-        2240,
-        440
+        100,
+        4420
       ],
       "parameters": {
         "rules": {
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9ed26ef0",
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d227d6ee",
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6f8a7855",
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 99374aa8",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Config**: set\n- **Edit Fields**: set\n- **Filter**: filter\n- **Deduplicate Keep First**: code\n- **Deduplicate Keep Last**: code\n- **Sticky Note5**: stickyNote\n- **Sticky Note6**: stickyNote\n- **Send Duplicates to Trash**: googleDrive\n- **No Operation, do nothing**: noOp\n- **Is Flagged**: if\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -692,8 +692,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -706,8 +706,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -720,8 +720,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -734,8 +734,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -761,8 +761,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -801,8 +801,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: filter, stickyNote, googleDriveTrigger, code, googleDrive. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -814,8 +814,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Workflow execution error",

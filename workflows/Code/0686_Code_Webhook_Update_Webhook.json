@@ -5,8 +5,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        80,
-        60
+        100,
+        10180
       ],
       "parameters": {
         "width": 464,
@@ -21,8 +21,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1680,
-        580
+        100,
+        10360
       ],
       "parameters": {
         "color": 4,
@@ -39,8 +39,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "onError": "continueErrorOutput",
       "position": [
-        680,
-        80
+        100,
+        9280
       ],
       "parameters": {
         "options": {},
@@ -55,8 +55,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "onError": "continueErrorOutput",
       "position": [
-        1900,
-        900
+        100,
+        9100
       ],
       "parameters": {
         "options": {
@@ -74,8 +74,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "onError": "continueErrorOutput",
       "position": [
-        1920,
-        220
+        100,
+        11440
       ],
       "parameters": {
         "options": {
@@ -93,8 +93,8 @@
       "type": "n8n-nodes-base.set",
       "onError": "continueErrorOutput",
       "position": [
-        680,
-        320
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -117,8 +117,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        60,
-        40
+        100,
+        10540
       ],
       "parameters": {
         "color": 7,
@@ -134,8 +134,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        340,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "rules": {
@@ -228,8 +228,8 @@
       "name": "Send to Error Channel",
       "type": "n8n-nodes-base.slack",
       "position": [
-        2380,
-        880
+        100,
+        9820
       ],
       "webhookId": "d8e1201d-cbcc-4153-a164-51d7b3e17c84",
       "parameters": {
@@ -254,8 +254,8 @@
       "type": "n8n-nodes-base.code",
       "onError": "continueRegularOutput",
       "position": [
-        940,
-        300
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "const csvData = $input.all()[0]?.json?.csv;\n\n// Use a regex to split on either ',' or ';'\nconst lines = csvData.split(\"\\n\");\nconst headers = lines[0].split(/,|;/);\n\nconst jsonData = lines.slice(1).map((line) => {\n  // Split on ',' or ';' for each line\n  const data = line.split(/,|;/);\n  let obj = {};\n  headers.forEach((header, i) => {\n    obj[header] = data[i];\n  });\n  return obj;\n});\n\nif (jsonData.length === 0) {\n  throw new Error(\"No data to process\");\n}\n\nreturn jsonData;\n"
@@ -269,8 +269,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2380,
-        40
+        100,
+        10000
       ],
       "parameters": {
         "color": 7,
@@ -286,8 +286,8 @@
       "name": "Check if Value",
       "type": "n8n-nodes-base.if",
       "position": [
-        1180,
-        300
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -321,8 +321,8 @@
       "name": "Send Raw CSV",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2480,
-        200
+        100,
+        9640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -347,8 +347,8 @@
       "name": "POST",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        140,
-        420
+        100,
+        9460
       ],
       "webhookId": "add125c9-1591-4e1c-b68c-8032b99b6010",
       "parameters": {
@@ -367,8 +367,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1580,
-        220
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -383,8 +383,8 @@
       "name": "Aggregate1",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1580,
-        360
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -400,8 +400,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "onError": "continueErrorOutput",
       "position": [
-        1900,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "options": {
@@ -419,8 +419,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in ccc66f1e-e000-4048-a492-b80fbf8c8fce",
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Error occurred in a7d34aba-6ded-4cc8-8866-7d4aa6ae3255",
@@ -449,8 +449,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Error occurred in 4484f424-429b-449f-85c2-dd6a135972a0",
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in 70a46bce-32da-4868-a960-3ee1cefbed1f",
@@ -479,8 +479,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in 51c77def-cdf7-41da-bfd1-e585f0553672",
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4eff962e",
@@ -509,8 +509,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ccc66f1e",
@@ -524,8 +524,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a7d34aba",
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a2d92aeb",
@@ -554,8 +554,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4484f424",
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 70a46bce",
@@ -584,8 +584,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 51c77def",
@@ -599,8 +599,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note1**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Extract From File**: extractFromFile\n- **Error Response**: respondToWebhook\n- **Success Response**: respondToWebhook\n- **Change Field**: set\n- **Sticky Note4**: stickyNote\n- **Switch**: switch\n- **Send to Error Channel**: slack\n- **Convert Raw Text To CSV**: code\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -613,8 +613,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -658,8 +658,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -673,8 +673,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -688,8 +688,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -702,8 +702,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -716,8 +716,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -731,8 +731,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -746,8 +746,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -761,8 +761,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -791,8 +791,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -806,8 +806,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -821,8 +821,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -836,8 +836,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -851,8 +851,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -866,8 +866,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -894,8 +894,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -909,8 +909,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -924,8 +924,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -939,8 +939,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -954,8 +954,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -969,8 +969,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -984,8 +984,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -999,8 +999,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1014,8 +1014,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1029,8 +1029,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1044,8 +1044,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 59\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1058,8 +1058,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1071,8 +1071,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1085,8 +1085,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1099,8 +1099,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1113,8 +1113,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1127,8 +1127,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1141,8 +1141,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13240
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 66\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1154,8 +1154,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1168,8 +1168,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1182,8 +1182,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1196,8 +1196,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1210,8 +1210,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1224,8 +1224,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13420
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1237,8 +1237,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1251,8 +1251,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13600
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: webhook, stickyNote, httpRequest, code, switch. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1264,8 +1264,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Workflow execution error",

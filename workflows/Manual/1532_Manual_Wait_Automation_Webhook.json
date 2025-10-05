@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -1960,
-        -160
+        100,
+        9100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Generate Kling Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -400,
-        0
+        100,
+        6940
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -66,8 +66,8 @@
       "name": "Get Kling Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -220,
-        0
+        100,
+        7660
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -90,8 +90,8 @@
       "name": "Verify Task Status",
       "type": "n8n-nodes-base.if",
       "position": [
-        -40,
-        0
+        100,
+        8740
       ],
       "parameters": {
         "options": {},
@@ -135,8 +135,8 @@
       "name": "Get Final Video",
       "type": "n8n-nodes-base.code",
       "position": [
-        260,
-        140
+        100,
+        7120
       ],
       "parameters": {
         "jsCode": "// Process the entire response\nreturn {\n  video_url: $input.all()[0].json.data.output.video_url,\n  watermark_free_url: $input.all()[0].json.data.output.works[0].video.resource_without_watermark\n};"
@@ -149,8 +149,8 @@
       "name": "GPT-4o Generator: Front View",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1560,
-        20
+        100,
+        6580
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -185,8 +185,8 @@
       "name": "GPT-4o Generator: Side View",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1000,
-        320
+        100,
+        6760
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -213,8 +213,8 @@
       "name": "Get Image URL of Front Image",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1380,
-        20
+        100,
+        7300
       ],
       "parameters": {
         "jsCode": "const chunks = $input.first().json.data.split('\\n\\n');\n\nlet imageUrl = null;\n\nfor (let i = chunks.length - 1; i >= 0; i--) {\n    const chunk = chunks[i];\n    \n    if (!chunk.startsWith('data: ')) continue;\n    \n    try {\n        const jsonStr = chunk.substring(6); \n        if (jsonStr.trim() === '[DONE]') continue;\n        \n        const data = JSON.parse(jsonStr);\n        \n\n        if (data.choices && data.choices[0].delta.content) {\n            const content = data.choices[0].delta.content;\n            const urlMatch = content.match(/!\\[.*?\\]\\((https?:\\/\\/[^\\s]+)\\)/);\n            \n            if (urlMatch && urlMatch[1]) {\n                imageUrl = urlMatch[1];\n                break;\n            }\n        }\n    } catch (e) {\n        continue;\n    }\n}\n\nreturn {\n    image_url: imageUrl,\n    finish_reason: imageUrl ? \"success\" : \"not_found\"\n};"
@@ -227,8 +227,8 @@
       "name": "Get Image URL of Side Image",
       "type": "n8n-nodes-base.code",
       "position": [
-        -800,
-        320
+        100,
+        7480
       ],
       "parameters": {
         "jsCode": "const chunks = $input.first().json.data.split('\\n\\n');\n\nlet imageUrl = null;\n\n// 反向遍历 chunks (从最新数据开始检查)\nfor (let i = chunks.length - 1; i >= 0; i--) {\n    const chunk = chunks[i];\n    \n    if (!chunk.startsWith('data: ')) continue;\n    \n    try {\n        const jsonStr = chunk.substring(6); // 去掉 \"data: \" 前缀\n        if (jsonStr.trim() === '[DONE]') continue;\n        \n        const data = JSON.parse(jsonStr);\n        \n        // 检查是否包含图片标记（Markdown 图片语法）\n        if (data.choices && data.choices[0].delta.content) {\n            const content = data.choices[0].delta.content;\n            const urlMatch = content.match(/!\\[.*?\\]\\((https?:\\/\\/[^\\s]+)\\)/);\n            \n            if (urlMatch && urlMatch[1]) {\n                imageUrl = urlMatch[1];\n                break;\n            }\n        }\n    } catch (e) {\n        continue;\n    }\n}\n\nreturn {\n    image_url: imageUrl,\n    finish_reason: imageUrl ? \"success\" : \"not_found\"\n};"
@@ -241,8 +241,8 @@
       "name": "Verify Generation Status of Front View",
       "type": "n8n-nodes-base.if",
       "position": [
-        -1160,
-        20
+        100,
+        8380
       ],
       "parameters": {
         "options": {},
@@ -276,8 +276,8 @@
       "name": "Verify Generation Status of Side View",
       "type": "n8n-nodes-base.if",
       "position": [
-        -600,
-        320
+        100,
+        8560
       ],
       "parameters": {
         "options": {},
@@ -311,8 +311,8 @@
       "name": "Wait for Video Generation",
       "type": "n8n-nodes-base.wait",
       "position": [
-        -20,
-        240
+        100,
+        8920
       ],
       "webhookId": "c7b2590d-96a3-4c7c-8821-3023fead254b",
       "parameters": {
@@ -326,8 +326,8 @@
       "name": "Basic Params",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1760,
-        -160
+        100,
+        100
       ],
       "parameters": {
         "mode": "raw",
@@ -343,8 +343,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 39c46540-7dee-4237-921e-3b6bd9821302",
@@ -358,8 +358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in cfc726ee-e6f2-4016-a4fe-7123a4520fda",
@@ -373,8 +373,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in adae02a4-dedc-4415-9409-88193090e2dc",
@@ -388,8 +388,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in 63320b08-62bc-4faf-a3ff-4069785c41f5",
@@ -404,7 +404,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        10900
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 17 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -417,8 +417,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 39c46540",
@@ -432,8 +432,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cfc726ee",
@@ -447,8 +447,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node adae02a4",
@@ -462,8 +462,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 63320b08",
@@ -477,8 +477,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11080
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Generate Kling Video**: httpRequest\n- **Get Kling Video**: httpRequest\n- **Verify Task Status**: if\n- **Get Final Video**: code\n- **GPT-4o Generator: Front View**: httpRequest\n- **GPT-4o Generator: Side View**: httpRequest\n- **Get Image URL of Front Image**: code\n- **Get Image URL of Side Image**: code\n- **Verify Generation Status of Front View**: if\n- ... and 12 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -491,8 +491,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -536,8 +536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -551,8 +551,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -565,8 +565,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -579,8 +579,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -609,8 +609,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -624,8 +624,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -639,8 +639,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -654,8 +654,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -669,8 +669,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -684,8 +684,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -699,8 +699,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -713,8 +713,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -727,8 +727,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -742,8 +742,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -757,8 +757,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -772,8 +772,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -802,8 +802,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -817,8 +817,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -832,8 +832,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -847,8 +847,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -861,8 +861,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -874,8 +874,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -888,8 +888,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -902,8 +902,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -916,8 +916,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -930,8 +930,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -943,8 +943,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -957,8 +957,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -971,8 +971,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -985,8 +985,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -999,8 +999,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1012,8 +1012,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1026,8 +1026,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# (Not published) Three-View Orthographic Projection to Dynamic Video Conversion\n\n## Overview\nAutomated workflow: (Not published) Three-View Orthographic Projection to Dynamic Video Conversion. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1039,8 +1039,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Workflow execution error",

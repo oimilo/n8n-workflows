@@ -17,8 +17,8 @@
       "name": "set credentials",
       "type": "n8n-nodes-base.set",
       "position": [
-        0,
-        300
+        100,
+        18100
       ],
       "parameters": {
         "options": {},
@@ -53,8 +53,8 @@
       "name": "login n8n",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        180,
-        300
+        100,
+        17380
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -105,8 +105,8 @@
       "name": "get tags",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        800,
-        300
+        100,
+        17020
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -162,8 +162,8 @@
       "name": "my-projects",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        340,
-        300
+        100,
+        17560
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -202,8 +202,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        480,
-        300
+        100,
+        11620
       ],
       "parameters": {
         "options": {},
@@ -217,8 +217,8 @@
       "name": "filter owned projects",
       "type": "n8n-nodes-base.filter",
       "position": [
-        640,
-        300
+        100,
+        16840
       ],
       "parameters": {
         "options": {
@@ -264,8 +264,8 @@
       "name": "Get folders",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1440,
-        480
+        100,
+        10000
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -306,8 +306,8 @@
       "name": "Split Out2",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1800,
-        380
+        100,
+        11980
       ],
       "parameters": {
         "options": {},
@@ -321,8 +321,8 @@
       "name": "Remove Duplicates",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        2140,
-        380
+        100,
+        11440
       ],
       "parameters": {
         "compare": "selectedFields",
@@ -337,8 +337,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1240,
-        320
+        100,
+        10720
       ],
       "parameters": {
         "options": {}
@@ -351,8 +351,8 @@
       "name": "get workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        3040,
-        720
+        100,
+        17200
       ],
       "parameters": {
         "filters": {
@@ -374,8 +374,8 @@
       "name": "Move workflow to folder",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3240,
-        720
+        100,
+        10900
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -424,8 +424,8 @@
       "name": "Normalize names",
       "type": "n8n-nodes-base.set",
       "position": [
-        1980,
-        380
+        100,
+        11080
       ],
       "parameters": {
         "options": {},
@@ -455,8 +455,8 @@
       "name": "Limit1",
       "type": "n8n-nodes-base.limit",
       "position": [
-        2420,
-        380
+        100,
+        10540
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -467,8 +467,8 @@
       "name": "Create folders",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2260,
-        640
+        100,
+        280
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -513,8 +513,8 @@
       "name": "set folder name + id",
       "type": "n8n-nodes-base.set",
       "position": [
-        2800,
-        640
+        100,
+        18280
       ],
       "parameters": {
         "options": {},
@@ -549,8 +549,8 @@
       "name": "set folder name + id1",
       "type": "n8n-nodes-base.set",
       "position": [
-        2780,
-        360
+        100,
+        18460
       ],
       "parameters": {
         "options": {},
@@ -585,8 +585,8 @@
       "name": "set global",
       "type": "n8n-nodes-base.set",
       "position": [
-        3020,
-        480
+        100,
+        18640
       ],
       "parameters": {
         "options": {},
@@ -600,8 +600,8 @@
       "name": "Filter",
       "type": "n8n-nodes-base.filter",
       "position": [
-        2280,
-        380
+        100,
+        9820
       ],
       "parameters": {
         "options": {
@@ -639,8 +639,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        1820,
-        640
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -669,8 +669,8 @@
       "name": "On form submission",
       "type": "n8n-nodes-base.formTrigger",
       "position": [
-        -160,
-        300
+        100,
+        11260
       ],
       "webhookId": "d7a3218f-0b12-4966-bf07-edd8acffe5e8",
       "parameters": {
@@ -695,8 +695,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        360,
-        580
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "function capitalizeFirstLetter(val) {\n  const str = String(val).trim();\n  return str.charAt(0).toUpperCase() + str.slice(1);\n}\n\n// Get raw comma-separated string\nconst raw = $json.name;\n\n// Step 1: Split, clean, and filter\nconst values = raw\n  .split(',')\n  .map(x => x.trim())\n  .filter(x => x.length > 0 && !/^[A-Za-z0-9]{10,}$/.test(x)) // filter junk-like tokens\n  .map(x => ({ option: capitalizeFirstLetter(x) }));\n\n// Step 2: Add [create new]\nvalues.push({ option: \"[create new]\" });\n\n// Step 3: Build form config\nconst formOptions = {\n  fieldLabel: \"Dropdown Options\",\n  fieldType: \"dropdown\",\n  requiredField: true,\n  fieldOptions: {\n    values\n  }\n};\n\n// Step 4: Return as stringified JSON\nreturn [\n  {\n    json: {\n      fieldLabel: \"Dropdown Options\",\n      fieldType: \"dropdown\",\n      requiredField: true,\n      fieldOptions: {\n        values: values\n      }\n    }\n  }\n];\n"
@@ -709,8 +709,8 @@
       "name": "If no folder",
       "type": "n8n-nodes-base.if",
       "position": [
-        1620,
-        480
+        100,
+        10360
       ],
       "parameters": {
         "options": {},
@@ -743,8 +743,8 @@
       "name": "If folder exists",
       "type": "n8n-nodes-base.if",
       "position": [
-        2580,
-        380
+        100,
+        10180
       ],
       "parameters": {
         "options": {},
@@ -778,8 +778,8 @@
       "name": "set name",
       "type": "n8n-nodes-base.set",
       "position": [
-        2020,
-        640
+        100,
+        18820
       ],
       "parameters": {
         "options": {},
@@ -808,8 +808,8 @@
       "name": "end import",
       "type": "n8n-nodes-base.form",
       "position": [
-        1660,
-        160
+        100,
+        16480
       ],
       "webhookId": "3605aadf-17f1-4443-8950-e4d506a61415",
       "parameters": {
@@ -826,8 +826,8 @@
       "name": "pass all items",
       "type": "n8n-nodes-base.set",
       "position": [
-        1480,
-        160
+        100,
+        17740
       ],
       "parameters": {
         "options": {},
@@ -841,8 +841,8 @@
       "name": "select tags to move",
       "type": "n8n-nodes-base.form",
       "position": [
-        580,
-        580
+        100,
+        17920
       ],
       "webhookId": "72c3db6c-542a-4df9-a10a-d63ce8a2f33b",
       "parameters": {
@@ -858,8 +858,8 @@
       "name": "extract name from form",
       "type": "n8n-nodes-base.set",
       "position": [
-        1020,
-        320
+        100,
+        16660
       ],
       "parameters": {
         "options": {},
@@ -882,8 +882,8 @@
       "name": "Split Out the tags",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        780,
-        580
+        100,
+        11800
       ],
       "parameters": {
         "options": {},
@@ -897,8 +897,8 @@
       "name": "tags to string",
       "type": "n8n-nodes-base.set",
       "position": [
-        140,
-        580
+        100,
+        19000
       ],
       "parameters": {
         "options": {
@@ -923,8 +923,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        220
+        100,
+        12160
       ],
       "parameters": {
         "width": 960,
@@ -939,8 +939,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        500
+        100,
+        12340
       ],
       "parameters": {
         "width": 960,
@@ -955,8 +955,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        960,
-        240
+        100,
+        12520
       ],
       "parameters": {
         "color": 2,
@@ -972,8 +972,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1420,
-        380
+        100,
+        12700
       ],
       "parameters": {
         "color": 3,
@@ -989,8 +989,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        300
+        100,
+        12880
       ],
       "parameters": {
         "width": 940,
@@ -1005,8 +1005,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        560
+        100,
+        13060
       ],
       "parameters": {
         "width": 680,
@@ -1021,8 +1021,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2740,
-        260
+        100,
+        13240
       ],
       "parameters": {
         "color": 5,
@@ -1038,8 +1038,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2960,
-        660
+        100,
+        13420
       ],
       "parameters": {
         "color": 4,
@@ -1055,8 +1055,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1440,
-        80
+        100,
+        13600
       ],
       "parameters": {
         "width": 380,
@@ -1072,8 +1072,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 877bbd5c-fb57-4fa4-9d0a-113270113f31",
@@ -1087,8 +1087,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13780
       ],
       "parameters": {
         "message": "Error occurred in 41effdd0-ffad-439c-aa33-39f9cc13f6f9",
@@ -1102,8 +1102,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13960
       ],
       "parameters": {
         "message": "Error occurred in 8fd2e71d-8da6-4f28-a377-56ef12c50c33",
@@ -1117,8 +1117,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14140
       ],
       "parameters": {
         "message": "Error occurred in 0362220f-ebb7-4fa0-b204-ec45f9b20cf4",
@@ -1132,8 +1132,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14320
       ],
       "parameters": {
         "message": "Error occurred in ddf83b3b-dffb-46b8-ab4b-38d19e1672b7",
@@ -1147,8 +1147,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14500
       ],
       "parameters": {
         "message": "Error occurred in c5d0c6b1-e478-40da-b9b7-15a60d3439dc",
@@ -1162,8 +1162,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 877bbd5c",
@@ -1177,8 +1177,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 41effdd0",
@@ -1192,8 +1192,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8fd2e71d",
@@ -1207,8 +1207,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0362220f",
@@ -1222,8 +1222,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ddf83b3b",
@@ -1237,8 +1237,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c5d0c6b1",
@@ -1252,8 +1252,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14680
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **set credentials**: set\n- **login n8n**: httpRequest\n- **get tags**: httpRequest\n- **my-projects**: httpRequest\n- **Split Out**: splitOut\n- **filter owned projects**: filter\n- **Get folders**: httpRequest\n- **Split Out2**: splitOut\n- **Remove Duplicates**: removeDuplicates\n- **Loop Over Items**: splitInBatches\n- ... and 42 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1266,8 +1266,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1281,8 +1281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1296,8 +1296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1311,8 +1311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1326,8 +1326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1341,8 +1341,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1356,8 +1356,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14860
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 59\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1370,8 +1370,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15040
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1384,8 +1384,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1399,8 +1399,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1414,8 +1414,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1429,8 +1429,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1444,8 +1444,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1459,8 +1459,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1474,8 +1474,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1489,8 +1489,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1504,8 +1504,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1519,8 +1519,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1534,8 +1534,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1549,8 +1549,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1564,8 +1564,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15220
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 73\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1578,8 +1578,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15400
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1592,8 +1592,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1607,8 +1607,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1622,8 +1622,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1637,8 +1637,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1652,8 +1652,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1667,8 +1667,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1682,8 +1682,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1697,8 +1697,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1712,8 +1712,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1727,8 +1727,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1742,8 +1742,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1757,8 +1757,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1772,8 +1772,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15580
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 87\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1786,8 +1786,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15760
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 88\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1799,8 +1799,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1813,8 +1813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1827,8 +1827,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1841,8 +1841,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1855,8 +1855,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1869,8 +1869,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1883,8 +1883,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15940
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 95\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1896,8 +1896,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1910,8 +1910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1924,8 +1924,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1938,8 +1938,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1952,8 +1952,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1966,8 +1966,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1980,8 +1980,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16120
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1993,8 +1993,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2007,8 +2007,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16300
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: filter, httpRequest, formTrigger, stickyNote, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2020,8 +2020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        5140
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "Chat Message Trigger",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1940,
-        160
+        100,
+        100
       ],
       "webhookId": "cb0b9dbe-1f35-441a-b062-29624b0ebc6a",
       "parameters": {
@@ -52,8 +52,8 @@
       "name": "Generate Search Queries using LLM",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1760,
-        160
+        100,
+        4420
       ],
       "parameters": {
         "text": "=User Query: {{ $('Chat Message Trigger').item.json.chatInput }}",
@@ -74,8 +74,8 @@
       "name": "LLM Response Provider (OpenRouter)",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1760,
-        700
+        100,
+        4960
       ],
       "parameters": {
         "model": "google/gemini-2.0-flash-001",
@@ -95,8 +95,8 @@
       "name": "Parse and Chunk JSON Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1420,
-        160
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "// Parse the input JSON string and split it into four chunks\nconst rawText = $json.text;\n\n// Remove Markdown JSON code blocks if present\nconst cleanedText = rawText.replace(/```json|```/g, '').trim();\n\ntry {\n    const jsonArray = JSON.parse(cleanedText);\n    if (!Array.isArray(jsonArray)) {\n        throw new Error('The JSON is not an array.');\n    }\n    const chunkSize = Math.ceil(jsonArray.length / 4);\n    const chunks = [];\n    for (let i = 0; i < jsonArray.length; i += chunkSize) {\n        chunks.push(jsonArray.slice(i, i + chunkSize));\n    }\n    return chunks.map(chunk => ({ json: { chunk } }));\n} catch (error) {\n    return [{ json: { error: error.message } }];\n}\n"
@@ -109,8 +109,8 @@
       "name": "Perform SerpAPI Search Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -780,
-        180
+        100,
+        5680
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -141,8 +141,8 @@
       "name": "Perform Jina AI Analysis Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        80,
-        160
+        100,
+        5500
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -164,8 +164,8 @@
       "name": "Format SerpAPI Organic Results",
       "type": "n8n-nodes-base.code",
       "position": [
-        -460,
-        140
+        100,
+        4060
       ],
       "parameters": {
         "jsCode": "// Format the organic search results from SerpAPI\nconst results = $input.first().json.organic_results;\nif (results.length === 0) {\n  return [{ json: { error: 'No search results found.' } }];\n}\nconst formattedResults = results.map(result => ({\n  title: result.title || 'No title available',\n  url: result.link || 'No link available',\n  source: result.source || result.displayed_link || 'Unknown source'\n}));\nreturn formattedResults.map(result => ({ json: result }));\n"
@@ -178,8 +178,8 @@
       "name": "Extract Relevant Context via LLM",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1280,
-        520
+        100,
+        3700
       ],
       "parameters": {
         "text": "=User Queries: {{ $('Parse and Chunk JSON Data').all().map(item => item.json.chunk[0]).join(', ') }}\nWebpage Contents: \n\"\"\"\n{{ $json.data }}\n\"\"\"",
@@ -196,8 +196,8 @@
       "name": "Generate Comprehensive Research Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -740,
-        520
+        100,
+        4240
       ],
       "parameters": {
         "text": "=Extracted Contexts (Merged):\n\"\"\"\n{{ $json.output }}\n\"\"\"",
@@ -214,8 +214,8 @@
       "name": "Split Data for SerpAPI Batching",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -1100,
-        160
+        100,
+        6040
       ],
       "parameters": {
         "options": {}
@@ -228,8 +228,8 @@
       "name": "Split Data for Jina AI Batching",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -220,
-        140
+        100,
+        5860
       ],
       "parameters": {
         "options": {}
@@ -242,8 +242,8 @@
       "name": "LLM Memory Buffer (Input Context)",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1160,
-        740
+        100,
+        4600
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -258,8 +258,8 @@
       "name": "LLM Memory Buffer (Report Context)",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -620,
-        760
+        100,
+        4780
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -274,8 +274,8 @@
       "name": "Fetch Wikipedia Information",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -580,
-        920
+        100,
+        3880
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -286,8 +286,8 @@
       "name": "Sticky Note: SerpAPI Setup",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -940,
-        -20
+        100,
+        6580
       ],
       "parameters": {
         "color": 7,
@@ -303,8 +303,8 @@
       "name": "Sticky Note: Jina AI Setup",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -60,
-        -40
+        100,
+        6220
       ],
       "parameters": {
         "color": 7,
@@ -320,8 +320,8 @@
       "name": "Sticky Note: OpenRouter API Setup",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1680,
-        460
+        100,
+        6400
       ],
       "parameters": {
         "color": 7,
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 5a3ac393-8355-449f-93cb-b98e8bee9b80",
@@ -353,8 +353,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in dad82469-830d-40fb-9f6b-b9fefef41267",
@@ -368,8 +368,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5a3ac393",
@@ -383,8 +383,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dad82469",
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Chat Message Trigger**: chatTrigger\n- **Generate Search Queries using LLM**: chainLlm\n- **LLM Response Provider (OpenRouter)**: lmChatOpenRouter\n- **Parse and Chunk JSON Data**: code\n- **Perform SerpAPI Search Request**: httpRequest\n- **Perform Jina AI Analysis Request**: httpRequest\n- **Format SerpAPI Organic Results**: code\n- **Extract Relevant Context via LLM**: agent\n- **Generate Comprehensive Research Report**: agent\n- **Split Data for SerpAPI Batching**: splitInBatches\n- ... and 11 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -412,8 +412,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -427,8 +427,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -442,8 +442,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -456,8 +456,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -558,8 +558,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -588,8 +588,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -603,8 +603,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -618,8 +618,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -632,8 +632,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -645,8 +645,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -659,8 +659,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -673,8 +673,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -700,8 +700,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -714,8 +714,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -727,8 +727,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -741,8 +741,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Open Deep Research - AI-Powered Autonomous Research Workflow\n\n## Overview\nAutomated workflow: Open Deep Research - AI-Powered Autonomous Research Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, agent, chainLlm. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -754,8 +754,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

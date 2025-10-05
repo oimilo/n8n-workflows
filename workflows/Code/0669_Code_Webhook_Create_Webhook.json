@@ -5,8 +5,8 @@
       "name": "Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        120,
-        -180
+        100,
+        5680
       ],
       "parameters": {
         "fileId": {
@@ -31,8 +31,8 @@
       "name": "Upload File",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        360,
-        -180
+        100,
+        8560
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -87,8 +87,8 @@
       "name": "Google Drive Trigger",
       "type": "n8n-nodes-base.googleDriveTrigger",
       "position": [
-        -80,
-        -180
+        100,
+        5860
       ],
       "parameters": {
         "event": "fileCreated",
@@ -123,8 +123,8 @@
       "name": "Create Invoice",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        400,
-        340
+        100,
+        100
       ],
       "parameters": {
         "base": {
@@ -187,8 +187,8 @@
       "name": "Create Line Item",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        800,
-        340
+        100,
+        280
       ],
       "parameters": {
         "base": {
@@ -301,8 +301,8 @@
       "name": "OpenAI - Extract Line Items",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        180,
-        340
+        100,
+        6040
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -328,8 +328,8 @@
       "name": "Set Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        -40,
-        340
+        100,
+        6400
       ],
       "parameters": {
         "options": {},
@@ -358,8 +358,8 @@
       "name": "Process Line Items",
       "type": "n8n-nodes-base.code",
       "position": [
-        600,
-        340
+        100,
+        6220
       ],
       "parameters": {
         "jsCode": "// Get the input from the \"OpenAI - Extract Line Items\" node\nconst input = $(\"OpenAI - Extract Line Items\").first().json;\n\n// Initialize an array for the output\nconst outputItems = [];\n\n// Navigate to the 'content' field in the choices array\nconst content = input.choices[0]?.message?.content;\n\nif (content) {\n  try {\n    // Parse the stringified JSON in the 'content' field\n    const parsedContent = JSON.parse(content);\n\n    // Extract 'items' and add them to the output array\n    if (Array.isArray(parsedContent.items)) {\n      outputItems.push(...parsedContent.items.map(i => ({ json: i })));\n    }\n  } catch (error) {\n    // Handle any parsing errors\n    console.error('Error parsing content:', error);\n  }\n}\n\n// Return the extracted items\nreturn outputItems;\n"
@@ -372,8 +372,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -220,
-        340
+        100,
+        8740
       ],
       "webhookId": "0f7f5ebb-8b66-453b-a818-20cc3647c783",
       "parameters": {
@@ -389,8 +389,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -260,
-        -300
+        100,
+        6760
       ],
       "parameters": {
         "width": 920,
@@ -405,8 +405,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -280,
-        240
+        100,
+        6580
       ],
       "parameters": {
         "width": 1340,
@@ -421,8 +421,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -60,
-        0
+        100,
+        6940
       ],
       "parameters": {
         "color": 3,
@@ -438,8 +438,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        320,
-        0
+        100,
+        7120
       ],
       "parameters": {
         "color": 3,
@@ -455,8 +455,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
-        540
+        100,
+        7300
       ],
       "parameters": {
         "color": 3,
@@ -472,8 +472,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        540
+        100,
+        7480
       ],
       "parameters": {
         "color": 3,
@@ -489,8 +489,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -760,
-        380
+        100,
+        8020
       ],
       "parameters": {
         "color": 7,
@@ -506,8 +506,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1060,
-        -300
+        100,
+        7840
       ],
       "parameters": {
         "color": 7,
@@ -523,8 +523,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1060,
-        380
+        100,
+        7660
       ],
       "parameters": {
         "color": 7,
@@ -541,8 +541,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in e21bb906-658c-4a52-9c7b-b77d6e0e7ea5",
@@ -556,8 +556,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in 7ee324e8-6df3-48d6-b1b8-6fdb610b1ec7",
@@ -571,8 +571,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in 741dc44e-6d47-4a77-80c2-5e18b291da33",
@@ -586,8 +586,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9df72ef9",
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e21bb906",
@@ -616,8 +616,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2a0c2331",
@@ -631,8 +631,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7ee324e8",
@@ -646,8 +646,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 741dc44e",
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Drive**: googleDrive\n- **Upload File**: httpRequest\n- **Google Drive Trigger**: googleDriveTrigger\n- **Create Invoice**: airtable\n- **Create Line Item**: airtable\n- **OpenAI - Extract Line Items**: httpRequest\n- **Set Fields**: set\n- **Process Line Items**: code\n- **Webhook**: webhook\n- **Sticky Note1**: stickyNote\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -675,8 +675,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -690,8 +690,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -705,8 +705,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -720,8 +720,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -734,8 +734,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -778,8 +778,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -793,8 +793,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -808,8 +808,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -823,8 +823,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -852,8 +852,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -866,8 +866,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -881,8 +881,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -896,8 +896,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -911,8 +911,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -926,8 +926,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -941,8 +941,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -956,8 +956,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -970,8 +970,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -983,8 +983,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -997,8 +997,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1011,8 +1011,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1025,8 +1025,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1038,8 +1038,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1052,8 +1052,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1066,8 +1066,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1080,8 +1080,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1093,8 +1093,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1107,8 +1107,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# Googledrive Workflow\n\n## Overview\nAutomated workflow: Googledrive Workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, googleDriveTrigger, airtable. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1120,8 +1120,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Calculate Wait Time",
       "type": "n8n-nodes-base.code",
       "position": [
-        1400,
-        -260
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Get all input items and ensure we have data\nif ($input.all().length === 0 || !$input.all()[0].headers) {\n  // If no headers available, return default wait time\n  return { waitTime: 1 };\n}\n\n// Check rate limit headers from previous request\nconst headers = $input.all()[0].headers;\nlet waitTime = 1; // Default 1 second\n\n// Check if we have rate limit information (safely)\nconst remaining = parseInt(headers['x-ratelimit-remaining']) || null;\nconst reset = parseInt(headers['x-ratelimit-reset']) || null;\n\n// Only adjust wait time if we have valid rate limit info\nif (remaining !== null && reset !== null) {\n  // If we're running low on requests, calculate a longer wait time\n  if (remaining < 100) {\n    // Calculate seconds until reset\n    const now = Math.floor(Date.now() / 1000);\n    const timeUntilReset = reset - now;\n    \n    // Spread remaining requests over time until reset\n    // Add 10% buffer to be safe\n    waitTime = Math.ceil((timeUntilReset / remaining) * 1.1);\n  } else if (remaining < 500) {\n    // Start slowing down earlier\n    waitTime = 2;\n  }\n}\n\n// Cap maximum wait time at 30 seconds\nwaitTime = Math.min(waitTime, 30);\n\nreturn { waitTime };"
@@ -40,8 +40,8 @@
       "name": "Run Daily at 2 AM",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -120,
-        -20
+        100,
+        4420
       ],
       "parameters": {
         "rule": {
@@ -60,8 +60,8 @@
       "name": "Get All Workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        320,
-        -20
+        100,
+        3700
       ],
       "parameters": {
         "filters": {},
@@ -81,8 +81,8 @@
       "name": "Loop Workflows",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        540,
-        -20
+        100,
+        4060
       ],
       "parameters": {
         "options": {}
@@ -96,8 +96,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        780,
-        -20
+        100,
+        3880
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -128,8 +128,8 @@
       "name": "New or Changed?",
       "type": "n8n-nodes-base.if",
       "position": [
-        980,
-        -20
+        100,
+        4240
       ],
       "parameters": {
         "options": {
@@ -173,8 +173,8 @@
       "name": "Upload Workflow to Bitbucket",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1200,
-        -260
+        100,
+        4960
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -230,8 +230,8 @@
       "name": "Wait to Avoid Rate Limiting",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1620,
-        -20
+        100,
+        5140
       ],
       "webhookId": "793d7525-d166-4487-a71f-d48da7c66662",
       "parameters": {
@@ -246,7 +246,7 @@
       "type": "n8n-nodes-base.set",
       "position": [
         100,
-        -20
+        4600
       ],
       "parameters": {
         "options": {},
@@ -276,8 +276,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 2a27e85d-51c0-4f45-a7d6-6422fc8a439b",
@@ -291,8 +291,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in 04400827-d331-4ee2-8a67-1238ea2dc969",
@@ -307,7 +307,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        6940
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 11 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -320,8 +320,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2a27e85d",
@@ -335,8 +335,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 04400827",
@@ -350,8 +350,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Calculate Wait Time**: code\n- **Run Daily at 2 AM**: scheduleTrigger\n- **Get All Workflows**: n8n\n- **Loop Workflows**: splitInBatches\n- **Get Existing Worfklow from Bitbucket**: httpRequest\n- **New or Changed?**: if\n- **Upload Workflow to Bitbucket**: httpRequest\n- **Wait to Avoid Rate Limiting**: wait\n- **Set Bitbucket Workspace & Repository**: set\n- **Error Handler**: stopAndError\n- ... and 4 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -364,8 +364,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -379,8 +379,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -394,8 +394,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -408,8 +408,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -422,8 +422,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -452,8 +452,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -467,8 +467,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -482,8 +482,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -510,8 +510,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -540,8 +540,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -555,8 +555,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -570,8 +570,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -584,8 +584,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -597,8 +597,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -611,8 +611,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -625,8 +625,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -638,8 +638,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -652,8 +652,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -666,8 +666,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Backup n8n Workflows to Bitbucket\n\n## Overview\nAutomated workflow: Backup n8n Workflows to Bitbucket. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -706,8 +706,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

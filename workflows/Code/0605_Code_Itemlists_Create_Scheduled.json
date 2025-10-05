@@ -5,8 +5,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1740,
-        -80
+        100,
+        5860
       ],
       "parameters": {
         "color": 4,
@@ -22,8 +22,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1740,
-        500
+        100,
+        6400
       ],
       "parameters": {
         "width": 980.8812626356395,
@@ -38,8 +38,8 @@
       "name": "Move Binary Data",
       "type": "n8n-nodes-base.moveBinaryData",
       "position": [
-        2000,
-        280
+        100,
+        4780
       ],
       "parameters": {
         "mode": "jsonToBinary",
@@ -56,8 +56,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        260,
-        -80
+        100,
+        6580
       ],
       "parameters": {
         "color": 2,
@@ -73,8 +73,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1300,
-        -80
+        100,
+        6760
       ],
       "parameters": {
         "color": 6,
@@ -90,8 +90,8 @@
       "name": "IGNORE FILES",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1440,
-        40
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -125,8 +125,8 @@
       "name": "Create n8n_backups",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1000,
-        340
+        100,
+        280
       ],
       "parameters": {
         "name": "n8n_backups",
@@ -158,8 +158,8 @@
       "name": "Create n8n_old",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1000,
-        500
+        100,
+        460
       ],
       "parameters": {
         "name": "n8n_old",
@@ -191,8 +191,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        300,
-        540
+        100,
+        7300
       ],
       "parameters": {
         "color": 6,
@@ -208,8 +208,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        900,
-        220
+        100,
+        6220
       ],
       "parameters": {
         "color": 5,
@@ -226,8 +226,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        320,
-        240
+        100,
+        2980
       ],
       "parameters": {
         "filter": {
@@ -255,8 +255,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        500,
-        240
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "const items = $input.all();\nconst requiredNames = [\"n8n_old\", \"n8n_backups\"];\n\n// Filtrar los nombres de la entrada\nconst folderNames = items.map(item => item.json.name);\n\n// Encontrar los nombres que faltan\nconst missingNames = requiredNames.filter(name => !folderNames.includes(name));\n\nif (missingNames.length === 0) {\n  return [{ json: { message: \"ok\" } }];\n} else {\n  return [{ json: { message: `Faltan los siguientes: ${missingNames.join(', ')}` } }];\n}\n"
@@ -269,8 +269,8 @@
       "name": "If n8n_old",
       "type": "n8n-nodes-base.if",
       "position": [
-        680,
-        360
+        100,
+        3520
       ],
       "parameters": {
         "options": {},
@@ -303,8 +303,8 @@
       "name": "If1 n8n_backups",
       "type": "n8n-nodes-base.if",
       "position": [
-        680,
-        120
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        1100,
-        40
+        100,
+        3160
       ],
       "parameters": {
         "filter": {
@@ -367,8 +367,8 @@
       "name": "Merge mensage",
       "type": "n8n-nodes-base.merge",
       "position": [
-        920,
-        40
+        100,
+        4600
       ],
       "parameters": {
         "mode": "combine",
@@ -383,8 +383,8 @@
       "name": "GET CURRENT BACKUPS1",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1800,
-        0
+        100,
+        2800
       ],
       "parameters": {
         "filter": {
@@ -418,8 +418,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        640,
-        -40
+        100,
+        6940
       ],
       "parameters": {
         "color": 7,
@@ -436,8 +436,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        2480,
-        -20
+        100,
+        4420
       ],
       "parameters": {
         "fileId": {
@@ -474,8 +474,8 @@
       "name": "UPLOAD WORKFLOWS",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        2480,
-        260
+        100,
+        7660
       ],
       "parameters": {
         "name": "={{ $('Split In Batches').item.binary.data.fileName }}-{{ $node[\"n8n\"].json[\"updatedAt\"] }}.json\n\n",
@@ -500,8 +500,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -180,
-        -80
+        100,
+        7120
       ],
       "parameters": {
         "color": 3,
@@ -517,8 +517,8 @@
       "name": "Item Lists",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        2000,
-        0
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -532,8 +532,8 @@
       "name": "Split In Batches2",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        2220,
-        0
+        100,
+        5680
       ],
       "parameters": {
         "options": {
@@ -549,8 +549,8 @@
       "name": "Split In Batches",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        2220,
-        280
+        100,
+        5320
       ],
       "parameters": {
         "options": {
@@ -566,8 +566,8 @@
       "name": "n8n",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1800,
-        280
+        100,
+        9640
       ],
       "parameters": {
         "filters": {},
@@ -588,8 +588,8 @@
       "name": "LIST OLD BACKUPS",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1960,
-        520
+        100,
+        4240
       ],
       "parameters": {
         "filter": {
@@ -626,8 +626,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        2560,
-        500
+        100,
+        640
       ],
       "parameters": {
         "fileId": {
@@ -655,8 +655,8 @@
       "name": "Item Lists old",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        2160,
-        520
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -670,8 +670,8 @@
       "name": "Split In Batches old",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        2360,
-        520
+        100,
+        5500
       ],
       "parameters": {
         "options": {
@@ -687,8 +687,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1320,
-        380
+        100,
+        7480
       ],
       "parameters": {
         "color": 3,
@@ -704,8 +704,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1740,
-        220
+        100,
+        6040
       ],
       "parameters": {
         "color": 5,
@@ -721,8 +721,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        320,
-        20
+        100,
+        4960
       ],
       "parameters": {
         "rule": {
@@ -739,8 +739,8 @@
       "name": "Schedule Trigger1",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        1760,
-        560
+        100,
+        5140
       ],
       "parameters": {
         "rule": {
@@ -760,8 +760,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d3f6191a",
@@ -775,8 +775,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b0ff6563",
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f0796631",
@@ -805,8 +805,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0a215059",
@@ -820,8 +820,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ae940b77",
@@ -835,8 +835,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1a77a0fd",
@@ -850,8 +850,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f9fad351",
@@ -865,8 +865,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d6455261",
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node aa1878bd",
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Move Binary Data**: moveBinaryData\n- **Sticky Note3**: stickyNote\n- **Sticky Note4**: stickyNote\n- **IGNORE FILES**: filter\n- **Create n8n_backups**: googleDrive\n- **Create n8n_old**: googleDrive\n- **Sticky Note8**: stickyNote\n- **Sticky Note10**: stickyNote\n- ... and 32 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -909,8 +909,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -923,8 +923,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -937,8 +937,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -965,8 +965,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -979,8 +979,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -992,8 +992,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1005,8 +1005,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1018,8 +1018,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1032,8 +1032,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 12 different services: stickyNote, filter, itemLists, code, scheduleTrigger. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1045,8 +1045,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

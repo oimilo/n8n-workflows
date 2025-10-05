@@ -17,8 +17,8 @@
       "name": "Gmail Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
       "position": [
-        1480,
-        160
+        100,
+        5680
       ],
       "parameters": {
         "simple": false,
@@ -47,8 +47,8 @@
       "type": "n8n-nodes-base.microsoftOutlookTrigger",
       "disabled": true,
       "position": [
-        1480,
-        720
+        100,
+        5860
       ],
       "parameters": {
         "fields": [
@@ -82,8 +82,8 @@
       "name": "Screenshot HTML",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2520,
-        480
+        100,
+        6580
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -121,8 +121,8 @@
       "name": "Retrieve Screenshot",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2700,
-        480
+        100,
+        6400
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -144,8 +144,8 @@
       "name": "Set Outlook Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        2020,
-        720
+        100,
+        7120
       ],
       "parameters": {
         "options": {},
@@ -192,8 +192,8 @@
       "name": "Set Gmail Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        2040,
-        160
+        100,
+        6940
       ],
       "parameters": {
         "options": {},
@@ -240,8 +240,8 @@
       "name": "Retrieve Headers of Email",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1680,
-        720
+        100,
+        6220
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -276,8 +276,8 @@
       "name": "Format Headers",
       "type": "n8n-nodes-base.code",
       "position": [
-        1860,
-        720
+        100,
+        5500
       ],
       "parameters": {
         "jsCode": "const input = $('Retrieve Headers of Email').item.json.internetMessageHeaders;\n\nconst result = input.reduce((acc, { name, value }) => {\n if (!acc[name]) acc[name] = [];\n acc[name].push(value);\n return acc;\n}, {});\n\nreturn result;"
@@ -290,8 +290,8 @@
       "name": "Set Email Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        2360,
-        480
+        100,
+        6760
       ],
       "parameters": {
         "options": {},
@@ -305,8 +305,8 @@
       "name": "ChatGPT Analysis",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3100,
-        480
+        100,
+        100
       ],
       "parameters": {
         "text": "=Describe this image. Determine if the email could be a phishing email. The message headers are as follows:\n{{ $('Set Email Variables').item.json.headers }}\n\nFormat the response for Jira who uses a wiki-style renderer. Do not include ``` around your response.",
@@ -337,8 +337,8 @@
       "name": "Create Jira Ticket",
       "type": "n8n-nodes-base.jira",
       "position": [
-        3500,
-        480
+        100,
+        280
       ],
       "parameters": {
         "project": {
@@ -372,8 +372,8 @@
       "name": "Rename Screenshot",
       "type": "n8n-nodes-base.code",
       "position": [
-        3680,
-        480
+        100,
+        6040
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -387,8 +387,8 @@
       "name": "Upload Screenshot of Email to Jira",
       "type": "n8n-nodes-base.jira",
       "position": [
-        3860,
-        480
+        100,
+        8560
       ],
       "parameters": {
         "issueKey": "YOUR_CREDENTIAL_HERE",
@@ -408,8 +408,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1420,
-        -107.36679523834897
+        100,
+        7300
       ],
       "parameters": {
         "color": 7,
@@ -425,8 +425,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1420,
-        380.6918768014301
+        100,
+        7480
       ],
       "parameters": {
         "color": 7,
@@ -442,8 +442,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2287.3684210526317,
-        46.18421052631584
+        100,
+        7660
       ],
       "parameters": {
         "color": 7,
@@ -459,8 +459,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2880,
-        123.72476075009968
+        100,
+        7840
       ],
       "parameters": {
         "color": 7,
@@ -476,8 +476,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3400,
-        122.88662032580646
+        100,
+        8020
       ],
       "parameters": {
         "color": 7,
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in 5bf9b0e8-b84e-44a2-aad2-45dde3e4ab1b",
@@ -509,8 +509,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in fc770d1d-6c18-4d14-8344-1dc042464df6",
@@ -524,8 +524,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in 3166738e-d0a3-475b-8b19-51afd519ee3a",
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5bf9b0e8",
@@ -554,8 +554,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fc770d1d",
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3166738e",
@@ -584,8 +584,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 45d156aa",
@@ -599,8 +599,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Gmail Trigger**: gmailTrigger\n- **Microsoft Outlook Trigger**: microsoftOutlookTrigger\n- **Screenshot HTML**: httpRequest\n- **Retrieve Screenshot**: httpRequest\n- **Set Outlook Variables**: set\n- **Set Gmail Variables**: set\n- **Retrieve Headers of Email**: httpRequest\n- **Format Headers**: code\n- **Set Email Variables**: set\n- **ChatGPT Analysis**: openAi\n- ... and 15 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -613,8 +613,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -658,8 +658,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -672,8 +672,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -701,8 +701,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -716,8 +716,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -731,8 +731,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -746,8 +746,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -761,8 +761,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -804,8 +804,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -819,8 +819,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -834,8 +834,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -849,8 +849,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -864,8 +864,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -879,8 +879,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -894,8 +894,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -908,8 +908,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -921,8 +921,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -935,8 +935,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -949,8 +949,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -963,8 +963,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -976,8 +976,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -990,8 +990,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1004,8 +1004,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1018,8 +1018,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1031,8 +1031,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1045,8 +1045,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# Gmailtrigger Workflow\n\n## Overview\nAutomated workflow: Gmailtrigger Workflow. This workflow integrates 9 different services: stickyNote, httpRequest, code, gmailTrigger, microsoftOutlookTrigger. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1058,8 +1058,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Workflow execution error",

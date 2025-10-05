@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        1220,
-        560
+        100,
+        7300
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Respond with Mermaid",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2640,
-        560
+        100,
+        5860
       ],
       "parameters": {
         "options": {
@@ -63,8 +63,8 @@
       "name": "List workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1620,
-        360
+        100,
+        5500
       ],
       "parameters": {
         "filters": {},
@@ -84,8 +84,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1980,
-        360
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -105,8 +105,8 @@
       "name": "Single workflow",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1620,
-        560
+        100,
+        6220
       ],
       "parameters": {
         "operation": "get",
@@ -131,8 +131,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1420,
-        460
+        100,
+        6940
       ],
       "parameters": {
         "rules": {
@@ -197,8 +197,8 @@
       "name": "Send Page",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2640,
-        360
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -213,8 +213,8 @@
       "name": "Prepare workflow list",
       "type": "n8n-nodes-base.set",
       "position": [
-        1800,
-        360
+        100,
+        5680
       ],
       "parameters": {
         "options": {},
@@ -237,8 +237,8 @@
       "name": "CONFIG",
       "type": "n8n-nodes-base.set",
       "position": [
-        2300,
-        360
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -274,8 +274,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        1800,
-        560
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "const workflow = $input.first().json;\n\n// Extract nodes from the workflow\nconst nodes = workflow.nodes || [];\n\n// Node types to exclude\nconst excludedNodeTypes = ['n8n-nodes-base.stickyNote'];\n\n// Define shapes and their corresponding brackets\n// {{ $env.WEBHOOK_URL }}\nconst shapes = {\n    'rect': ['[', ']'],\n    'rhombus': ['{', '}'],\n    'circle': ['((', '))'],\n    'hexagon': ['{{', '}}'],\n    'subroutine': ['[[', ']]'],\n    'parallelogram': ['[\\/', '\\/]'],\n    'wait': ['(', ')']\n    // Add more shapes here as needed\n};\n\n// Define special shapes for specific node types\nconst specialShapes = {\n    'n8n-nodes-base.if': 'rhombus',\n    'n8n-nodes-base.switch': 'rhombus',\n    'n8n-nodes-base.code': 'subroutine',\n    'n8n-nodes-base.executeWorkflow': 'subroutine',\n    'n8n-nodes-base.httpRequest':'parallelogram',\n    'n8n-nodes-base.wait':'wait'\n    // List more special node types\n};\n\n// Function to get the shape for a node type\nfunction getNodeShape(nodeType) {\n    return specialShapes[nodeType] || 'rect';\n}\n\n// Create a map of node names to their \"EL<N>\" identifiers, disabled status, and shape\nconst nodeMap = {};\nlet nodeCounter = 1;\nnodes.forEach((node) => {\n    if (!excludedNodeTypes.includes(node.type)) {\n        const shape = getNodeShape(node.type);\n        nodeMap[node.name] = {\n            id: `EL${nodeCounter}`,\n            disabled: node.disabled || false,\n            shape: shape,\n            brackets: shapes[shape] || shapes['rect'] // Default to rect if shape not found\n        };\n        nodeCounter++;\n    }\n});\n\n// Function to convert special characters to HTML entities\nfunction convertToHTMLEntities(str) {\n    return str.replaceAll('\"',\"'\").replace(/[^\\w\\s-]/g, function(char) {\n        return '&#' + char.charCodeAt(0) + ';';\n    });\n}\n\n// Function to format node text (with strike-through if disabled)\nfunction formatNodeText(nodeName, isDisabled) {\n    const escapedName = convertToHTMLEntities(nodeName);\n    return isDisabled ? `<s>${escapedName}</s>` : escapedName;\n}\n\n// Generate connections and isolated nodes\nconst connections = [];\nconst isolatedNodes = new Set(Object.keys(nodeMap));\n\nif (workflow.connections) {\n    Object.entries(workflow.connections).forEach(([sourceName, targetConnections]) => {\n        Object.entries(targetConnections).forEach(([connectionType, targets]) => {\n            targets.forEach(targetArray => {\n                targetArray.forEach(target => {\n                    const sourceNode = nodeMap[sourceName];\n                    const targetNode = nodeMap[target.node];\n                    if (sourceNode && targetNode) {\n                        let connectionLine = `    ${sourceNode.id}${sourceNode.brackets[0]}${formatNodeText(sourceName, sourceNode.disabled)}${sourceNode.brackets[1]}`;\n                        if (connectionType === 'main') {\n                            connectionLine += ` -->`;\n                        } else {\n                            connectionLine += ` -.- |${connectionType}|`;\n                        }\n                        connectionLine += ` ${targetNode.id}${targetNode.brackets[0]}${formatNodeText(target.node, targetNode.disabled)}${targetNode.brackets[1]}`;\n                        connections.push(connectionLine);\n                        isolatedNodes.delete(sourceName);\n                        isolatedNodes.delete(target.node);\n                    }\n                });\n            });\n        });\n    });\n}\n\n// Add isolated nodes to the connections array\nisolatedNodes.forEach(nodeName => {\n    const node = nodeMap[nodeName];\n    connections.push(`    ${node.id}${node.brackets[0]}${formatNodeText(nodeName, node.disabled)}${node.brackets[1]}`);\n});\n\n// Generate the Mermaid flowchart string\nconst mermaidChart = `\n---\nconfig:\n  look: neo\n  theme: default\n---\nflowchart LR\n${connections.join('\\n')}`;\n\n// Output the result\nreturn {\n    json: {\n        mermaidChart: mermaidChart\n    }\n};"
@@ -288,8 +288,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2120,
-        100
+        100,
+        6400
       ],
       "parameters": {
         "color": 3,
@@ -305,8 +305,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        1220,
-        360
+        100,
+        7120
       ],
       "webhookId": "dd9e2c5d-6c48-428e-aa54-bef9e369d3b0",
       "parameters": {
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 2aef0899-91bb-4141-9ec1-def1c31806ae",
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in 95e0b67b-5e5b-4433-9822-da86900c12ca",
@@ -353,8 +353,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in 63245902-69d7-4d75-8cb3-58198208220a",
@@ -368,8 +368,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2aef0899",
@@ -383,8 +383,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 95e0b67b",
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 63245902",
@@ -413,8 +413,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Respond with Mermaid**: respondToWebhook\n- **List workflows**: n8n\n- **Aggregate**: aggregate\n- **Single workflow**: n8n\n- **Switch**: switch\n- **Send Page**: respondToWebhook\n- **Prepare workflow list**: set\n- **CONFIG**: set\n- **Code**: code\n- ... and 8 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -427,8 +427,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -442,8 +442,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -457,8 +457,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -472,8 +472,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -486,8 +486,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -575,8 +575,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -590,8 +590,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -618,8 +618,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -633,8 +633,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -648,8 +648,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -663,8 +663,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -708,8 +708,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -735,8 +735,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -749,8 +749,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -804,8 +804,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -818,8 +818,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -832,8 +832,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -845,8 +845,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -859,8 +859,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Workflow dashboard with mermaid.js\n\n## Overview\nAutomated workflow: Workflow dashboard with mermaid.js. This workflow integrates 10 different services: webhook, stickyNote, code, n8n, switch. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -872,8 +872,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Workflow execution error",

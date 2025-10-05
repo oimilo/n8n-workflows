@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -3440,
-        -320
+        100,
+        5860
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -39,8 +39,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueErrorOutput",
       "position": [
-        -2660,
-        -220
+        100,
+        3880
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -68,8 +68,8 @@
       "name": "Request all data from SIREN database",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -2420,
-        -240
+        100,
+        4420
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -96,8 +96,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3420,
-        -640
+        100,
+        4960
       ],
       "parameters": {
         "width": 460,
@@ -112,8 +112,8 @@
       "name": "FilterOut all Company that have the ReadOnly Key set",
       "type": "n8n-nodes-base.code",
       "position": [
-        -2880,
-        -220
+        100,
+        3700
       ],
       "parameters": {
         "jsCode": "// Get input data\nconst input = $input.all();\nconst output = input.filter(item => {\n    const properties = item.json.properties || [];\n    return !properties.some(property => property.name === \"RO\" && property.value === \"1\"); // Remove all ReadOnly entries\n}).map(item => {\n    const companyId = item.json.id;\n    const denominationUniteLegale = item.json.properties[0]?.value || null; \n    return {\n        json: {\n            companyId,\n            denominationUniteLegale\n        }\n    };\n});\n\n// Return the transformed output\nreturn output;\n"
@@ -126,8 +126,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2940,
-        -640
+        100,
+        5140
       ],
       "parameters": {
         "color": 5,
@@ -143,8 +143,8 @@
       "name": "Set Insee API Key",
       "type": "n8n-nodes-base.set",
       "position": [
-        -3260,
-        -220
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -167,8 +167,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -3440,
-        -140
+        100,
+        4600
       ],
       "parameters": {
         "rule": {
@@ -185,8 +185,8 @@
       "name": "clean_route",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -2660,
-        -360
+        100,
+        7840
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -197,8 +197,8 @@
       "name": "Get all Compagnies from Agile CRM",
       "type": "n8n-nodes-base.agileCrm",
       "position": [
-        -3080,
-        -220
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -219,8 +219,8 @@
       "name": "Enrich CRM with INSEE Data",
       "type": "n8n-nodes-base.agileCrm",
       "position": [
-        -1960,
-        -340
+        100,
+        100
       ],
       "parameters": {
         "resource": "company",
@@ -260,8 +260,8 @@
       "name": "Merge data from CRM and SIREN database with enriched for the CRM",
       "type": "n8n-nodes-base.merge",
       "position": [
-        -2180,
-        -340
+        100,
+        4240
       ],
       "parameters": {
         "mode": "combine",
@@ -284,8 +284,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3460,
-        20
+        100,
+        5320
       ],
       "parameters": {
         "height": 80,
@@ -299,8 +299,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2260,
-        -640
+        100,
+        5500
       ],
       "parameters": {
         "width": 380,
@@ -316,8 +316,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in d406941b-80a1-43a3-ba19-2e29570192f2",
@@ -331,8 +331,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in 6ab3818b-2f09-44e2-874a-87c51478572b",
@@ -346,8 +346,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d406941b",
@@ -361,8 +361,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6ab3818b",
@@ -376,8 +376,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Find Company in SIREN database**: httpRequest\n- **Request all data from SIREN database**: httpRequest\n- **Sticky Note**: stickyNote\n- **FilterOut all Company that have the ReadOnly Key set**: code\n- **Sticky Note1**: stickyNote\n- **Set Insee API Key**: set\n- **Schedule Trigger**: scheduleTrigger\n- **clean_route**: noOp\n- **Get all Compagnies from Agile CRM**: agileCrm\n- ... and 8 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -390,8 +390,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -405,8 +405,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -420,8 +420,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -448,8 +448,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -463,8 +463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -493,8 +493,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -508,8 +508,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -522,8 +522,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -536,8 +536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -551,8 +551,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -566,8 +566,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -581,8 +581,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -610,8 +610,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -623,8 +623,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -637,8 +637,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -692,8 +692,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -705,8 +705,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -719,8 +719,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# INSEE Enrichment for Agile CRM\n\n## Overview\nAutomated workflow: INSEE Enrichment for Agile CRM. This workflow integrates 10 different services: stickyNote, httpRequest, code, scheduleTrigger, merge. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

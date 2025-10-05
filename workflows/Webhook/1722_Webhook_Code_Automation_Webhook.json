@@ -26,8 +26,8 @@
       "name": "Validate Key Gen Params",
       "type": "n8n-nodes-base.code",
       "position": [
-        -220,
-        220
+        100,
+        13960
       ],
       "parameters": {
         "jsCode": "// Check required parameters for key generation\nconst requiredParams = [\n  'subjectCN', 'issuerCN', 'serialNumber', \n  'validFrom', 'validTo', 'password'\n];\n\nlet missingParams = [];\nconst requestBody = $input.item.json.body || {}; // Access the body object\n\nfor (const param of requiredParams) {\n  if (!requestBody[param]) {\n    missingParams.push(param);\n  }\n}\n\nif (missingParams.length > 0) {\n  return {\n    json: {\n      success: false,\n      message: `Missing required parameters: ${missingParams.join(', ')}`\n    }\n  };\n}\n\n// Set default output directory if not provided\nconst outputDir = $input.item.json.keyPath || '/tmp';\nconst timestamp = new Date().getTime();\nconst outputPfx = `${outputDir}certificate_${timestamp}.pfx`;\nconst outputPrivateKey = `${outputDir}private_${timestamp}.key`;\nconst outputCertPem = `${outputDir}certificate_${timestamp}.pem`;\n\nreturn {\n  json: {\n    ...requestBody,\n    success: true,\n    outputDir,\n    outputPfx,\n    outputPrivateKey,\n    outputCertPem\n  }\n};\n"
@@ -40,8 +40,8 @@
       "name": "Validate PDF Sign Params",
       "type": "n8n-nodes-base.code",
       "position": [
-        -220,
-        380
+        100,
+        14320
       ],
       "parameters": {
         "jsCode": "// Check required parameters for PDF signing\nconst requiredParams = ['inputPdf', 'pfxFile', 'pfxPassword'];\n\n// Access the body object from input\nconst requestBody = $input.item.json.body || {}; \n\nlet missingParams = [];\nfor (const param of requiredParams) {\n  if (!requestBody[param]) {\n    missingParams.push(param);\n  }\n}\n\nif (missingParams.length > 0) {\n  return {\n    json: {\n      success: false,\n      message: `Missing required parameters: ${missingParams.join(', ')}`\n    }\n  };\n}\n\n// Set default output directory if not provided\nconst pdfDir = $input.item.json.pdfPath || '/tmp';\nconst keyDir = $input.item.json.keyPath || '/tmp';\nconst outputDir = $input.item.json.pdfPath || '/tmp';\n\nconst timestamp = new Date().getTime();\nconst inputPdfPath = `${pdfDir}${requestBody.inputPdf}`;\nconst pfxFilePath = `${keyDir}${requestBody.pfxFile}`;\nconst outputPdfPath = `${pdfDir}signed_${timestamp}.pdf`;\n\nreturn {\n  json: {\n    ...requestBody,\n    success: true,\n    outputDir,\n    inputPdfPath,\n    pfxFilePath,\n    outputPdfPath\n  }\n};"
@@ -54,8 +54,8 @@
       "name": "Validate PDF Upload",
       "type": "n8n-nodes-base.code",
       "position": [
-        80,
-        -440
+        100,
+        14500
       ],
       "parameters": {
         "jsCode": "// Check required parameters for PDF upload\nconst requiredParams = ['fileData'];\n\nlet missingParams = [];\nfor (const param of requiredParams) {\n  if (!$input.item.json[param]) {\n    missingParams.push(param);\n  }\n}\n\nif (missingParams.length > 0) {\n  return {\n    json: {\n      success: false,\n      message: `Missing required parameters: ${missingParams.join(', ')}`\n    }\n  };\n}\n\n// Set default output directory if not provided\nconst outputDir = $input.item.json.outputDir || '/tmp';\nconst timestamp = new Date().getTime();\nconst outputPath = $input.item.json.fileName \n  ? `${outputDir}/${$input.item.json.fileName}` \n  : `${outputDir}/uploaded_pdf_${timestamp}.pdf`;\n\nreturn {\n  json: {\n    ...$input.item.json,\n    success: true,\n    outputDir,\n    outputPath\n  }\n};"
@@ -68,8 +68,8 @@
       "name": "Validate Key Upload",
       "type": "n8n-nodes-base.code",
       "position": [
-        80,
-        -140
+        100,
+        14140
       ],
       "parameters": {
         "jsCode": "// Check required parameters for key upload\nconst requiredParams = ['fileData'];\n\nlet missingParams = [];\nfor (const param of requiredParams) {\n  if (!$input.item.json[param]) {\n    missingParams.push(param);\n  }\n}\n\nif (missingParams.length > 0) {\n  return {\n    json: {\n      success: false,\n      message: `Missing required parameters: ${missingParams.join(', ')}`\n    }\n  };\n}\n\n// Set default output directory if not provided\nconst outputDir = $input.item.json.outputDir || '/tmp';\nconst timestamp = new Date().getTime();\nconst outputPath = $input.item.json.fileName \n  ? `${outputDir}/${$input.item.json.fileName}` \n  : `${outputDir}/uploaded_key_${timestamp}.pfx`;\n\nreturn {\n  json: {\n    ...$input.item.json,\n    success: true,\n    outputDir,\n    outputPath\n  }\n};"
@@ -82,8 +82,8 @@
       "name": "Generate Keys",
       "type": "n8n-nodes-base.code",
       "position": [
-        20,
-        220
+        100,
+        10360
       ],
       "parameters": {
         "jsCode": "console.log(\"!!!!!!!!!\" + process.env.NODE_PATH);\n\n// Key Generation Code\nconst forge = require('node-forge');\nconst fs = require('fs');\n\n// Get parameters from input\nconst subjectCN = $input.item.json.subjectCN;\nconst issuerCN = $input.item.json.issuerCN;\nconst serialNumber = $input.item.json.serialNumber;\nconst validFrom = $input.item.json.validFrom;\nconst validTo = $input.item.json.validTo;\nconst pfxPassword = $input.item.json.password;\nconst outputPfx = $input.item.json.outputPfx;\nconst outputPrivateKey = $input.item.json.outputPrivateKey;\nconst outputCertPem = $input.item.json.outputCertPem;\n\ntry {\n  // Generate a key pair\n  const keys = forge.pki.rsa.generateKeyPair(2048);\n  const privateKey = keys.privateKey;\n  const publicKey = keys.publicKey;\n\n  // Create a certificate\n  const cert = forge.pki.createCertificate();\n  cert.publicKey = publicKey;\n  cert.serialNumber = serialNumber;\n\n  // Parse date strings (format: YYYYMMDDHHMMSS)\n  const parseDate = (dateStr) => {\n    const year = parseInt(dateStr.substring(0, 4));\n    const month = parseInt(dateStr.substring(4, 6)) - 1; // JS months are 0-based\n    const day = parseInt(dateStr.substring(6, 8));\n    const hour = parseInt(dateStr.substring(8, 10));\n    const minute = parseInt(dateStr.substring(10, 12));\n    const second = parseInt(dateStr.substring(12, 14));\n    \n    return new Date(year, month, day, hour, minute, second);\n  };\n\n  cert.validity.notBefore = parseDate(validFrom);\n  cert.validity.notAfter = parseDate(validTo);\n\n  const attrs = [{\n    name: 'commonName',\n    value: subjectCN\n  }, {\n    name: 'countryName',\n    value: 'US'\n  }, {\n    shortName: 'ST',\n    value: 'State'\n  }, {\n    name: 'localityName',\n    value: 'City'\n  }, {\n    name: 'organizationName',\n    value: 'Organization'\n  }, {\n    shortName: 'OU',\n    value: 'Test'\n  }];\n\n  cert.setSubject(attrs);\n  cert.setIssuer(attrs); // Self-signed, so issuer = subject\n\n  // Sign the certificate with the private key\n  cert.sign(privateKey, forge.md.sha256.create());\n\n  // Convert to PEM format\n  const pemCert = forge.pki.certificateToPem(cert);\n  const pemPrivateKey = forge.pki.privateKeyToPem(privateKey);\n\n  // Create a PKCS#12 (PFX) file\n  const p12Asn1 = forge.pkcs12.toPkcs12Asn1(\n    privateKey, \n    [cert], \n    pfxPassword,\n    { generateLocalKeyId: true, friendlyName: subjectCN }\n  );\n\n  const p12Der = forge.asn1.toDer(p12Asn1).getBytes();\n  const p12b64 = forge.util.encode64(p12Der);\n\n  // Save files\n  fs.writeFileSync(outputPrivateKey, pemPrivateKey);\n  fs.writeFileSync(outputCertPem, pemCert);\n  fs.writeFileSync(outputPfx, forge.util.decode64(p12b64), { encoding: 'binary' });\n\n  return {\n    json: {\n      success: true,\n      message: \"Certificate and keys generated successfully\",\n      fileName: outputPfx.split('/').pop(),\n      filePaths: {\n        pfx: outputPfx,\n        privateKey: outputPrivateKey,\n        certificate: outputCertPem\n      },\n      fileNames: {\n        pfx: outputPfx.split('/').pop(),\n        privateKey: outputPrivateKey.split('/').pop(),\n        certificate: outputCertPem.split('/').pop()\n      }\n    }\n  };\n} catch (error) {\n  return {\n    json: {\n      success: false,\n      message: `Error generating keys: ${error.message}`,\n      error: error.stack\n    }\n  };\n}"
@@ -96,8 +96,8 @@
       "name": "Sign PDF",
       "type": "n8n-nodes-base.code",
       "position": [
-        20,
-        380
+        100,
+        11800
       ],
       "parameters": {
         "jsCode": "// PDF Signing Code\nconst fs = require('fs');\nconst forge = require('node-forge');\nconst { SignPdf } = require('@signpdf/signpdf');\nconst { P12Signer } = require('@signpdf/signer-p12');\nconst { plainAddPlaceholder } = require('@signpdf/placeholder-plain');\n\n// Get parameters from input\n// const inputPdfBase64 = $input.item.json.inputPdf;\n// const pfxFileBase64 = $input.item.json.pfxFile;\nconst pfxPassword = $input.item.json.pfxPassword;\nconst inputPdfPath = $input.item.json.inputPdfPath;\nconst pfxFilePath = $input.item.json.pfxFilePath;\nconst outputPdfPath = $input.item.json.outputPdfPath;\n\ntry {\n    // Read the PDF\n    const pdfBuffer = fs.readFileSync(inputPdfPath);\n\n    // Add a signature placeholder\n    const pdfWithPlaceholder = plainAddPlaceholder({\n      pdfBuffer,\n      reason: 'Digital Signature',\n      contactInfo: 'info@example.com',\n      location: 'New York, USA',\n      signatureLength: 8192 // Ensure enough space for signature\n    });\n    \n    // Read the P12 file\n    const p12Buffer = fs.readFileSync(pfxFilePath);\n\n    // Create a signer instance\n    const signer = new P12Signer(p12Buffer, {\n      passphrase: pfxPassword\n    });\n    \n    // Create SignPdf instance and sign the PDF\n    const signPdfInstance = new SignPdf();\n    const signedPdf = await signPdfInstance.sign(pdfWithPlaceholder, signer);\n    \n    // Write the signed PDF to file\n    fs.writeFileSync(outputPdfPath, signedPdf);\n    console.log(`PDF successfully signed: ${outputPdfPath}`);\n\n  return {\n    json: {\n      success: true,\n      message: \"PDF successfully signed\",\n      filePath: outputPdfPath,\n      fileName: outputPdfPath.split('/').pop()\n    }\n  };\n} catch (error) {\n  return {\n    json: {\n      success: false,\n      message: `Error signing PDF: ${error.message}`,\n      error: error.stack\n    }\n  };\n}"
@@ -110,8 +110,8 @@
       "name": "Prepare Success Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        1380,
-        40
+        100,
+        10900
       ],
       "parameters": {
         "values": {
@@ -139,8 +139,8 @@
       "name": "Switch Operation",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -520,
-        200
+        100,
+        13600
       ],
       "parameters": {
         "rules": {
@@ -255,8 +255,8 @@
       "name": "Switch Upload Type",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -100,
-        -300
+        100,
+        13780
       ],
       "parameters": {
         "rules": {
@@ -321,8 +321,8 @@
       "name": "Prepare input params",
       "type": "n8n-nodes-base.set",
       "position": [
-        -280,
-        -300
+        100,
+        11080
       ],
       "parameters": {
         "options": {
@@ -354,8 +354,8 @@
       "name": "set file path",
       "type": "n8n-nodes-base.set",
       "position": [
-        -700,
-        220
+        100,
+        17200
       ],
       "parameters": {
         "options": {},
@@ -385,8 +385,8 @@
       "name": "Convert PDF to File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        260,
-        -440
+        100,
+        820
       ],
       "parameters": {
         "options": {
@@ -404,8 +404,8 @@
       "name": "Write PDF File to Disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        440,
-        -440
+        100,
+        16480
       ],
       "parameters": {
         "options": {
@@ -422,8 +422,8 @@
       "name": "Read PDF File from Disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        620,
-        -440
+        100,
+        11260
       ],
       "parameters": {
         "options": {},
@@ -437,8 +437,8 @@
       "name": "Convert PFX to File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        260,
-        -140
+        100,
+        1000
       ],
       "parameters": {
         "options": {
@@ -456,8 +456,8 @@
       "name": "Write PFX File to Disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        440,
-        -140
+        100,
+        16660
       ],
       "parameters": {
         "options": {
@@ -474,8 +474,8 @@
       "name": "Read PFX File from Disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        620,
-        -140
+        100,
+        11440
       ],
       "parameters": {
         "options": {},
@@ -489,8 +489,8 @@
       "name": "Check PDF file is OK",
       "type": "n8n-nodes-base.set",
       "position": [
-        800,
-        -380
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -519,8 +519,8 @@
       "name": "Check PFX file is OK",
       "type": "n8n-nodes-base.set",
       "position": [
-        800,
-        -220
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -549,8 +549,8 @@
       "name": "check success",
       "type": "n8n-nodes-base.if",
       "position": [
-        1180,
-        180
+        100,
+        16840
       ],
       "parameters": {
         "options": {},
@@ -584,8 +584,8 @@
       "name": "set downlowd file info",
       "type": "n8n-nodes-base.set",
       "position": [
-        -220,
-        740
+        100,
+        17020
       ],
       "parameters": {
         "options": {},
@@ -608,8 +608,8 @@
       "name": "Read download file from Disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        0,
-        740
+        100,
+        11620
       ],
       "parameters": {
         "options": {},
@@ -623,8 +623,8 @@
       "name": "API POST Endpoint",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -900,
-        220
+        100,
+        280
       ],
       "webhookId": "0c12b17f-77a7-46b2-99a0-432b29b58dfb",
       "parameters": {
@@ -643,8 +643,8 @@
       "name": "API GET Endpoint",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -900,
-        560
+        100,
+        100
       ],
       "webhookId": "71854b24-a2b8-4cae-bb5d-3959f1573974",
       "parameters": {
@@ -660,8 +660,8 @@
       "name": "POST Success Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1540,
-        120
+        100,
+        10720
       ],
       "parameters": {
         "options": {}
@@ -674,8 +674,8 @@
       "name": "POST Error Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1540,
-        280
+        100,
+        10540
       ],
       "parameters": {
         "options": {}
@@ -688,8 +688,8 @@
       "name": "GET Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        240,
-        740
+        100,
+        10180
       ],
       "parameters": {
         "options": {
@@ -712,8 +712,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -320,
-        100
+        100,
+        11980
       ],
       "parameters": {
         "width": 740,
@@ -728,8 +728,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -320,
-        600
+        100,
+        12160
       ],
       "parameters": {
         "width": 740,
@@ -744,8 +744,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -320,
-        -560
+        100,
+        12340
       ],
       "parameters": {
         "width": 1380,
@@ -760,8 +760,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1100,
-        -80
+        100,
+        12520
       ],
       "parameters": {
         "color": 4,
@@ -777,8 +777,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1120,
-        -100
+        100,
+        12700
       ],
       "parameters": {
         "color": 4,
@@ -795,8 +795,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in c6c8aea2-a770-4e32-94b5-c4b9f18ea3fe",
@@ -810,8 +810,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12880
       ],
       "parameters": {
         "message": "Error occurred in c7387236-4d72-4123-b181-31059c7fb973",
@@ -825,8 +825,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13060
       ],
       "parameters": {
         "message": "Error occurred in c87290be-95fd-4edf-8993-b0710714919b",
@@ -840,8 +840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13240
       ],
       "parameters": {
         "message": "Error occurred in 501c7371-99a5-4d2f-bd54-ed8a9e8a67a9",
@@ -855,8 +855,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in 3905360c-581c-4588-a509-7329e73a7ed6",
@@ -870,8 +870,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2667149c",
@@ -885,8 +885,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6559070f",
@@ -900,8 +900,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0f6dfb44",
@@ -915,8 +915,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 59e18825",
@@ -930,8 +930,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d079d173",
@@ -945,8 +945,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a2517543",
@@ -960,8 +960,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5710c64c",
@@ -975,8 +975,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c6c8aea2",
@@ -990,8 +990,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c7387236",
@@ -1005,8 +1005,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c87290be",
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 501c7371",
@@ -1035,8 +1035,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3905360c",
@@ -1050,8 +1050,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14680
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Validate Key Gen Params**: code\n- **Validate PDF Sign Params**: code\n- **Validate PDF Upload**: code\n- **Validate Key Upload**: code\n- **Generate Keys**: code\n- **Sign PDF**: code\n- **Prepare Success Response**: set\n- **Switch Operation**: switch\n- **Switch Upload Type**: switch\n- **Prepare input params**: set\n- ... and 39 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1064,8 +1064,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1079,8 +1079,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1094,8 +1094,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1109,8 +1109,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1124,8 +1124,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1139,8 +1139,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14860
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1153,8 +1153,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15040
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1167,8 +1167,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1182,8 +1182,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1197,8 +1197,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1212,8 +1212,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1227,8 +1227,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1242,8 +1242,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1257,8 +1257,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1272,8 +1272,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1287,8 +1287,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1302,8 +1302,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1317,8 +1317,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15220
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 67\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1331,8 +1331,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15400
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 68\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1345,8 +1345,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1360,8 +1360,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1375,8 +1375,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1390,8 +1390,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1405,8 +1405,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1420,8 +1420,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1435,8 +1435,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1450,8 +1450,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1465,8 +1465,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1480,8 +1480,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1495,8 +1495,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15580
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 79\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1509,8 +1509,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15760
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 80\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1522,8 +1522,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1536,8 +1536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1550,8 +1550,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1564,8 +1564,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1578,8 +1578,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1592,8 +1592,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15940
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 86\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1605,8 +1605,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1619,8 +1619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1633,8 +1633,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1647,8 +1647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1661,8 +1661,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1675,8 +1675,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16120
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1688,8 +1688,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1702,8 +1702,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16300
       ],
       "parameters": {
         "content": "# Basic PDF Digital Sign Service\n\n## Overview\nAutomated workflow: Basic PDF Digital Sign Service. This workflow integrates 10 different services: convertToFile, webhook, stickyNote, code, readWriteFile. It contains 49 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1715,8 +1715,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Workflow execution error",

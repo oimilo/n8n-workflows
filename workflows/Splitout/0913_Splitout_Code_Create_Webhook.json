@@ -17,8 +17,8 @@
       "name": "OpenRouter Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        620,
-        240
+        100,
+        2440
       ],
       "parameters": {
         "model": "openai/gpt-4.1",
@@ -32,8 +32,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        900,
-        240
+        100,
+        2980
       ],
       "parameters": {
         "schemaType": "manual",
@@ -47,8 +47,8 @@
       "name": "scrap url",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        240,
-        60
+        100,
+        5860
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -89,8 +89,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        160,
-        -140
+        100,
+        2800
       ],
       "parameters": {
         "content": "## Web Scraper API\n\n[Inscription - Free Trial]({{ $env.WEBHOOK_URL }}"
@@ -103,8 +103,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -440,
-        200
+        100,
+        3160
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -115,8 +115,8 @@
       "name": "url",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        20,
-        200
+        100,
+        6040
       ],
       "parameters": {
         "options": {}
@@ -129,8 +129,8 @@
       "name": "get urls to scrape",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -200,
-        200
+        100,
+        5680
       ],
       "parameters": {
         "options": {},
@@ -151,8 +151,8 @@
       "name": "clean html",
       "type": "n8n-nodes-base.code",
       "position": [
-        460,
-        60
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "// CleanHtmlFunction.js\n// Purpose: n8n Function node to clean HTML: remove doctype, scripts, styles, head, comments, classes, extra blank lines, and non-whitelisted tags\n\nreturn items.map(item => {\n  const rawHtml = item.json.data;\n\n  // 1) remove doctype, scripts, styles, comments and head section, and strip class attributes\n  let cleaned = rawHtml\n    .replace(/<!doctype html>/gi, '')\n    .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n    .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n    .replace(/<!--[\\s\\S]*?-->/g, '')\n    .replace(/<head[\\s\\S]*?<\\/head>/gi, '')\n    .replace(/\\sclass=\"[^\"]*\"/gi, '');\n\n  // 2) define whitelist of tags to keep\n  const allowedTags = [\n    'h1','h2','h3','h4','h5','h6',\n    'p','ul','ol','li',\n    'strong','em','a','blockquote',\n    'code','pre'\n  ];\n\n  // 3) strip out all tags not in the whitelist, reconstruct allowed tags cleanly\n  cleaned = cleaned.replace(\n    /<\\/?([a-z][a-z0-9]*)\\b[^>]*>/gi,\n    (match, tagName) => {\n      const name = tagName.toLowerCase();\n      if (allowedTags.includes(name)) {\n        return match.startsWith('</') ? `</${name}>` : `<${name}>`;\n      }\n      return '';\n    }\n  );\n\n  // 4) collapse multiple blank or whitespace-only lines into a single newline\n  cleaned = cleaned.replace(/(\\s*\\r?\\n\\s*){2,}/g, '\\n');\n\n  // 5) trim leading/trailing whitespace\n  cleaned = cleaned.trim();\n\n  return {\n    json: { cleanedHtml: cleaned }\n  };\n});"
@@ -165,8 +165,8 @@
       "name": "extract data",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        680,
-        60
+        100,
+        5500
       ],
       "parameters": {
         "text": "={{ $json.cleanedHtml }}",
@@ -188,8 +188,8 @@
       "name": "add results",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1280,
-        200
+        100,
+        5140
       ],
       "parameters": {
         "columns": {
@@ -243,8 +243,8 @@
       "name": "Split items",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1060,
-        60
+        100,
+        2620
       ],
       "parameters": {
         "include": "allOtherFields",
@@ -260,8 +260,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in e4800c1d-c0d8-4093-81ec-fc19ad0034cd",
@@ -275,8 +275,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e4800c1d",
@@ -290,8 +290,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 21b6d21c",
@@ -305,8 +305,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8b4af1bb",
@@ -320,8 +320,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenRouter Chat Model**: lmChatOpenRouter\n- **Structured Output Parser**: outputParserStructured\n- **scrap url**: httpRequest\n- **Sticky Note1**: stickyNote\n- **When clicking ‘Test workflow’**: manualTrigger\n- **url**: splitInBatches\n- **get urls to scrape**: googleSheets\n- **clean html**: code\n- **extract data**: chainLlm\n- **add results**: googleSheets\n- ... and 5 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -334,8 +334,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -349,8 +349,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -363,8 +363,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -392,8 +392,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -421,8 +421,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -435,8 +435,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -479,8 +479,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -492,8 +492,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -519,8 +519,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Lmchatopenrouter Workflow\n\n## Overview\nAutomated workflow: Lmchatopenrouter Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",

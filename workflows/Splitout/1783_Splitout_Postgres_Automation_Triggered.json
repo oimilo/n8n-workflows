@@ -26,8 +26,8 @@
       "name": "Embeddings Ollama",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1920,
-        -100
+        1500,
+        100
       ],
       "parameters": {
         "model": "nomic-embed-text:latest"
@@ -41,8 +41,8 @@
       "name": "Default Data Loader",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2040,
-        -97.5
+        2060,
+        100
       ],
       "parameters": {
         "options": {
@@ -70,7 +70,7 @@
       "name": "Recursive Character Text Splitter",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2128,
+        2340,
         100
       ],
       "parameters": {
@@ -86,7 +86,7 @@
       "name": "Gmail Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
       "position": [
-        1260,
+        100,
         280
       ],
       "parameters": {
@@ -116,8 +116,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        840,
-        40
+        4300,
+        100
       ],
       "parameters": {
         "options": {}
@@ -130,8 +130,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        640,
-        40
+        3740,
+        100
       ],
       "parameters": {
         "options": {
@@ -147,8 +147,8 @@
       "name": "Was manually triggered?",
       "type": "n8n-nodes-base.if",
       "position": [
-        2416,
-        -145
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -182,8 +182,8 @@
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        0,
-        40
+        100,
+        460
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -194,8 +194,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2636,
-        -145
+        2900,
+        280
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -206,8 +206,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -60,
-        -540
+        100,
+        640
       ],
       "parameters": {
         "color": 6,
@@ -223,8 +223,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        360,
-        -100
+        3180,
+        100
       ],
       "parameters": {
         "width": 220,
@@ -239,8 +239,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        260
+        4020,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -256,8 +256,8 @@
       "name": "Set before and after dates",
       "type": "n8n-nodes-base.set",
       "position": [
-        1040,
-        -320
+        4860,
+        100
       ],
       "parameters": {
         "options": {},
@@ -286,8 +286,8 @@
       "name": "Extract email fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        1480,
-        -320
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -358,8 +358,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1640,
-        -540
+        940,
+        100
       ],
       "parameters": {
         "width": 720,
@@ -375,8 +375,8 @@
       "type": "n8n-nodes-base.postgres",
       "onError": "continueErrorOutput",
       "position": [
-        1700,
-        -320
+        1220,
+        100
       ],
       "parameters": {
         "table": {
@@ -507,8 +507,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueRegularOutput",
       "position": [
-        1936,
-        -320
+        1780,
+        100
       ],
       "parameters": {
         "mode": "insert",
@@ -524,8 +524,8 @@
       "name": "Create the table",
       "type": "n8n-nodes-base.postgres",
       "position": [
-        200,
-        40
+        2900,
+        100
       ],
       "parameters": {
         "query": "CREATE TABLE IF NOT EXISTS public.emails_metadata (\n    email_id character varying(64) NOT NULL,\n    thread_id character varying(64),\n    email_from text,\n    email_to text,\n    email_cc text,\n    date timestamp with time zone NOT NULL,\n    email_subject text,\n    email_text text,\n    attachments text[]\n);\n",
@@ -541,8 +541,8 @@
       "name": "Explode interval into weeks",
       "type": "n8n-nodes-base.code",
       "position": [
-        420,
-        40
+        3460,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -556,8 +556,8 @@
       "name": "Get a batch of messages",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1260,
-        -320
+        380,
+        100
       ],
       "webhookId": "bace3678-df5b-4a9c-a1ef-1c219e3fd07b",
       "parameters": {
@@ -582,8 +582,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        380,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Embeddings Ollama**: embeddingsOllama\n- **Default Data Loader**: documentDefaultDataLoader\n- **Recursive Character Text Splitter**: textSplitterRecursiveCharacterTextSplitter\n- **Gmail Trigger**: gmailTrigger\n- **Loop Over Items**: splitInBatches\n- **Split Out**: splitOut\n- **Was manually triggered?**: if\n- **Manual Trigger**: manualTrigger\n- **No Operation, do nothing**: noOp\n- **Sticky Note**: stickyNote\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        660,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -610,8 +610,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        940,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -624,8 +624,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1220,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -638,8 +638,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1500,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -652,8 +652,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1780,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -666,8 +666,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2060,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2340,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -692,8 +692,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2620,
+        280
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -705,8 +705,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        4580,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -719,8 +719,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# Gmail to Vector Embeddings with PGVector and Ollama\n\n## Overview\nAutomated workflow: Gmail to Vector Embeddings with PGVector and Ollama. This workflow integrates 15 different services: stickyNote, textSplitterRecursiveCharacterTextSplitter, code, gmailTrigger, splitOut. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

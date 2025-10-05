@@ -26,8 +26,8 @@
       "name": "Get List of records used",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        -40,
-        -80
+        100,
+        6940
       ],
       "parameters": {
         "base": {
@@ -62,8 +62,8 @@
       "name": "Update the used node",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        200,
-        600
+        100,
+        8380
       ],
       "parameters": {
         "base": {
@@ -131,8 +131,8 @@
       "name": "map used articls ids",
       "type": "n8n-nodes-base.code",
       "position": [
-        200,
-        -80
+        100,
+        11260
       ],
       "parameters": {
         "jsCode": "let values = $input.all().map(item => item.json.value);\n\nreturn [\n    {\n      json: {\n        values: values\n      }\n    }\n  ];"
@@ -145,8 +145,8 @@
       "name": "filter only unused Ids",
       "type": "n8n-nodes-base.filter",
       "position": [
-        640,
-        -80
+        100,
+        10720
       ],
       "parameters": {
         "options": {},
@@ -180,8 +180,8 @@
       "name": "get random tags",
       "type": "n8n-nodes-base.code",
       "position": [
-        -280,
-        -80
+        100,
+        10900
       ],
       "parameters": {
         "jsCode": "const devToTags = [\n  \"android\",\n        \"androiddev\",\n        \"kotlin\",\n        \"jetpack-compose\",\n        \"android-appdevelopment\",\n        \"app-development\"\n];\n\n\nfunction getRandomValuesAsObjects(list, count) {\n  const randomValues = [];\n  for (let i = 0; i < count; i++) {\n    const randomIndex = Math.floor(Math.random() * list.length);\n    randomValues.push({ json: { value: list[randomIndex] } });\n  }\n  return randomValues;\n}\n\nreturn getRandomValuesAsObjects(devToTags, 1);\n"
@@ -194,8 +194,8 @@
       "name": "sent the status",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        520,
-        600
+        100,
+        11440
       ],
       "webhookId": "9373d46a-d5ad-40f4-93c0-7a44ff5fea37",
       "parameters": {
@@ -220,8 +220,8 @@
       "name": "Morning  9 Clock",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -560,
-        -80
+        100,
+        7300
       ],
       "parameters": {
         "rule": {
@@ -241,8 +241,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -560,
-        -600
+        100,
+        7480
       ],
       "parameters": {
         "width": 920,
@@ -257,8 +257,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        -520
+        100,
+        7660
       ],
       "parameters": {
         "width": 580,
@@ -273,8 +273,8 @@
       "name": "fetch article ids from tag",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        420,
-        -80
+        100,
+        10540
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -301,8 +301,8 @@
       "name": "Fetch Medium post using Article Id",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        880,
-        -80
+        100,
+        6760
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -329,8 +329,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        -200,
-        260
+        100,
+        7120
       ],
       "parameters": {
         "options": {},
@@ -364,8 +364,8 @@
       "name": "make Linkedin post",
       "type": "n8n-nodes-base.linkedIn",
       "position": [
-        740,
-        240
+        100,
+        11080
       ],
       "parameters": {
         "text": "={{ $('Fetch Medium post content').item.json.content.substring(0, 600) }} ...\n\nArticle link : {{ $env.WEBHOOK_URL }}{{ $('If').item.json.url }}\n\n#AndroidDevelopment #MobileAppDevelopment #AppDevelopment #Programming #SoftwareEngineering #TechCommunity #DeveloperLife #Kotlin #LinkedInDevelopers \n#Mr4rogrammer #isharewhatilearn",
@@ -391,7 +391,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "position": [
         100,
-        240
+        6580
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -418,8 +418,8 @@
       "name": "download image for post",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        420,
-        240
+        100,
+        10360
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -446,8 +446,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in c6712f11-2852-49af-8fb9-235da0e4685c",
@@ -461,8 +461,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in 6382e23e-e214-48b4-8d93-06fc2c74e7cc",
@@ -476,8 +476,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in b5026d10-0bcf-4ef4-a42e-0d8162a7eccc",
@@ -491,8 +491,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in d25bf5d7-0258-4f07-b0b7-54ace75ef697",
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6b16bc15",
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c6712f11",
@@ -536,8 +536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6382e23e",
@@ -551,8 +551,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b5026d10",
@@ -566,8 +566,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d25bf5d7",
@@ -581,8 +581,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get List of records used**: airtable\n- **Update the used node**: airtable\n- **map used articls ids**: code\n- **filter only unused Ids**: filter\n- **get random tags**: code\n- **sent the status**: telegram\n- **Morning  9 Clock**: scheduleTrigger\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **fetch article ids from tag**: httpRequest\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -595,8 +595,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -610,8 +610,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -625,8 +625,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -640,8 +640,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -655,8 +655,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -669,8 +669,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -683,8 +683,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -698,8 +698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -713,8 +713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -728,8 +728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -743,8 +743,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -758,8 +758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -773,8 +773,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -788,8 +788,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -803,8 +803,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -817,8 +817,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -831,8 +831,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -846,8 +846,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -861,8 +861,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -876,8 +876,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -891,8 +891,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -906,8 +906,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -921,8 +921,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -936,8 +936,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -965,8 +965,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -978,8 +978,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -992,8 +992,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1006,8 +1006,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1034,8 +1034,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1047,8 +1047,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1061,8 +1061,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1075,8 +1075,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1089,8 +1089,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1103,8 +1103,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1116,8 +1116,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1130,8 +1130,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# Linkedin Automation\n\n## Overview\nAutomated workflow: Linkedin Automation. This workflow integrates 10 different services: filter, stickyNote, httpRequest, telegram, airtable. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1143,8 +1143,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Workflow execution error",

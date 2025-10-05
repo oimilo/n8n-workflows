@@ -17,8 +17,8 @@
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -180,
-        -60
+        100,
+        4060
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "Retrieve detailed call data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        60,
-        40
+        100,
+        6580
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -57,8 +57,8 @@
       "name": "Get transcript",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        60,
-        -140
+        100,
+        5320
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -85,8 +85,8 @@
       "name": "Join Transcript to String",
       "type": "n8n-nodes-base.set",
       "position": [
-        260,
-        -140
+        100,
+        5860
       ],
       "parameters": {
         "options": {},
@@ -109,8 +109,8 @@
       "name": "Isolate Notion Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        2720,
-        -100
+        100,
+        5500
       ],
       "parameters": {
         "options": {},
@@ -211,8 +211,8 @@
       "name": "Join Affiliation",
       "type": "n8n-nodes-base.code",
       "position": [
-        740,
-        -120
+        100,
+        5680
       ],
       "parameters": {
         "jsCode": "// Retrieve input data from all items\nconst inputData = $input.all();\nconst originalJson = inputData[0].json; // Get the original JSON data\nconst conversation = originalJson.Conversation;\nconst parties = originalJson.parties;\n\n// Create a mapping of speakerId to affiliation\nconst affiliationMap = {};\nparties.forEach(party => {\n  affiliationMap[party.speakerId] = party.affiliation;\n});\n\n// Replace speakerId with affiliation in the conversation data\nconst updatedConversation = conversation.map(entry => {\n  const affiliation = affiliationMap[entry.speaker] || 'Unknown'; // Fallback to 'Unknown' if not found\n  return {\n    ...entry,\n    speaker: affiliation, // Replace speakerId with affiliation\n  };\n});\n\n// Return the updated conversation along with the original JSON data\nreturn [{ json: { ...originalJson, updatedConversation } }];\n"
@@ -225,8 +225,8 @@
       "name": "Join conversation",
       "type": "n8n-nodes-base.code",
       "position": [
-        940,
-        -120
+        100,
+        6040
       ],
       "parameters": {
         "jsCode": "// Retrieve the original JSON data\nconst originalJson = $json;\nconst conversation = originalJson.updatedConversation;\n\n// Create an array to hold the formatted lines\nconst formattedLines = [];\n\n// Iterate over each entry in the conversation\nconversation.forEach(entry => {\n  const speaker = entry.speaker;\n  const texts = entry.text;\n\n  // Iterate over each text item and format it as \"speaker: text\"\n  texts.forEach(line => {\n    formattedLines.push(`${speaker}: ${line}`);\n  });\n});\n\n// Join the formatted lines with newline characters\nconst result = formattedLines.join('\\n');\n\n// Return the original JSON data along with the new conversationText field\nreturn [{ json: { ...originalJson, conversationText: result } }];\n"
@@ -239,8 +239,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -600,
-        -500
+        100,
+        7480
       ],
       "parameters": {
         "width": 340,
@@ -255,8 +255,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -240,
-        -340
+        100,
+        6760
       ],
       "parameters": {
         "color": 7,
@@ -272,8 +272,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        -340
+        100,
+        6940
       ],
       "parameters": {
         "color": 7,
@@ -289,8 +289,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1100,
-        -340
+        100,
+        7120
       ],
       "parameters": {
         "color": 7,
@@ -306,8 +306,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2440,
-        -340
+        100,
+        7300
       ],
       "parameters": {
         "color": 7,
@@ -323,8 +323,8 @@
       "name": "Extract SF Opp Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        1700,
-        80
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -395,8 +395,8 @@
       "name": "Extract SF Opp Data1",
       "type": "n8n-nodes-base.set",
       "position": [
-        1880,
-        260
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -425,8 +425,8 @@
       "name": "Get Opp Data",
       "type": "n8n-nodes-base.salesforce",
       "position": [
-        1460,
-        80
+        100,
+        4960
       ],
       "parameters": {
         "resource": "opportunity",
@@ -447,8 +447,8 @@
       "name": "Get account data",
       "type": "n8n-nodes-base.salesforce",
       "position": [
-        1700,
-        260
+        100,
+        5140
       ],
       "parameters": {
         "resource": "account",
@@ -469,8 +469,8 @@
       "name": "Extract Call Data",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        260,
-        40
+        100,
+        4240
       ],
       "parameters": {
         "options": {},
@@ -484,8 +484,8 @@
       "name": "Merge call and transcript Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        540,
-        -120
+        100,
+        6400
       ],
       "parameters": {
         "mode": "combine",
@@ -500,8 +500,8 @@
       "name": "Aggregate Gong Call Transcript",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1720,
-        -120
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -516,8 +516,8 @@
       "name": "Get External Attendees Emails",
       "type": "n8n-nodes-base.set",
       "position": [
-        1280,
-        80
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -540,8 +540,8 @@
       "name": "Combine Salesforce Opp Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2060,
-        100
+        100,
+        460
       ],
       "parameters": {
         "mode": "combine",
@@ -556,8 +556,8 @@
       "name": "Aggregate Salesforce data",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        2260,
-        100
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -572,8 +572,8 @@
       "name": "Merge Enriched Transcript Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2520,
-        -100
+        100,
+        6220
       ],
       "parameters": {
         "mode": "combine",
@@ -589,8 +589,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 1c42e95b-705d-43ae-91ce-1029334b9e9a",
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in 69c9ef1a-9ef4-4c3f-ab62-a5c9b2a10a4e",
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1c42e95b",
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 69c9ef1a",
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- **Retrieve detailed call data**: httpRequest\n- **Get transcript**: httpRequest\n- **Join Transcript to String**: set\n- **Isolate Notion Data**: set\n- **Join Affiliation**: code\n- **Join conversation**: code\n- **Sticky Note5**: stickyNote\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -663,8 +663,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -751,8 +751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -795,8 +795,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -809,8 +809,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -824,8 +824,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -839,8 +839,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -869,8 +869,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -883,8 +883,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -896,8 +896,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -924,8 +924,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -937,8 +937,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -965,8 +965,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -978,8 +978,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -992,8 +992,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 10 different services: stickyNote, httpRequest, salesforce, code, splitOut. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1005,8 +1005,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Workflow execution error",

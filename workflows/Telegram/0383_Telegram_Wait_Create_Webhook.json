@@ -17,8 +17,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1305,
-        -337
+        100,
+        14500
       ],
       "parameters": {
         "color": 7,
@@ -34,8 +34,8 @@
       "name": "New User ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        -400,
-        -140
+        100,
+        12700
       ],
       "parameters": {
         "conditions": {
@@ -56,8 +56,8 @@
       "name": "Format",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1260,
-        260
+        100,
+        10900
       ],
       "parameters": {
         "jsCode": "function escapeRedisJsonSyntax(value) {\n  if (typeof value === 'string') {\n    return value.replace(/[\"\\\\/]/g, '\\\\$&');\n  }\n  return value;\n}\n\nconst outputItems = [];\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const escapedItem = { TG_USER_: {} };\n\n  for (const key in item) {\n    const value = item[key];\n    if (Array.isArray(value)) {\n      escapedItem.TG_USER_[key] = [escapeRedisJsonSyntax(value[0])];\n    } else if (typeof value === 'object') {\n      flattenObject(value, escapedItem.TG_USER_, key);\n    } else {\n      escapedItem.TG_USER_[key] = escapeRedisJsonSyntax(value);\n    }\n  }\n\n  outputItems.push(escapedItem);\n}\n\nfunction flattenObject(obj, result, prefix) {\n  for (const key in obj) {\n    const newKey = prefix ? `${prefix}_${key}` : key;\n    const value = obj[key];\n    if (typeof value === 'object') {\n      if (Array.isArray(value)) {\n        result[newKey] = [escapeRedisJsonSyntax(value[0])];\n      } else {\n        flattenObject(value, result, newKey);\n      }\n    } else {\n      result[newKey.replace('json_message_', '').replace('json_', '')] = escapeRedisJsonSyntax(value);\n    }\n  }\n}\n\nreturn outputItems;\n"
@@ -70,8 +70,8 @@
       "name": "Bot-Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1120,
-        260
+        100,
+        460
       ],
       "parameters": {
         "mode": "raw",
@@ -87,8 +87,8 @@
       "name": "Create Topic (Chat Ticket)",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        80,
-        -260
+        100,
+        1000
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -102,8 +102,8 @@
       "name": "Save Topic ID",
       "type": "n8n-nodes-base.redis",
       "position": [
-        260,
-        -260
+        100,
+        13600
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -125,8 +125,8 @@
       "name": "Get User Chat Topic",
       "type": "n8n-nodes-base.redis",
       "position": [
-        200,
-        -80
+        100,
+        11980
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -150,8 +150,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueErrorOutput",
       "position": [
-        560,
-        -80
+        100,
+        11260
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -166,8 +166,8 @@
       "name": "IF No Topic Created",
       "type": "n8n-nodes-base.if",
       "position": [
-        40,
-        320
+        100,
+        12160
       ],
       "parameters": {
         "conditions": {
@@ -188,8 +188,8 @@
       "name": "ReCreate Topic (Chat Ticket)",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        220,
-        220
+        100,
+        13060
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -203,8 +203,8 @@
       "name": "ReSave Topic ID",
       "type": "n8n-nodes-base.redis",
       "position": [
-        380,
-        220
+        100,
+        13240
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -226,8 +226,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        120.47661481708235
+        100,
+        14680
       ],
       "parameters": {
         "color": 3,
@@ -243,8 +243,8 @@
       "name": "Update User Data",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -140,
-        -80
+        100,
+        16660
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -266,8 +266,8 @@
       "name": "Save User Data",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -140,
-        -260
+        100,
+        13780
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -289,8 +289,8 @@
       "name": "Support Forum",
       "type": "n8n-nodes-base.if",
       "position": [
-        -620,
-        240
+        100,
+        16300
       ],
       "parameters": {
         "conditions": {
@@ -311,8 +311,8 @@
       "name": "From Ticket",
       "type": "n8n-nodes-base.if",
       "position": [
-        -420,
-        220
+        100,
+        11800
       ],
       "parameters": {
         "conditions": {
@@ -342,8 +342,8 @@
       "name": "Forward Support Reply To User",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -200,
-        200
+        100,
+        11620
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -358,8 +358,8 @@
       "name": "IF Topic Created",
       "type": "n8n-nodes-base.if",
       "position": [
-        -420,
-        440
+        100,
+        12340
       ],
       "parameters": {
         "conditions": {
@@ -380,8 +380,8 @@
       "name": "Forward New Message to the recrated topic",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        540,
-        220
+        100,
+        11440
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -396,8 +396,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        540,
-        420
+        100,
+        12880
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -409,8 +409,8 @@
       "type": "n8n-nodes-base.redis",
       "notes": "Search Key",
       "position": [
-        -580,
-        -140
+        100,
+        820
       ],
       "parameters": {
         "operation": "keys",
@@ -430,8 +430,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -660,
-        120
+        100,
+        14860
       ],
       "parameters": {
         "color": 5,
@@ -447,8 +447,8 @@
       "name": "Send User Ticket Created Notification",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -220,
-        420
+        100,
+        13960
       ],
       "parameters": {
         "text": "A new ticket has been created for you. Please wait while one of our support team members becomes available to reply.",
@@ -471,8 +471,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -656.2527877074685,
-        -340
+        100,
+        15040
       ],
       "parameters": {
         "color": 3,
@@ -488,8 +488,8 @@
       "name": "Bot-Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        -880,
-        -200
+        100,
+        280
       ],
       "parameters": {
         "fields": {
@@ -518,8 +518,8 @@
       "name": "Telegram-Bot",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        -1240,
-        -200
+        100,
+        16480
       ],
       "webhookId": "d8b773ab-aee9-494b-8749-f0aa80032871",
       "parameters": {
@@ -543,8 +543,8 @@
       "name": "1st",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -980,
-        260
+        100,
+        100
       ],
       "parameters": {
         "rules": {
@@ -579,8 +579,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "notes": "Telegram Limitation 29/sec",
       "position": [
-        160,
-        780
+        100,
+        14320
       ],
       "parameters": {
         "options": {},
@@ -594,8 +594,8 @@
       "name": "Wait1",
       "type": "n8n-nodes-base.wait",
       "position": [
-        560,
-        740
+        100,
+        16840
       ],
       "webhookId": "9f87deed-d502-46d3-8c85-ce99552a0441",
       "parameters": {
@@ -610,8 +610,8 @@
       "name": "Format Users",
       "type": "n8n-nodes-base.code",
       "position": [
-        -200,
-        780
+        100,
+        11080
       ],
       "parameters": {
         "jsCode": "let response = items[0].json; // get the Redis response\nlet newItems = []; // to store the new items\n\nfor(let key in response) {\n    if(response.hasOwnProperty(key)) {\n        newItems.push({\n            json: {\n                user: response[key]\n            }\n        });\n    }\n}\n\nreturn newItems;\n"
@@ -625,8 +625,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueErrorOutput",
       "position": [
-        380,
-        760
+        100,
+        640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -641,8 +641,8 @@
       "name": "Set Blocked Member",
       "type": "n8n-nodes-base.redis",
       "position": [
-        560,
-        900
+        100,
+        14140
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -664,8 +664,8 @@
       "name": "IF Verified Channel",
       "type": "n8n-nodes-base.if",
       "position": [
-        -558,
-        800
+        100,
+        12520
       ],
       "parameters": {
         "conditions": {
@@ -686,8 +686,8 @@
       "name": "Filter Blocked Users",
       "type": "n8n-nodes-base.filter",
       "position": [
-        -20,
-        780
+        100,
+        10720
       ],
       "parameters": {
         "conditions": {
@@ -708,8 +708,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -660,
-        620
+        100,
+        15220
       ],
       "parameters": {
         "color": 6,
@@ -726,8 +726,8 @@
       "type": "n8n-nodes-base.redis",
       "notes": "Search Key",
       "position": [
-        -378,
-        780
+        100,
+        13420
       ],
       "parameters": {
         "operation": "keys",
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in 0cc142e7-4fbc-4104-9529-1087a7bac68a",
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15400
       ],
       "parameters": {
         "message": "Error occurred in 591e1768-58c9-428e-8a0d-69ba4cce7ccc",
@@ -778,8 +778,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15580
       ],
       "parameters": {
         "message": "Error occurred in ef044803-5e2e-4e54-a10b-21ad5feadb26",
@@ -793,8 +793,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15760
       ],
       "parameters": {
         "message": "Error occurred in 71b55beb-7c93-40a1-a94b-f411d11eb713",
@@ -808,8 +808,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15940
       ],
       "parameters": {
         "message": "Error occurred in 4b1ba81a-6986-48a9-b439-cd79cfe278b7",
@@ -823,8 +823,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        16120
       ],
       "parameters": {
         "message": "Error occurred in 8c330aca-3720-439e-87c6-47d914f828c3",
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0cc142e7",
@@ -853,8 +853,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 591e1768",
@@ -868,8 +868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ef044803",
@@ -883,8 +883,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 71b55beb",
@@ -898,8 +898,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4b1ba81a",
@@ -913,8 +913,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a443f847",
@@ -928,8 +928,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 59145dcd",
@@ -943,8 +943,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8c330aca",
@@ -958,8 +958,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17020
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **New User ?**: if\n- **Format**: code\n- **Bot-Fields**: set\n- **Create Topic (Chat Ticket)**: httpRequest\n- **Save Topic ID**: redis\n- **Get User Chat Topic**: redis\n- **Forward New Message**: httpRequest\n- **IF No Topic Created**: if\n- **ReCreate Topic (Chat Ticket)**: httpRequest\n- ... and 40 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -972,8 +972,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -987,8 +987,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1002,8 +1002,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1017,8 +1017,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1032,8 +1032,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1047,8 +1047,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1062,8 +1062,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17200
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1076,8 +1076,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17380
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1090,8 +1090,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1105,8 +1105,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1120,8 +1120,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1135,8 +1135,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1150,8 +1150,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1165,8 +1165,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1180,8 +1180,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1195,8 +1195,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1210,8 +1210,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1225,8 +1225,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1240,8 +1240,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1255,8 +1255,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1270,8 +1270,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17560
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 71\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1284,8 +1284,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17740
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 72\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1298,8 +1298,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1313,8 +1313,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1328,8 +1328,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1343,8 +1343,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1358,8 +1358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1373,8 +1373,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1388,8 +1388,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1403,8 +1403,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1418,8 +1418,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1433,8 +1433,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1448,8 +1448,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1463,8 +1463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1478,8 +1478,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17920
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 85\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1492,8 +1492,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 86\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1505,8 +1505,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1519,8 +1519,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1533,8 +1533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1547,8 +1547,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1561,8 +1561,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1575,8 +1575,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1589,8 +1589,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18280
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 93\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1602,8 +1602,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1616,8 +1616,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1630,8 +1630,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1644,8 +1644,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1658,8 +1658,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1672,8 +1672,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1686,8 +1686,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18460
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1699,8 +1699,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1713,8 +1713,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18640
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, telegramTrigger, wait, telegram. It contains 50 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1726,8 +1726,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Send to Parquet API",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1100,
-        440
+        100,
+        2260
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -48,8 +48,8 @@
       "type": "n8n-nodes-base.webhook",
       "notes": "Example trigger flow:\n\ncurl -X POST {{ $env.WEBHOOK_URL }} \\\n  -F \"file=@converted.parquet\"",
       "position": [
-        900,
-        440
+        100,
+        2800
       ],
       "webhookId": "0b1223c9-c117-45f9-9931-909f2db28955",
       "parameters": {
@@ -69,8 +69,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        0
+        100,
+        2440
       ],
       "parameters": {
         "width": 840,
@@ -85,8 +85,8 @@
       "name": "Parse API Response",
       "type": "n8n-nodes-base.code",
       "position": [
-        1280,
-        440
+        100,
+        2080
       ],
       "parameters": {
         "jsCode": "const item = items[0];\n\n// Convert `data` (stringified JSON array) → actual array\nif (typeof item.json.data === 'string') {\n  item.json.data = JSON.parse(item.json.data);\n}\n\n// Convert `meta_data` (stringified JSON object) → actual object\nif (typeof item.json.meta_data === 'string') {\n  item.json.meta_data = JSON.parse(item.json.meta_data);\n}\n\nreturn [item];\n"
@@ -100,8 +100,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 651a10dc-1c91-4957-bcdd-3e55d7328f04",
@@ -115,8 +115,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in 42a7e623-ca11-4d38-94bb-cfb48d021a5c",
@@ -130,8 +130,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 651a10dc",
@@ -145,8 +145,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 42a7e623",
@@ -160,8 +160,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2980
       ],
       "parameters": {
         "content": "# Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON\n\n## Overview\nAutomated workflow: Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON. This workflow integrates 5 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 8\n- **Node Types**: 5\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Send to Parquet API**: httpRequest\n- **Webhook**: webhook\n- **Sticky Note**: stickyNote\n- **Parse API Response**: code\n- **Error Handler**: stopAndError\n- **Stopanderror 1**: stopAndError\n- **Error Handler for 651a10dc**: stopAndError\n- **Error Handler for 42a7e623**: stopAndError\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -174,8 +174,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -189,8 +189,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -204,8 +204,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON\n\n## Overview\nAutomated workflow: Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON. This workflow integrates 5 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -218,8 +218,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -233,8 +233,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -248,8 +248,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON\n\n## Overview\nAutomated workflow: Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON. This workflow integrates 5 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -262,8 +262,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -277,8 +277,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -292,8 +292,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON\n\n## Overview\nAutomated workflow: Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON. This workflow integrates 5 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -306,8 +306,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON\n\n## Overview\nAutomated workflow: Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON. This workflow integrates 5 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 8 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -319,8 +319,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -333,8 +333,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON\n\n## Overview\nAutomated workflow: Convert Parquet, Avro, ORC & Feather via ParquetReader to JSON. This workflow integrates 5 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 8 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -346,8 +346,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",

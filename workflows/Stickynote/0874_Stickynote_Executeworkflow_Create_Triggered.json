@@ -17,8 +17,8 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        460,
-        260
+        100,
+        2260
       ],
       "parameters": {
         "workflowInputs": {
@@ -48,8 +48,8 @@
       "name": "Operation",
       "type": "n8n-nodes-base.switch",
       "position": [
-        640,
-        260
+        380,
+        100
       ],
       "parameters": {
         "rules": {
@@ -140,8 +140,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -340,
-        -100
+        100,
+        1180
       ],
       "parameters": {
         "color": 7,
@@ -157,8 +157,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        360,
-        -100
+        100,
+        1360
       ],
       "parameters": {
         "color": 7,
@@ -174,8 +174,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -340,
-        -220
+        100,
+        1720
       ],
       "parameters": {
         "color": 5,
@@ -191,8 +191,8 @@
       "name": "SQLite MCP Server",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -160,
-        60
+        100,
+        1000
       ],
       "webhookId": "3124a4cd-4e93-4c1b-b4db-b5599f4889b1",
       "parameters": {
@@ -206,8 +206,8 @@
       "name": "CreateRecord",
       "type": "n8n-nodes-base.code",
       "position": [
-        940,
-        260
+        660,
+        100
       ],
       "parameters": {
         "jsCode": "const sqlite3 = require('sqlite3').verbose();\nconst { promisify } = require('util');\n\nconst db = new sqlite3.Database('/home/node/test.db');\nconst run = promisify(db.run.bind(db));\n\nconst { json } = $input.first();\n\n\nlet output = '';\nconst statement = [\n  `INSERT INTO ${json.tableName}`,\n  `   (${Object.keys(json.values).join(',')})`,\n  `VALUES`,\n  `  (${Object.keys(json.values).map(_ => '?').join(',')})`\n].join(' ');\nconst params = Object.values(json.values);\n\ntry {\n  await run(statement.trim(), params);\n  output = { output: 'ok', error: null };\n} catch (err) {\n  output = { output: null, error: err };\n} finally {\n  await db.close();\n}\n\nreturn output;"
@@ -221,7 +221,7 @@
       "type": "n8n-nodes-base.code",
       "position": [
         940,
-        440
+        100
       ],
       "parameters": {
         "jsCode": "const sqlite3 = require('sqlite3').verbose();\nconst { promisify } = require('util');\n\nconst db = new sqlite3.Database('/home/node/test.db');\nconst run = promisify(db.run.bind(db));\n\nconst { json } = $input.first();\n\nlet output = '';\nconst statement = [\n  `UPDATE ${json.tableName}`,\n  `SET`,\n  `${Object.keys(json.values)\n    .map(key => `${key} = ?`)\n    .join(',')}`,\n  `WHERE`,\n  `${Object.keys(json.where)\n     .map((key,idx) => `${key} = ?`)\n     .join(' AND ')}`\n].join(' ');\nconst params = [ ...Object.values(json.values), ...Object.values(json.where)];\n\ntry {\n  await run(statement, params);\n  output = { output: 'ok', error: null };\n} catch (err) {\n  output = { output: null, error: err };\n} finally {\n  await db.close();\n}\n\nreturn output;"
@@ -234,8 +234,8 @@
       "name": "ReadRecords",
       "type": "n8n-nodes-base.code",
       "position": [
-        940,
-        80
+        1220,
+        100
       ],
       "parameters": {
         "jsCode": "const sqlite3 = require('sqlite3').verbose();\nconst { promisify } = require('util');\n\nconst db = new sqlite3.Database('/home/node/test.db');\nconst all = promisify(db.all.bind(db));\n\nconst { json } = $input.first();\n\nlet output = '';\nconst statement = [\n  `SELECT * FROM ${json.tableName}`,\n  json?.where && Object.keys(json?.where).length > 0\n    ? `WHERE ` + Object.keys(json.where)\n        .map((key,idx) => `${key} = $${idx+1}`)\n        .join(' AND ')\n    : ''\n].join(' ');\nconst params = json.where ? Object.values(json.where) : undefined;\n\ntry {\n  \n  const results = await all(statement.trim(), params);\n\n  output = { output: [].concat(results), error: null };\n} catch (err) {\n  output = { output: null, error: err };\n} finally {\n  await db.close();\n}\n\nreturn output"
@@ -248,8 +248,8 @@
       "name": "DescribeTables",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -160,
-        340
+        100,
+        280
       ],
       "parameters": {
         "name": "describeTable",
@@ -267,8 +267,8 @@
       "name": "ListTables",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -260,
-        240
+        100,
+        640
       ],
       "parameters": {
         "name": "listTables",
@@ -283,8 +283,8 @@
       "name": "CreateRecords",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -40,
-        440
+        100,
+        100
       ],
       "parameters": {
         "name": "CreateRecords",
@@ -358,7 +358,7 @@
       "type": "n8n-nodes-base.noOp",
       "position": [
         100,
-        360
+        2080
       ],
       "parameters": {
         "name": "updateRows",
@@ -427,8 +427,8 @@
       "name": "ReadRows",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        180,
-        240
+        100,
+        820
       ],
       "parameters": {
         "name": "readRows",
@@ -497,8 +497,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -820,
-        -800
+        100,
+        1540
       ],
       "parameters": {
         "width": 440,
@@ -513,8 +513,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -340,
-        -340
+        100,
+        1900
       ],
       "parameters": {
         "color": 3,
@@ -531,8 +531,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2440
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When Executed by Another Workflow**: executeWorkflowTrigger\n- **Operation**: switch\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note3**: stickyNote\n- **SQLite MCP Server**: mcpTrigger\n- **CreateRecord**: code\n- **UpdateRecord**: code\n- **ReadRecords**: code\n- **DescribeTables**: toolCode\n- ... and 6 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2620
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -559,8 +559,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2800
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2980
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -615,8 +615,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -654,8 +654,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        1500,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Executeworkflowtrigger Workflow\n\n## Overview\nAutomated workflow: Executeworkflowtrigger Workflow. This workflow integrates 7 different services: stickyNote, code, switch, mcpTrigger, toolCode. It contains 16 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -681,8 +681,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Workflow execution error",

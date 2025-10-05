@@ -26,8 +26,8 @@
       "name": "Gmail Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
       "position": [
-        500,
-        560
+        100,
+        2440
       ],
       "parameters": {
         "filters": {
@@ -56,8 +56,8 @@
       "name": "Chat OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        720,
-        740
+        100,
+        280
       ],
       "parameters": {
         "model": "gpt-4",
@@ -79,8 +79,8 @@
       "name": "Workflow Tool",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1580,
-        759
+        100,
+        6400
       ],
       "parameters": {
         "name": "Calendar_Availability",
@@ -95,8 +95,8 @@
       "name": "Chat OpenAI1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1420,
-        759
+        100,
+        460
       ],
       "parameters": {
         "model": "gpt-4",
@@ -118,8 +118,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        460
+        100,
+        3520
       ],
       "parameters": {
         "width": 616.8060552874073,
@@ -134,8 +134,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1340,
-        460
+        100,
+        3700
       ],
       "parameters": {
         "width": 676.1951194231482,
@@ -150,8 +150,8 @@
       "name": "Google Calendar",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        680,
-        1120
+        100,
+        2620
       ],
       "parameters": {
         "options": {
@@ -182,8 +182,8 @@
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        460,
-        1120
+        100,
+        1720
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -194,8 +194,8 @@
       "name": "Format response",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        1560,
-        1120
+        100,
+        2260
       ],
       "parameters": {
         "include": "allFieldsExcept",
@@ -213,8 +213,8 @@
       "name": "Stringify Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        1780,
-        1120
+        100,
+        4240
       ],
       "parameters": {
         "values": {
@@ -236,8 +236,8 @@
       "name": "Extract start, end and name",
       "type": "n8n-nodes-base.set",
       "position": [
-        1100,
-        1120
+        100,
+        1900
       ],
       "parameters": {
         "values": {
@@ -271,8 +271,8 @@
       "name": "Filter only confirmed and with set time",
       "type": "n8n-nodes-base.filter",
       "position": [
-        880,
-        1120
+        100,
+        2080
       ],
       "parameters": {
         "conditions": {
@@ -299,8 +299,8 @@
       "name": "Is appointment request",
       "type": "n8n-nodes-base.if",
       "position": [
-        1100,
-        560
+        100,
+        2800
       ],
       "parameters": {
         "conditions": {
@@ -327,8 +327,8 @@
       "name": "Classify appointment",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        720,
-        560
+        100,
+        640
       ],
       "parameters": {
         "prompt": "=Please evaluate the following email to determine if it suggests scheduling a meeting or a call:\nSubject: {{ encodeURI($json.Subject) }}\nSnippet: {{ encodeURI($json.snippet) }}\nIndicate your assessment by responding with \"true\" if it suggests a meeting or call, or \"false\" otherwise. Use lowercase for your response.\n"
@@ -341,8 +341,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        880,
-        740
+        100,
+        4420
       ],
       "parameters": {
         "jsonSchema": "{\n \"type\": \"object\",\n \"properties\": {\n \"is_appointment\": {\n \"type\": \"boolean\"\n }\n }\n}"
@@ -355,8 +355,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        640,
-        1058.6115582634225
+        100,
+        3880
       ],
       "parameters": {
         "width": 810.4923211935056,
@@ -371,8 +371,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1513,
-        1060
+        100,
+        4060
       ],
       "parameters": {
         "width": 444.4130232558142,
@@ -387,8 +387,8 @@
       "name": "Sort",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        1320,
-        1120
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -409,8 +409,8 @@
       "name": "Mark as read",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1840,
-        739
+        100,
+        2980
       ],
       "parameters": {
         "messageId": "={{ $('Gmail Trigger').item.json.id }}",
@@ -430,8 +430,8 @@
       "name": "Send Reply",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1840,
-        539
+        100,
+        3160
       ],
       "parameters": {
         "message": "={{ $json.output }}",
@@ -455,8 +455,8 @@
       "name": "Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1400,
-        539
+        100,
+        100
       ],
       "parameters": {
         "text": "=Sender: {{ $('Gmail Trigger').item.json.From }}\\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\\nEmail Text: {{ $('Gmail Trigger').item.json.snippet }}",
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a97c3ab1",
@@ -488,8 +488,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5ba2c2b0",
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 499def23",
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Gmail Trigger**: gmailTrigger\n- **Chat OpenAI**: lmChatOpenAi\n- **Workflow Tool**: toolWorkflow\n- **Chat OpenAI1**: lmChatOpenAi\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Google Calendar**: googleCalendar\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- **Format response**: itemLists\n- **Stringify Response**: set\n- ... and 14 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -574,8 +574,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -588,8 +588,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -602,8 +602,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -615,8 +615,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -655,8 +655,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Calendar_scheduling\n\n## Overview\nAutomated workflow: Calendar_scheduling. This workflow integrates 15 different services: stickyNote, itemLists, filter, gmailTrigger, agent. It contains 24 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

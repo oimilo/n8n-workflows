@@ -26,8 +26,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        2000,
-        -60
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Function to extract essential information from servers\nfunction extractServers(serversArray) {\n    let servers = [];\n\n    if (!Array.isArray(serversArray)) {\n        console.log(\"⚠️ Invalid data received:\", JSON.stringify(serversArray, null, 2));\n        return servers; // Returns an empty array if the data is not valid\n    }\n\n    serversArray.forEach(server => {\n        servers.push({\n            name: server.name || \"Unknown\",\n            tags: server.tags && server.tags.length > 0 ? server.tags.join(\", \") : \"No tags\",\n            public_ip: getPublicIPs(server),\n            type: server.commercial_type || server.offer_name || \"Unknown\", // Baremetal does not have commercial_type, but offer_name\n            state: server.state || server.status || \"Unknown\", // Baremetal uses status instead of state\n            zone: server.zone || \"Unknown\",\n            user: getUser(server) // User management\n        });\n    });\n\n    return servers;\n}\n\n// Function to extract the public IP (IPv4 prioritized, otherwise IPv6)\nfunction getPublicIPs(server) {\n    let ipv4 = null;\n    let ipv6 = null;\n\n    // Case for Compute instances (public_ips is an array)\n    if (server.public_ips && Array.isArray(server.public_ips)) {\n        server.public_ips.forEach(ip => {\n            if (ip.family === \"inet\" && !ipv4) ipv4 = ip.address;\n            if (ip.family === \"inet6\" && !ipv6) ipv6 = ip.address;\n        });\n    }\n\n    // Some instances have public_ip as a single object\n    if (server.public_ip && server.public_ip.address) {\n        if (server.public_ip.family === \"inet\" && !ipv4) ipv4 = server.public_ip.address;\n        if (server.public_ip.family === \"inet6\" && !ipv6) ipv6 = server.public_ip.address;\n    }\n\n    // Case for Baremetal servers (ips is an array)\n    if (server.ips && Array.isArray(server.ips)) {\n        server.ips.forEach(ip => {\n            if (ip.version === \"IPv4\" && !ipv4) ipv4 = ip.address;\n            if (ip.version === \"IPv6\" && !ipv6) ipv6 = ip.address;\n        });\n    }\n\n    // Returns IPv4 if available, otherwise IPv6, otherwise \"No IP\"\n    return ipv4 || ipv6 || \"No IP\";\n}\n\n// Function to retrieve the user\nfunction getUser(server) {\n    // For Compute instances, the \"user\" field sometimes exists\n    if (server.user) return server.user;\n\n    // For Baremetal servers, user info is often found in install.user\n    if (server.install && server.install.user) return server.install.user;\n\n    // Default value\n    return \"root\";\n}\n\n// Retrieve all input items (from Loop Over Zone Instance)\nlet inputItems = $input.all();\nlet allServers = [];\n\n// Iterate over each item and extract servers if they are contained in a \"servers\" property\ninputItems.forEach(item => {\n    if (item.json.servers && Array.isArray(item.json.servers)) {\n        allServers = allServers.concat(extractServers(item.json.servers));\n    } else {\n        // If the item does not have a \"servers\" property, attempt to process the object itself as a server\n        allServers = allServers.concat(extractServers([item.json]));\n    }\n});\n\n// Return the final result as items (JSON object per server)\nreturn allServers.map(server => ({ json: server }));\n"
@@ -41,8 +41,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        880,
-        0
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -89,8 +89,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        2260,
-        -80
+        100,
+        20620
       ],
       "parameters": {
         "rules": {
@@ -224,8 +224,8 @@
       "name": "Code search Tags",
       "type": "n8n-nodes-base.code",
       "position": [
-        2680,
-        -500
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Retrieve all input items\nlet servers = $input.all();\n\n// Filter only servers with the tag \"STAGING\"\nlet filteredServers = servers.filter(server =>\n    server.json.tags && server.json.tags.includes($('Edit Fields').first().json.search)\n);\n\n// Return only servers that have \"search\" in the tags\nreturn filteredServers;\n"
@@ -239,8 +239,8 @@
       "name": "Code search Name",
       "type": "n8n-nodes-base.code",
       "position": [
-        2680,
-        -340
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Retrieve all input items\nlet servers = $input.all();\n\n// Filter only servers with the tag \"STAGING\"\nlet filteredServers = servers.filter(server =>\n    server.json.name && server.json.name.includes($('Edit Fields').first().json.search)\n);\n\n// Return only servers that have \"search\" in the name\nreturn filteredServers;\n"
@@ -254,8 +254,8 @@
       "name": "Code search public_ip",
       "type": "n8n-nodes-base.code",
       "position": [
-        2680,
-        -180
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "// Retrieve all input items\nlet servers = $input.all();\n\n// Filter only servers with the tag \"STAGING\"\nlet filteredServers = servers.filter(server =>\n    server.json.public_ip && server.json.public_ip.includes($('Edit Fields').first().json.search)\n);\n\n// Return only servers that have \"search\" in the public_ip\nreturn filteredServers;\n"
@@ -269,8 +269,8 @@
       "name": "Code search zone",
       "type": "n8n-nodes-base.code",
       "position": [
-        2680,
-        -20
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "// Retrieve all input items\nlet servers = $input.all();\n\n// Filter only servers with the tag \"STAGING\"\nlet filteredServers = servers.filter(server =>\n    server.json.public_ip && server.json.public_ip.includes($('Edit Fields').first().json.search)\n);\n\n// Return only servers that have \"search\" in the public_ip\nreturn filteredServers;\n"
@@ -284,8 +284,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        660,
-        0
+        100,
+        20800
       ],
       "webhookId": "a6767312-3a4c-4819-b4fe-a03c9e0ade5c",
       "parameters": {
@@ -309,8 +309,8 @@
       "name": "Respond Error",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2680,
-        300
+        100,
+        17200
       ],
       "parameters": {
         "options": {},
@@ -325,8 +325,8 @@
       "name": "Respond to Webhook1",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2900,
-        -340
+        100,
+        17560
       ],
       "parameters": {
         "options": {},
@@ -340,8 +340,8 @@
       "name": "Respond to Webhook2",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2900,
-        -180
+        100,
+        17740
       ],
       "parameters": {
         "options": {},
@@ -355,8 +355,8 @@
       "name": "Respond to Webhook3",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2900,
-        -20
+        100,
+        17920
       ],
       "parameters": {
         "options": {},
@@ -370,8 +370,8 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2900,
-        -500
+        100,
+        17380
       ],
       "parameters": {
         "options": {},
@@ -385,8 +385,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        -1240
+        100,
+        18460
       ],
       "parameters": {
         "color": 4,
@@ -402,8 +402,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1060,
-        520
+        100,
+        18640
       ],
       "parameters": {
         "width": 960,
@@ -418,8 +418,8 @@
       "name": "Get Scalway Machines",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1400,
-        1020
+        100,
+        16120
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -455,8 +455,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1600,
-        1020
+        100,
+        16840
       ],
       "parameters": {
         "options": {}
@@ -469,8 +469,8 @@
       "name": "Respond to Webhook4",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2680,
-        140
+        100,
+        18100
       ],
       "parameters": {
         "options": {},
@@ -484,8 +484,8 @@
       "name": "Get scw instance by zone",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1560,
-        80
+        100,
+        16480
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -512,8 +512,8 @@
       "name": "Loop Over Zone Instance",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1360,
-        0
+        100,
+        17020
       ],
       "parameters": {
         "options": {}
@@ -526,8 +526,8 @@
       "name": "Get scw baremetal by zone",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2000,
-        80
+        100,
+        16300
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -554,8 +554,8 @@
       "name": "Split Out ZONE_INSTANCE",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1100,
-        0
+        100,
+        18280
       ],
       "parameters": {
         "options": {},
@@ -569,8 +569,8 @@
       "name": "If ZONE_BAREMETAL in ZONE_INSTANCE",
       "type": "n8n-nodes-base.if",
       "position": [
-        1780,
-        80
+        100,
+        16660
       ],
       "parameters": {
         "options": {},
@@ -605,8 +605,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        -140
+        100,
+        18820
       ],
       "parameters": {
         "color": 3,
@@ -623,8 +623,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in 3dae20ba-07b2-4948-a58c-8b803f672dcb",
@@ -638,8 +638,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19000
       ],
       "parameters": {
         "message": "Error occurred in 65f62d8f-aead-47cb-a9df-105054d8b666",
@@ -653,8 +653,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19180
       ],
       "parameters": {
         "message": "Error occurred in 9d8db89d-c318-4078-9a3d-8bc10022d059",
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19360
       ],
       "parameters": {
         "message": "Error occurred in 3009a593-8a23-448c-b8fd-58c6fc4b77b3",
@@ -683,8 +683,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19540
       ],
       "parameters": {
         "message": "Error occurred in 27e1f543-c57c-4772-944b-d2207526dd9d",
@@ -698,8 +698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19720
       ],
       "parameters": {
         "message": "Error occurred in 90e51c36-9888-4942-ad13-28fa90235d13",
@@ -713,8 +713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19900
       ],
       "parameters": {
         "message": "Error occurred in d54772b2-40e7-43ff-9c4c-d4bbf176c3c2",
@@ -728,8 +728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        20080
       ],
       "parameters": {
         "message": "Error occurred in 387d2a3d-8f2c-47be-a4c6-73ac110b03d0",
@@ -743,8 +743,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        20260
       ],
       "parameters": {
         "message": "Error occurred in 09f05bba-5fe3-4e3f-b5e6-b6f75eb9400d",
@@ -758,8 +758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        20440
       ],
       "parameters": {
         "message": "Error occurred in be293c2d-bd39-46f5-8c09-766cc145f8b7",
@@ -773,8 +773,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3dae20ba",
@@ -788,8 +788,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 65f62d8f",
@@ -803,8 +803,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9d8db89d",
@@ -818,8 +818,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3009a593",
@@ -833,8 +833,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 27e1f543",
@@ -848,8 +848,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 90e51c36",
@@ -863,8 +863,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d54772b2",
@@ -878,8 +878,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 387d2a3d",
@@ -893,8 +893,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 09f05bba",
@@ -908,8 +908,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node be293c2d",
@@ -923,8 +923,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20980
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Code**: code\n- **Edit Fields**: set\n- **Switch**: switch\n- **Code search Tags**: code\n- **Code search Name**: code\n- **Code search public_ip**: code\n- **Code search zone**: code\n- **Webhook**: webhook\n- **Respond Error**: respondToWebhook\n- **Respond to Webhook1**: respondToWebhook\n- ... and 34 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -937,8 +937,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -952,8 +952,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -967,8 +967,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -982,8 +982,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -997,8 +997,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1012,8 +1012,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1027,8 +1027,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1042,8 +1042,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1057,8 +1057,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1072,8 +1072,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1087,8 +1087,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21160
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1101,8 +1101,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21340
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1115,8 +1115,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1130,8 +1130,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1145,8 +1145,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1160,8 +1160,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1175,8 +1175,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1190,8 +1190,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1205,8 +1205,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1220,8 +1220,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1235,8 +1235,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1250,8 +1250,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1265,8 +1265,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1280,8 +1280,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1295,8 +1295,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1310,8 +1310,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1325,8 +1325,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1340,8 +1340,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1355,8 +1355,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1370,8 +1370,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1385,8 +1385,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1400,8 +1400,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1415,8 +1415,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21520
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 77\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1429,8 +1429,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21700
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 78\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1443,8 +1443,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1458,8 +1458,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1473,8 +1473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1488,8 +1488,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1503,8 +1503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1518,8 +1518,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1533,8 +1533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1548,8 +1548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1563,8 +1563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1578,8 +1578,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1593,8 +1593,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1608,8 +1608,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1623,8 +1623,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1638,8 +1638,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1653,8 +1653,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1668,8 +1668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1683,8 +1683,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1698,8 +1698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1713,8 +1713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1728,8 +1728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1743,8 +1743,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21880
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 99\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1757,8 +1757,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        22060
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 100\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1770,8 +1770,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1784,8 +1784,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1798,8 +1798,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1812,8 +1812,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1826,8 +1826,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1840,8 +1840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1854,8 +1854,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1868,8 +1868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1882,8 +1882,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1896,8 +1896,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1910,8 +1910,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        22240
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 111\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1923,8 +1923,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1937,8 +1937,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1951,8 +1951,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1965,8 +1965,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1979,8 +1979,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1993,8 +1993,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2007,8 +2007,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2021,8 +2021,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2035,8 +2035,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2049,8 +2049,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2063,8 +2063,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        22420
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2076,8 +2076,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13960
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2090,8 +2090,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        22600
       ],
       "parameters": {
         "content": "# Get all scaleway server info copy\n\n## Overview\nAutomated workflow: Get all scaleway server info copy. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, code, splitOut. It contains 44 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2103,8 +2103,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14140
       ],
       "parameters": {
         "message": "Workflow execution error",

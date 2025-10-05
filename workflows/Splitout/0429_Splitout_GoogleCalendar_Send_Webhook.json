@@ -17,8 +17,8 @@
       "name": "Setup",
       "type": "n8n-nodes-base.set",
       "position": [
-        -700,
-        320
+        100,
+        6400
       ],
       "parameters": {
         "fields": {
@@ -44,8 +44,8 @@
       "name": "Every morning @ 7",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -940,
-        320
+        100,
+        4420
       ],
       "parameters": {
         "rule": {
@@ -64,8 +64,8 @@
       "name": "Get meetings for today",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        -300,
-        320
+        100,
+        5500
       ],
       "parameters": {
         "options": {
@@ -95,8 +95,8 @@
       "name": "Get attendees email domains",
       "type": "n8n-nodes-base.set",
       "position": [
-        -80,
-        320
+        100,
+        5140
       ],
       "parameters": {
         "fields": {
@@ -123,8 +123,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        140,
-        320
+        100,
+        6580
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -140,8 +140,8 @@
       "name": "Get recent LinkedIn posts",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -20,
-        540
+        100,
+        5680
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -185,8 +185,8 @@
       "name": "Enrich attendee company",
       "type": "n8n-nodes-base.clearbit",
       "position": [
-        580,
-        320
+        100,
+        460
       ],
       "parameters": {
         "domain": "={{ $json.domain }}",
@@ -206,8 +206,8 @@
       "name": "Gmail",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1360,
-        640
+        100,
+        5860
       ],
       "parameters": {
         "sendTo": "={{ $('Setup').first().json.emails }}",
@@ -229,8 +229,8 @@
       "name": "Combine all activity for a company",
       "type": "n8n-nodes-base.merge",
       "position": [
-        460,
-        620
+        100,
+        280
       ],
       "parameters": {
         "mode": "combine",
@@ -259,8 +259,8 @@
       "name": "Extract data for email",
       "type": "n8n-nodes-base.set",
       "position": [
-        680,
-        800
+        100,
+        4600
       ],
       "parameters": {
         "fields": {
@@ -293,8 +293,8 @@
       "name": "Prepare email template",
       "type": "n8n-nodes-base.html",
       "position": [
-        1140,
-        640
+        100,
+        6220
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\" />\n\n</head>\n<body>\n  <div class=\"container\">\n     <h2 style=\"font-size: 1.2em\">\n      🗓️ Meeting with <span>{{ $json.attendeeEmail }}</span>\n       at {{ $json.startHour }}:{{ $json.startMinute < 10 ? `0${$json.startMinute}` : $json.startMinute }}h\n       <h3>Here's a quick summary of {{ $json.name }}'s recent social media activities</h3>\n       <p class=\"summary\">\n         {{ $json.message.content }}\n       </p>\n    </h2>\n\n  </div>\n</body>\n</html>\n\n<style>\n.container {\n  font-family: sans-serif;\n}\n\n.summary {\n  background-color: #f7f9fc; \n  font-family: sans-serif; \n  padding: 0.3em 1em\n}\n</style>"
@@ -307,8 +307,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -773.5590877677955,
-        50.38078783690389
+        100,
+        6760
       ],
       "parameters": {
         "color": 7,
@@ -324,8 +324,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -474,
-        620
+        100,
+        6940
       ],
       "parameters": {
         "color": 7,
@@ -341,8 +341,8 @@
       "name": "Keep only ones with the domain",
       "type": "n8n-nodes-base.filter",
       "position": [
-        360,
-        320
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -375,8 +375,8 @@
       "name": "Extract important data",
       "type": "n8n-nodes-base.set",
       "position": [
-        220,
-        540
+        100,
+        4780
       ],
       "parameters": {
         "fields": {
@@ -408,8 +408,8 @@
       "name": "Extract important data again",
       "type": "n8n-nodes-base.set",
       "position": [
-        220,
-        740
+        100,
+        4960
       ],
       "parameters": {
         "fields": {
@@ -441,8 +441,8 @@
       "name": "Ask AI to summerize",
       "type": "n8n-nodes-base.openAi",
       "position": [
-        680,
-        620
+        100,
+        100
       ],
       "parameters": {
         "prompt": {
@@ -470,8 +470,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -260,
-        640
+        100,
+        7480
       ],
       "parameters": {
         "rules": {
@@ -538,8 +538,8 @@
       "name": "Wrap everything together",
       "type": "n8n-nodes-base.merge",
       "position": [
-        940,
-        640
+        100,
+        9460
       ],
       "parameters": {
         "mode": "combine",
@@ -554,8 +554,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        780,
-        197.44186046511595
+        100,
+        7120
       ],
       "parameters": {
         "color": 5,
@@ -571,8 +571,8 @@
       "name": "Get latest tweets",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -20,
-        740
+        100,
+        5320
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 68041cd4-6dc3-4225-b39e-d227a3142e02",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in 31d22fdc-aacf-4228-ac78-b8f05621c0e0",
@@ -658,8 +658,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1cb46dc8",
@@ -673,8 +673,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 68041cd4",
@@ -688,8 +688,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fda56f50",
@@ -703,8 +703,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 31d22fdc",
@@ -718,8 +718,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Setup**: set\n- **Every morning @ 7**: scheduleTrigger\n- **Get meetings for today**: googleCalendar\n- **Get attendees email domains**: set\n- **Split Out**: splitOut\n- **Get recent LinkedIn posts**: httpRequest\n- **Enrich attendee company**: clearbit\n- **Gmail**: gmail\n- **Combine all activity for a company**: merge\n- **Extract data for email**: set\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -762,8 +762,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -805,8 +805,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -820,8 +820,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -835,8 +835,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -850,8 +850,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -864,8 +864,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -878,8 +878,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -893,8 +893,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -908,8 +908,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -923,8 +923,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -938,8 +938,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -952,8 +952,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -965,8 +965,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -979,8 +979,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -993,8 +993,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1006,8 +1006,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1034,8 +1034,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1047,8 +1047,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1061,8 +1061,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 14 different services: stickyNote, httpRequest, filter, scheduleTrigger, clearbit. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1074,8 +1074,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Workflow execution error",

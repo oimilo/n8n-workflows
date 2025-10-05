@@ -18,8 +18,8 @@
       "type": "n8n-nodes-klicktipp.klicktipp",
       "notes": "Adds the invitee to the KlickTipp subscriber list, associating them with the relevant booking details. In this step an array of the guests email addresses is saved in the record to navigate guest cancellations. In case of cancellations Calendly does not provide an array of guests and therefore this information needs to be read from the invitee record.",
       "position": [
-        1700,
-        300
+        1220,
+        100
       ],
       "parameters": {
         "email": "={{ $('New Calendly event').item.json.payload.email }}",
@@ -104,8 +104,8 @@
       "type": "n8n-nodes-klicktipp.klicktipp",
       "notes": "Adds guests to the KlickTipp subscriber list for the associated booking.",
       "position": [
-        2500,
-        200
+        4300,
+        100
       ],
       "parameters": {
         "email": "={{ $json.guests.email }}",
@@ -177,8 +177,8 @@
       "type": "n8n-nodes-klicktipp.klicktipp",
       "notes": "Handles cancellations by removing guests from the subscriber list in KlickTipp.",
       "position": [
-        2500,
-        580
+        4580,
+        100
       ],
       "parameters": {
         "email": "={{ $json.invitee_guests_addresses }}",
@@ -202,8 +202,8 @@
       "type": "n8n-nodes-klicktipp.klicktipp",
       "notes": "Handles cancellations by removing the invitee from the subscriber list in KlickTipp.",
       "position": [
-        1700,
-        660
+        1500,
+        100
       ],
       "parameters": {
         "email": "={{ $('New Calendly event').item.json.payload.email }}",
@@ -228,8 +228,8 @@
       "type": "n8n-nodes-base.splitOut",
       "notes": "Splits the guests into individual items for processing their bookings.",
       "position": [
-        2300,
-        200
+        3740,
+        100
       ],
       "parameters": {
         "include": "allOtherFields",
@@ -245,8 +245,8 @@
       "type": "n8n-nodes-base.splitOut",
       "notes": "Splits the guests into individual items for processing their cancellations.",
       "position": [
-        2300,
-        580
+        4020,
+        100
       ],
       "parameters": {
         "include": "allOtherFields",
@@ -262,8 +262,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "Validates if there are any guests associated with the booking to process them separately.",
       "position": [
-        1880,
-        300
+        2060,
+        100
       ],
       "parameters": {
         "options": {},
@@ -298,8 +298,8 @@
       "type": "n8n-nodes-klicktipp.klicktipp",
       "notes": "Writes \"null\" into the field which saves the array of the guests email addresses to prevent errors when rebooking.",
       "position": [
-        2940,
-        660
+        5140,
+        100
       ],
       "parameters": {
         "email": "={{ $('New Calendly event').item.json.payload.email }}",
@@ -332,8 +332,8 @@
       "type": "n8n-nodes-base.calendlyTrigger",
       "notes": "This node triggers the workflow whenever an event is booked or canceled in Calendly.",
       "position": [
-        980,
-        360
+        100,
+        280
       ],
       "webhookId": "f5440e40-1e7f-4ef1-b639-b8b65832a1a6",
       "parameters": {
@@ -357,8 +357,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "Formats the timestamps provided by Calendly so they are within the format that KlickTipp expects. UNIX Timestamps for date and date&time values and the time fields expects to receive the time in amounts of seconds since midnight.",
       "position": [
-        1200,
-        360
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -436,8 +436,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "Validates if an event booking or cancellation is being processed.",
       "position": [
-        1440,
-        360
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -471,8 +471,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "Prepares the guest data for subscription into KlickTipp during booking.",
       "position": [
-        2100,
-        200
+        2620,
+        100
       ],
       "parameters": {
         "options": {},
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "Prepares the guest data for subscription removal in KlickTipp during cancellations.",
       "position": [
-        2100,
-        580
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "Validates if there are guest email addresses within the result of the subscription process of the invitee cancellation so that the cancellations can be transmitted as well. Since Calendly does not provide a list of guests upon cancellation we store this information inside the invitee contact in KlickTipp and read it out.",
       "position": [
-        1880,
-        660
+        2340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -556,8 +556,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "This node checks whether the cancellation is due to a rescheduling of the original booking or not. In case it is a rescheduling, we are not overwriting the string of guest email addresses within the invitee record.",
       "position": [
-        2720,
-        580
+        4860,
+        100
       ],
       "parameters": {
         "options": {},
@@ -591,8 +591,8 @@
       "name": "Invitee did not add guests to the booking",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2100,
-        400
+        3180,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -603,8 +603,8 @@
       "name": "Event was rescheduled",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2940,
-        500
+        5420,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -616,8 +616,8 @@
       "type": "n8n-nodes-base.noOp",
       "notes": "If no guest E-Mail Addresses were found inside the invitee record there are no guest cancellations that must be processed as there were no guests involved in the original event booking.",
       "position": [
-        2100,
-        760
+        3460,
+        100
       ],
       "parameters": {},
       "notesInFlow": true,
@@ -628,8 +628,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1840,
-        960
+        1780,
+        100
       ],
       "parameters": {
         "width": 1133.0384930384926,
@@ -645,8 +645,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Subscribe invitee booking in KlickTipp**: klicktipp\n- **Subscribe guest booking in KlickTipp**: klicktipp\n- **Subscribe guest cancellation in KlickTipp**: klicktipp\n- **Subscribe invitee cancellation in KlickTipp**: klicktipp\n- **Split Out guest bookings**: splitOut\n- **Split Out guest cancellations**: splitOut\n- **Guests booking check**: if\n- **Subscribe invitee to empty guest addresses field**: klicktipp\n- **New Calendly event**: calendlyTrigger\n- **Convert data for KlickTipp**: set\n- ... and 9 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -659,8 +659,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -673,8 +673,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -687,8 +687,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -701,8 +701,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -715,8 +715,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -729,8 +729,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -742,8 +742,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -755,8 +755,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -768,8 +768,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -782,8 +782,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# Klicktipp Workflow\n\n## Overview\nAutomated workflow: Klicktipp Workflow. This workflow integrates 7 different services: stickyNote, calendlyTrigger, splitOut, set, if. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -795,8 +795,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Split Transcript into Segments",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        800,
-        680
+        100,
+        7300
       ],
       "parameters": {
         "options": {},
@@ -41,8 +41,8 @@
       "name": "Extract YouTube URL from Input",
       "type": "n8n-nodes-base.set",
       "position": [
-        580,
-        220
+        100,
+        5500
       ],
       "parameters": {
         "options": {},
@@ -65,8 +65,8 @@
       "name": "Extract Video ID from URL",
       "type": "n8n-nodes-base.code",
       "position": [
-        580,
-        460
+        100,
+        5140
       ],
       "parameters": {
         "language": "python",
@@ -80,8 +80,8 @@
       "name": "gpt-4o-mini",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1280,
-        960
+        100,
+        10720
       ],
       "parameters": {
         "options": {}
@@ -100,8 +100,8 @@
       "name": "Generate Summary with GPT-4o-mini",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1260,
-        760
+        100,
+        5680
       ],
       "parameters": {
         "text": "=Please analyze the given text and create a structured summary following these guidelines:\n\n1. *General Summary*:\n   - Provide a concise overview of the main topic or purpose of the text in one paragraph.\n   - Focus on the essence of the content without excessive detail.\n\n2. *Key Moments*:\n   - List the most important points, events, or concepts from the text.\n   - Use bullet points for clarity.\n   - Keep each point short and focused.\n   - Highlight key terms using HTML bold tags (<b>term</b>).\n\n3. *Instructions (if applicable)*:\n   - If the text is a tutorial or instructional, list the steps in a clear order.\n   - Use numbered points for steps.\n   - If not applicable, state: \"This text does not contain instructions.\"\n\n4. *Format requirements*:\n   - Use markdown for headers (e.g., ## General Summary) and bullet points.\n   - Use HTML bold tags (<b>term</b>) for emphasis instead of markdown bold.\n   - Do not use tables; use simple text for lists or comparisons (e.g., \"Element: opis\").\n   - Ensure the message is simple and displays correctly in the Telegram app, avoiding unsupported features like nested lists or tables.\n\nHere is the text: {{ $json.concatenated_text }}",
@@ -115,8 +115,8 @@
       "name": "Concatenate Transcript Segments",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        1000,
-        680
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -138,8 +138,8 @@
       "name": "Trigger on Telegram Message",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        360,
-        100
+        100,
+        8380
       ],
       "webhookId": "da4bfbb8-d077-4ea1-8d2d-08d408002213",
       "parameters": {
@@ -153,8 +153,8 @@
       "name": "Extract YouTube Transcript",
       "type": "n8n-nodes-youtube-transcription-kasha.youtubeTranscripter",
       "position": [
-        580,
-        680
+        100,
+        5320
       ],
       "parameters": {
         "videoId": "={{ $json.videoId}}"
@@ -167,8 +167,8 @@
       "name": "Send Summary via Telegram",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1660,
-        760
+        100,
+        7120
       ],
       "webhookId": "7159b4c8-984a-4c86-aa32-84e55d406745",
       "parameters": {
@@ -192,8 +192,8 @@
       "name": "Receive YouTube URL via Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        360,
-        320
+        100,
+        6400
       ],
       "webhookId": "8f0beaaf-b2c3-4148-8006-3b73fa146f60",
       "parameters": {
@@ -209,8 +209,8 @@
       "name": "Send Response to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1860,
-        760
+        100,
+        6940
       ],
       "parameters": {
         "options": {}
@@ -223,8 +223,8 @@
       "name": "Telegram Trigger",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        240,
-        1040
+        100,
+        8200
       ],
       "webhookId": "254daa2a-41b8-49f7-8781-52c7e573de70",
       "parameters": {
@@ -247,8 +247,8 @@
       "name": "Retrieve Transcript from Google Docs",
       "type": "n8n-nodes-base.googleDocs",
       "position": [
-        1280,
-        520
+        100,
+        6580
       ],
       "parameters": {
         "operation": "get",
@@ -268,8 +268,8 @@
       "name": "Update Transcript in Google Docs",
       "type": "n8n-nodes-base.googleDocs",
       "position": [
-        1480,
-        520
+        100,
+        8560
       ],
       "parameters": {
         "actionsUi": {
@@ -298,8 +298,8 @@
       "name": "Handle User Questions via AI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        440,
-        1040
+        100,
+        6040
       ],
       "parameters": {
         "text": "={{ $json.message.text }}",
@@ -316,8 +316,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        380,
-        1220
+        100,
+        6220
       ],
       "parameters": {
         "model": {
@@ -341,8 +341,8 @@
       "name": "Window Buffer Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        540,
-        1260
+        100,
+        8740
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -356,8 +356,8 @@
       "name": "Google Docs2",
       "type": "n8n-nodes-base.googleDocsTool",
       "position": [
-        660,
-        1280
+        100,
+        5860
       ],
       "parameters": {
         "operation": "get",
@@ -377,8 +377,8 @@
       "name": "Send AI Response via Telegram",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        840,
-        1040
+        100,
+        6760
       ],
       "webhookId": "63608fd8-27e6-4b87-8021-95f7441b7ca1",
       "parameters": {
@@ -403,8 +403,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        0
+        100,
+        7480
       ],
       "parameters": {
         "color": 5,
@@ -420,8 +420,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1200,
-        360
+        100,
+        7660
       ],
       "parameters": {
         "color": 4,
@@ -437,8 +437,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        40,
-        900
+        100,
+        7840
       ],
       "parameters": {
         "color": 3,
@@ -455,8 +455,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 7754143b-9449-427c-9e04-e91434c4bc74",
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in e9aaec56-2458-49a4-989e-eb4af03441b9",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8552bb5d",
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 196453ad",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7754143b",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e9aaec56",
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node bac178f2",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 128b8e7a",
@@ -575,8 +575,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d4377188",
@@ -590,8 +590,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 562ce57d",
@@ -605,8 +605,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1983dc09",
@@ -620,8 +620,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4dfcba99",
@@ -635,8 +635,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Node Types**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Split Transcript into Segments**: splitOut\n- **Extract YouTube URL from Input**: set\n- **Extract Video ID from URL**: code\n- **gpt-4o-mini**: lmChatOpenAi\n- **Generate Summary with GPT-4o-mini**: chainLlm\n- **Concatenate Transcript Segments**: summarize\n- **Trigger on Telegram Message**: chatTrigger\n- **Extract YouTube Transcript**: youtubeTranscripter\n- **Send Summary via Telegram**: telegram\n- **Receive YouTube URL via Webhook**: webhook\n- ... and 24 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -737,8 +737,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -752,8 +752,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -767,8 +767,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -795,8 +795,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -810,8 +810,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -825,8 +825,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -840,8 +840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -855,8 +855,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -869,8 +869,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -896,8 +896,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -923,8 +923,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -937,8 +937,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -964,8 +964,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -978,8 +978,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram\n\n## Overview\nAutomated workflow: Summarize YouTube Videos & Chat About Content with GPT-4o-mini via Telegram. This workflow integrates 18 different services: webhook, telegramTrigger, stickyNote, telegram, code. It contains 34 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -991,8 +991,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

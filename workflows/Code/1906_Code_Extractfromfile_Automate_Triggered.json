@@ -26,8 +26,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        320,
-        700
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.prompt }}",
@@ -44,8 +44,8 @@
       "name": "Monitor Google Drive for New Files",
       "type": "n8n-nodes-base.googleDriveTrigger",
       "position": [
-        -520,
-        -240
+        100,
+        3160
       ],
       "parameters": {
         "event": "fileCreated",
@@ -78,8 +78,8 @@
       "name": "Download File from Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        -300,
-        -240
+        100,
+        640
       ],
       "parameters": {
         "fileId": {
@@ -104,8 +104,8 @@
       "name": "Extract PDF Content",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        -80,
-        -240
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -119,8 +119,8 @@
       "name": "Insert Document into Pinecone Vector Store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        360,
-        -240
+        100,
+        2800
       ],
       "parameters": {
         "mode": "insert",
@@ -146,8 +146,8 @@
       "name": "Generate Document Embeddings (Google Gemini)",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        260,
-        20
+        100,
+        2440
       ],
       "parameters": {
         "modelName": "models/text-embedding-004"
@@ -166,8 +166,8 @@
       "name": "Clean and Normalize PDF Text",
       "type": "n8n-nodes-base.code",
       "position": [
-        140,
-        -240
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "const rawData = $json[\"text\"];\nconst cleanedData = rawData\n  .replace(/(\\r\\n|\\n|\\r)/gm, \" \")   // remove line breaks\n  .trim()                           // remove extra spaces\n  .replace(/[^\\w\\s]/gi, \"\");         // remove special characters\nreturn { cleanedData };\n"
@@ -180,8 +180,8 @@
       "name": "Load Document Data for Processing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        480,
-        20
+        100,
+        2980
       ],
       "parameters": {
         "options": {}
@@ -194,8 +194,8 @@
       "name": "Split Document Text into Chunks",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        380,
-        240
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -210,8 +210,8 @@
       "name": "Chat Message Trigger",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -520,
-        700
+        100,
+        280
       ],
       "webhookId": "d36e67b9-a789-4801-b624-64bf8b88d702",
       "parameters": {
@@ -225,8 +225,8 @@
       "name": "Retrieve Relevant Documents from Pinecone",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -260,
-        700
+        100,
+        3520
       ],
       "parameters": {
         "mode": "load",
@@ -253,8 +253,8 @@
       "name": "Generate Query Embeddings (Google Gemini)",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -280,
-        940
+        100,
+        2620
       ],
       "parameters": {
         "modelName": "models/text-embedding-004"
@@ -274,7 +274,7 @@
       "type": "n8n-nodes-base.code",
       "position": [
         100,
-        700
+        2260
       ],
       "parameters": {
         "jsCode": "const userQuery =  $('Chat Message Trigger').first().json.chatInput\n// Retrieve the user query from the previous node output.\n// Assuming the Pinecone node has passed an array of items where each item has a document and score:\nlet documents = items.map(item => {\n  return {\n    pageContent: item.json.document.pageContent,\n    score: item.json.score\n  };\n});\n\n// Sort the documents by their score in descending order.\ndocuments.sort((a, b) => b.score - a.score);\n\n// Pick the top 3 documents to use as context.\nconst topDocuments = documents.slice(0, 3);\n\n// Combine the top documents into one context string.\nconst contextContent = topDocuments\n  .map((doc, index) => `Document ${index + 1}:\\n${doc.pageContent}`)\n  .join(\"\\n\\n\");\n\n// Build the final prompt that combines the context with the user query.\nconst prompt = `Using the following context from documents:\\n\\n${contextContent}\\n\\nAnswer the following question:\\n${userQuery}\\n\\nAnswer:`;\n\n// Return the prompt so it can be passed to a Chat/AI node for further processing.\nreturn [{ json: { prompt } }];\n"
@@ -287,8 +287,8 @@
       "name": "OpenRouter Chat Model Interface",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        280,
-        940
+        100,
+        3340
       ],
       "parameters": {
         "model": "google/gemini-2.0-flash-exp:free",
@@ -310,7 +310,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        5500
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 14 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 72ca46ad",
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 03e9dc61",
@@ -353,8 +353,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 782fc162",
@@ -368,8 +368,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f5b93646",
@@ -383,8 +383,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8d479b6b",
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **AI Agent**: agent\n- **Monitor Google Drive for New Files**: googleDriveTrigger\n- **Download File from Google Drive**: googleDrive\n- **Extract PDF Content**: extractFromFile\n- **Insert Document into Pinecone Vector Store**: vectorStorePinecone\n- **Generate Document Embeddings (Google Gemini)**: embeddingsGoogleGemini\n- **Clean and Normalize PDF Text**: code\n- **Load Document Data for Processing**: documentDefaultDataLoader\n- **Split Document Text into Chunks**: textSplitterRecursiveCharacterTextSplitter\n- **Chat Message Trigger**: chatTrigger\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -412,8 +412,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -426,8 +426,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -440,8 +440,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -454,8 +454,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -468,8 +468,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -482,8 +482,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -495,8 +495,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -508,8 +508,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -535,8 +535,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Google Drive Automation\n\n## Overview\nAutomated workflow: Google Drive Automation. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

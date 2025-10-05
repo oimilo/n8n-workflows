@@ -26,8 +26,8 @@
       "name": "CRM New Lead Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -2560,
-        600
+        100,
+        640
       ],
       "webhookId": "8fb37aae-df12-40eb-81ea-0e5022e1f988",
       "parameters": {
@@ -42,8 +42,8 @@
       "name": "Webhook Setup Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2720,
-        160
+        100,
+        7840
       ],
       "parameters": {
         "color": 5,
@@ -59,8 +59,8 @@
       "name": "Fetch Lead Data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -2180,
-        600
+        100,
+        5500
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -76,8 +76,8 @@
       "name": "CRM API Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2280,
-        160
+        100,
+        460
       ],
       "parameters": {
         "color": 5,
@@ -93,8 +93,8 @@
       "name": "BatchData Property Lookup",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1840,
-        600
+        100,
+        280
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -131,8 +131,8 @@
       "name": "BatchData API Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1960,
-        160
+        100,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -148,8 +148,8 @@
       "name": "Score And Qualify Lead",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1480,
-        620
+        100,
+        6580
       ],
       "parameters": {
         "jsCode": "// Initialize lead score\nlet score = 0;\nlet qualificationStatus = \"not qualified\";\nlet qualificationNotes = [];\n\n// Get property data from BatchData response\nconst propertyData = $input.first().json;\nconst leadData = $input.first().json;\n\n// Check if property exists\nif (propertyData.success === true && propertyData.data) {\n  const property = propertyData.data;\n  \n  // Score based on property value\n  if (property.estimatedValue > 750000) {\n    score += 30;\n    qualificationNotes.push(\"High-value property: $\" + property.estimatedValue);\n  } else if (property.estimatedValue > 500000) {\n    score += 20;\n    qualificationNotes.push(\"Mid-high value property: $\" + property.estimatedValue);\n  } else if (property.estimatedValue > 350000) {\n    score += 10;\n    qualificationNotes.push(\"Average value property: $\" + property.estimatedValue);\n  }\n  \n  // Score based on property size\n  if (property.squareFootage > 3000) {\n    score += 15;\n    qualificationNotes.push(\"Large property: \" + property.squareFootage + \" sq ft\");\n  } else if (property.squareFootage > 2000) {\n    score += 10;\n    qualificationNotes.push(\"Mid-size property: \" + property.squareFootage + \" sq ft\");\n  }\n  \n  // Score based on property age\n  const currentYear = new Date().getFullYear();\n  const propertyAge = currentYear - property.yearBuilt;\n  \n  if (propertyAge < 5) {\n    score += 15;\n    qualificationNotes.push(\"New construction: \" + property.yearBuilt);\n  } else if (propertyAge < 20) {\n    score += 10;\n    qualificationNotes.push(\"Relatively new property: \" + property.yearBuilt);\n  }\n  \n  // Other factors to consider\n  if (property.ownerOccupied === false) {\n    score += 15;\n    qualificationNotes.push(\"Investment property (not owner-occupied)\");\n  }\n  \n  if (property.lotSize > 0.5) {\n    score += 10;\n    qualificationNotes.push(\"Large lot size: \" + property.lotSize + \" acres\");\n  }\n  \n  // Determine qualification status based on score\n  if (score >= 50) {\n    qualificationStatus = \"high-value\";\n  } else if (score >= 30) {\n    qualificationStatus = \"qualified\";\n  } else if (score >= 15) {\n    qualificationStatus = \"potential\";\n  }\n  \n  // Combine all data for CRM update\n  const enrichedData = {\n    leadId: leadData.leadId,\n    score: score,\n    qualificationStatus: qualificationStatus,\n    qualificationNotes: qualificationNotes.join(\", \"),\n    propertyData: {\n      estimatedValue: property.estimatedValue,\n      squareFootage: property.squareFootage,\n      yearBuilt: property.yearBuilt,\n      lotSize: property.lotSize,\n      bedrooms: property.bedrooms,\n      bathrooms: property.bathrooms,\n      ownerOccupied: property.ownerOccupied,\n      lastSaleDate: property.lastSaleDate,\n      lastSalePrice: property.lastSalePrice\n    }\n  };\n  \n  return enrichedData;\n} else {\n  // If property data not found\n  qualificationNotes.push(\"Property data not found or verification failed\");\n  \n  return {\n    leadId: leadData.leadId,\n    score: 0,\n    qualificationStatus: \"unverified\",\n    qualificationNotes: qualificationNotes.join(\", \"),\n    propertyData: null\n  };\n}"
@@ -162,8 +162,8 @@
       "name": "Lead Scoring Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1580,
-        -280
+        100,
+        6040
       ],
       "parameters": {
         "color": 3,
@@ -179,8 +179,8 @@
       "name": "Update CRM Lead",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1120,
-        620
+        100,
+        7660
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -238,8 +238,8 @@
       "name": "CRM Update Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1240,
-        160
+        100,
+        820
       ],
       "parameters": {
         "color": 5,
@@ -255,8 +255,8 @@
       "name": "Is High-Value Lead?",
       "type": "n8n-nodes-base.if",
       "position": [
-        -760,
-        620
+        100,
+        5860
       ],
       "parameters": {
         "conditions": {
@@ -276,8 +276,8 @@
       "name": "Routing Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -880,
-        160
+        100,
+        6400
       ],
       "parameters": {
         "color": 3,
@@ -293,8 +293,8 @@
       "name": "Create Immediate Follow-up Task",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -180,
-        320
+        100,
+        1000
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -340,8 +340,8 @@
       "name": "Follow-up Task Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -340,
-        -140
+        100,
+        5680
       ],
       "parameters": {
         "color": 4,
@@ -357,8 +357,8 @@
       "name": "Send Slack Notification",
       "type": "n8n-nodes-base.slack",
       "position": [
-        -60,
-        860
+        100,
+        6760
       ],
       "webhookId": "dc308b09-6aea-41be-96c4-c322cfc8ed8f",
       "parameters": {
@@ -375,8 +375,8 @@
       "name": "Notification Instructions",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -340,
-        520
+        100,
+        6220
       ],
       "parameters": {
         "color": 4,
@@ -392,8 +392,8 @@
       "name": "Workflow Overview",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3200,
-        260
+        100,
+        9100
       ],
       "parameters": {
         "width": 400,
@@ -409,8 +409,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in 376bc838-013e-4033-a508-d27a2a64d792",
@@ -424,8 +424,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in 961b3c4c-5b58-439e-9c8c-cc6e9774ebe7",
@@ -439,8 +439,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in 25445c3c-adf0-41d7-8f5f-c0fabc297658",
@@ -454,8 +454,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in b9bcb2af-6ccc-4f9e-9926-765df4f36809",
@@ -469,8 +469,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in c7772695-cda1-4483-a961-7468fd075c55",
@@ -484,8 +484,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 376bc838",
@@ -499,8 +499,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 961b3c4c",
@@ -514,8 +514,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 25445c3c",
@@ -529,8 +529,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b9bcb2af",
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c7772695",
@@ -559,8 +559,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0d0d4e2e",
@@ -574,8 +574,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Lead Qualification with BatchData\n\n## Overview\nAutomated workflow: Lead Qualification with BatchData. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **CRM New Lead Webhook**: webhook\n- **Webhook Setup Instructions**: stickyNote\n- **Fetch Lead Data**: httpRequest\n- **CRM API Instructions**: stickyNote\n- **BatchData Property Lookup**: httpRequest\n- **BatchData API Instructions**: stickyNote\n- **Score And Qualify Lead**: code\n- **Lead Scoring Instructions**: stickyNote\n- **Update CRM Lead**: httpRequest\n- **CRM Update Instructions**: stickyNote\n- ... and 18 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -588,8 +588,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -603,8 +603,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -618,8 +618,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -633,8 +633,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -648,8 +648,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -663,8 +663,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Lead Qualification with BatchData\n\n## Overview\nAutomated workflow: Lead Qualification with BatchData. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -692,8 +692,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -737,8 +737,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -752,8 +752,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Lead Qualification with BatchData\n\n## Overview\nAutomated workflow: Lead Qualification with BatchData. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -796,8 +796,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -811,8 +811,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -826,8 +826,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -841,8 +841,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Lead Qualification with BatchData\n\n## Overview\nAutomated workflow: Lead Qualification with BatchData. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -855,8 +855,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Lead Qualification with BatchData\n\n## Overview\nAutomated workflow: Lead Qualification with BatchData. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -868,8 +868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Lead Qualification with BatchData\n\n## Overview\nAutomated workflow: Lead Qualification with BatchData. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, stopAndError. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -13,8 +13,8 @@
       "name": "Remove Duplicate URLs",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        -780,
-        380
+        100,
+        3520
       ],
       "parameters": {},
       "typeVersion": 1.1,
@@ -25,8 +25,8 @@
       "name": "Loop over queries",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -1080,
-        -100
+        100,
+        3340
       ],
       "parameters": {
         "options": {}
@@ -39,8 +39,8 @@
       "name": "Search Google Maps with query",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1380,
-        380
+        100,
+        4780
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -58,8 +58,8 @@
       "name": "Scrape URLs from results",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1180,
-        380
+        100,
+        4420
       ],
       "parameters": {
         "jsCode": "const data = $input.first().json.data\n\nconst regex = /https?:\\/\\/[^\\/]+/g\n\nconst urls = data.match(regex)\n\nreturn urls.map(url => ({json: {url: url}}))"
@@ -72,8 +72,8 @@
       "name": "Filter irrelevant URLs",
       "type": "n8n-nodes-base.filter",
       "position": [
-        -980,
-        380
+        100,
+        2620
       ],
       "parameters": {
         "options": {},
@@ -117,8 +117,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        -380,
-        460
+        100,
+        3880
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -134,8 +134,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "onError": "continueErrorOutput",
       "position": [
-        -580,
-        380
+        100,
+        2980
       ],
       "parameters": {
         "options": {
@@ -151,8 +151,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "onError": "continueErrorOutput",
       "position": [
-        -360,
-        120
+        100,
+        3160
       ],
       "parameters": {
         "options": {}
@@ -167,8 +167,8 @@
       "type": "n8n-nodes-base.code",
       "onError": "continueRegularOutput",
       "position": [
-        -200,
-        220
+        100,
+        4600
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -182,7 +182,7 @@
       "name": "Aggregate arrays of emails",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        -40,
+        100,
         100
       ],
       "parameters": {
@@ -205,8 +205,8 @@
       "name": "Split out into default data structure",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        180,
-        100
+        100,
+        4960
       ],
       "parameters": {
         "options": {},
@@ -220,8 +220,8 @@
       "name": "Remove duplicate emails",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        400,
-        100
+        100,
+        3700
       ],
       "parameters": {
         "compare": "selectedFields",
@@ -236,8 +236,8 @@
       "name": "Filter irrelevant emails",
       "type": "n8n-nodes-base.filter",
       "position": [
-        600,
-        100
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -270,8 +270,8 @@
       "name": "Save emails to Google Sheet",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        800,
-        100
+        100,
+        4240
       ],
       "parameters": {
         "columns": {
@@ -306,8 +306,8 @@
       "name": "Starts scraper workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -1600,
-        380
+        100,
+        5140
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -318,8 +318,8 @@
       "name": "Run workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -1320,
-        -100
+        100,
+        4060
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -330,8 +330,8 @@
       "name": "Wait between executions",
       "type": "n8n-nodes-base.wait",
       "position": [
-        -700,
-        0
+        100,
+        6940
       ],
       "webhookId": "40eb11a9-0f7d-4932-993e-0052b69dbf9b",
       "parameters": {
@@ -345,8 +345,8 @@
       "name": "Execute scraper for query",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        -880,
-        0
+        100,
+        2440
       ],
       "parameters": {
         "mode": "each",
@@ -367,8 +367,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2280,
-        -140
+        100,
+        5320
       ],
       "parameters": {
         "color": 5,
@@ -384,8 +384,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -700,
-        -120
+        100,
+        5500
       ],
       "parameters": {
         "color": 6,
@@ -400,8 +400,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1600,
-        260
+        100,
+        5680
       ],
       "parameters": {
         "width": 480,
@@ -416,8 +416,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        300
+        100,
+        5860
       ],
       "parameters": {
         "color": 4,
@@ -432,8 +432,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1760,
-        -360
+        100,
+        6040
       ],
       "parameters": {
         "color": 3,
@@ -447,8 +447,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2280,
-        -360
+        100,
+        6220
       ],
       "parameters": {
         "color": 7,
@@ -464,8 +464,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1000,
-        540
+        100,
+        6400
       ],
       "parameters": {
         "color": 6,
@@ -481,8 +481,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        580,
-        260
+        100,
+        6580
       ],
       "parameters": {
         "color": 6,
@@ -499,8 +499,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 3a478935-781b-4fb1-bdc7-fcf8be1334bc",
@@ -514,8 +514,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in 40ec6d1f-1c98-4c9f-8499-c5893c3df7b9",
@@ -529,8 +529,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3a478935",
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 40ec6d1f",
@@ -559,8 +559,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 59675faa",
@@ -574,8 +574,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Google Maps Email Scraper Template\n\n## Overview\nAutomated workflow: Google Maps Email Scraper Template. This workflow integrates 14 different services: filter, httpRequest, stickyNote, wait, code. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Remove Duplicate URLs**: removeDuplicates\n- **Loop over queries**: splitInBatches\n- **Search Google Maps with query**: httpRequest\n- **Scrape URLs from results**: code\n- **Filter irrelevant URLs**: filter\n- **Request web page for URL**: httpRequest\n- **Loop over URLs**: splitInBatches\n- **Loop over pages**: splitInBatches\n- **Scrape emails from page**: code\n- **Aggregate arrays of emails**: aggregate\n- ... and 21 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -588,8 +588,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -603,8 +603,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -618,8 +618,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Google Maps Email Scraper Template\n\n## Overview\nAutomated workflow: Google Maps Email Scraper Template. This workflow integrates 14 different services: filter, httpRequest, stickyNote, wait, code. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -632,8 +632,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -647,8 +647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -662,8 +662,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Google Maps Email Scraper Template\n\n## Overview\nAutomated workflow: Google Maps Email Scraper Template. This workflow integrates 14 different services: filter, httpRequest, stickyNote, wait, code. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -676,8 +676,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -691,8 +691,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -706,8 +706,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Google Maps Email Scraper Template\n\n## Overview\nAutomated workflow: Google Maps Email Scraper Template. This workflow integrates 14 different services: filter, httpRequest, stickyNote, wait, code. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -720,8 +720,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Google Maps Email Scraper Template\n\n## Overview\nAutomated workflow: Google Maps Email Scraper Template. This workflow integrates 14 different services: filter, httpRequest, stickyNote, wait, code. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -733,8 +733,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Google Maps Email Scraper Template\n\n## Overview\nAutomated workflow: Google Maps Email Scraper Template. This workflow integrates 14 different services: filter, httpRequest, stickyNote, wait, code. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -760,8 +760,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",

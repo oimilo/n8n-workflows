@@ -4,8 +4,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -550,
-        450
+        100,
+        280
       ],
       "parameters": {
         "path": "PuHq2RQsmc3HXB/hook",
@@ -21,8 +21,8 @@
       "name": "Mautic",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        1260,
-        180
+        3740,
+        100
       ],
       "parameters": {
         "email": "={{$node[\"@MAIN STUDENT DATA\"].json[\"student\"][\"email\"]}}",
@@ -44,8 +44,8 @@
       "name": "Find User",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        170,
-        260
+        1220,
+        100
       ],
       "parameters": {
         "limit": 1,
@@ -67,8 +67,8 @@
       "name": "Update User",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        1560,
-        250
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -91,8 +91,8 @@
       "name": "Tag User",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        430,
-        670
+        2060,
+        100
       ],
       "parameters": {
         "options": {},
@@ -113,8 +113,8 @@
       "name": "Unsubscribe User",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        2170,
-        410
+        5140,
+        100
       ],
       "parameters": {
         "options": {},
@@ -135,8 +135,8 @@
       "name": "Split Full Name",
       "type": "n8n-nodes-base.function",
       "position": [
-        340,
-        420
+        1780,
+        100
       ],
       "parameters": {
         "functionCode": "const student = items[0].json.student\nstudent.firstName = student.name ? student.name.split(' ').slice(0, -1).join(' ') : ''\nstudent.lastName= student.name ? student.name.split(' ').slice(-1).join(' ') : ''\nitems[0].json.student = student\nreturn items;"
@@ -148,8 +148,8 @@
       "name": "If not found return -1",
       "type": "n8n-nodes-base.function",
       "position": [
-        450,
-        260
+        2340,
+        100
       ],
       "parameters": {
         "functionCode": "items[0].json.id = items[0].json.id || -1\nreturn items"
@@ -161,8 +161,8 @@
       "name": "@MAIN STUDENT DATA",
       "type": "n8n-nodes-base.merge",
       "position": [
-        900,
-        400
+        2900,
+        100
       ],
       "parameters": {
         "join": "inner",
@@ -175,8 +175,8 @@
       "name": "Remove unsubscribe",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        1770,
-        500
+        4580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -197,8 +197,8 @@
       "name": "Find User To Tag Sale",
       "type": "n8n-nodes-base.mautic",
       "position": [
-        190,
-        670
+        1500,
+        100
       ],
       "parameters": {
         "limit": 1,
@@ -220,8 +220,8 @@
       "name": "Set userFound",
       "type": "n8n-nodes-base.set",
       "position": [
-        700,
-        260
+        2620,
+        100
       ],
       "parameters": {
         "values": {
@@ -242,8 +242,8 @@
       "name": "Switch Webhook Types",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -70,
-        450
+        660,
+        100
       ],
       "parameters": {
         "rules": {
@@ -269,8 +269,8 @@
       "name": "Set Webhook Request",
       "type": "n8n-nodes-base.set",
       "position": [
-        -310,
-        450
+        380,
+        100
       ],
       "parameters": {
         "values": {
@@ -295,8 +295,8 @@
       "name": "IF NOT userFound",
       "type": "n8n-nodes-base.if",
       "position": [
-        1090,
-        400
+        3460,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -316,8 +316,8 @@
       "name": "Switch User.type",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1380,
-        420
+        4020,
+        100
       ],
       "parameters": {
         "rules": {
@@ -345,8 +345,8 @@
       "name": "IF unsubscribe_from_marketing_emails",
       "type": "n8n-nodes-base.if",
       "position": [
-        1770,
-        250
+        4860,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -368,8 +368,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        940,
+        100
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -381,8 +381,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        3180,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -395,8 +395,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -408,8 +408,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

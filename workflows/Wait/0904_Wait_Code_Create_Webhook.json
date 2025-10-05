@@ -18,8 +18,8 @@
       "type": "n8n-nodes-base.code",
       "notes": "This code adds \n- a blank space\n- and a letter, starting from a, b, c... up to z\nIt processes all the 26 possible letters.\n\nEx :\nn8n a\nn8n b\nn8n c\n...\nn8n z",
       "position": [
-        180,
-        0
+        100,
+        3880
       ],
       "parameters": {
         "jsCode": "const keyword = $input.first().json.chatInput;\nconst alphabet = \"abcdefghijklmnopqrstuvwxyz\".split(\"\");\n\nreturn alphabet.map(letter => ({\n  json: { query: `${keyword} ${letter}` }\n}));"
@@ -32,8 +32,8 @@
       "name": "Google Autocomplete",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        560,
-        100
+        100,
+        4240
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -48,8 +48,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "notes": "The 26 items (one for each alphabet letter) are treated by batches of 10.\nThis setting + the wait time help not to be blocked by Google's API.",
       "position": [
-        360,
-        0
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -63,8 +63,8 @@
       "type": "n8n-nodes-base.wait",
       "notes": "This wait time is necessary, otherwise Google API might block the call and make an error.",
       "position": [
-        920,
-        100
+        100,
+        5500
       ],
       "webhookId": "844dc802-f7d5-47f0-a389-ad60c4970aa0",
       "parameters": {
@@ -77,7 +77,7 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        740,
+        100,
         100
       ],
       "parameters": {
@@ -91,8 +91,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -40,
-        -340
+        100,
+        4780
       ],
       "parameters": {
         "width": 400,
@@ -108,8 +108,8 @@
       "type": "n8n-nodes-base.noOp",
       "notes": "You could also get this initial keyword from :\n- a line in a Google Sheet\n- a webhook and a form on a website\n- a messaging app like Telegram or Whatsapp",
       "position": [
-        0,
-        0
+        100,
+        4060
       ],
       "webhookId": "add903d6-ee86-435a-b876-12b2f6264631",
       "parameters": {
@@ -123,8 +123,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        -360
+        100,
+        4960
       ],
       "parameters": {
         "width": 480,
@@ -140,8 +140,8 @@
       "type": "n8n-nodes-base.code",
       "notes": "This code gathers all the keywords in one list.",
       "position": [
-        560,
-        -100
+        100,
+        3700
       ],
       "parameters": {
         "jsCode": "let mergedKeywords = [];\n\nfor (const item of $input.all()) {\n  mergedKeywords.push(...item.json.keywords);\n}\n\nreturn { json: { keywords: mergedKeywords } };\n"
@@ -154,8 +154,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "notes": "Use this node",
       "position": [
-        740,
-        -100
+        100,
+        4600
       ],
       "parameters": {
         "options": {}
@@ -167,8 +167,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        540,
-        280
+        100,
+        5140
       ],
       "parameters": {
         "width": 560,
@@ -184,8 +184,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 0c6ae163-3d08-4a40-aaa9-921f583940df",
@@ -199,8 +199,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in 95376c0e-43a8-408d-9542-ca9c0c4999c7",
@@ -214,8 +214,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0c6ae163",
@@ -229,8 +229,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 95376c0e",
@@ -244,8 +244,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Generate A-Z Queries**: code\n- **Google Autocomplete**: httpRequest\n- **Loop Over Items**: splitInBatches\n- **Wait 1s**: wait\n- **Code**: code\n- **Sticky Note**: stickyNote\n- **Get Keyword**: chatTrigger\n- **Sticky Note1**: stickyNote\n- **Extract Keywords**: code\n- **Return Keywords**: respondToWebhook\n- ... and 5 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -258,8 +258,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -273,8 +273,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -288,8 +288,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -302,8 +302,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -316,8 +316,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -331,8 +331,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -346,8 +346,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -361,8 +361,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -376,8 +376,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -390,8 +390,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -404,8 +404,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -419,8 +419,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -449,8 +449,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -491,8 +491,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -505,8 +505,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -519,8 +519,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, respondToWebhook. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -600,8 +600,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

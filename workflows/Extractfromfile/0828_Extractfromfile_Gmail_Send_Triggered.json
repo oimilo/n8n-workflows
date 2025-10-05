@@ -17,8 +17,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        260,
-        260
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -51,8 +51,8 @@
       "name": "Check the format",
       "type": "n8n-nodes-base.code",
       "position": [
-        960,
-        260
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "const content = $input.first().json.xhtml_content;\n\n// Helper to extract tags\nfunction extractTags(tagName) {\n  const regex = new RegExp(`<${tagName}[^>]*>(.*?)<\\\\/${tagName}>`, 'gs');\n  let matches = [];\n  let match;\n  while ((match = regex.exec(content)) !== null) {\n    matches.push(match[1].trim());\n  }\n  return matches;\n}\n\n// Basic Tests\nconst headerPresent = /<ix:header>/i.test(content);\nconst governanceTag = /<ix:nonNumeric[^>]*name=\"esrs:SustainabilityGovernance\"/i.test(content);\nconst strategyTag = /<ix:nonNumeric[^>]*name=\"esrs:StrategySustainability\"/i.test(content);\n\n// KPI Tags\nconst kpiTags = [\"esrs:GHGScope1Emissions\", \"esrs:GHGScope2Emissions\", \"esrs:GHGScope3Emissions\"];\nconst kpiMatches = kpiTags.filter(tag => content.includes(tag));\n\n// Check for empty tags\nconst emptyNonNumeric = (content.match(/<ix:nonNumeric[^>]*>\\s*<\\/ix:nonNumeric>/g) || []).length;\n\n// Check duplicate text\nconst nonNumericValues = extractTags(\"ix:nonNumeric\");\nconst duplicates = [...new Set(nonNumericValues.filter((v, i, arr) => arr.indexOf(v) !== i))];\n\n// Final Result\nreturn [\n  {\n    json: {\n      audit_results:{\n      total_nonNumeric_tags: nonNumericValues.length,\n      total_kpis_found: kpiMatches.length,\n      empty_disclosures: emptyNonNumeric,\n      governance_check: governanceTag ? \"PASS\" : \"MISSING\",\n      strategy_check: strategyTag ? \"PASS\" : \"MISSING\",\n      header_check: headerPresent ? \"PASS\" : \"MISSING\",\n      duplicate_disclosures: duplicates,\n      }\n\n    }\n  }\n];\n"
@@ -65,8 +65,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1240,
-        260
+        100,
+        100
       ],
       "parameters": {
         "text": "=Generate an email to the sustainability team summarizing this CSRD XHTML report audit:\n\n{{JSON.stringify($json.audit_results, null, 2)}}\n\nReturn the output in the following JSON format:\n\n{\n  \"subject\": \"...\",\n  \"body\": \"...\"\n}",
@@ -84,8 +84,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1200,
-        420
+        100,
+        2080
       ],
       "parameters": {
         "model": {
@@ -103,8 +103,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1500,
-        440
+        100,
+        3160
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"subject\": \"CSRD XHTML Report Audit – Key Findings and Next Steps\",\n  \"body\": \"Content of the email\"\n}"
@@ -117,8 +117,8 @@
       "name": "Reply",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1620,
-        260
+        100,
+        2260
       ],
       "webhookId": "=",
       "parameters": {
@@ -137,8 +137,8 @@
       "name": "Extract the HTML",
       "type": "n8n-nodes-base.code",
       "position": [
-        800,
-        260
+        100,
+        1540
       ],
       "parameters": {
         "jsCode": "return [\n  {\n    json: {\n      xhtml_content:$input.first().json.data \n    }\n  }\n];\n"
@@ -151,8 +151,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        -140
+        100,
+        2620
       ],
       "parameters": {
         "color": 7,
@@ -168,8 +168,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        440,
-        -140
+        100,
+        2440
       ],
       "parameters": {
         "color": 7,
@@ -185,8 +185,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1120,
-        -140
+        100,
+        2800
       ],
       "parameters": {
         "color": 7,
@@ -202,8 +202,8 @@
       "name": "HTML from binary",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        660,
-        260
+        100,
+        1720
       ],
       "parameters": {
         "options": {},
@@ -219,8 +219,8 @@
       "name": "Email Trigger",
       "type": "n8n-nodes-base.gmailTrigger",
       "position": [
-        40,
-        260
+        100,
+        640
       ],
       "parameters": {
         "simple": false,
@@ -243,8 +243,8 @@
       "name": "Download Attachment",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        480,
-        260
+        100,
+        460
       ],
       "webhookId": "=",
       "parameters": {
@@ -264,8 +264,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        -140
+        100,
+        2980
       ],
       "parameters": {
         "width": 780,
@@ -281,8 +281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3dcbaf39",
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 18103fec",
@@ -311,8 +311,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, agent, outputParserStructured. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **If Node**: if\n- **Check the format**: code\n- **AI Agent**: agent\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Structured Output Parser**: outputParserStructured\n- **Reply**: gmail\n- **Extract the HTML**: code\n- **Sticky Note1**: stickyNote\n- **Sticky Note**: stickyNote\n- **Sticky Note2**: stickyNote\n- ... and 6 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -325,8 +325,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, agent, outputParserStructured. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -339,8 +339,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, agent, outputParserStructured. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -353,8 +353,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, agent, outputParserStructured. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -367,8 +367,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, agent, outputParserStructured. It contains 16 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -380,8 +380,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -394,8 +394,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: stickyNote, code, gmailTrigger, agent, outputParserStructured. It contains 16 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

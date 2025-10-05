@@ -17,8 +17,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2080,
-        -200
+        100,
+        4420
       ],
       "parameters": {
         "width": 460,
@@ -33,8 +33,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        1000,
-        120
+        100,
+        4960
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -45,8 +45,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        2100,
-        640
+        100,
+        3700
       ],
       "parameters": {
         "options": {}
@@ -59,8 +59,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        -200
+        100,
+        4240
       ],
       "parameters": {
         "color": 7,
@@ -76,8 +76,8 @@
       "name": "Page Link",
       "type": "n8n-nodes-base.set",
       "position": [
-        1200,
-        120
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -107,8 +107,8 @@
       "name": "Download Results",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1440,
-        640
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -135,8 +135,8 @@
       "name": "altLength < 50",
       "type": "n8n-nodes-base.if",
       "position": [
-        1660,
-        640
+        100,
+        6940
       ],
       "parameters": {
         "options": {},
@@ -169,8 +169,8 @@
       "name": "Limit records",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1880,
-        560
+        100,
+        3520
       ],
       "parameters": {
         "maxItems": 5
@@ -183,8 +183,8 @@
       "name": "Generate altText",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2320,
-        560
+        100,
+        3160
       ],
       "parameters": {
         "text": "Please generate the alternative text (alt text) for this image under 150 characters.\t",
@@ -210,8 +210,8 @@
       "name": "Update Results",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        2540,
-        640
+        100,
+        4780
       ],
       "parameters": {
         "columns": {
@@ -320,8 +320,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        320
+        100,
+        4060
       ],
       "parameters": {
         "color": 7,
@@ -337,8 +337,8 @@
       "name": "Store Results",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1860,
-        120
+        100,
+        4600
       ],
       "parameters": {
         "columns": {
@@ -437,8 +437,8 @@
       "name": "Download HTML",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1420,
-        120
+        100,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -452,8 +452,8 @@
       "name": "Get Images urls with altText",
       "type": "n8n-nodes-base.code",
       "position": [
-        1640,
-        120
+        100,
+        3340
       ],
       "parameters": {
         "jsCode": "const html = $input.first().json.data;\nconst baseUrl = $('Page Link').first().json.baseUrl;\n\nconst imgTagRegex = /<img\\b[^>]*>/gi;\nconst altAttrRegex = /alt\\s*=\\s*[\"']([^\"']*)[\"']/i;\nconst srcAttrRegex = /src\\s*=\\s*[\"']([^\"']*)[\"']/i;\n\nconst imageTags = html.match(imgTagRegex) || [];\n\nconst results = imageTags.map((tag, index) => {\n  const altMatch = tag.match(altAttrRegex);\n  const srcMatch = tag.match(srcAttrRegex);\n\n  let alt = altMatch ? altMatch[1] : '[No alt text]';\n  let src = srcMatch ? srcMatch[1] : '[No src]';\n\n  // If src is relative, manually join with baseUrl\n  if (src !== '[No src]' && !src.startsWith('http')) {\n    if (baseUrl.endsWith('/') && src.startsWith('/')) {\n      src = baseUrl + src.slice(1);\n    } else if (!baseUrl.endsWith('/') && !src.startsWith('/')) {\n      src = baseUrl + '/' + src;\n    } else {\n      src = baseUrl + src;\n    }\n  }\n\n  return {\n    index: index + 1,\n    src,\n    alt,\n    altLength: alt.length,\n  };\n});\n\nreturn results.map(item => ({ json: item }));"
@@ -467,8 +467,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in fe71094e-3a22-4cda-90ad-4174258a9086",
@@ -482,8 +482,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6e6b7801",
@@ -497,8 +497,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5785deb6",
@@ -512,8 +512,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 86051a7f",
@@ -527,8 +527,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c1bf1dcf",
@@ -542,8 +542,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fe71094e",
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note4**: stickyNote\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Loop Over Items**: splitInBatches\n- **Sticky Note1**: stickyNote\n- **Page Link**: set\n- **Download Results**: googleSheets\n- **altLength < 50**: if\n- **Limit records**: limit\n- **Generate altText**: openAi\n- **Update Results**: googleSheets\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -571,8 +571,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -586,8 +586,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -600,8 +600,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -629,8 +629,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -644,8 +644,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -658,8 +658,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -672,8 +672,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -687,8 +687,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -702,8 +702,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -716,8 +716,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -729,8 +729,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -743,8 +743,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -756,8 +756,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -770,8 +770,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -783,8 +783,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -797,8 +797,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -810,8 +810,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",

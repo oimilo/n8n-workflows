@@ -17,8 +17,8 @@
       "name": "Refresh Token",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1300,
-        100
+        100,
+        11080
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -44,8 +44,8 @@
       "name": "Get Post",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -960,
-        100
+        100,
+        10000
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}<Your Threads ID>/threads?fields=id,media_product_type,media_type,media_url,permalink,owner,username,text,timestamp,shortcode,thumbnail_url,children,is_quote_post",
@@ -71,8 +71,8 @@
       "name": "Get Post ID",
       "type": "n8n-nodes-base.function",
       "position": [
-        -640,
-        100
+        100,
+        10180
       ],
       "parameters": {
         "functionCode": "// 獲取 API 返回的完整資料 (假設只有一個 \"data\" 陣列)\nconst allData = items[0].json.data;\n\n// 過濾符合條件的貼文：\n// 條件 1: media_type = \"TEXT_POST\" 或 \"VIDEO\"\n// 條件 2: is_quote_post = false\nconst filteredPosts = allData.filter(post => {\n  return (\npost.media_type === \"TEXT_POST\" || \npost.media_type === \"IMAGE\" || \npost.media_type === \"VIDEO\" || \npost.media_type === \"CAROUSEL_ALBUM\" || \npost.media_type === \"AUDIO\");\n});\n\n// 抽取所需的欄位：id, permalink, timestamp\nconst extractedData = filteredPosts.map(post => {\n  return {\n    id: post.id,\n    type: post.media_type,\n    permalink: post.permalink,\n    timestamp: post.timestamp,\n  };\n});\n\n// 將結果以 n8n 所需格式輸出\nreturn extractedData.map(post => ({ json: post }));\n"
@@ -85,8 +85,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -300,
-        100
+        100,
+        10720
       ],
       "parameters": {
         "options": {}
@@ -99,8 +99,8 @@
       "name": "Replace Me",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2820,
-        200
+        100,
+        11260
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -111,8 +111,8 @@
       "name": "Threads / Comments",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        0,
-        180
+        100,
+        14140
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -134,8 +134,8 @@
       "name": "Threads / Root",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        0,
-        0
+        100,
+        14320
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -157,8 +157,8 @@
       "name": "Comment's Filter",
       "type": "n8n-nodes-base.code",
       "position": [
-        240,
-        180
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// 確保 items 是否有內容\nif (!items || items.length === 0) {\n  console.log('No items found');\n  return [];\n}\n\n// 取得輸入數據\nconst inputData = items[0].json;\nconsole.log('Input data:', JSON.stringify(inputData, null, 2));\n\nif (!inputData || !inputData.data || !Array.isArray(inputData.data)) {\n  console.log('Invalid data structure');\n  return [];\n}\n\n// 過濾出 username 為 yourThreadsName 的資料\nconst filteredPosts = inputData.data.filter(post => post.username === 'geekaz');\nconsole.log('Filtered posts count:', filteredPosts.length);\n\n// 處理每個 post，提取所需的資料\nconst processedData = filteredPosts.map(post => {\n  // 初始化 mediaUrls，用來存放所有的 media_url\n  let mediaUrls = [];\n\n  // 如果有 children，則提取 children 裡的 media_url\n  if (post.children?.data && Array.isArray(post.children.data)) {\n    mediaUrls = post.children.data\n      .map(child => child.media_url) // 提取每個 child 的 media_url\n      .filter(url => url); // 過濾掉 undefined 或 null 的 URL\n  } else if (post.media_url) {\n    // 如果沒有 children，使用最外層的 media_url\n    mediaUrls.push(post.media_url);\n  }\n\n  // 返回每個 post 的處理後結果\n  return {\n    text: post.text || '',\n    media_urls: mediaUrls\n  };\n});\n\nconsole.log('Processed data:', JSON.stringify(processedData, null, 2));\n\n// 將結果轉換為 n8n 所需格式\nreturn processedData.map(post => ({ json: post }));"
@@ -171,8 +171,8 @@
       "name": "Root's Filter",
       "type": "n8n-nodes-base.code",
       "position": [
-        240,
-        0
+        100,
+        11440
       ],
       "parameters": {
         "jsCode": "// 確保 items 是否有內容\nif (!items || items.length === 0) {\n  return [];\n}\n\n// 確保 items 的資料結構是正確的\nconst allData = items.map(item => item.json);\n\nconst processedData = allData.map(post => {\n  // 初始化 mediaUrls，用來存放所有的 media_url\n  let mediaUrls = [];\n\n  // 如果有 children，則提取 children 裡的 media_url\n  if (post.children?.data && Array.isArray(post.children.data)) {\n    mediaUrls = post.children.data\n      .map(child => child.media_url) // 提取每個 child 的 media_url\n      .filter(url => url); // 過濾掉 undefined 或 null 的 URL\n  } else if (post.media_url) {\n    // 如果沒有 children，使用最外層的 media_url\n    mediaUrls.push(post.media_url);\n  }\n\n  // 返回每個 post 的處理後結果\n  return {\n    id: post.id || null,\n    username: post.username || null,\n    text: post.text || null,\n    timestamp: post.timestamp || null,\n    media_type: post.media_type || null,\n    media_urls: mediaUrls, // 包含所有的媒體 URL\n    permalink: post.permalink || null,\n  };\n});\n\n// 將結果轉換為 n8n 所需格式\nreturn processedData.map(post => ({ json: post }));\n"
@@ -185,8 +185,8 @@
       "name": "Threads ID",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1060,
-        100
+        100,
+        14500
       ],
       "parameters": {
         "simple": false,
@@ -217,8 +217,8 @@
       "name": "Extract IDs",
       "type": "n8n-nodes-base.function",
       "position": [
-        1260,
-        100
+        100,
+        9820
       ],
       "parameters": {
         "functionCode": "// 檢查輸入是否存在\nif (!items?.length) return [{ json: { threadsIds: [] } }];\n\n// 取得所有頁面\nconst pages = items.map(item => item.json).flat();\nconsole.log('Number of pages:', pages.length);\n\n// 提取所有 Threads ID\nconst threadsIds = pages\n  .map(page => {\n    if (!page?.properties) return null;\n    const threadsIdField = page.properties['Threads ID'];\n    if (!threadsIdField?.rich_text?.length) return null;\n    return threadsIdField.rich_text[0]?.text?.content || null;\n  })\n  .filter(Boolean);\n\nconsole.log('Found Threads IDs:', threadsIds);\n\n// 將結果轉換為 n8n 所需格式\nreturn [{ json: { threadsIds } }];"
@@ -231,8 +231,8 @@
       "name": "Compare IDs",
       "type": "n8n-nodes-base.function",
       "position": [
-        1500,
-        100
+        100,
+        280
       ],
       "parameters": {
         "functionCode": "// 檢查輸入是否存在\nif (!items?.length) return [{ json: { isExist: false } }];\n\n// 從 Threads Post 節點取得 ID\nconst newId = $('Threads Post').last().json.id;\nconst existingIds = $json.threadsIds || [];\n\n// 檢查是否重複\nconst isExist = existingIds.includes(newId);\n\nreturn [{ json: { isExist } }];\n"
@@ -245,8 +245,8 @@
       "name": "Create Page",
       "type": "n8n-nodes-base.notion",
       "position": [
-        2080,
-        20
+        100,
+        460
       ],
       "parameters": {
         "simple": false,
@@ -305,8 +305,8 @@
       "name": "Upload Medias",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2560,
-        20
+        100,
+        14860
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -325,8 +325,8 @@
       "name": "If Post Exist",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1740,
-        100
+        100,
+        10540
       ],
       "parameters": {
         "rules": {
@@ -392,8 +392,8 @@
       "name": "Threads Post",
       "type": "n8n-nodes-base.code",
       "position": [
-        800,
-        100
+        100,
+        14680
       ],
       "parameters": {
         "jsCode": "// 確保 items 是否有內容\nif (!items || items.length === 0) {\n  console.log('No items found');\n  return [];\n}\n\n// 取得所有貼文\nconst posts = items.map(item => item.json).flat();\nconsole.log('Number of posts:', posts.length);\n\n// 取得第一篇貼文的基本資訊\nconst firstPost = posts[0] || {};\n\n// 生成 blocks 結構\nconst blocks = [];\n\n// 處理每個貼文\nposts.forEach(post => {\n  // 如果有文字，加入文字區塊\n  if (post.text) {\n    blocks.push({\n      object: \"block\",\n      type: \"paragraph\",\n      paragraph: {\n        rich_text: [{\n          type: \"text\",\n          text: { content: post.text }\n        }]\n      }\n    });\n  }\n  \n  // 如果有媒體連結，加入 embed 區塊\n  if (post.media_urls && post.media_urls.length > 0) {\n    post.media_urls.forEach(url => {\n      blocks.push({\n        object: \"block\",\n        type: \"embed\",\n        embed: { url }\n      });\n    });\n  }\n});\n\n// 合併基本資訊和 blocks\nconst combinedPost = {\n  id: firstPost.id || '',\n  permalink: firstPost.permalink || '',\n  username: firstPost.username || '',\n  timestamp: firstPost.timestamp || '',\n  blocks\n};\n\n// 將結果轉換為 n8n 所需格式\nreturn [{ json: combinedPost }];"
@@ -406,8 +406,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        540,
-        100
+        100,
+        10900
       ],
       "parameters": {},
       "typeVersion": 3,
@@ -418,8 +418,8 @@
       "name": "Run This First to Get Long Live Access Token",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -940,
-        -340
+        100,
+        11620
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -449,8 +449,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1260,
-        -380
+        100,
+        11800
       ],
       "parameters": {
         "height": 240,
@@ -464,8 +464,8 @@
       "name": "Get Posts Schedule",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1660,
-        100
+        100,
+        10360
       ],
       "parameters": {
         "rule": {
@@ -482,8 +482,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1360,
-        260
+        100,
+        11980
       ],
       "parameters": {
         "height": 180,
@@ -497,8 +497,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1020,
-        260
+        100,
+        12160
       ],
       "parameters": {
         "height": 600,
@@ -512,8 +512,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        -60
+        100,
+        12340
       ],
       "parameters": {
         "height": 140,
@@ -527,8 +527,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2000,
-        -140
+        100,
+        12520
       ],
       "parameters": {
         "height": 140,
@@ -542,8 +542,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2500,
-        -200
+        100,
+        12700
       ],
       "parameters": {
         "height": 200,
@@ -557,8 +557,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2360,
-        80
+        100,
+        12880
       ],
       "parameters": {
         "width": 600,
@@ -573,8 +573,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        180,
-        400
+        100,
+        13060
       ],
       "parameters": {
         "height": 140,
@@ -589,8 +589,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 200098a9-1a49-49c1-8703-eea0c496a020",
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13240
       ],
       "parameters": {
         "message": "Error occurred in 58373d28-8f22-4224-8ef1-aca9c24d5777",
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in 3b4e5eda-f354-4ef4-a260-378c06708cb5",
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13600
       ],
       "parameters": {
         "message": "Error occurred in 6331c1f6-e1a4-4749-a17a-c129ab7ab0e0",
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13780
       ],
       "parameters": {
         "message": "Error occurred in 8a5e4752-a8fa-480f-8271-c15a66679e00",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13960
       ],
       "parameters": {
         "message": "Error occurred in a79e46eb-bb45-4d80-9f99-adae1e51f94d",
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 200098a9",
@@ -694,8 +694,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 58373d28",
@@ -709,8 +709,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3b4e5eda",
@@ -724,8 +724,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6331c1f6",
@@ -739,8 +739,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8a5e4752",
@@ -754,8 +754,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a79e46eb",
@@ -769,8 +769,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15040
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Refresh Token**: httpRequest\n- **Get Post**: httpRequest\n- **Get Post ID**: function\n- **Loop Over Items**: splitInBatches\n- **Replace Me**: noOp\n- **Threads / Comments**: httpRequest\n- **Threads / Root**: httpRequest\n- **Comment's Filter**: code\n- **Root's Filter**: code\n- **Threads ID**: notion\n- ... and 29 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -783,8 +783,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -798,8 +798,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -813,8 +813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -828,8 +828,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -843,8 +843,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -858,8 +858,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -873,8 +873,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15220
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -887,8 +887,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15400
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -901,8 +901,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -916,8 +916,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -931,8 +931,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -946,8 +946,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -961,8 +961,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -976,8 +976,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -991,8 +991,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1006,8 +1006,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1021,8 +1021,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1036,8 +1036,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1051,8 +1051,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1066,8 +1066,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1081,8 +1081,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15580
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1095,8 +1095,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15760
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1109,8 +1109,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1124,8 +1124,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1139,8 +1139,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1154,8 +1154,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1169,8 +1169,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1184,8 +1184,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1199,8 +1199,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1214,8 +1214,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1229,8 +1229,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1244,8 +1244,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1259,8 +1259,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1274,8 +1274,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1289,8 +1289,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15940
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1303,8 +1303,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16120
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 75\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1316,8 +1316,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1330,8 +1330,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1344,8 +1344,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1358,8 +1358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1372,8 +1372,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1386,8 +1386,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1400,8 +1400,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16300
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 82\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1413,8 +1413,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1427,8 +1427,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1441,8 +1441,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1455,8 +1455,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1469,8 +1469,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1483,8 +1483,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1497,8 +1497,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16480
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1510,8 +1510,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1524,8 +1524,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16660
       ],
       "parameters": {
         "content": "# Httprequest Workflow\n\n## Overview\nAutomated workflow: Httprequest Workflow. This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, function. It contains 39 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1537,8 +1537,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Workflow execution error",

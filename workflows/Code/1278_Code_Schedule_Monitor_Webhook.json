@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        4220,
-        380
+        100,
+        4960
       ],
       "parameters": {
         "options": {}
@@ -46,8 +46,8 @@
       "name": "Basic LLM Chain",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        4180,
-        -120
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.data }}",
@@ -68,8 +68,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -840,
-        120
+        100,
+        5680
       ],
       "parameters": {
         "rule": {
@@ -90,8 +90,8 @@
       "type": "n8n-nodes-base.rssFeedRead",
       "onError": "continueRegularOutput",
       "position": [
-        800,
-        120
+        100,
+        5320
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -108,8 +108,8 @@
       "name": "Relevance Classification for Topic Monitoring",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2380,
-        -20
+        100,
+        5500
       ],
       "parameters": {
         "options": {
@@ -137,8 +137,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2240,
-        -480
+        100,
+        6580
       ],
       "parameters": {
         "color": 7,
@@ -154,8 +154,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4020,
-        -660
+        100,
+        7660
       ],
       "parameters": {
         "color": 7,
@@ -171,8 +171,8 @@
       "name": "Google Sheets - Get RSS Feed url followed",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        260,
-        120
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -207,8 +207,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        80,
-        -480
+        100,
+        7840
       ],
       "parameters": {
         "color": 7,
@@ -224,8 +224,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        620,
-        -480
+        100,
+        8200
       ],
       "parameters": {
         "color": 7,
@@ -241,8 +241,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2940,
-        -480
+        100,
+        8020
       ],
       "parameters": {
         "color": 7,
@@ -258,8 +258,8 @@
       "name": "Slack1",
       "type": "n8n-nodes-base.slack",
       "position": [
-        4940,
-        -120
+        100,
+        6400
       ],
       "webhookId": "",
       "parameters": {
@@ -288,8 +288,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -460,
-        -480
+        100,
+        8560
       ],
       "parameters": {
         "color": 7,
@@ -305,8 +305,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1180,
-        -480
+        100,
+        8740
       ],
       "parameters": {
         "color": 7,
@@ -322,8 +322,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2940,
-        60
+        100,
+        6940
       ],
       "parameters": {
         "color": 7,
@@ -339,8 +339,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4020,
-        80
+        100,
+        7480
       ],
       "parameters": {
         "color": 5,
@@ -356,8 +356,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4680,
-        -640
+        100,
+        7120
       ],
       "parameters": {
         "color": 7,
@@ -373,8 +373,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4700,
-        80
+        100,
+        7300
       ],
       "parameters": {
         "color": 7,
@@ -390,8 +390,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1000,
-        -280
+        100,
+        6760
       ],
       "parameters": {
         "color": 7,
@@ -407,8 +407,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1900,
-        -720
+        100,
+        8380
       ],
       "parameters": {
         "color": 6,
@@ -424,8 +424,8 @@
       "name": "Google Sheets - Get article monitored database",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -400,
-        120
+        100,
+        4240
       ],
       "parameters": {
         "options": {},
@@ -461,8 +461,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        1280,
-        120
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Retrieve data from RSS feed and Google Sheets\nconst rssItems = items; // Contains RSS articles\nconst sheetItems = $items(\"Set field - existing_url\", 0);\n\n// Extract the links of articles present in Google Sheets\nconst existingUrls = sheetItems.map(entry => entry.json.existing_url);\n\n// Filter RSS articles to keep only those not present in Google Sheets\nconst newArticles = rssItems.filter(rssItem => {\n return !existingUrls.includes(rssItem.json.link);\n});\n\n// If new articles are found, return them\nif (newArticles.length > 0) {\n return newArticles;\n}\n\n// If no new articles, return an informational message\nreturn [{ json: { message: \"No new articles found.\" } }];\n\n"
@@ -475,8 +475,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1960,
-        240
+        100,
+        4780
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -487,8 +487,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        1640,
-        120
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -521,8 +521,8 @@
       "name": "Jina AI - Read URL",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3240,
-        -120
+        100,
+        4600
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.set",
       "onError": "continueRegularOutput",
       "position": [
-        -180,
-        120
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -564,8 +564,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2400,
-        300
+        100,
+        5140
       ],
       "parameters": {
         "options": {}
@@ -584,8 +584,8 @@
       "name": "Set fields - Not relevant articles",
       "type": "n8n-nodes-base.set",
       "position": [
-        3060,
-        480
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -632,8 +632,8 @@
       "name": "Google Sheets - Add relevant articles",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        3480,
-        480
+        100,
+        3880
       ],
       "parameters": {
         "columns": {
@@ -731,8 +731,8 @@
       "name": "Google Sheets - Add relevant article",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        5660,
-        520
+        100,
+        3700
       ],
       "parameters": {
         "columns": {
@@ -830,8 +830,8 @@
       "name": "Set Fields - Relevant Articles",
       "type": "n8n-nodes-base.set",
       "position": [
-        4900,
-        520
+        100,
+        5860
       ],
       "parameters": {
         "options": {},
@@ -885,8 +885,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in 6e2c820d-27da-4d3b-844c-581fb266e04a",
@@ -900,8 +900,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 704de862",
@@ -915,8 +915,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b472f924",
@@ -930,8 +930,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3f8a0ce3",
@@ -945,8 +945,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d72f505d",
@@ -960,8 +960,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6e2c820d",
@@ -975,8 +975,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node baef0ff9",
@@ -990,8 +990,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0dbcc872",
@@ -1005,8 +1005,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0c7024b6",
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Basic LLM Chain**: chainLlm\n- **Schedule Trigger**: scheduleTrigger\n- **RSS Read**: rssFeedRead\n- **Relevance Classification for Topic Monitoring**: textClassifier\n- **Sticky Note**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Google Sheets - Get RSS Feed url followed**: googleSheets\n- **Sticky Note4**: stickyNote\n- **Sticky Note6**: stickyNote\n- ... and 30 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1034,8 +1034,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1049,8 +1049,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1063,8 +1063,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1077,8 +1077,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1092,8 +1092,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1107,8 +1107,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1121,8 +1121,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1135,8 +1135,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1150,8 +1150,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1165,8 +1165,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1179,8 +1179,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1192,8 +1192,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1206,8 +1206,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1219,8 +1219,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1233,8 +1233,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1246,8 +1246,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1260,8 +1260,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack\n\n## Overview\nAutomated workflow: AI-Powered Information Monitoring with OpenAI, Google Sheets, Jina AI and Slack. This workflow integrates 14 different services: textClassifier, stickyNote, httpRequest, code, scheduleTrigger. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1273,8 +1273,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",

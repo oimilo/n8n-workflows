@@ -26,8 +26,8 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        80,
-        340
+        100,
+        1000
       ],
       "parameters": {
         "inputSource": "jsonExample",
@@ -41,8 +41,8 @@
       "name": "LLM Bus",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        400,
-        340
+        940,
+        100
       ],
       "parameters": {
         "text": "You are an AI agent tasked with identifying the (pretty-print) OAuth service name, audience, authorization URI, and token URI.\nThe input is only a name bearing on the OAUth service, e.g.:\n1. Jira.  The name Jira must be resolved to the correlated API service, in this case, Atlassian.  OAuth information can be gleaned from {{ $env.WEBHOOK_URL }}\n2. Sage. This is potentially a vague name.  However, in the context of API and OAuth, it is probably Sage300 the ERP system.  OAuth information can be gleaned from {{ $env.WEBHOOK_URL }}\n3. SAP. This can be the SAP HANA Cloud Platform. Authorization is usually be dedicated URL, e.g., https://<host_name>:<port_number>/sap/bc/sec/oauth2/client/grant/authorization?\n4. Google. This can be the Google API, e.g., {{ $env.WEBHOOK_URL }} with audience as project-id-random-value.apps.googleusercontent.com.\n\nObtaining these details by just knowing the pretty-name of the service might be cumbersome.  Therefore a confidence score, as a probabilistic indication your confidence\nof the data must be calculated.  Express your confidence score on a scale of 1 (absolute certainty) down to almost zero (least certain), i.e., confidence NUMERIC(3, 2) CHECK (confidence >= 0.1 AND confidence <= 1.0).\nIf you can't obtain information, invent the data, but justify your improvisation by assigning a very low confidence score.  You must always return a result, no matter\nhow low your confidence.\n\nThese Instructions comprise a Context Understanding, Information Retrieval, Output Format, an Example, with Accuracy and Verification.  \n1. Context Understanding: The name (as input) value represents the target API or service. You need to identify the service name, audience, authorization URI, and token URI based on the name value. \n2. Information Retrieval: Use reputable sources and official documentation to find the correct service name, audience, authorization URI and token URI.\n3. Output Format: Service Name: [Service Name], [Audience], [Authorization URI], [Token URI], [Details]: (Your choice rationale in about 100 words to justify your answer), and lastly the [Confidence] (probability factor) as a numeric value 0<x≤1andx∈{0.01,0.02,…,1.00}.\n4. Example 1: If the name is Sage, the service is probably something like sage300.yourdomain.com (where the yourdomain is clearly a proprietary name), the authorization and token uri follow the same pattern, e.g., \na. Service Name: Sage 300,\nb. Audience: sage300.yourdomain.com\nc. Authorization URI: {{ $env.WEBHOOK_URL }} \nd. Token URI: {{ $env.WEBHOOK_URL }} \ne. Details: Your domain is embedded in the standard presentation of the audience, authorization uri, and the token uri.  Therefore I substituted the standard representations of the OAuth pattern. \nf. Confidence: 0.90 (=> 0<x≤1andx∈{0.01,0.02,…,1.00})\n5. Example 2: If the name is Jira, the API service is probably Atlassian the elements: \na. Service Name: Atlassian, \nb. Audience: api.atlassian.com\nc. Authorization URI: {{ $env.WEBHOOK_URL }} \nd. Token URI: {{ $env.WEBHOOK_URL }} \ne. Details: I have referenced the Atlassian online API documentation and retrieved the standard presentation of the audience, authorization uri, and the token uri from their documentation. \nf. Confidence: 1 (=> 0<x≤1andx∈{0.01,0.02,…,1.00})\n6. Accuracy and Verification: Double-check the information to ensure it is correct and up-to-date. If the name value is ambiguous or not well-documented, provide the best possible match based on available information, or improvise an answer based on the patterns of OAuth, but assign a low Confidence.\n7. Improvisation when OAuth elements relating to the provided {{ $json.name }} (API service name) cannot be determined with high confidence you should specify common patterns or fallback options for OAuth and perform additional searches to cross-reference multiple sources to improve accuracy.\n",
@@ -65,8 +65,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        640,
-        580
+        1500,
+        100
       ],
       "parameters": {
         "schemaType": "manual",
@@ -80,8 +80,8 @@
       "name": "OpenRouter Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        340,
-        580
+        660,
+        100
       ],
       "parameters": {
         "model": "latitudegames/wayfarer-large-70b-llama-3.3",
@@ -109,8 +109,8 @@
       "name": "Conform JSON",
       "type": "n8n-nodes-base.code",
       "position": [
-        900,
-        340
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "// Extract the relevant information from the original output\nconst items =$input.all();\n// Extract the relevant information from the input\nconst originalText = items[0].json.output.text;\n\n// Parse the text to extract the required fields\nconst lines = originalText.split('\\n');\nconst service_name = lines[0].split(': ')[1];\nconst audience = lines[1].split(': ')[1];\nconst authorization_uri = lines[2].split(': ')[1];\nconst token_uri = lines[3].split(': ')[1];\nconst details = lines[4].split(': ')[1];\nconst confidence = parseFloat(lines[5].split(': ')[1]);\n\n// Return the transformed output\nreturn [\n  {\n    json: {\n      output: {\n        service_name,\n        audience,\n        authorization_uri,\n        token_uri,\n        details,\n        confidence\n      }\n    }\n  }\n];"
@@ -123,8 +123,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        -200
+        100,
+        280
       ],
       "parameters": {
         "color": 4,
@@ -140,8 +140,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        180
+        100,
+        460
       ],
       "parameters": {
         "width": 280,
@@ -156,8 +156,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        300,
-        180
+        380,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -172,8 +172,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        180
+        1220,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -188,8 +188,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        180
+        1780,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -205,8 +205,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1520,
-        -200
+        100,
+        640
       ],
       "parameters": {
         "color": 7,
@@ -222,8 +222,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1520,
-        760
+        100,
+        820
       ],
       "parameters": {
         "color": 6,
@@ -239,8 +239,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Node Types**: 6\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When Executed by Another Workflow**: executeWorkflowTrigger\n- **LLM Bus**: chainLlm\n- **Structured Output Parser**: outputParserStructured\n- **OpenRouter Chat Model**: lmChatOpenRouter\n- **Conform JSON**: code\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Sticky Note4**: stickyNote\n- ... and 2 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -253,8 +253,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -267,8 +267,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -281,8 +281,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -295,8 +295,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -309,8 +309,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2260
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -336,8 +336,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2440
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -349,8 +349,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2620
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -362,8 +362,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        2340,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -376,8 +376,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2800
       ],
       "parameters": {
         "content": "# My workflow\n\n## Overview\nAutomated workflow: My workflow. This workflow integrates 6 different services: stickyNote, code, chainLlm, outputParserStructured, lmChatOpenRouter. It contains 12 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -389,8 +389,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

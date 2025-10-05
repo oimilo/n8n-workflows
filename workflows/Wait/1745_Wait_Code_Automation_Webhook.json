@@ -26,8 +26,8 @@
       "name": "Convert URLs to Items",
       "type": "n8n-nodes-base.code",
       "position": [
-        600,
-        500
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Get the raw input string from the \"Start\" node\nconst input = $('Start').item.json.Competitors;\n\n// Split the string by line breaks and filter out any empty lines\nconst urls = input\n  .split('\\n')\n  .map(url => url.trim())\n  .filter(url => url.length > 0);\n\n// Return the array as output with \"competitor_url\" field\nreturn urls.map(url => ({ json: { competitor_url: url } }));"
@@ -40,8 +40,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.formTrigger",
       "position": [
-        240,
-        500
+        100,
+        7660
       ],
       "webhookId": "dafbc2ba-7397-4f83-b84d-630294e636b0",
       "parameters": {
@@ -94,8 +94,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        880,
-        500
+        100,
+        6400
       ],
       "parameters": {
         "options": {}
@@ -110,8 +110,8 @@
       "onError": "continueErrorOutput",
       "maxTries": 5,
       "position": [
-        1100,
-        340
+        100,
+        4960
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -141,8 +141,8 @@
       "name": "Extract HTML Elements",
       "type": "n8n-nodes-base.code",
       "position": [
-        1300,
-        340
+        100,
+        4600
       ],
       "parameters": {
         "jsCode": "// Function to remove inner HTML tags and decode common HTML entities\nfunction cleanText(text) {\n  // Remove any HTML tags inside the text\n  let cleaned = text.replace(/<\\/?[^>]+(>|$)/g, '');\n\n  // Decode common HTML entities\n  cleaned = cleaned\n    .replace(/&nbsp;/g, ' ')  // Non-breaking space\n    .replace(/&amp;/g, '&')   // Ampersand\n    .replace(/&quot;/g, '\"')  // Double quote\n    .replace(/&lt;/g, '<')    // Less-than\n    .replace(/&gt;/g, '>')    // Greater-than\n    .replace(/&#8217;/g, \"'\")  // Right single quotation mark\n    .replace(/&#8220;/g, '\"')  // Left double quotation mark\n    .replace(/&#8221;/g, '\"')  // Right double quotation mark\n    .replace(/&rsquo;/g, \"'\")  // Right single quotation mark\n    .replace(/&lsquo;/g, \"'\")  // Left single quotation mark\n    .replace(/&rdquo;/g, '\"')  // Right double quotation mark\n    .replace(/&ldquo;/g, '\"')  // Left double quotation mark\n    .replace(/&mdash;/g, '—')  // Em dash\n    .replace(/&ndash;/g, '–')  // En dash\n    .replace(/&hellip;/g, '…') // Ellipsis\n    .replace(/&#(\\d+);/g, (match, dec) => String.fromCharCode(dec)); // Handle numeric entities\n\n  return cleaned.trim();  // Remove extra whitespace\n}\n\n// Function to generate n-grams from text\nfunction generateNgrams(text, n) {\n  // Convert text to lowercase and split into words\n  const words = text.toLowerCase()\n    .replace(/[^\\w\\s]|_/g, ' ')  // Replace punctuation and underscores with spaces\n    .replace(/\\s+/g, ' ')        // Replace multiple spaces with a single space\n    .trim()                       // Remove leading/trailing spaces\n    .split(' ');                  // Split into words\n  \n  // Filter out stop words and very short words (optional)\n  const filteredWords = words.filter(word => word.length > 1);\n  \n  // Generate n-grams\n  const ngrams = [];\n  for (let i = 0; i <= filteredWords.length - n; i++) {\n    ngrams.push(filteredWords.slice(i, i + n).join(' '));\n  }\n  \n  return ngrams;\n}\n\n// Function to count n-grams\nfunction countNgrams(textArray, n) {\n  const ngramCounts = {};\n  \n  textArray.forEach(text => {\n    const ngrams = generateNgrams(text, n);\n    \n    ngrams.forEach(ngram => {\n      ngramCounts[ngram] = (ngramCounts[ngram] || 0) + 1;\n    });\n  });\n  \n  // Convert to array of objects and sort by count (descending)\n  return Object.entries(ngramCounts)\n    .map(([phrase, count]) => ({ phrase, count }))\n    .sort((a, b) => b.count - a.count);\n}\n\n// Initialize an array to store the results for each item\nlet results = [];\n\n// Iterate through all items (each item corresponds to one URL in the loop)\nitems.forEach(item => {\n  // Get the raw HTML content for the current item\n  const html = item.json.data || '';  // Ensure you're getting the correct field where HTML is stored\n\n  // Initialize arrays to store the extracted outline\n  let outline = [];\n  let meta = {};\n  let schemas = [];\n  let headingTexts = []; // Store all heading texts for n-gram analysis\n\n  // Store all headings with their positions to maintain original order\n  let headingsWithPositions = [];\n  \n  // Extract heading content with a more robust approach\n  for (let i = 1; i <= 6; i++) {\n    // This regex pattern matches h1-h6 tags, capturing everything between opening and closing tags\n    // even if there are nested elements\n    const pattern = new RegExp(`<h${i}[^>]*>((?:.|\\n)*?)<\\/h${i}>`, 'gi');\n    let match;\n    \n    while ((match = pattern.exec(html)) !== null) {\n      const fullContent = match[1];\n      const cleanedText = cleanText(fullContent);\n      \n      // Only add non-empty headings\n      if (cleanedText && cleanedText.trim().length > 0) {\n        headingsWithPositions.push({\n          position: match.index,\n          level: i,\n          tag: `h${i}`,\n          text: cleanedText\n        });\n        \n        // Add to headingTexts for n-gram analysis\n        headingTexts.push(cleanedText);\n      }\n    }\n  }\n  \n  // Sort headings by their position in the HTML to maintain the original order\n  headingsWithPositions.sort((a, b) => a.position - b.position);\n  \n  // Process the sorted headings\n  headingsWithPositions.forEach(heading => {\n    // Build the outline based on the heading level with dot-based indentation\n    const indentation = '.'.repeat(heading.level - 1);  // No dots for H1, one for H2, etc.\n    outline.push(`${indentation}${heading.tag.toUpperCase()}: ${heading.text}`);\n  });\n\n  // Generate n-grams (2-gram, 3-gram, and 4-gram) from all headings\n  const ngrams = {\n    '2gram': countNgrams(headingTexts, 2),\n    '3gram': countNgrams(headingTexts, 3),\n    '4gram': countNgrams(headingTexts, 4)\n  };\n  \n  // Filter out n-grams with only one occurrence (optional)\n  // This can be adjusted based on preference\n  const filteredNgrams = {\n    '2gram': ngrams['2gram'].filter(item => item.count > 1),\n    '3gram': ngrams['3gram'].filter(item => item.count > 1),\n    '4gram': ngrams['4gram'].filter(item => item.count > 1)\n  };\n\n  // Extract title tag\n  const titleMatch = html.match(/<title>(.*?)<\\/title>/i);\n  if (titleMatch && titleMatch[1]) {\n    meta.title = cleanText(titleMatch[1]);\n  }\n\n  // Extract meta tags\n  const metaTags = [\n    { name: 'description', regex: /<meta\\s+name=\"description\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'canonical', regex: /<link\\s+rel=\"canonical\"\\s+href=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:locale', regex: /<meta\\s+property=\"og:locale\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:type', regex: /<meta\\s+property=\"og:type\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:title', regex: /<meta\\s+property=\"og:title\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:description', regex: /<meta\\s+property=\"og:description\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:url', regex: /<meta\\s+property=\"og:url\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:site_name', regex: /<meta\\s+property=\"og:site_name\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'article:publisher', regex: /<meta\\s+property=\"article:publisher\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'article:modified_time', regex: /<meta\\s+property=\"article:modified_time\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:image', regex: /<meta\\s+property=\"og:image\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:image:width', regex: /<meta\\s+property=\"og:image:width\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:image:height', regex: /<meta\\s+property=\"og:image:height\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'og:image:type', regex: /<meta\\s+property=\"og:image:type\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'twitter:card', regex: /<meta\\s+name=\"twitter:card\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'twitter:title', regex: /<meta\\s+name=\"twitter:title\"\\s+content=\"([^\"]*)\"[^>]*>/i },\n    { name: 'twitter:site', regex: /<meta\\s+name=\"twitter:site\"\\s+content=\"([^\"]*)\"[^>]*>/i }\n  ];\n\n  // Extract each meta tag\n  metaTags.forEach(tag => {\n    const match = html.match(tag.regex);\n    if (match && match[1]) {\n      meta[tag.name] = cleanText(match[1]);\n    }\n  });\n\n  // Extract all meta tags with name or property attributes (more general approach)\n  const generalMetaRegex = /<meta\\s+(?:name|property)=\"([^\"]*)\"\\s+content=\"([^\"]*)\"[^>]*>/gi;\n  let metaMatch;\n  while ((metaMatch = generalMetaRegex.exec(html)) !== null) {\n    const name = metaMatch[1];\n    const content = cleanText(metaMatch[2]);\n    \n    // Only add if not already captured and has content\n    if (content && !meta[name]) {\n      meta[name] = content;\n    }\n  }\n\n  // Extract JSON-LD schema data\n  const schemaRegex = /<script\\s+type=\"application\\/ld\\+json\"[^>]*>([\\s\\S]*?)<\\/script>/gi;\n  let schemaMatch;\n  \n  while ((schemaMatch = schemaRegex.exec(html)) !== null) {\n    try {\n      const schemaText = schemaMatch[1].trim();\n      if (schemaText) {\n        const schemaData = JSON.parse(schemaText);\n        schemas.push(schemaData);\n      }\n    } catch (e) {\n      // If JSON parsing fails, add the raw text\n      schemas.push({ raw: schemaMatch[1].trim() });\n    }\n  }\n\n  // Add the outline, meta, schema, and ngrams for the current item to the results array\n  results.push({\n    json: {\n      outline: outline,  // Array containing the hierarchy of headings with dot-based indentation\n      meta: Object.keys(meta).length > 0 ? meta : undefined,  // Only include if meta tags were found\n      schema: schemas.length > 0 ? schemas : undefined,  // Only include if schema data was found\n      ngrams: headingTexts.length > 0 ? filteredNgrams : undefined  // Only include if headings were found\n    }\n  });\n});\n\n// Return the results for all items (all URLs in the loop)\nreturn results;"
@@ -155,8 +155,8 @@
       "name": "Set URL Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        1480,
-        340
+        100,
+        7120
       ],
       "parameters": {
         "options": {},
@@ -197,8 +197,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        1100,
-        520
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "let output = '';\n\nfor (const [index, item] of items.entries()) {\n  const data = item.json;\n\n  const formatField = (value) => {\n    if (typeof value === 'string') {\n      try {\n        const parsed = JSON.parse(value);\n        return JSON.stringify(parsed, null, 2); // Pretty print with 2-space indent\n      } catch {\n        return value; // Not JSON, return as-is\n      }\n    }\n    return value;\n  };\n\n  output += `<competitor${index + 1}>\\n`;\n  output += `  <competitor url>\\n    ${data[\"Competitor URL\"]}\\n  </competitor url>\\n\\n`;\n  output += `  <outline>\\n    ${formatField(data[\"Outline\"])}\\n  </outline>\\n\\n`;\n  output += `  <meta>\\n${formatField(data[\"Meta\"])}\\n  </meta>\\n\\n`;\n  output += `  <ngrams>\\n${formatField(data[\"Ngrams\"])}\\n  </ngrams>\\n`;\n  output += `</competitor${index + 1}>\\n\\n`;\n}\n\nreturn [\n  {\n    json: {\n      competitors_data: output.trim()\n    }\n  }\n];\n"
@@ -211,8 +211,8 @@
       "name": "Edit Fields1",
       "type": "n8n-nodes-base.set",
       "position": [
-        1300,
-        520
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -235,8 +235,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        320,
-        880
+        100,
+        5140
       ],
       "parameters": {
         "options": {
@@ -258,8 +258,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        940,
-        720
+        100,
+        8560
       ],
       "webhookId": "2231c6d5-575e-46be-b1e3-6fac3af1a830",
       "parameters": {
@@ -273,8 +273,8 @@
       "name": "Google Gemini Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        920
+        100,
+        5320
       ],
       "parameters": {
         "options": {
@@ -296,8 +296,8 @@
       "name": "Set Competitor Analysis",
       "type": "n8n-nodes-base.set",
       "position": [
-        740,
-        720
+        100,
+        6580
       ],
       "parameters": {
         "options": {},
@@ -320,8 +320,8 @@
       "name": "Set User Intent Analysis",
       "type": "n8n-nodes-base.set",
       "position": [
-        1480,
-        720
+        100,
+        7480
       ],
       "parameters": {
         "options": {},
@@ -344,8 +344,8 @@
       "name": "Wait1",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1660,
-        720
+        100,
+        8740
       ],
       "webhookId": "2231c6d5-575e-46be-b1e3-6fac3af1a830",
       "parameters": {
@@ -359,8 +359,8 @@
       "name": "Google Gemini Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        420,
-        1220
+        100,
+        5500
       ],
       "parameters": {
         "options": {
@@ -376,8 +376,8 @@
       "name": "Competitors Analysis",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        400,
-        720
+        100,
+        280
       ],
       "parameters": {
         "text": "=<target_query>{{ $('Start').first().json['Target Keyword'] }}</target_query>\n<competitors_data>\n{{ $json.competitors_data }}\n</competitors_data>",
@@ -398,8 +398,8 @@
       "name": "User Intent Analysis",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1140,
-        720
+        100,
+        8380
       ],
       "parameters": {
         "text": "=<target_query>{{ $('Start').first().json['Target Keyword'] }}</target_query>",
@@ -420,8 +420,8 @@
       "name": "Synthesis & Gap Analysis",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        500,
-        1060
+        100,
+        8020
       ],
       "parameters": {
         "text": "=<target_query>{{ $('Start').first().json['Target Keyword'] }}</target_query>\n<competitor_analysis_report>\n{{ $('Set Competitor Analysis').first().json['Competitor Analysis Report'] }}\n</competitor_analysis_report>\n<user_intent_report>\n{{ $('Set User Intent Analysis').first().json['User Intent Analysis Report'] }}\n</user_intent_report>",
@@ -442,8 +442,8 @@
       "name": "Set Synthesis & Gap Analysis",
       "type": "n8n-nodes-base.set",
       "position": [
-        840,
-        1060
+        100,
+        6940
       ],
       "parameters": {
         "options": {},
@@ -466,8 +466,8 @@
       "name": "Wait2",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1020,
-        1060
+        100,
+        8920
       ],
       "webhookId": "2231c6d5-575e-46be-b1e3-6fac3af1a830",
       "parameters": {
@@ -481,8 +481,8 @@
       "name": "Google Gemini Chat Model3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1160,
-        1260
+        100,
+        5680
       ],
       "parameters": {
         "options": {
@@ -504,8 +504,8 @@
       "name": "Ideal Page Outline Generation",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1200,
-        1060
+        100,
+        6220
       ],
       "parameters": {
         "text": "=<target_query>{{ $('Start').first().json['Target Keyword'] }}</target_query>\n<synthesis_and_gap_analysis>\n{{ $('Set Synthesis & Gap Analysis').first().json['Synthesis & Gap Analysis'] }}\n</synthesis_and_gap_analysis>\n<is_homepage>{{ $('Start').first().json['Is Homepage?'] }}</is_homepage>\n<brand_name>{{ $('Start').first().json['Brand Name'] }}</brand_name>\n<services_offered>\n{{ $('Start').first().json['Services Offered'] }}\n</services_offered>",
@@ -526,8 +526,8 @@
       "name": "Set Page Outline",
       "type": "n8n-nodes-base.set",
       "position": [
-        1560,
-        1060
+        100,
+        6760
       ],
       "parameters": {
         "options": {},
@@ -550,8 +550,8 @@
       "name": "Wait3",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1740,
-        1060
+        100,
+        9100
       ],
       "webhookId": "2231c6d5-575e-46be-b1e3-6fac3af1a830",
       "parameters": {
@@ -565,8 +565,8 @@
       "name": "Google Gemini Chat Model4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        500,
-        1540
+        100,
+        5860
       ],
       "parameters": {
         "options": {
@@ -582,8 +582,8 @@
       "name": "UX, Conversion & Copywriting Enhancement",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        600,
-        1400
+        100,
+        8200
       ],
       "parameters": {
         "text": "=<target_query>{{ $('Start').first().json['Target Keyword'] }}</target_query>\n<recommended_page_outline>\n{{ $('Set Page Outline').first().json['Page Outline'] }}\n</recommended_page_outline>\n<user_intent_report>\n{{ $('Set User Intent Analysis').first().json['User Intent Analysis Report'] }}\n</user_intent_report>\n<brand_name>{{ $('Start').first().json['Brand Name'] }}</brand_name>\n<services_offered>\n{{ $('Start').first().json['Services Offered'] }}\n</services_offered>",
@@ -604,8 +604,8 @@
       "name": "Set UX & Conversions Enhancements",
       "type": "n8n-nodes-base.set",
       "position": [
-        960,
-        1400
+        100,
+        7300
       ],
       "parameters": {
         "options": {},
@@ -628,8 +628,8 @@
       "name": "Google Gemini Chat Model5",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1100,
-        1560
+        100,
+        6040
       ],
       "parameters": {
         "options": {
@@ -645,8 +645,8 @@
       "name": "Final Service Page Blueprint",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1160,
-        1400
+        100,
+        4780
       ],
       "parameters": {
         "text": "=<target_query>{{ $('Start').first().json['Target Keyword'] }}</target_query>\n<brand_name>{{ $('Start').first().json['Brand Name'] }}</brand_name>\n<services_offered>\n{{ $('Start').first().json['Services Offered'] }}\n</services_offered>\n<is_homepage>{{ $('Start').first().json['Is Homepage?'] }}</is_homepage>\n<competitor_analysis_report>\n{{ $('Set Competitor Analysis').first().json['Competitor Analysis Report'] }}\n</competitor_analysis_report>\n<user_intent_report>\n{{ $('Set User Intent Analysis').first().json['User Intent Analysis Report'] }}\n</user_intent_report>\n<synthesis_and_gap_analysis>\n{{ $('Set Synthesis & Gap Analysis').first().json['Synthesis & Gap Analysis'] }}\n</synthesis_and_gap_analysis>\n<recommended_page_outline>\n{{ $('Set Page Outline').first().json['Page Outline'] }}\n</recommended_page_outline>\n<ux_conversion_copy_recommendations>\n{{ $json['UX & Conversions Enhancements'] }}\n</ux_conversion_copy_recommendations>",
@@ -667,8 +667,8 @@
       "name": "Edit Fields2",
       "type": "n8n-nodes-base.set",
       "position": [
-        1520,
-        1400
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -691,8 +691,8 @@
       "name": "Convert to File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        1740,
-        1400
+        100,
+        640
       ],
       "parameters": {
         "options": {
@@ -709,8 +709,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        420,
-        500
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -745,8 +745,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        0
+        100,
+        7840
       ],
       "parameters": {
         "width": 1020,
@@ -762,8 +762,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in ac532215-626d-4690-9c99-d11f09fa86dc",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ac532215",
@@ -792,8 +792,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 715317ae",
@@ -807,8 +807,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 998ac0b0",
@@ -822,8 +822,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8ac6dc7a",
@@ -837,8 +837,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0282d60c",
@@ -852,8 +852,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node bd098536",
@@ -867,8 +867,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1e9482a5",
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 780a5e01",
@@ -897,8 +897,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Convert URLs to Items**: code\n- **Start**: formTrigger\n- **Loop Over Items**: splitInBatches\n- **Get URL HTML**: httpRequest\n- **Extract HTML Elements**: code\n- **Set URL Data**: set\n- **Code**: code\n- **Edit Fields1**: set\n- **Google Gemini Chat Model**: lmChatGoogleGemini\n- **Wait**: wait\n- ... and 32 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -911,8 +911,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -926,8 +926,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -940,8 +940,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -954,8 +954,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -969,8 +969,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -984,8 +984,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -998,8 +998,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1012,8 +1012,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1027,8 +1027,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1042,8 +1042,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1056,8 +1056,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1069,8 +1069,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1083,8 +1083,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1096,8 +1096,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1110,8 +1110,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1123,8 +1123,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1137,8 +1137,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10900
       ],
       "parameters": {
         "content": "# High-Level Service Page SEO Blueprint Report\n\n## Overview\nAutomated workflow: High-Level Service Page SEO Blueprint Report. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, formTrigger, wait. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1150,8 +1150,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",

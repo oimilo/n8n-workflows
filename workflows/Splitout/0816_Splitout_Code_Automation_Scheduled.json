@@ -17,8 +17,8 @@
       "name": "Spam Detection",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        260,
-        100
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -44,8 +44,8 @@
       "name": "Get Recent Messages",
       "type": "n8n-nodes-base.discord",
       "position": [
-        -1020,
-        40
+        100,
+        2440
       ],
       "webhookId": "7aa72e1f-06f4-4fe8-82ec-ad0e87a5b6b9",
       "parameters": {
@@ -81,8 +81,8 @@
       "name": "Only Once",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        -820,
-        40
+        100,
+        4060
       ],
       "parameters": {
         "options": {
@@ -99,8 +99,8 @@
       "name": "Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        240,
-        260
+        100,
+        3340
       ],
       "parameters": {
         "model": {
@@ -125,8 +125,8 @@
       "name": "Warn User",
       "type": "n8n-nodes-base.discord",
       "position": [
-        2880,
-        20
+        100,
+        6400
       ],
       "webhookId": "88bdd468-8eb9-41b8-b017-1deec91c9498",
       "parameters": {
@@ -159,8 +159,8 @@
       "name": "Warn User Only",
       "type": "n8n-nodes-base.discord",
       "position": [
-        2540,
-        180
+        100,
+        6580
       ],
       "webhookId": "88bdd468-8eb9-41b8-b017-1deec91c9498",
       "parameters": {
@@ -193,8 +193,8 @@
       "name": "Group By User",
       "type": "n8n-nodes-base.code",
       "position": [
-        -540,
-        100
+        100,
+        2620
       ],
       "parameters": {
         "jsCode": "const groupByUser = {};\n\nfor (const item of $input.all()) {\n  if (!groupByUser[item.json.author.id]) {\n    groupByUser[item.json.author.id] = [];\n  }\n  groupByUser[item.json.author.id].push(item.json);\n}\n\nreturn { json : { groupByUser } };"
@@ -207,8 +207,8 @@
       "name": "For Each User...",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -160,
-        100
+        100,
+        2080
       ],
       "parameters": {
         "options": {}
@@ -221,8 +221,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        -360,
-        100
+        100,
+        4960
       ],
       "parameters": {
         "options": {},
@@ -237,7 +237,7 @@
       "type": "n8n-nodes-base.code",
       "position": [
         100,
-        100
+        3160
       ],
       "parameters": {
         "jsCode": "const messages = $input.first().json;\nreturn Object.keys(messages).map(key => messages[key]);"
@@ -250,8 +250,8 @@
       "name": "Notify Moderators with Send & Wait",
       "type": "n8n-nodes-base.discord",
       "position": [
-        1980,
-        180
+        100,
+        3880
       ],
       "webhookId": "644a85f3-5add-4321-9d8a-bcc4acfa33f1",
       "parameters": {
@@ -308,8 +308,8 @@
       "name": "Flag as Spam",
       "type": "n8n-nodes-base.set",
       "position": [
-        620,
-        0
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -333,8 +333,8 @@
       "name": "Flag as Not Spam",
       "type": "n8n-nodes-base.set",
       "position": [
-        620,
-        200
+        100,
+        1720
       ],
       "parameters": {
         "options": {},
@@ -359,8 +359,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        800,
-        100
+        100,
+        2980
       ],
       "parameters": {},
       "typeVersion": 3,
@@ -371,8 +371,8 @@
       "name": "Spam Messages Only",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1060,
-        100
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -407,8 +407,8 @@
       "name": "Has Flagged Messages?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1240,
-        180
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -442,8 +442,8 @@
       "name": "Get Message IDs",
       "type": "n8n-nodes-base.code",
       "position": [
-        2540,
-        20
+        100,
+        2260
       ],
       "parameters": {
         "jsCode": "return $('When Executed by Another Workflow').all().map(item => ({ json: {\n  id: item.json.id,\n  channel_id: item.json.channel_id\n}}))"
@@ -456,8 +456,8 @@
       "name": "Delete Messages",
       "type": "n8n-nodes-base.discord",
       "position": [
-        2720,
-        20
+        100,
+        100
       ],
       "webhookId": "6fa8bb1c-c5b7-4498-af63-dbe43691e602",
       "parameters": {
@@ -490,8 +490,8 @@
       "name": "Receive Instructions",
       "type": "n8n-nodes-base.switch",
       "position": [
-        2180,
-        180
+        100,
+        4240
       ],
       "parameters": {
         "rules": {
@@ -582,8 +582,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1280,
-        -160
+        100,
+        5140
       ],
       "parameters": {
         "color": 7,
@@ -599,8 +599,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -640,
-        -160
+        100,
+        5320
       ],
       "parameters": {
         "color": 7,
@@ -616,8 +616,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        -160
+        100,
+        5500
       ],
       "parameters": {
         "color": 7,
@@ -633,8 +633,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1680,
-        -160
+        100,
+        5680
       ],
       "parameters": {
         "color": 7,
@@ -650,8 +650,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2440,
-        -160
+        100,
+        5860
       ],
       "parameters": {
         "color": 7,
@@ -667,8 +667,8 @@
       "name": "Moderation Subworkflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        1460,
-        200
+        100,
+        3520
       ],
       "parameters": {
         "options": {
@@ -696,8 +696,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        -160
+        100,
+        6040
       ],
       "parameters": {
         "color": 7,
@@ -713,8 +713,8 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        1780,
-        180
+        100,
+        6760
       ],
       "parameters": {
         "inputSource": "passthrough"
@@ -727,8 +727,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1700,
-        -580
+        100,
+        6220
       ],
       "parameters": {
         "width": 380,
@@ -743,8 +743,8 @@
       "name": "No Action Taken",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2540,
-        340
+        100,
+        3700
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -755,8 +755,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1220,
-        40
+        100,
+        4420
       ],
       "parameters": {
         "rule": {
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 74420874",
@@ -791,8 +791,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 36923da1",
@@ -806,8 +806,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node af01bb60",
@@ -821,8 +821,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 04e9f167",
@@ -836,8 +836,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 762e3a5e",
@@ -851,8 +851,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fc43a315",
@@ -866,8 +866,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Node Types**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Spam Detection**: textClassifier\n- **Get Recent Messages**: discord\n- **Only Once**: removeDuplicates\n- **Model**: lmChatOpenAi\n- **Warn User**: discord\n- **Warn User Only**: discord\n- **Group By User**: code\n- **For Each User...**: splitInBatches\n- **Split Out**: splitOut\n- **Message to List**: code\n- ... and 26 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -894,8 +894,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -908,8 +908,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -922,8 +922,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -936,8 +936,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -950,8 +950,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -963,8 +963,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -976,8 +976,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -989,8 +989,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1003,8 +1003,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Textclassifier Workflow\n\n## Overview\nAutomated workflow: Textclassifier Workflow. This workflow integrates 18 different services: textClassifier, filter, stickyNote, code, scheduleTrigger. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1016,8 +1016,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        680,
-        380
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -47,8 +47,8 @@
       "name": "Basic LLM Chain",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        640,
-        220
+        100,
+        100
       ],
       "parameters": {
         "text": "=ini ada base64 invoice rangkumkan Pengeluaran dari invoice tersebut Nama Barang jumlah dan Pengeluaran masing masing barang dan total, outputnya jangan panjang panjang saya cukup berikan \n\ndate: DD-MM-YYYY ( Jika dari OCR tidak ada tanggal ambil tanggal hari ini )\nid:\nname:\n qty: \nprice:\n total:\ncategory:\ntax : (jika di total berbeda dengan item brati ada pajak nya hitungkan juga pajaknya masukan kesini)\n\nuntuk pilihan categorynya : Food & Beverage / Transportation / Utilities / Shopping / Healthcare / Entertaiment / Housing / Education\n\ndalam bentuk JSON array object, berikan juga key message summary untuk rangkuman, berikan rangkauman singkat total pengeluaran dan barang apa saja yang dibeli serta jumlah nya berikan juga pajaknya",
@@ -71,8 +71,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        0
+        100,
+        3520
       ],
       "parameters": {
         "width": 1703,
@@ -87,8 +87,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        620
+        100,
+        3700
       ],
       "parameters": {
         "color": 5,
@@ -104,8 +104,8 @@
       "name": "Schedule Trigger | for send chart report",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        80,
-        880
+        100,
+        2800
       ],
       "parameters": {
         "rule": {
@@ -122,8 +122,8 @@
       "name": "Get Recent Data from Notions",
       "type": "n8n-nodes-base.notion",
       "position": [
-        400,
-        940
+        100,
+        2080
       ],
       "parameters": {
         "filters": {
@@ -161,8 +161,8 @@
       "name": "Summarize Transaction Data",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        760,
-        920
+        100,
+        5860
       ],
       "parameters": {
         "options": {},
@@ -184,8 +184,8 @@
       "name": "Generate Chart",
       "type": "n8n-nodes-base.quickChart",
       "position": [
-        1200,
-        900
+        100,
+        1720
       ],
       "parameters": {
         "data": "={{ $json.chart.data.datasets[0].data }}",
@@ -202,8 +202,8 @@
       "name": "Send Chart Image to Group or Private Chat",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1460,
-        760
+        100,
+        2980
       ],
       "webhookId": "66cce6e1-819c-487b-b8ad-3f02aebd40cb",
       "parameters": {
@@ -229,8 +229,8 @@
       "name": "Convert Data to JSON chart payload",
       "type": "n8n-nodes-base.code",
       "position": [
-        1080,
-        900
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "const labels = [];\nconst values = [];\n\nfor (const item of items) {\n  labels.push(item.json.property_category);\n  values.push(item.json.sum_property_total);\n}\n\nreturn [\n  {\n    json: {\n      chart: {\n        type: 'bar',\n        data: {\n          labels,\n          datasets: [\n            {\n              label: 'Spending by Category',\n              data: values,\n              backgroundColor: 'rgba(54, 162, 235, 0.6)',\n              borderColor: 'rgba(54, 162, 235, 1)',\n              borderWidth: 1\n            }\n          ]\n        },\n        options: {\n          plugins: {\n            title: {\n              display: true,\n              text: 'Spending Summary by Category'\n            }\n          },\n          scales: {\n            y: {\n              beginAtZero: true\n            }\n          }\n        }\n      }\n    }\n  }\n];"
@@ -243,8 +243,8 @@
       "name": "Telegram Trigger | When recive photo",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        160,
-        160
+        100,
+        6220
       ],
       "webhookId": "cac4ce91-ed1f-42ea-aebe-97ac3612aea6",
       "parameters": {
@@ -267,8 +267,8 @@
       "name": "Get Image Info",
       "type": "n8n-nodes-base.editImage",
       "position": [
-        460,
-        160
+        100,
+        1900
       ],
       "parameters": {
         "operation": "information"
@@ -281,8 +281,8 @@
       "name": "Parse To your object | Table",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        460
+        100,
+        2440
       ],
       "parameters": {
         "schemaType": "manual",
@@ -296,8 +296,8 @@
       "name": "Split Out | data transaction",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1120,
-        40
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -311,8 +311,8 @@
       "name": "Sendback to chat and give summarize text",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1480,
-        400
+        100,
+        3160
       ],
       "webhookId": "f90475fa-69cd-4e19-bc93-bffdceae8324",
       "parameters": {
@@ -336,8 +336,8 @@
       "name": "Record To Notion Database",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1580,
-        120
+        100,
+        2620
       ],
       "parameters": {
         "options": {},
@@ -396,8 +396,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        40,
-        60
+        100,
+        4420
       ],
       "parameters": {
         "color": 3,
@@ -413,8 +413,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        600,
-        60
+        100,
+        4600
       ],
       "parameters": {
         "color": 5,
@@ -430,8 +430,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        980,
-        340
+        100,
+        4780
       ],
       "parameters": {
         "color": 5,
@@ -447,8 +447,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1320,
-        0
+        100,
+        4960
       ],
       "parameters": {
         "color": 2,
@@ -464,8 +464,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        760
+        100,
+        5140
       ],
       "parameters": {
         "height": 280,
@@ -479,8 +479,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        320,
-        760
+        100,
+        5320
       ],
       "parameters": {
         "color": 2,
@@ -496,8 +496,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        660,
-        740
+        100,
+        5500
       ],
       "parameters": {
         "width": 320,
@@ -512,8 +512,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1040,
-        740
+        100,
+        5680
       ],
       "parameters": {
         "width": 300,
@@ -528,8 +528,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1380,
-        640
+        100,
+        3880
       ],
       "parameters": {
         "color": 6,
@@ -545,8 +545,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1320,
-        280
+        100,
+        4060
       ],
       "parameters": {
         "color": 6,
@@ -562,8 +562,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        40,
-        360
+        100,
+        4240
       ],
       "parameters": {
         "color": 7,
@@ -579,8 +579,8 @@
       "name": "Telegram",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        320,
-        160
+        100,
+        6040
       ],
       "webhookId": "6e801e0b-72d1-42a9-ac47-61ac113a01d2",
       "parameters": {
@@ -602,8 +602,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3792ae58",
@@ -617,8 +617,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6b7c67ee",
@@ -632,8 +632,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4ad8c9c9",
@@ -647,8 +647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2a42bc4b",
@@ -662,8 +662,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8f6f0fdb",
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Gemini Chat Model**: lmChatGoogleGemini\n- **Basic LLM Chain**: chainLlm\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Schedule Trigger | for send chart report**: scheduleTrigger\n- **Get Recent Data from Notions**: notion\n- **Summarize Transaction Data**: summarize\n- **Generate Chart**: quickChart\n- **Send Chart Image to Group or Private Chat**: telegram\n- **Convert Data to JSON chart payload**: code\n- ... and 23 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -691,8 +691,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -705,8 +705,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -719,8 +719,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -733,8 +733,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -761,8 +761,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -800,8 +800,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -814,8 +814,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports\n\n## Overview\nAutomated workflow: N8N Financial Tracker Telegram Invoices to Notion with AI Summaries & Reports. This workflow integrates 14 different services: stickyNote, telegramTrigger, telegram, code, lmChatGoogleGemini. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -827,8 +827,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Workflow execution error",

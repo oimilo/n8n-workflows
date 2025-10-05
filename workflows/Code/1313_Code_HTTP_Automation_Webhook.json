@@ -26,8 +26,8 @@
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        2760,
-        540
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -68,8 +68,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2320,
-        760
+        100,
+        9640
       ],
       "parameters": {
         "width": 300,
@@ -84,8 +84,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2660,
-        420
+        100,
+        7840
       ],
       "parameters": {
         "color": 7,
@@ -102,8 +102,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        3440,
-        540
+        100,
+        6400
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -131,8 +131,8 @@
       "name": "Compose Prompts",
       "type": "n8n-nodes-base.set",
       "position": [
-        2760,
-        980
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -155,8 +155,8 @@
       "name": "Extract MetaData Object",
       "type": "n8n-nodes-base.set",
       "position": [
-        3780,
-        540
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -179,8 +179,8 @@
       "name": "Get Prompt by Prompt Type",
       "type": "n8n-nodes-base.code",
       "position": [
-        3100,
-        980
+        100,
+        6220
       ],
       "parameters": {
         "jsCode": "// Get the XML content from the input\nconst xmlContent = $input.first().json.content;\n\n// Get the tag name from the Config node\nconst tagName = $node[\"Config\"].json.prompt_type;\n\n// Create regex patterns for both prompt and model within the main tag\nconst promptRegex = new RegExp(`<${tagName}>[\\\\s\\\\S]*?<prompt>([\\\\s\\\\S]*?)</prompt>[\\\\s\\\\S]*?</${tagName}>`, \"i\");\nconst modelRegex = new RegExp(`<${tagName}>[\\\\s\\\\S]*?<model>([\\\\s\\\\S]*?)</model>[\\\\s\\\\S]*?</${tagName}>`, \"i\");\n\n// Use the match method to apply the regex patterns\nconst promptMatch = xmlContent.match(promptRegex);\nconst modelMatch = xmlContent.match(modelRegex);\n\n// Create the output item with proper structure\nlet outputItem = {\n  json: {\n    prompt: null,\n    model: null\n  }\n};\n\n// Extract prompt content if found\nif (promptMatch) {\n  outputItem.json.prompt = promptMatch[1].trim();\n}\n\n// Extract model content if found\nif (modelMatch) {\n  outputItem.json.model = modelMatch[1].trim();\n}\n\n// Return the properly structured item\nreturn [outputItem];\n"
@@ -193,8 +193,8 @@
       "name": "Define Audience Meta Prompt",
       "type": "n8n-nodes-base.set",
       "position": [
-        3100,
-        540
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -217,8 +217,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3340,
-        420
+        100,
+        10000
       ],
       "parameters": {
         "color": 3,
@@ -234,8 +234,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3340,
-        860
+        100,
+        10180
       ],
       "parameters": {
         "color": 3,
@@ -251,8 +251,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3000,
-        420
+        100,
+        10540
       ],
       "parameters": {
         "color": 7,
@@ -268,8 +268,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3680,
-        420
+        100,
+        10720
       ],
       "parameters": {
         "color": 7,
@@ -285,8 +285,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2660,
-        860
+        100,
+        10900
       ],
       "parameters": {
         "color": 7,
@@ -302,8 +302,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3000,
-        860
+        100,
+        8200
       ],
       "parameters": {
         "color": 7,
@@ -320,8 +320,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        3440,
-        980
+        100,
+        6580
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -349,8 +349,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2320,
-        420
+        100,
+        8020
       ],
       "parameters": {
         "color": 4,
@@ -366,8 +366,8 @@
       "name": "Save to Google Drive as Text File",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        3780,
-        1320
+        100,
+        7300
       ],
       "parameters": {
         "name": "={{ $('Start Workflow').item.json['YouTube Video Id'] }} - {{ $now }}",
@@ -400,8 +400,8 @@
       "name": "Send to Gmail as HTML",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        4120,
-        1320
+        100,
+        7480
       ],
       "webhookId": "ccf34c87-14a3-4103-96fb-595cf9fa0636",
       "parameters": {
@@ -426,8 +426,8 @@
       "name": "Convert Markdown to HTML",
       "type": "n8n-nodes-base.markdown",
       "position": [
-        3780,
-        980
+        100,
+        460
       ],
       "parameters": {
         "mode": "markdownToHtml",
@@ -442,8 +442,8 @@
       "name": "Provide YouTube Information to User as HTML",
       "type": "n8n-nodes-base.form",
       "position": [
-        4120,
-        980
+        100,
+        7120
       ],
       "webhookId": "49b5f9c9-e4c2-4cc4-b01c-c27b1cdba918",
       "parameters": {
@@ -459,8 +459,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3340,
-        320
+        100,
+        9820
       ],
       "parameters": {
         "color": 5,
@@ -476,8 +476,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3340,
-        760
+        100,
+        10360
       ],
       "parameters": {
         "color": 5,
@@ -493,8 +493,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3680,
-        860
+        100,
+        8380
       ],
       "parameters": {
         "color": 7,
@@ -510,8 +510,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3680,
-        1200
+        100,
+        8560
       ],
       "parameters": {
         "color": 7,
@@ -527,8 +527,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4020,
-        1200
+        100,
+        8740
       ],
       "parameters": {
         "color": 7,
@@ -544,8 +544,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4020,
-        860
+        100,
+        8920
       ],
       "parameters": {
         "color": 4,
@@ -561,8 +561,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2280,
-        -120
+        100,
+        9100
       ],
       "parameters": {
         "color": 7,
@@ -578,8 +578,8 @@
       "name": "Start Workflow",
       "type": "n8n-nodes-base.formTrigger",
       "position": [
-        2420,
-        540
+        100,
+        7660
       ],
       "webhookId": "92148b0b-bbf7-4ce9-80a2-768207adee7b",
       "parameters": {
@@ -632,8 +632,8 @@
       "name": "Create YouTube API URL",
       "type": "n8n-nodes-base.code",
       "position": [
-        3100,
-        100
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "// Define the base URL for the YouTube Data API\nconst BASE_URL = '{{ $env.API_BASE_URL }}';\n\n// Get the first input item\nconst item = $input.first();\n\n// Extract the videoId and google_api_key from the input JSON\nconst VIDEO_ID = item.json.video_id;\nconst GOOGLE_API_KEY = item.json.google_api_key; // Dynamically retrieve API key\n\nif (!VIDEO_ID) {\n  throw new Error('The video ID parameter is empty.');\n}\n\nif (!GOOGLE_API_KEY) {\n  throw new Error('The Google API Key is missing.');\n}\n\n// Construct the API URL with the video ID and dynamically retrieved API key\nconst youtubeUrl = `${BASE_URL}?part=snippet,contentDetails,status,statistics,player,topicDetails&id=${VIDEO_ID}&key=${GOOGLE_API_KEY}`;\n\n// Return the constructed URL\nreturn [\n  {\n    json: {\n      youtubeUrl: youtubeUrl,\n    },\n  },\n];\n"
@@ -646,8 +646,8 @@
       "name": "Get YouTube Video Details",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3440,
-        100
+        100,
+        6760
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -661,8 +661,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3340,
-        -20
+        100,
+        9280
       ],
       "parameters": {
         "color": 3,
@@ -678,8 +678,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        4100,
-        540
+        100,
+        6940
       ],
       "parameters": {
         "mode": "combine",
@@ -694,8 +694,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3000,
-        -20
+        100,
+        9460
       ],
       "parameters": {
         "color": 7,
@@ -712,8 +712,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in fdc9aeb2-35b4-4f33-9438-00a10f0cb0d5",
@@ -727,8 +727,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in a00048cb-e30c-4b14-9dd3-b986d2ee5f9c",
@@ -742,8 +742,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in 17daf9d1-4bee-4632-b929-0696e71b9fa2",
@@ -757,8 +757,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fdc9aeb2",
@@ -772,8 +772,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a00048cb",
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e243fe41",
@@ -802,8 +802,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 17daf9d1",
@@ -817,8 +817,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11440
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Config**: set\n- **Sticky Note2**: stickyNote\n- **Sticky Note**: stickyNote\n- **Get Video Audience MetaData**: httpRequest\n- **Compose Prompts**: set\n- **Extract MetaData Object**: set\n- **Get Prompt by Prompt Type**: code\n- **Define Audience Meta Prompt**: set\n- **Sticky Note4**: stickyNote\n- **Sticky Note5**: stickyNote\n- ... and 30 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -831,8 +831,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -846,8 +846,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -861,8 +861,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -876,8 +876,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11620
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -890,8 +890,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11800
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -904,8 +904,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -919,8 +919,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -934,8 +934,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -949,8 +949,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -964,8 +964,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -979,8 +979,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -994,8 +994,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1008,8 +1008,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1022,8 +1022,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1037,8 +1037,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1052,8 +1052,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1067,8 +1067,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1082,8 +1082,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1097,8 +1097,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1112,8 +1112,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1126,8 +1126,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1139,8 +1139,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1153,8 +1153,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1167,8 +1167,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1181,8 +1181,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1194,8 +1194,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1208,8 +1208,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1222,8 +1222,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1236,8 +1236,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1249,8 +1249,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1263,8 +1263,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI\n\n## Overview\nAutomated workflow: 🎥 Analyze YouTube Video for Summaries, Transcripts & Content + Google Gemini AI. This workflow integrates 11 different services: stickyNote, httpRequest, markdown, formTrigger, code. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1276,8 +1276,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Workflow execution error",

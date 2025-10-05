@@ -26,8 +26,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        80,
-        680
+        100,
+        10000
       ],
       "webhookId": "891ad1cd-6a50-4a88-8789-95680c78f14c",
       "parameters": {
@@ -43,8 +43,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        520,
-        680
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "let myCookies = {};\nlet cookies = [];\n\ncookies = $input.item.json.headers.cookie.split(';')\nfor (item of cookies ) {\n  myCookies[item.split('=')[0].trim()]=item.split('=')[1].trim();\n}\n\nreturn myCookies;"
@@ -58,8 +58,8 @@
       "name": "user info",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1220,
-        760
+        100,
+        12880
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -83,8 +83,8 @@
       "name": "send back login page",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1900,
-        980
+        100,
+        12520
       ],
       "parameters": {
         "options": {},
@@ -99,8 +99,8 @@
       "name": "IF token is present",
       "type": "n8n-nodes-base.if",
       "position": [
-        940,
-        820
+        100,
+        8020
       ],
       "parameters": {
         "conditions": {
@@ -121,8 +121,8 @@
       "name": "Welcome page",
       "type": "n8n-nodes-base.html",
       "position": [
-        1720,
-        660
+        100,
+        10180
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n\n<html>\n<head>\n  <meta charset=\"UTF-8\" />\n  <title>My HTML document</title>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Welcome {{$('user info').item.json.email }} </h1>\n  </div>\n</body>\n</html>\n\n<style>\n.container {\n  background-color: #ffffff;\n  text-align: center;\n  padding: 16px;\n  border-radius: 8px;\n}\n\nh1 {\n  color: #ff6d5a;\n  font-size: 24px;\n  font-weight: bold;\n  padding: 8px;\n}\n\nh2 {\n  color: #909399;\n  font-size: 18px;\n  font-weight: bold;\n  padding: 8px;\n}\n</style>\n"
@@ -135,8 +135,8 @@
       "name": "send back welcome page",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1920,
-        660
+        100,
+        12700
       ],
       "parameters": {
         "options": {},
@@ -151,8 +151,8 @@
       "name": "IF user info ok",
       "type": "n8n-nodes-base.if",
       "position": [
-        1400,
-        760
+        100,
+        8200
       ],
       "parameters": {
         "conditions": {
@@ -173,8 +173,8 @@
       "name": "login form",
       "type": "n8n-nodes-base.html",
       "position": [
-        1700,
-        980
+        100,
+        12340
       ],
       "parameters": {
         "html": "<!-- Thanks to {{ $env.WEBHOOK_URL }} -->\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Login</title>\n  </head>\n  <style>\n.container {\n  background-color: #ffffff;\n  text-align: center;\n  padding: 16px;\n  border-radius: 8px;\n}\n\nh1 {\n  color: #ff6d5a;\n  font-size: 24px;\n  font-weight: bold;\n  padding: 8px;\n}\n\nh2 {\n  color: #909399;\n  font-size: 18px;\n  font-weight: bold;\n  padding: 8px;\n}\n</style>\n  <body>\n    <div id=\"result\"></div>\n    <script>\n    const authorizeEndpoint = \"{{ $('Set variables : auth, token, userinfo, client id, scope').item.json.auth_endpoint }}\";\n    const tokenEndpoint = \"{{ $('Set variables : auth, token, userinfo, client id, scope').item.json.token_endpoint }}\";\n    const clientId = \"{{ $('Set variables : auth, token, userinfo, client id, scope').item.json.client_id }}\";\n    const scope = \"{{ $('Set variables : auth, token, userinfo, client id, scope').item.json.scope }}\";\n    const usePKCE = {{ $('Set variables : auth, token, userinfo, client id, scope').item.json.PKCE }};\n        if (window.location.search) {\n            var args = new URLSearchParams(window.location.search);\n            var code = args.get(\"code\");\n\n            if (code) {\n                var xhr = new XMLHttpRequest();\n\n                xhr.onload = function() {\n                    var response = xhr.response;\n                    var message;\n\n                    if (xhr.status == 200) {\n                        message = \"Access Token: \" + response.access_token;\n                        document.cookie = \"access_token=\"+response.access_token;\n                        location.reload();\n                    }\n                    else {\n                        message = \"Error: \" + response.error_description + \" (\" + response.error + \")\";\n                    }\n\n                    document.getElementById(\"result\").innerHTML = message;\n                };\n                xhr.responseType = 'json';\n                xhr.open(\"POST\", tokenEndpoint, true);\n                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');\n                xhr.send(new URLSearchParams({\n                    client_id: clientId,\n                    code_verifier: window.sessionStorage.getItem(\"code_verifier\"),\n                    grant_type: \"authorization_code\",\n                    redirect_uri: location.href.replace(location.search, ''),\n                    code: code\n                }));\n            }\n        }\n        async function generateCodeChallenge(codeVerifier) {\n            var digest = await crypto.subtle.digest(\"SHA-256\",\n                new TextEncoder().encode(codeVerifier));\n\n            return btoa(String.fromCharCode(...new Uint8Array(digest)))\n                .replace(/=/g, '').replace(/\\+/g, '-').replace(/\\//g, '_')\n        }\n\n        function generateRandomString(length) {\n            var text = \"\";\n            var possible = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\n\n            for (var i = 0; i < length; i++) {\n                text += possible.charAt(Math.floor(Math.random() * possible.length));\n            }\n\n            return text;\n        }\n\n        if (!crypto.subtle) {\n            document.writeln('<p>' +\n                    '<b>WARNING:</b> The script will fall back to using plain code challenge as crypto is not available.</p>' +\n                    '<p>Javascript crypto services require that this site is served in a <a href=\"{{ $env.WEBHOOK_URL }}\">secure context</a>; ' +\n                    'either from <b>(*.)localhost</b> or via <b>https</b>. </p>' +\n                    '<p> You can add an entry to /etc/hosts like \"127.0.0.1 public-test-client.localhost\" and reload the site from there, enable SSL using something like <a href=\"{{ $env.WEBHOOK_URL }}\">letsencypt</a>, or refer to this <a href=\"{{ $env.WEBHOOK_URL }}\">stackoverflow article</a> for more alternatives.</p>' +\n                    '<p>If Javascript crypto is available this message will disappear.</p>')\n        }\n\n      var codeVerifier = generateRandomString(64);\n\n            const challengeMethod = crypto.subtle ? \"S256\" : \"plain\"\n\n            Promise.resolve()\n                .then(() => {\n                    if (challengeMethod === 'S256') {\n                        return generateCodeChallenge(codeVerifier)\n                    } else {\n                        return codeVerifier\n                    }\n                })\n                .then(function(codeChallenge) {\n                    window.sessionStorage.setItem(\"code_verifier\", codeVerifier);\n\n                    var redirectUri = window.location.href.split('?')[0];\n                    var args = new URLSearchParams({\n                        response_type: \"code\",\n                        client_id: clientId,\n                        redirect_uri: redirectUri,\n                        scope: scope,\n                        state: generateRandomString(16)\n                    });\n                    if(usePKCE){\n                      args.append(\"code_challenge_method\", challengeMethod);\n                      args.append(\"code_challenge\", codeChallenge);\n                    }\n                window.location = authorizeEndpoint + \"?\" + args;\n            });\n    </script>\n  </body>\n</html>"
@@ -187,8 +187,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        460
+        100,
+        8740
       ],
       "parameters": {
         "width": 510,
@@ -203,8 +203,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1640,
-        480
+        100,
+        8920
       ],
       "parameters": {
         "content": "At this point the user is authenticated, you have access to his profile from the user info result and you continue doing things"
@@ -217,8 +217,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        980
+        100,
+        9100
       ],
       "parameters": {
         "width": 776,
@@ -233,8 +233,8 @@
       "name": "Set variables : auth, token, userinfo, client id, scope",
       "type": "n8n-nodes-base.set",
       "position": [
-        320,
-        680
+        100,
+        8560
       ],
       "parameters": {
         "values": {
@@ -285,8 +285,8 @@
       "name": "IF we have code in URI and not in PKCE mode",
       "type": "n8n-nodes-base.if",
       "position": [
-        700,
-        680
+        100,
+        8380
       ],
       "parameters": {
         "conditions": {
@@ -311,8 +311,8 @@
       "name": "get access_token from /token endpoint with code",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        940,
-        640
+        100,
+        12160
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -354,8 +354,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in da0c6b83-9c8c-431b-beaa-66b5343b21c5",
@@ -369,8 +369,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in 7867d061-c0e3-4359-90ac-a4536c948db2",
@@ -384,8 +384,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in df0e9896-0670-49cc-b7c6-140c234036b4",
@@ -399,8 +399,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in c1448e12-4292-402b-bf9d-0ab555bbc734",
@@ -414,8 +414,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in 99c8fa5d-3173-4371-9742-6014eca6e7fe",
@@ -429,8 +429,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node da0c6b83",
@@ -444,8 +444,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7867d061",
@@ -459,8 +459,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node df0e9896",
@@ -474,8 +474,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c1448e12",
@@ -489,8 +489,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 99c8fa5d",
@@ -504,8 +504,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Webhook**: webhook\n- **Code**: code\n- **user info**: httpRequest\n- **send back login page**: respondToWebhook\n- **IF token is present**: if\n- **Welcome page**: html\n- **send back welcome page**: respondToWebhook\n- **IF user info ok**: if\n- **login form**: html\n- **Sticky Note**: stickyNote\n- ... and 15 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -563,8 +563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -578,8 +578,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -593,8 +593,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -607,8 +607,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -636,8 +636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -666,8 +666,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -681,8 +681,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -696,8 +696,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -711,8 +711,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -726,8 +726,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -741,8 +741,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -756,8 +756,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -771,8 +771,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10900
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -785,8 +785,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11080
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -799,8 +799,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -814,8 +814,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -829,8 +829,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -844,8 +844,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -859,8 +859,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -874,8 +874,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -889,8 +889,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -904,8 +904,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -919,8 +919,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -934,8 +934,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -949,8 +949,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11260
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -963,8 +963,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11440
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -976,8 +976,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -990,8 +990,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1004,8 +1004,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1018,8 +1018,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1032,8 +1032,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1046,8 +1046,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11620
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 62\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1059,8 +1059,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1073,8 +1073,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1087,8 +1087,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1101,8 +1101,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1115,8 +1115,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1129,8 +1129,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11800
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1142,8 +1142,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1156,8 +1156,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# OIDC client workflow\n\n## Overview\nAutomated workflow: OIDC client workflow. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, respondToWebhook. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1169,8 +1169,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Workflow execution error",

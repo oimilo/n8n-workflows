@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        1720
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -820,
-        -140
+        100,
+        1900
       ],
       "parameters": {
         "color": 6,
@@ -54,8 +54,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -60,
-        -140
+        100,
+        2080
       ],
       "parameters": {
         "width": 740,
@@ -70,8 +70,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -60,
-        180
+        100,
+        2260
       ],
       "parameters": {
         "width": 740,
@@ -86,8 +86,8 @@
       "name": "Jina AI DeepSearch Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        220,
-        0
+        100,
+        1540
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -105,8 +105,8 @@
       "name": "User Research Query Input",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        0,
-        0
+        100,
+        2440
       ],
       "webhookId": "8a4b05af-cd63-4692-9924-e35aaed5f077",
       "parameters": {
@@ -120,8 +120,8 @@
       "name": "Format & Clean AI Response",
       "type": "n8n-nodes-base.code",
       "position": [
-        440,
-        0
+        100,
+        1360
       ],
       "parameters": {
         "jsCode": "function extractAndFormatMarkdown(input) {\n    let extractedContent = [];\n\n    // Extract raw data string from n8n input\n    let rawData = input.first().json.data;\n\n    // Split into individual JSON strings\n    let jsonStrings = rawData.split(\"\\n\\ndata: \").map(s => s.replace(/^data: /, ''));\n\n    let lastContent = \"\";\n    \n    // Reverse loop to find the last \"content\" field\n    for (let i = jsonStrings.length - 1; i >= 0; i--) {\n        try {\n            let parsedChunk = JSON.parse(jsonStrings[i]);\n\n            if (parsedChunk.choices && parsedChunk.choices.length > 0) {\n                for (let j = parsedChunk.choices.length - 1; j >= 0; j--) {\n                    let choice = parsedChunk.choices[j];\n\n                    if (choice.delta && choice.delta.content) {\n                        lastContent = choice.delta.content.trim();\n                        break;\n                    }\n                }\n            }\n\n            if (lastContent) break; // Stop once the last content is found\n        } catch (error) {\n            console.error(\"Failed to parse JSON string:\", jsonStrings[i], error);\n        }\n    }\n\n    // Clean and format Markdown\n    lastContent = lastContent.replace(/\\[\\^(\\d+)\\]: (.*?)\\n/g, \"[$1]: $2\\n\");  // Format footnotes\n    lastContent = lastContent.replace(/\\[\\^(\\d+)\\]/g, \"[^$1]\");  // Inline footnotes\n    lastContent = lastContent.replace(/(https?:\\/\\/[^\\s]+)(?=[^]]*\\])/g, \"<$1>\");  // Format links\n\n    // Return formatted content as an array of objects (n8n expects this format)\n    return [{ text: lastContent.trim() }];\n}\n\n// Execute function and return formatted output\nreturn extractAndFormatMarkdown($input);\n"
@@ -135,8 +135,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 42fd2f04-7d83-44c9-a41b-48860efbcf79",
@@ -150,8 +150,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 42fd2f04",
@@ -165,8 +165,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2620
       ],
       "parameters": {
         "content": "# AI-Powered Research with Jina AI Deep Search\n\n## Overview\nAutomated workflow: AI-Powered Research with Jina AI Deep Search. This workflow integrates 5 different services: stickyNote, httpRequest, code, stopAndError, chatTrigger. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 8\n- **Node Types**: 5\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Jina AI DeepSearch Request**: httpRequest\n- **User Research Query Input**: chatTrigger\n- **Format & Clean AI Response**: code\n- **Error Handler**: stopAndError\n- **Error Handler for 42fd2f04**: stopAndError\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -179,8 +179,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -194,8 +194,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2800
       ],
       "parameters": {
         "content": "# AI-Powered Research with Jina AI Deep Search\n\n## Overview\nAutomated workflow: AI-Powered Research with Jina AI Deep Search. This workflow integrates 5 different services: stickyNote, httpRequest, code, stopAndError, chatTrigger. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -208,8 +208,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -223,8 +223,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2980
       ],
       "parameters": {
         "content": "# AI-Powered Research with Jina AI Deep Search\n\n## Overview\nAutomated workflow: AI-Powered Research with Jina AI Deep Search. This workflow integrates 5 different services: stickyNote, httpRequest, code, stopAndError, chatTrigger. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -237,8 +237,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -252,8 +252,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# AI-Powered Research with Jina AI Deep Search\n\n## Overview\nAutomated workflow: AI-Powered Research with Jina AI Deep Search. This workflow integrates 5 different services: stickyNote, httpRequest, code, stopAndError, chatTrigger. It contains 8 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -266,8 +266,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# AI-Powered Research with Jina AI Deep Search\n\n## Overview\nAutomated workflow: AI-Powered Research with Jina AI Deep Search. This workflow integrates 5 different services: stickyNote, httpRequest, code, stopAndError, chatTrigger. It contains 8 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -279,8 +279,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -293,8 +293,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# AI-Powered Research with Jina AI Deep Search\n\n## Overview\nAutomated workflow: AI-Powered Research with Jina AI Deep Search. This workflow integrates 5 different services: stickyNote, httpRequest, code, stopAndError, chatTrigger. It contains 8 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -306,8 +306,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

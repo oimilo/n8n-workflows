@@ -26,8 +26,8 @@
       "name": "Set Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        -240,
-        0
+        100,
+        2620
       ],
       "parameters": {
         "options": {},
@@ -56,8 +56,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -800,
-        -340
+        100,
+        2980
       ],
       "parameters": {
         "width": 580,
@@ -72,8 +72,8 @@
       "name": "Convert & Split Domains",
       "type": "n8n-nodes-base.code",
       "position": [
-        -60,
-        0
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Get domains from input JSON\nconst domains = $json.Domains.split(\"\\n\").map(domain => domain.trim()).filter(Boolean);\n\n// Define batch size\nconst batchSize = 200;\n\n// Split into batches of 200\nlet batches = [];\nfor (let i = 0; i < domains.length; i += batchSize) {\n    batches.push(domains.slice(i, i + batchSize).join(\",\"));\n}\n\n// Return batches as an array\nreturn batches.map(batch => ({ batchedDomains: batch }));"
@@ -86,8 +86,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        680,
-        -200
+        100,
+        3160
       ],
       "webhookId": "3ede79a2-7875-462f-b15a-1c74339e2a8a",
       "parameters": {
@@ -101,8 +101,8 @@
       "name": "Merge Results",
       "type": "n8n-nodes-base.code",
       "position": [
-        320,
-        0
+        100,
+        2080
       ],
       "parameters": {
         "jsCode": "// This re-maps each input item (if needed)\nconst newItems = items.map(item => ({\n  json: {\n    Domain: item.json.Domain,\n    Availability: item.json.Availability\n  }\n}));\n\nreturn newItems;"
@@ -115,8 +115,8 @@
       "name": "Loop Over Domains",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        120,
-        0
+        100,
+        1900
       ],
       "parameters": {
         "options": {}
@@ -129,8 +129,8 @@
       "name": "Namesilo Requests",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        320,
-        -200
+        100,
+        2260
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -146,8 +146,8 @@
       "name": "Parse Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        500,
-        -200
+        100,
+        2440
       ],
       "parameters": {
         "jsCode": "// Ensure input data exists\nif (!$json || !$json.data) {\n    throw new Error(\"Invalid input data format\");\n}\n\n// Parse the JSON string inside `data`\nlet parsedData;\ntry {\n    parsedData = JSON.parse($json.data);\n} catch (error) {\n    throw new Error(\"Error parsing JSON data: \" + error.message);\n}\n\n// Extract available and unavailable domains safely\nconst availableDomains = parsedData.reply?.available ? Object.values(parsedData.reply.available) : [];\nconst unavailableDomains = parsedData.reply?.unavailable ? Object.values(parsedData.reply.unavailable) : [];\n\n// Prepare the output array\nconst output = [];\n\n// Process available domains\navailableDomains.forEach(domainObj => {\n    if (domainObj && domainObj.domain) {\n        output.push({\n            Domain: domainObj.domain,\n            Availability: \"Available\"\n        });\n    }\n});\n\n// Process unavailable domains\nunavailableDomains.forEach(domain => {\n    if (typeof domain === \"string\") {\n        output.push({\n            Domain: domain,\n            Availability: \"Unavailable\"\n        });\n    } else if (typeof domain === \"object\" && domain.domain) {\n        output.push({\n            Domain: domain.domain,\n            Availability: \"Unavailable\"\n        });\n    }\n});\n\n// Return the structured data\nreturn output;"
@@ -160,8 +160,8 @@
       "name": "Convert to Excel",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        500,
-        0
+        100,
+        280
       ],
       "parameters": {
         "options": {
@@ -178,8 +178,8 @@
       "name": "Start",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -420,
-        0
+        100,
+        2800
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -191,8 +191,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in 5d97cd82-f7d5-4f98-a789-8c0fcf473f0f",
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5d97cd82",
@@ -221,8 +221,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ec7b8311",
@@ -236,8 +236,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Namesilo Bulk Domain Availability [Template]\n\n## Overview\nAutomated workflow: Namesilo Bulk Domain Availability [Template]. This workflow integrates 9 different services: convertToFile, stickyNote, httpRequest, wait, code. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Set Data**: set\n- **Sticky Note**: stickyNote\n- **Convert & Split Domains**: code\n- **Wait**: wait\n- **Merge Results**: code\n- **Loop Over Domains**: splitInBatches\n- **Namesilo Requests**: httpRequest\n- **Parse Data**: code\n- **Convert to Excel**: convertToFile\n- **Start**: manualTrigger\n- ... and 3 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -265,8 +265,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Namesilo Bulk Domain Availability [Template]\n\n## Overview\nAutomated workflow: Namesilo Bulk Domain Availability [Template]. This workflow integrates 9 different services: convertToFile, stickyNote, httpRequest, wait, code. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -279,8 +279,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -294,8 +294,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Namesilo Bulk Domain Availability [Template]\n\n## Overview\nAutomated workflow: Namesilo Bulk Domain Availability [Template]. This workflow integrates 9 different services: convertToFile, stickyNote, httpRequest, wait, code. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -308,8 +308,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Namesilo Bulk Domain Availability [Template]\n\n## Overview\nAutomated workflow: Namesilo Bulk Domain Availability [Template]. This workflow integrates 9 different services: convertToFile, stickyNote, httpRequest, wait, code. It contains 13 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -337,8 +337,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Namesilo Bulk Domain Availability [Template]\n\n## Overview\nAutomated workflow: Namesilo Bulk Domain Availability [Template]. This workflow integrates 9 different services: convertToFile, stickyNote, httpRequest, wait, code. It contains 13 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -350,8 +350,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -364,8 +364,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Namesilo Bulk Domain Availability [Template]\n\n## Overview\nAutomated workflow: Namesilo Bulk Domain Availability [Template]. This workflow integrates 9 different services: convertToFile, stickyNote, httpRequest, wait, code. It contains 13 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Workflow execution error",

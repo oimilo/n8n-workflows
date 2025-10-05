@@ -17,8 +17,8 @@
       "name": "If no playlist",
       "type": "n8n-nodes-base.if",
       "position": [
-        1180,
-        635.2020978272825
+        1780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -51,8 +51,8 @@
       "name": "Create Downloads Playlist",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        1840,
-        435.2020978272825
+        2620,
+        100
       ],
       "parameters": {
         "name": "Downloads",
@@ -74,8 +74,8 @@
       "name": "Get Liked Tracks",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        2500,
-        735.2020978272825
+        4020,
+        100
       ],
       "parameters": {
         "limit": "={{ $('Globals').item.json.download_limit }}",
@@ -95,8 +95,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        2960,
-        735.2020978272825
+        4860,
+        100
       ],
       "parameters": {
         "options": {}
@@ -109,8 +109,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1400,
-        735.2020978272825
+        2060,
+        100
       ],
       "parameters": {
         "options": {},
@@ -133,8 +133,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1840,
-        735.2020978272825
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -148,8 +148,8 @@
       "name": "Add tracks to Downloads",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        3220,
-        835.2020978272825
+        5140,
+        100
       ],
       "parameters": {
         "id": "={{ $('Filter out Downloads Playlist').item.json.uri }}",
@@ -173,8 +173,8 @@
       "name": "Get Downloads Playlist",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        2280,
-        735.2020978272825
+        3460,
+        100
       ],
       "parameters": {
         "id": "={{ $json.uri }}",
@@ -195,8 +195,8 @@
       "name": "Filter out new tracks",
       "type": "n8n-nodes-base.code",
       "position": [
-        2720,
-        735.2020978272825
+        4300,
+        100
       ],
       "parameters": {
         "jsCode": "var downloades_uris = [];\nfor (const download of $('Get Downloads Playlist').first().json.tracks.items) {\n  downloades_uris.push(download.track.uri);\n}\n\nvar result = [];\nfor (const item of $input.all()) {\n  if (!downloades_uris.includes(item.json.track.uri)) {\n    result.push(item);\n  }\n}\n\nreturn result.reverse();"
@@ -209,8 +209,8 @@
       "name": "Get tracks to remove",
       "type": "n8n-nodes-base.code",
       "position": [
-        3440,
-        640
+        5700,
+        100
       ],
       "parameters": {
         "jsCode": "var liked_uris = [];\nfor (const liked of $('Get Liked Tracks').all()) {\n  liked_uris.push(liked.json.track.uri);\n}\n\nvar result = [];\nfor (const item of $input.first().json.tracks.items) {\n  if (!liked_uris.includes(item.track.uri)) {\n    result.push(item);\n  }\n}\n\nreturn result;"
@@ -224,8 +224,8 @@
       "name": "Remove oldest tracks from Downloads",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        3660,
-        635.2020978272825
+        5980,
+        100
       ],
       "parameters": {
         "id": "={{ $('Get Downloads Playlist').item.json.uri }}",
@@ -247,8 +247,8 @@
       "name": "Filter out Downloads Playlist",
       "type": "n8n-nodes-base.filter",
       "position": [
-        2060,
-        735.2020978272825
+        3180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -281,8 +281,8 @@
       "name": "Get Updated Downloads Playlist",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        3220,
-        635.2020978272825
+        5420,
+        100
       ],
       "parameters": {
         "id": "={{ $('Filter out Downloads Playlist').item.json.uri }}",
@@ -304,8 +304,8 @@
       "name": "Get all Playlists",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        960,
-        635.2020978272825
+        1220,
+        100
       ],
       "parameters": {
         "resource": "playlist",
@@ -327,8 +327,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        460,
-        635.2020978272825
+        100,
+        280
       ],
       "parameters": {
         "rule": {
@@ -345,8 +345,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        640,
-        475.2020978272825
+        380,
+        100
       ],
       "parameters": {
         "width": 251.77358490566033,
@@ -361,8 +361,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        475.2020978272825
+        100,
+        640
       ],
       "parameters": {
         "width": 251.77358490566033,
@@ -377,8 +377,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        240
+        100,
+        460
       ],
       "parameters": {
         "color": 5,
@@ -394,8 +394,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        900,
-        395.2020978272825
+        940,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -411,8 +411,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2440,
-        655.2020978272825
+        3740,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -428,8 +428,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2880,
-        575.2020978272825
+        4580,
+        100
       ],
       "parameters": {
         "color": 7,
@@ -445,8 +445,8 @@
       "name": "If no Downloads Playlist found",
       "type": "n8n-nodes-base.if",
       "position": [
-        1620,
-        735.2020978272825
+        2340,
+        100
       ],
       "parameters": {
         "options": {},
@@ -479,8 +479,8 @@
       "name": "Globals",
       "type": "n8n-nodes-base.set",
       "position": [
-        720,
-        640
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -504,8 +504,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **If no playlist**: if\n- **Create Downloads Playlist**: spotify\n- **Get Liked Tracks**: spotify\n- **Loop Over Items**: splitInBatches\n- **Aggregate**: aggregate\n- **Split Out**: splitOut\n- **Add tracks to Downloads**: spotify\n- **Get Downloads Playlist**: spotify\n- **Filter out new tracks**: code\n- **Get tracks to remove**: code\n- ... and 13 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -574,8 +574,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -588,8 +588,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2260
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -627,8 +627,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        1500,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2440
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow integrates 10 different services: filter, stickyNote, code, scheduleTrigger, splitOut. It contains 23 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -654,8 +654,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

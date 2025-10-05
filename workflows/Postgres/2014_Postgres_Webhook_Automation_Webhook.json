@@ -26,8 +26,8 @@
       "name": "Extract relevant data",
       "type": "n8n-nodes-base.set",
       "position": [
-        -260,
-        700
+        100,
+        10180
       ],
       "parameters": {
         "values": {
@@ -66,8 +66,8 @@
       "type": "n8n-nodes-base.webhook",
       "disabled": true,
       "position": [
-        -740,
-        700
+        100,
+        11800
       ],
       "webhookId": "705ca4c4-0a38-4ef8-9de9-abc8b3686dc6",
       "parameters": {
@@ -83,8 +83,8 @@
       "name": "Unknown threat?",
       "type": "n8n-nodes-base.if",
       "position": [
-        720,
-        1240
+        100,
+        16480
       ],
       "parameters": {
         "conditions": {
@@ -107,8 +107,8 @@
       "type": "n8n-nodes-base.postgres",
       "disabled": true,
       "position": [
-        960,
-        1220
+        100,
+        10360
       ],
       "parameters": {
         "query": "SELECT * FROM staging_n8n_cloud_frontend.user_signed_in WHERE user_id='{{ $('Extract relevant data').item.json.userId }}' ORDER BY received_at DESC LIMIT 10;",
@@ -129,8 +129,8 @@
       "name": "Query IP API1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1240,
-        1340
+        100,
+        13240
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -144,8 +144,8 @@
       "name": "New location?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1440,
-        1340
+        100,
+        12520
       ],
       "parameters": {
         "conditions": {
@@ -166,8 +166,8 @@
       "name": "Parse User Agent",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1260,
-        1640
+        100,
+        13060
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -198,8 +198,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        295,
-        1502
+        100,
+        11620
       ],
       "parameters": {
         "mode": "combine",
@@ -214,8 +214,8 @@
       "name": "New Device/Browser?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1460,
-        1640
+        100,
+        12160
       ],
       "parameters": {
         "conditions": {
@@ -247,8 +247,8 @@
       "name": "Complete login info",
       "type": "n8n-nodes-base.merge",
       "position": [
-        540,
-        1240
+        100,
+        460
       ],
       "parameters": {
         "mode": "combine",
@@ -264,8 +264,8 @@
       "type": "n8n-nodes-base.postgres",
       "disabled": true,
       "position": [
-        2020,
-        1340
+        100,
+        13420
       ],
       "parameters": {
         "query": "SELECT * FROM staging_n8n_cloud_frontend.users WHERE id='{{ $('Extract relevant data').item.json.userId }}'",
@@ -286,8 +286,8 @@
       "name": "New Location",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1660,
-        1280
+        100,
+        12340
       ],
       "parameters": {},
       "executeOnce": true,
@@ -299,8 +299,8 @@
       "name": "New Device/Browser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1674,
-        1625
+        100,
+        11980
       ],
       "parameters": {},
       "executeOnce": true,
@@ -312,8 +312,8 @@
       "name": "User has email?",
       "type": "n8n-nodes-base.if",
       "position": [
-        2360,
-        1360
+        100,
+        16660
       ],
       "parameters": {
         "conditions": {
@@ -333,8 +333,8 @@
       "name": "HTML",
       "type": "n8n-nodes-base.html",
       "position": [
-        2580,
-        1313
+        100,
+        10720
       ],
       "parameters": {
         "html": "<p>\n  Hello {{ $json.first_name || $json.username }},\n</p>\n<p>\n  We've detected a recent login to your n8n account from a new device or location. Here are the details:\n</p>\n<p>\n  <ul>\n    <li><b>Username:</b> {{ $json.username }}</li>\n    <li><b>Date & Time:</b> {{ $('Extract relevant data').item.json.timestamp }}</li>\n    <li><b>Location:</b> {{ $('Complete login info').item.json.city }}, {{ $('Complete login info').item.json.country }}</li>\n    <li><b>Device:</b> {{ $('Complete login info').item.json.operatingSystem.name }} ({{ $('Complete login info').item.json.device.type }})</li>\n  </ul>\n</p>\n<p>\n  If this was you, you can disregard this email. We just wanted to make sure it was you who logged in from a new device or location.\n</p>\n  If this wasn't you, we recommend resetting your password right away.\n</p>\n\n<style>\n  p {\n    font-family: sans-serif;\n  }\n</style>"
@@ -348,8 +348,8 @@
       "type": "n8n-nodes-base.gmail",
       "disabled": true,
       "position": [
-        2740,
-        1313
+        100,
+        11080
       ],
       "parameters": {
         "sendTo": "={{ $('User has email?').item.json.email }}",
@@ -371,8 +371,8 @@
       "name": "noise?",
       "type": "n8n-nodes-base.if",
       "position": [
-        340,
-        220
+        100,
+        19000
       ],
       "parameters": {
         "conditions": {
@@ -393,8 +393,8 @@
       "type": "n8n-nodes-base.slack",
       "disabled": true,
       "position": [
-        1560,
-        500
+        100,
+        13600
       ],
       "parameters": {
         "text": "=Suspicious login attempt detected:\n  - Priority: {{ $json.priority }}\n  - User: {{ $('Extract relevant data').item.json[\"userId\"] }}\n  - IP: {{ $('Extract relevant data').item.json[\"ip\"] }}\n  - Timestamp: {{ $('Extract relevant data').item.json[\"timestamp\"] }}\n  - User Agent: {{ $('Extract relevant data').item.json[\"userAgent\"] }}\nGreyNoise report: {{ $env.WEBHOOK_URL }}{{ $('Extract relevant data').item.json[\"ip\"] }}",
@@ -420,8 +420,8 @@
       "name": "Check trust level",
       "type": "n8n-nodes-base.switch",
       "position": [
-        780,
-        360
+        100,
+        280
       ],
       "parameters": {
         "rules": {
@@ -449,8 +449,8 @@
       "name": "Check classification",
       "type": "n8n-nodes-base.switch",
       "position": [
-        780,
-        200
+        100,
+        100
       ],
       "parameters": {
         "rules": {
@@ -479,8 +479,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0.10300782209924364,
-        -502.1236093865191
+        100,
+        14500
       ],
       "parameters": {
         "width": 1443.8164871528645,
@@ -495,8 +495,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1450.4432083435722,
-        -139
+        100,
+        14680
       ],
       "parameters": {
         "width": 560.0194854548777,
@@ -511,8 +511,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        477,
-        690
+        100,
+        14860
       ],
       "parameters": {
         "width": 696.8700988949365,
@@ -527,8 +527,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1185,
-        691
+        100,
+        15040
       ],
       "parameters": {
         "width": 663.6738255654103,
@@ -543,8 +543,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2310.5877845770297,
-        691.4637444823477
+        100,
+        15400
       ],
       "parameters": {
         "width": 629.1148167417672,
@@ -559,8 +559,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1858,
-        691.3527917931716
+        100,
+        13780
       ],
       "parameters": {
         "width": 442.82773054232473,
@@ -575,8 +575,8 @@
       "name": "riot?",
       "type": "n8n-nodes-base.if",
       "position": [
-        520,
-        380
+        100,
+        19180
       ],
       "parameters": {
         "conditions": {
@@ -596,8 +596,8 @@
       "name": "🔴 Priority: HIGH",
       "type": "n8n-nodes-base.set",
       "position": [
-        1180,
-        220
+        100,
+        19360
       ],
       "parameters": {
         "values": {
@@ -619,8 +619,8 @@
       "name": "🟡 Priority: MEDIUM",
       "type": "n8n-nodes-base.set",
       "position": [
-        1180,
-        360
+        100,
+        19540
       ],
       "parameters": {
         "values": {
@@ -641,8 +641,8 @@
       "name": "🟢 Priority: LOW",
       "type": "n8n-nodes-base.set",
       "position": [
-        1180,
-        500
+        100,
+        19720
       ],
       "parameters": {
         "values": {
@@ -663,8 +663,8 @@
       "name": "GreyNoise",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        280,
-        440
+        100,
+        10540
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -692,8 +692,8 @@
       "name": "IP API",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        40,
-        1280
+        100,
+        10900
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -707,8 +707,8 @@
       "name": "UserParser",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        80,
-        1522
+        100,
+        16840
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -739,8 +739,8 @@
       "name": "When clicking \"Execute Workflow\"",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -740,
-        880
+        100,
+        17020
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -751,8 +751,8 @@
       "name": "Example event",
       "type": "n8n-nodes-base.code",
       "position": [
-        -480,
-        880
+        100,
+        10000
       ],
       "parameters": {
         "jsCode": "return {\n  json:\n  {\n    \"headers\": {\n      \"host\": \"internal.users.n8n.cloud\",\n      \"user-agent\": \"PostmanRuntime/7.32.3\",\n      \"content-length\": \"857\",\n      \"accept\": \"*/*\",\n      \"accept-encoding\": \"gzip, deflate, br\",\n      \"content-type\": \"application/json\",\n      \"postman-token\": \"e10e747f-0668-4238-9a3d-148b2c8591da\",\n      \"x-forwarded-for\": \"10.255.0.2\",\n      \"x-forwarded-host\": \"internal.users.n8n.cloud\",\n      \"x-forwarded-port\": \"443\",\n      \"x-forwarded-proto\": \"https\",\n      \"x-forwarded-server\": \"e591fa1c2d01\",\n      \"x-real-ip\": \"10.255.0.2\"\n    },\n    \"params\": {},\n    \"query\": {},\n    \"body\": {\n      \"anonymousId\": \"b4191c58-7d64-4c93-8bb4-479c3c95d283\",\n      \"context\": {\n        \"ip\": \"2.204.248.108\",\n        \"library\": {\n          \"name\": \"analytics.js\",\n          \"version\": \"next-1.53.0\"\n        },\n        \"locale\": \"en-US\",\n        \"page\": {\n          \"path\": \"/login\",\n          \"referrer\": \"{{ $env.WEBHOOK_URL }}\",\n          \"search\": \"\",\n          \"title\": \"n8n.cloud\",\n          \"url\": \"{{ $env.WEBHOOK_URL }}\"\n        },\n        \"userAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0\"\n      },\n      \"event\": \"User signed in\",\n      \"integrations\": {},\n      \"messageId\": \"ajs-next-a14f5b6e9860c7318a27f1ac05b3182d\",\n      \"originalTimestamp\": \"2023-06-28T11:26:46.302Z\",\n      \"properties\": {},\n      \"receivedAt\": \"2023-06-28T11:26:46.550Z\",\n      \"sentAt\": \"2023-06-28T11:26:46.313Z\",\n      \"timestamp\": \"2023-06-28T11:26:46.539Z\",\n      \"type\": \"track\",\n      \"userId\": \"staging-2055\"\n    }\n  }\n}"
@@ -765,8 +765,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -803,
-        -83
+        100,
+        15220
       ],
       "parameters": {
         "width": 794.5711626683587,
@@ -781,8 +781,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0.113308604309168,
-        690
+        100,
+        13960
       ],
       "parameters": {
         "width": 469.4801859287644,
@@ -797,8 +797,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        1435
+        100,
+        14140
       ],
       "parameters": {
         "width": 470.4372486447854,
@@ -813,8 +813,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1184,
-        1590
+        100,
+        14320
       ],
       "parameters": {
         "width": 659.8254746666762,
@@ -829,8 +829,8 @@
       "name": "Known, Do Nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        960,
-        1440
+        100,
+        11440
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -841,8 +841,8 @@
       "name": "Known Location",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1660,
-        1420
+        100,
+        11260
       ],
       "parameters": {},
       "executeOnce": true,
@@ -854,8 +854,8 @@
       "name": "Old Device/Browser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1674,
-        1765
+        100,
+        12880
       ],
       "parameters": {},
       "executeOnce": true,
@@ -867,8 +867,8 @@
       "name": "Not Riot",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        780,
-        520
+        100,
+        12700
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in d7dea680-14f3-4ffd-bfaf-f928b69d801d",
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15580
       ],
       "parameters": {
         "message": "Error occurred in 90e859b2-aa64-48e7-a8fe-696e3b7216f1",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15760
       ],
       "parameters": {
         "message": "Error occurred in fb4d5d07-58ae-4b17-a389-29e7fbe2caa2",
@@ -925,8 +925,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15940
       ],
       "parameters": {
         "message": "Error occurred in fd1e93a2-267e-4d5e-9724-6a4bb46b94b2",
@@ -940,8 +940,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        16120
       ],
       "parameters": {
         "message": "Error occurred in 032b9558-a19b-4790-8593-8949ab2606d4",
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        16300
       ],
       "parameters": {
         "message": "Error occurred in 6cff0db9-27c3-4c4b-9af0-e8a8d55ad107",
@@ -970,8 +970,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d7dea680",
@@ -985,8 +985,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 90e859b2",
@@ -1000,8 +1000,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fb4d5d07",
@@ -1015,8 +1015,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5be949da",
@@ -1030,8 +1030,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fd1e93a2",
@@ -1045,8 +1045,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 032b9558",
@@ -1060,8 +1060,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6cff0db9",
@@ -1075,8 +1075,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17200
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Extract relevant data**: set\n- **New /login event**: webhook\n- **Unknown threat?**: if\n- **Get last 10 logins from the same user**: postgres\n- **Query IP API1**: httpRequest\n- **New location?**: if\n- **Parse User Agent**: httpRequest\n- **Merge**: merge\n- **New Device/Browser?**: if\n- **Complete login info**: merge\n- ... and 46 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1089,8 +1089,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1104,8 +1104,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1119,8 +1119,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1134,8 +1134,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1149,8 +1149,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1164,8 +1164,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1179,8 +1179,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17380
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 63\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1193,8 +1193,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17560
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1207,8 +1207,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1222,8 +1222,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1237,8 +1237,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1252,8 +1252,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1267,8 +1267,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1282,8 +1282,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1297,8 +1297,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1312,8 +1312,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1327,8 +1327,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1342,8 +1342,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1357,8 +1357,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1372,8 +1372,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1387,8 +1387,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17740
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 77\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1401,8 +1401,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17920
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 78\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1415,8 +1415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1430,8 +1430,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1445,8 +1445,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1460,8 +1460,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1475,8 +1475,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1490,8 +1490,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1505,8 +1505,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1520,8 +1520,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1535,8 +1535,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1550,8 +1550,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1565,8 +1565,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1580,8 +1580,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1595,8 +1595,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18100
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 91\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1609,8 +1609,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18280
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 92\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1622,8 +1622,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1636,8 +1636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1650,8 +1650,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1664,8 +1664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1678,8 +1678,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1692,8 +1692,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1706,8 +1706,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18460
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 99\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1719,8 +1719,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1733,8 +1733,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1747,8 +1747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1761,8 +1761,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1775,8 +1775,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1789,8 +1789,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1803,8 +1803,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18640
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1816,8 +1816,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1830,8 +1830,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        18820
       ],
       "parameters": {
         "content": "# Suspicious_login_detection\n\n## Overview\nAutomated workflow: Suspicious_login_detection. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, code, merge. It contains 56 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1843,8 +1843,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Workflow execution error",

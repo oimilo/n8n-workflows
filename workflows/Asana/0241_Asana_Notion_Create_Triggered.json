@@ -17,8 +17,8 @@
       "name": "Determine create/update",
       "type": "n8n-nodes-base.if",
       "position": [
-        1380,
-        300
+        1780,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -38,8 +38,8 @@
       "name": "Update task",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1580,
-        420
+        2060,
+        100
       ],
       "parameters": {
         "pageId": "={{ $json[\"database_id\"] }}",
@@ -72,8 +72,8 @@
       "name": "Create task",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1580,
-        180
+        2340,
+        100
       ],
       "parameters": {
         "title": "={{$json[\"name\"]}}",
@@ -103,8 +103,8 @@
       "name": "Get tasks",
       "type": "n8n-nodes-base.asana",
       "position": [
-        780,
-        300
+        660,
+        100
       ],
       "parameters": {
         "id": "={{ $json[\"gid\"] }}",
@@ -125,8 +125,8 @@
       "name": "Find tasks",
       "type": "n8n-nodes-base.notion",
       "position": [
-        980,
-        160
+        940,
+        100
       ],
       "parameters": {
         "options": {},
@@ -150,8 +150,8 @@
       "name": "Get unique tasks",
       "type": "n8n-nodes-base.function",
       "position": [
-        580,
-        300
+        380,
+        100
       ],
       "parameters": {
         "functionCode": "const gids = [];\n\n// get all the unique Asana task gids\nfor (item of items) {\n  var gid = parseInt(item.json.resource.gid);\n  var resource_type = item.json.resource.resource_type;\n  if (!(gids.includes(gid)) && resource_type == \"task\") {\n    gids.push(gid);\n  }\n}\n\n// show in output\nconst new_items = [];\nfor (gid of gids) {\n  var new_item = {\n    \"json\": {\n      \"gid\": 0,\n      \"gids\": [],\n      \"notionfilter\": \"\"\n    }\n  };\n  new_item = JSON.stringify(new_item);\n  new_item = JSON.parse(new_item);\n  new_item.json.gid = gid;\n  new_item.json.gids = gids;\n  new_items.push(new_item);\n\n  // Notion filter\n  notionfilter = {\n    or: [],\n  }\n\n  for (gid of gids) {\n    const filter = {\n      property: 'Asana GID',\n      number: {\n        equals: gid\n      }\n    }\n    notionfilter[\"or\"].push(filter);\n  }\n\n\n  new_item.json.notionfilter = JSON.stringify(notionfilter); \n}\n\nconsole.log(gids);\nreturn new_items;"
@@ -165,8 +165,8 @@
       "name": "Determine",
       "type": "n8n-nodes-base.function",
       "position": [
-        1180,
-        300
+        1500,
+        100
       ],
       "parameters": {
         "functionCode": "const gids_to_update = [];\nconst database_ids = [];\n\nfor (item of $items(\"Find tasks\")) {\n  gids_to_update.push(parseInt(item.json.property_asana_gid));\n  database_ids.push(item.json.id);\n}\nconsole.log(gids_to_update);\nconsole.log(database_ids);\n\nvar gid;\nlet i = 0;\nfor (item of $items(\"Get tasks\")) {\n  gid = parseInt(item.json.gid);\n  if (gids_to_update.includes(gid)) {\n    item.json.action = \"Update\"\n    item.json.database_id = database_ids[i];\n  } else {\n    item.json.action = \"Create\"\n  }\n  i++;\n}\n\nreturn $items(\"Get tasks\");"
@@ -179,8 +179,8 @@
       "name": "Check required fields exist",
       "type": "n8n-nodes-base.if",
       "position": [
-        1780,
-        180
+        2620,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -200,8 +200,8 @@
       "name": "Update deadline",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1980,
-        180
+        2900,
+        100
       ],
       "parameters": {
         "pageId": "={{ $json[\"id\"] }}",
@@ -230,8 +230,8 @@
       "name": "On update",
       "type": "n8n-nodes-base.asanaTrigger",
       "position": [
-        380,
-        300
+        100,
+        280
       ],
       "webhookId": "61055fe2-63c7-4b93-adcb-ddb7556c3060",
       "parameters": {
@@ -254,7 +254,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        2080
       ],
       "parameters": {
         "content": "# If Workflow\n\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 10 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -267,8 +267,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2260
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 11\n- **Node Types**: 6\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Determine create/update**: if\n- **Update task**: notion\n- **Create task**: notion\n- **Get tasks**: asana\n- **Find tasks**: notion\n- **Get unique tasks**: function\n- **Determine**: function\n- **Check required fields exist**: if\n- **Update deadline**: notion\n- **On update**: asanaTrigger\n- ... and 1 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -281,8 +281,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -295,8 +295,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -309,8 +309,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -337,8 +337,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -351,8 +351,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -364,8 +364,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -390,8 +390,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        1220,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -404,8 +404,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# If Workflow\n\n## Overview\nAutomated workflow: If Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -417,8 +417,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

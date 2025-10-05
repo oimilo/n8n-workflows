@@ -6,8 +6,8 @@
       "name": "SplitInBatches",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        480,
-        220
+        940,
+        100
       ],
       "parameters": {
         "batchSize": 1
@@ -20,8 +20,8 @@
       "name": "Function",
       "type": "n8n-nodes-base.function",
       "position": [
-        610,
-        220
+        1500,
+        100
       ],
       "parameters": {
         "functionCode": "const staticData = getWorkflowStaticData('global');\n\n// Access its data\nconst oldlink = staticData.oldlink;\n\nitems[0].json.oldlink = oldlink || \"\";\n\n// Update its data\nstaticData.oldlink = items[0].json.link;\n\nreturn items;"
@@ -34,8 +34,8 @@
       "name": "Cron1",
       "type": "n8n-nodes-base.cron",
       "position": [
-        180,
-        290
+        100,
+        100
       ],
       "parameters": {
         "triggerTimes": {
@@ -55,8 +55,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "判断链接是否相同",
       "position": [
-        750,
-        220
+        2060,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -75,8 +75,8 @@
       "name": "写入图片的属性",
       "type": "n8n-nodes-base.function",
       "position": [
-        910,
-        220
+        2620,
+        100
       ],
       "parameters": {
         "functionCode": "function imgList(items) {\n  let imgReg = /<img.*?(?:>|\\/>)/gi //匹配图片中的img标签\n  let srcReg = /src=[\\'\\\"]?([^\\'\\\"]*)[\\'\\\"]?/i // 匹配图片中的src\n  let str = items[0].json.content\n  let arr = str.match(imgReg)  //筛选出所有的img\n  let srcArr = []\n  if(arr !== null){\n     for (let i = 0; i < arr.length; i++) {\n          let src = arr[i].match(srcReg)\n          // 获取图片地址\n          srcArr.push(src[1])\n      }\n        items[0].json.arrlength = arr.length;\n        items[0].json.imgList = srcArr;\n   } else {\n        items[0].json.arrlength = 0;\n   }\n   \n }\nimgList(items)\nreturn items;"
@@ -89,8 +89,8 @@
       "name": "图片数量判断",
       "type": "n8n-nodes-base.if",
       "position": [
-        1060,
-        220
+        3460,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -113,8 +113,8 @@
       "name": "一张图片",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1270,
-        80
+        4020,
+        100
       ],
       "parameters": {
         "file": "={{$node[\"图片数量判断\"].data[\"imgList\"][0]}}",
@@ -136,8 +136,8 @@
       "type": "n8n-nodes-base.telegram",
       "notes": "无图片",
       "position": [
-        1270,
-        230
+        4300,
+        100
       ],
       "parameters": {
         "text": "={{$node[\"图片数量判断\"].data[\"contentSnippet\"]}} {{$node[\"图片数量判断\"].data[\"link\"]}}",
@@ -157,8 +157,8 @@
       "name": "NaN",
       "type": "n8n-nodes-base.function",
       "position": [
-        910,
-        370
+        2900,
+        100
       ],
       "parameters": {
         "functionCode": "function imgList(items) {\n  let imgReg = /<img.*?(?:>|\\/>)/gi //匹配图片中的img标签\n  let srcReg = /src=[\\'\\\"]?([^\\'\\\"]*)[\\'\\\"]?/i // 匹配图片中的src\n  let str = items[0].json.content\n  let arr = str.match(imgReg)  //筛选出所有的img\n  let srcArr = []\n  if(arr !== null){\n     for (let i = 0; i < arr.length; i++) {\n          let src = arr[i].match(srcReg)\n          // 获取图片地址\n          srcArr.push(src[1])\n      }\n        items[0].json.arrlength = arr.length;\n        items[0].json.imgList = srcArr;\n   } else {\n        items[0].json.arrlength = 0;\n   }\n   \n }\nimgList(items)\nreturn items;"
@@ -171,8 +171,8 @@
       "name": "SplitInBatches1",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        480,
-        370
+        1220,
+        100
       ],
       "parameters": {
         "batchSize": 1
@@ -185,8 +185,8 @@
       "name": "Function1",
       "type": "n8n-nodes-base.function",
       "position": [
-        610,
-        370
+        1780,
+        100
       ],
       "parameters": {
         "functionCode": "const staticData = getWorkflowStaticData('global');\n\n// Access its data\nconst tsaioldlink = staticData.tsaioldlink;\n\nitems[0].json.tsaioldlink = tsaioldlink || \"\";\n\n// Update its data\nstaticData.tsaioldlink = items[0].json.link;\n\nreturn items;"
@@ -199,8 +199,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        750,
-        370
+        2340,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -220,8 +220,8 @@
       "name": "IF1",
       "type": "n8n-nodes-base.if",
       "position": [
-        1060,
-        370
+        3740,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -243,8 +243,8 @@
       "type": "n8n-nodes-base.telegram",
       "notes": "无图片",
       "position": [
-        1270,
-        380
+        4580,
+        100
       ],
       "parameters": {
         "file": "={{$node[\"IF1\"].data[\"imgList\"][0]}}",
@@ -264,8 +264,8 @@
       "name": "instagram rss",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        360,
-        370
+        380,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}"
@@ -278,8 +278,8 @@
       "name": "weibo rss",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        360,
-        220
+        660,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}"
@@ -292,8 +292,8 @@
       "name": "Telegram",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1270,
-        530
+        4860,
+        100
       ],
       "parameters": {
         "file": "={{$node[\"IF1\"].data[\"imgList\"][0]}}",
@@ -314,8 +314,8 @@
       "name": "test",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        180,
-        130
+        100,
+        2260
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -329,7 +329,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        460
       ],
       "parameters": {
         "content": "# rss-telegram\n\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 18 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -342,8 +342,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -356,8 +356,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -370,8 +370,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -384,8 +384,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -412,8 +412,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -425,8 +425,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -438,8 +438,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -451,8 +451,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        3180,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# rss-telegram\n\n## Overview\nAutomated workflow: rss-telegram. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        200,
-        -420
+        100,
+        10540
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        200,
-        -780
+        100,
+        9280
       ],
       "parameters": {
         "width": 400,
@@ -54,8 +54,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        620,
-        -780
+        100,
+        9460
       ],
       "parameters": {
         "width": 480,
@@ -70,8 +70,8 @@
       "name": "Markdown to Textual Data Extractor",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        860,
-        -420
+        100,
+        8740
       ],
       "parameters": {
         "text": "=You need to analyze the below markdown and convert to textual data. Please do not output with your own thoughts. Make sure to output with textual data only with no links, scripts, css etc.\n\n{{ $json.data }}",
@@ -92,8 +92,8 @@
       "name": "Set URL and Bright Data Zone",
       "type": "n8n-nodes-base.set",
       "position": [
-        420,
-        -420
+        100,
+        9100
       ],
       "parameters": {
         "options": {},
@@ -122,8 +122,8 @@
       "name": "Initiate a Webhook Notification for Markdown to Textual Data Extraction",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1314,
-        -720
+        100,
+        8380
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -146,8 +146,8 @@
       "name": "Initiate a Webhook Notification for AI Sentiment Analyzer",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1612,
-        80
+        100,
+        8200
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -170,8 +170,8 @@
       "name": "Google Gemini Chat Model for Data Extract",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        948,
-        -200
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -191,8 +191,8 @@
       "name": "Google Gemini Chat Model for Sentiment Analyzer",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1324,
-        200
+        100,
+        8020
       ],
       "parameters": {
         "options": {},
@@ -212,8 +212,8 @@
       "name": "Perform Bright Data Web Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        640,
-        -420
+        100,
+        8920
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -263,8 +263,8 @@
       "name": "Topic Extractor with the structured response",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1236,
-        -20
+        100,
+        10180
       ],
       "parameters": {
         "text": "=Perform the topic analysis on the below content and output with the structured information.\n\nHere's the content:\n\n{{ $('Perform Bright Data Web Request').item.json.data }}",
@@ -282,8 +282,8 @@
       "name": "Trends by location and category with the structured response",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1236,
-        -520
+        100,
+        10360
       ],
       "parameters": {
         "text": "=Perform the data analysis on the below content and output with the structured information by clustering the emerging trends by location and category\n\nHere's the content:\n\n{{ $('Perform Bright Data Web Request').item.json.data }}",
@@ -301,8 +301,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1324,
-        -300
+        100,
+        7660
       ],
       "parameters": {
         "options": {},
@@ -322,8 +322,8 @@
       "name": "Initiate a Webhook Notification for trends by location and category",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1612,
-        -320
+        100,
+        8560
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -346,8 +346,8 @@
       "name": "Create a binary file for topics",
       "type": "n8n-nodes-base.function",
       "position": [
-        1612,
-        -120
+        100,
+        280
       ],
       "parameters": {
         "functionCode": "items[0].binary = {\n  data: {\n    data: new Buffer(JSON.stringify(items[0].json, null, 2)).toString('base64')\n  }\n};\nreturn items;"
@@ -360,8 +360,8 @@
       "name": "Write the topics file to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        1820,
-        -120
+        100,
+        12520
       ],
       "parameters": {
         "options": {},
@@ -376,8 +376,8 @@
       "name": "Write the trends file to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        1832,
-        -520
+        100,
+        12700
       ],
       "parameters": {
         "options": {},
@@ -392,8 +392,8 @@
       "name": "Create a binary data for tends",
       "type": "n8n-nodes-base.function",
       "position": [
-        1612,
-        -520
+        100,
+        100
       ],
       "parameters": {
         "functionCode": "items[0].binary = {\n  data: {\n    data: new Buffer(JSON.stringify(items[0].json, null, 2)).toString('base64')\n  }\n};\nreturn items;"
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in 8d15dca1-3014-405f-ac35-78d64eda1d07",
@@ -422,8 +422,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in fff9e2d1-f3e2-47c3-8c3a-f9de8dbdee6a",
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in 7fae589c-854d-429e-9e67-527a002fcabf",
@@ -452,8 +452,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in 1a252b74-6768-41a6-99dd-090e35c47065",
@@ -467,8 +467,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8d15dca1",
@@ -482,8 +482,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fff9e2d1",
@@ -497,8 +497,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 40c82a76",
@@ -512,8 +512,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0c1da174",
@@ -527,8 +527,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7fae589c",
@@ -542,8 +542,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 92203e9f",
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1a252b74",
@@ -572,8 +572,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2cf80339",
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cf1da0ee",
@@ -602,8 +602,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Markdown to Textual Data Extractor**: chainLlm\n- **Set URL and Bright Data Zone**: set\n- **Initiate a Webhook Notification for Markdown to Textual Data Extraction**: httpRequest\n- **Initiate a Webhook Notification for AI Sentiment Analyzer**: httpRequest\n- **Google Gemini Chat Model for Data Extract**: lmChatGoogleGemini\n- **Google Gemini Chat Model for Sentiment Analyzer**: lmChatGoogleGemini\n- **Perform Bright Data Web Request**: httpRequest\n- ... and 21 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -616,8 +616,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -631,8 +631,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -646,8 +646,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -676,8 +676,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10900
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -690,8 +690,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11080
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -704,8 +704,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -719,8 +719,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -734,8 +734,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -749,8 +749,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -764,8 +764,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -779,8 +779,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -794,8 +794,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -809,8 +809,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -824,8 +824,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11260
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11440
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -852,8 +852,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -867,8 +867,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -897,8 +897,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -912,8 +912,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -927,8 +927,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -942,8 +942,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -957,8 +957,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -972,8 +972,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11620
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -986,8 +986,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11800
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -999,8 +999,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1013,8 +1013,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1027,8 +1027,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1041,8 +1041,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1055,8 +1055,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 62\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1068,8 +1068,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1082,8 +1082,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1096,8 +1096,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1110,8 +1110,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1124,8 +1124,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1137,8 +1137,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1151,8 +1151,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# Structured Data Extract, Data Mining with Bright Data & Google Gemini\n\n## Overview\nAutomated workflow: Structured Data Extract, Data Mining with Bright Data & Google Gemini. This workflow integrates 10 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, chainLlm. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1164,8 +1164,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Get Config",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1220,
-        -200
+        100,
+        7840
       ],
       "parameters": {
         "range": "config!A1:H2",
@@ -49,8 +49,8 @@
       "name": "Create Date Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1700,
-        80
+        100,
+        1180
       ],
       "parameters": {
         "name": "={{ $('Determine Folder Info').item.json.dateFolderName }}",
@@ -75,8 +75,8 @@
       "name": "Set Date Folder ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        1960,
-        -20
+        100,
+        9640
       ],
       "parameters": {
         "jsCode": "// Log ข้อมูล input ทั้งหมด\n//console.log(\"Set Target Parent (Date) - Input:\", items);\n\nlet targetParentId = '';\n\nif (items.length > 0) {\n\t// ตรวจสอบจาก branch แรก (True Branch จาก IF node)\n\tif (items[0].json && items[0].json.id) {\n\t\ttargetParentId = items[0].json.id;\n\t} else if (items.length > 1 && items[1].json && items[1].json.id) {\n\t\t// ถ้าไม่พบจาก branch แรก ให้ลองดูจาก branch ที่สอง (False Branch หรือผลจากการสร้าง folder ใหม่)\n\t\ttargetParentId = items[1].json.id;\n\t}\n\t\n\t// เพิ่ม targetParentId ลงใน items[0].json\n\titems[0].json.targetParentId = targetParentId;\n\tconsole.log(\"Set Target Parent (Date) - Output:\", items);\n\treturn items;\n} else {\n\tconsole.log(\"Set Target Parent (Date) - No input items.\");\n\treturn [];\n}\n"
@@ -90,8 +90,8 @@
       "name": "Create File Type Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1700,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "name": "={{ $('Determine Folder Info').item.json.fileTypeFolderName }}",
@@ -123,8 +123,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        1600,
-        640
+        100,
+        11080
       ],
       "parameters": {
         "name": "={{ $('Merge Event and Config Data').item.json.body.events[0].timestamp }}.{{$node[\"Get File Binary Content\"].binary.data.fileExtension}}",
@@ -155,8 +155,8 @@
       "name": "Determine Folder Info",
       "type": "n8n-nodes-base.code",
       "position": [
-        1960,
-        -280
+        100,
+        1540
       ],
       "parameters": {
         "jsCode": "const data = items[0].json;\nconst config = data.config;\nconst event = data.event;\n\n// ใช้ key จาก config ตามที่ส่งมา\nlet baseFolderId = config[\"Parent Folder ID\"];\nlet dateFolderName = \"\";\nlet fileTypeFolderName = \"\";\n\n// หากตั้งค่า Store by Date เป็น true\nif (config[\"Store by Date\"]) {\n  // ใช้ CurrentDate จาก config หรือใช้วันที่ปัจจุบันถ้าไม่มี\n  dateFolderName = config[\"CurrentDate\"] ? config[\"CurrentDate\"] : new Date().toISOString().slice(0,10).replace(/-/g, \"\");\n}\n\n// หากตั้งค่า Store by File Type เป็น true\nif (config[\"Store by File Type\"]) {\n  // ตรวจสอบว่า event.body.events มีข้อมูลหรือไม่\n  if (event.body && event.body.events && event.body.events.length > 0) {\n    // ดึง type ของ message จาก event.body.events[0]\n    fileTypeFolderName = event.body.events[0].message.type.toLowerCase();\n  }\n}\n\nreturn [{\n  json: {\n    baseFolderId,\n    dateFolderName,\n    fileTypeFolderName,\n    storeByDate: config[\"Store by Date\"],\n    storeByFileType: config[\"Store by File Type\"],\n    event: event,\n    config: config\n  }\n}];\n"
@@ -169,8 +169,8 @@
       "name": "Search Date Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        980,
-        0
+        100,
+        9100
       ],
       "parameters": {
         "filter": {
@@ -199,8 +199,8 @@
       "name": "Merge Event and Config Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1480,
-        -280
+        100,
+        8560
       ],
       "parameters": {
         "mode": "mergeByIndex"
@@ -213,8 +213,8 @@
       "name": "Check Existing Date Folder",
       "type": "n8n-nodes-base.if",
       "position": [
-        1220,
-        0
+        100,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -234,8 +234,8 @@
       "name": "Check Existing File Type Folder",
       "type": "n8n-nodes-base.if",
       "position": [
-        1220,
-        320
+        100,
+        280
       ],
       "parameters": {
         "conditions": {
@@ -255,8 +255,8 @@
       "name": "Merge Final Parent Folder Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2280,
-        400
+        100,
+        8740
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -267,8 +267,8 @@
       "name": "Search File Type Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        980,
-        320
+        100,
+        9280
       ],
       "parameters": {
         "filter": {
@@ -297,8 +297,8 @@
       "name": "Set File Type Folder ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        1960,
-        320
+        100,
+        9820
       ],
       "parameters": {
         "jsCode": "// Log ข้อมูล input ทั้งหมด\n//console.log(\"Set Target Parent (Date) - Input:\", items);\n\nlet targetParentId = '';\n\nif (items.length > 0) {\n\t// ตรวจสอบจาก branch แรก (True Branch จาก IF node)\n\tif (items[0].json && items[0].json.id) {\n\t\ttargetParentId = items[0].json.id;\n\t} else if (items.length > 1 && items[1].json && items[1].json.id) {\n\t\t// ถ้าไม่พบจาก branch แรก ให้ลองดูจาก branch ที่สอง (False Branch หรือผลจากการสร้าง folder ใหม่)\n\t\ttargetParentId = items[1].json.id;\n\t}\n\t\n\t// เพิ่ม targetParentId ลงใน items[0].json\n\titems[0].json.targetParentId = targetParentId;\n\tconsole.log(\"Set Target Parent (Date) - Output:\", items);\n\treturn items;\n} else {\n\tconsole.log(\"Set Target Parent (Date) - No input items.\");\n\treturn [];\n}\n"
@@ -311,8 +311,8 @@
       "name": "Configure Final Parent Folder ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        960,
-        640
+        100,
+        1000
       ],
       "parameters": {
         "jsCode": "/**\n * Expected input: items array จาก Merge Final Data\n * - items[0].json คือผลลัพธ์ที่อาจเป็น folder สำหรับวันที่หรือ file type folder (ขึ้นอยู่กับเงื่อนไข)\n * - items[1].json คือผลลัพธ์อีกส่วนหนึ่ง (สำหรับกรณีที่มีทั้งสอง)\n * \n * Config จะถูกดึงมาจาก node 'Get Config'\n */\n\nconst config = $('Get Config').first().json;\nlet finalParentId = '';\n\n// เงื่อนไขเลือก finalParentId\nif (config[\"Store by Date\"] === true && config[\"Store by File Type\"] === true) {\n    // เมื่อทั้งสองเป็น TRUE: สมมุติว่า file type folder อยู่ใน items[1]\n    finalParentId = $('Set File Type Folder ID').first().json.targetParentId\n} else if (config[\"Store by Date\"] === true && config[\"Store by File Type\"] === false) {\n    // ใช้ folder ตามวันที่ (items[0])\n    finalParentId =$('Set Date Folder ID').first().json.targetParentId;\n} else if (config[\"Store by Date\"] === false && config[\"Store by File Type\"] === true) {\n    // ใช้ folder สำหรับประเภทไฟล์ (ใน test case นี้ ใช้ items[0])\n    finalParentId = $('Set File Type Folder ID').first().json.targetParentId;\n} else {\n    // เมื่อทั้งสองเป็น FALSE: ใช้ Parent Folder ID จาก config\n    finalParentId = config[\"Parent Folder ID\"];\n}\n\n// เพิ่ม finalParentId ลงใน items[0].json เพื่อส่งต่อให้ Node \"Upload File to Google Drive\" ใช้งาน\nitems[0].json.finalParentId = finalParentId;\nreturn [items[0]];\n"
@@ -325,8 +325,8 @@
       "name": "Process Event and Config Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        1680,
-        -280
+        100,
+        8920
       ],
       "parameters": {
         "jsCode": "// ตรวจสอบว่า items มีอย่างน้อย 2 รายการหรือไม่\nconst eventData = items[0].json;\nlet config;\n\nif (items.length >= 2) {\n\t// ถ้ามี items[1] ให้ใช้เป็น config\n\tconst configData = items[1].json;\n\tconfig = Array.isArray(configData) ? configData[0] : configData;\n} else {\n\t// ถ้าไม่มี items[1] ให้ลองดึง config จาก eventData\n\t// สมมุติว่าฟิลด์ config ถูกส่งมาพร้อมกับ eventData ด้วยชื่อฟิลด์เหมือนที่ได้ใน output\n\tif (eventData[\"Parent Folder Path\"] && eventData[\"Parent Folder ID\"]) {\n\t\tconfig = {\n\t\t\t\"Parent Folder Path\": eventData[\"Parent Folder Path\"],\n\t\t\t\"Parent Folder ID\": eventData[\"Parent Folder ID\"],\n\t\t\t\"Store by Date\": eventData[\"Store by Date\"],\n\t\t\t\"Store by File Type\": eventData[\"Store by File Type\"],\n\t\t\t\"Allow File Types\": eventData[\"Allow File Types\"],\n\t\t\t\"CurrentDate\": eventData[\"CurrentDate\"],\n\t\t\t\"Reply Enabled\": eventData[\"Reply Enabled\"],\n\t\t\t\"CHANNEL ACCESS TOKEN\": eventData[\"CHANNEL ACCESS TOKEN\"]\n\t\t};\n\t} else {\n\t\tthrow new Error(\"ไม่พบข้อมูล config! กรุณาตรวจสอบว่า node ก่อนหน้านี้ส่งข้อมูล config มาด้วย\");\n\t}\n}\n\nreturn [{ json: { event: eventData, config: config } }];\n"
@@ -339,8 +339,8 @@
       "name": "Get File Binary Content",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1180,
-        640
+        100,
+        8020
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -364,8 +364,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "onError": "continueRegularOutput",
       "position": [
-        1820,
-        640
+        100,
+        8380
       ],
       "parameters": {
         "columns": {
@@ -448,8 +448,8 @@
       "name": "Check Reply Enabled Flag",
       "type": "n8n-nodes-base.if",
       "position": [
-        2040,
-        640
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -484,8 +484,8 @@
       "name": "Check if Store by Date is Enabled",
       "type": "n8n-nodes-base.if",
       "position": [
-        1420,
-        80
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -519,8 +519,8 @@
       "name": "Check if Store by File Type is Enabled",
       "type": "n8n-nodes-base.if",
       "position": [
-        1420,
-        400
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -554,8 +554,8 @@
       "name": "LINE Webhook Listener",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        980,
-        -300
+        100,
+        8200
       ],
       "webhookId": "feb869e5-a96c-4a5c-b346-3d7c7e64bf0a",
       "parameters": {
@@ -572,8 +572,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        2280,
-        620
+        100,
+        9460
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.code",
       "onError": "continueRegularOutput",
       "position": [
-        1380,
-        640
+        100,
+        11260
       ],
       "parameters": {
         "jsCode": "// ดึงค่า allowed types จาก Node \"Get Config\"\nconst allowedTypes = $('Get Config').first().json[\"Allow File Types\"]\n  .split(\"|\")\n  .map(s => s.trim().toLowerCase());\n\n// ดึงค่า file type จากข้อมูลของ event (ปรับให้ตรงกับ structure ของข้อมูลคุณ)\nconst fileType = $('LINE Webhook Listener').first().json.body.events[0].message.type.toLowerCase();\n\n// ตรวจสอบว่า fileType อยู่ใน allowedTypes หรือไม่\nif (!allowedTypes.includes(fileType)) {\n  // สร้าง Error object พร้อมแนบข้อมูล replyToken และ errorMessage\n  const error = new Error(`File type '${fileType}' is not allowed.`);\n  error.json = {\n    replyToken: $('LINE Webhook Listener').first().json.body.events[0].replyToken,\n    errorMessage: error.message,\n  };\n  throw error;\n}\n\nreturn items;\n"
@@ -616,8 +616,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        220,
-        -380
+        100,
+        10000
       ],
       "parameters": {
         "width": 2320,
@@ -632,8 +632,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        220,
-        -40
+        100,
+        10180
       ],
       "parameters": {
         "color": 5,
@@ -649,8 +649,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        220,
-        600
+        100,
+        10540
       ],
       "parameters": {
         "color": 4,
@@ -666,8 +666,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        220,
-        320
+        100,
+        10360
       ],
       "parameters": {
         "color": 6,
@@ -684,8 +684,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in fb5bd15c-bb0a-420b-a14b-ed5df5ecd691",
@@ -699,8 +699,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Error occurred in f6b24396-a854-42c4-ae70-55095d637b9a",
@@ -714,8 +714,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Error occurred in 3b1ca174-f5fc-4b01-90f4-be9240f8be77",
@@ -729,8 +729,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 47c9f83b",
@@ -744,8 +744,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1514cec1",
@@ -759,8 +759,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node aa480dc9",
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d5ed8981",
@@ -789,8 +789,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f4e30758",
@@ -804,8 +804,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1003b29d",
@@ -819,8 +819,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fb5bd15c",
@@ -834,8 +834,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f064ba27",
@@ -849,8 +849,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f6b24396",
@@ -864,8 +864,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3b1ca174",
@@ -879,8 +879,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11440
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get Config**: googleSheets\n- **Create Date Folder**: googleDrive\n- **Set Date Folder ID**: code\n- **Create File Type Folder**: googleDrive\n- **Upload File to Google Drive**: googleDrive\n- **Determine Folder Info**: code\n- **Search Date Folder**: googleDrive\n- **Merge Event and Config Data**: merge\n- **Check Existing Date Folder**: if\n- **Check Existing File Type Folder**: if\n- ... and 30 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -893,8 +893,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -908,8 +908,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -923,8 +923,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -938,8 +938,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11620
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -952,8 +952,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11800
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -966,8 +966,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -981,8 +981,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -996,8 +996,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1011,8 +1011,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1026,8 +1026,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1041,8 +1041,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1056,8 +1056,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1070,8 +1070,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1084,8 +1084,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1099,8 +1099,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1114,8 +1114,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1129,8 +1129,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1144,8 +1144,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1159,8 +1159,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1174,8 +1174,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1188,8 +1188,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1201,8 +1201,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1215,8 +1215,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1229,8 +1229,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1243,8 +1243,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1256,8 +1256,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1270,8 +1270,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1284,8 +1284,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1298,8 +1298,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1311,8 +1311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1325,8 +1325,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# Line Save File to Google Drive and Log File's URL\n\n## Overview\nAutomated workflow: Line Save File to Google Drive and Log File's URL. This workflow integrates 9 different services: webhook, stickyNote, httpRequest, code, merge. It contains 40 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1338,8 +1338,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Workflow execution error",

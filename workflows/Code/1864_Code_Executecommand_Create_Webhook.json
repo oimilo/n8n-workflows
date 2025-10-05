@@ -26,8 +26,8 @@
       "name": "Start AutoClip Workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        40,
-        0
+        100,
+        8740
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Retrieve Video Background Data",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        500,
-        180
+        100,
+        8020
       ],
       "parameters": {
         "columns": {
@@ -100,8 +100,8 @@
       "name": "Retrieve Quote Data",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        500,
-        0
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -139,8 +139,8 @@
       "name": "List Video Background Files",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        260,
-        180
+        100,
+        6760
       ],
       "parameters": {
         "filter": {
@@ -173,8 +173,8 @@
       "name": "Configure Music Background Folder ID",
       "type": "n8n-nodes-base.set",
       "position": [
-        40,
-        360
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -197,8 +197,8 @@
       "name": "List Music Background Files",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        260,
-        360
+        100,
+        6580
       ],
       "parameters": {
         "filter": {
@@ -231,8 +231,8 @@
       "name": "Retrieve Music Background Data",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        500,
-        360
+        100,
+        7660
       ],
       "parameters": {
         "columns": {
@@ -293,8 +293,8 @@
       "name": "Merge File Selection Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        740,
-        200
+        100,
+        7120
       ],
       "parameters": {
         "numberInputs": 3
@@ -307,8 +307,8 @@
       "name": "Select Random Video, Music & Quote",
       "type": "n8n-nodes-base.code",
       "position": [
-        940,
-        200
+        100,
+        8560
       ],
       "parameters": {
         "jsCode": "function getRandomItem(arr) {\n  return arr[Math.floor(Math.random() * arr.length)];\n}\n\n// Filter items based on unique keys from the merged inputs\nconst videoItems = items.filter(item => item.json.BackgroundURL !== undefined);\nconst musicItems = items.filter(item => item.json.MusicURL !== undefined);\nconst quoteItems = items.filter(item => item.json.Qoute !== undefined);\n\n// Debug logs to check counts in the execution log\nconsole.log(\"Video Items count: \" + videoItems.length);\nconsole.log(\"Music Items count: \" + musicItems.length);\nconsole.log(\"Quote Items count: \" + quoteItems.length);\n\nif (videoItems.length === 0 || musicItems.length === 0 || quoteItems.length === 0) {\n  throw new Error(\"One or more input arrays are empty. Check your previous nodes.\");\n}\n\nconst selectedVideo = getRandomItem(videoItems);\nconst selectedMusic = getRandomItem(musicItems);\nconst selectedQuote = getRandomItem(quoteItems);\n\n// Return the combined selected items\nreturn [{\n  video: selectedVideo.json,\n  music: selectedMusic.json,\n  quote: selectedQuote.json\n}];\n"
@@ -321,8 +321,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        -120
+        100,
+        8920
       ],
       "parameters": {
         "width": 1100,
@@ -337,8 +337,8 @@
       "name": "Download Selected Video Background",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1180,
-        0
+        100,
+        460
       ],
       "parameters": {
         "fileId": {
@@ -365,8 +365,8 @@
       "name": "Download Selected Music Background",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1180,
-        340
+        100,
+        280
       ],
       "parameters": {
         "fileId": {
@@ -393,8 +393,8 @@
       "name": "Save Video Background Locally",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        1420,
-        0
+        100,
+        8380
       ],
       "parameters": {
         "options": {},
@@ -409,8 +409,8 @@
       "name": "Save Music Background Locally",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        1420,
-        340
+        100,
+        8200
       ],
       "parameters": {
         "options": {
@@ -427,8 +427,8 @@
       "name": "Prepare Overlay Text (Quote & Author)",
       "type": "n8n-nodes-base.code",
       "position": [
-        1620,
-        20
+        100,
+        7300
       ],
       "parameters": {
         "jsCode": "// Define separate configuration for the quote and the author\nconst quoteFont = \"Kanit-Italic.ttf\";      // Font for the quote\nconst quoteFontSize = 70;\nconst authorFont = \"Kanit-Italic.ttf\";         // Font for the author (ensure this supports Thai)\nconst authorFontSize = 50;\nconst fontColor = \"white\";\nconst lineHeightMultiplier = 1.1;\nconst videoWidth = 1080;\nconst margin = 40;  // Gap from left and right edges\n\n// Effective width for the quote text (accounting for left/right margins)\nconst effectiveVideoWidth = videoWidth - 2 * margin;\n\n// Estimate average character width based on quoteFontSize (this is a rough estimate)\nconst avgCharWidth = quoteFontSize * 0.6;\nconst maxCharsPerLine = Math.floor(effectiveVideoWidth / avgCharWidth);\n\n// Retrieve the quote transcript and author from the \"Merge\" node\nconst transcript = $node[\"Merge File Selection Data\"].json[\"Qoute\"];\nif (!transcript) {\n  throw new Error(\"Quote not found\");\n}\nconst author = $node[\"Merge File Selection Data\"].json[\"Author\"];\nif (!author) {\n  throw new Error(\"Author not found\");\n}\n\n// Split the transcript into words and group them into lines based on maxCharsPerLine\nconst words = transcript.split(' ');\nconst lines = [];\nlet currentLine = \"\";\nlet currentCharCount = 0;\n\nwords.forEach(word => {\n  const wordLength = word.length;\n  const additionalSpace = currentLine ? 1 : 0;\n  const potentialLength = currentCharCount + additionalSpace + wordLength;\n  if (potentialLength <= maxCharsPerLine) {\n    currentLine += (currentLine ? \" \" : \"\") + word;\n    currentCharCount = potentialLength;\n  } else {\n    lines.push(currentLine);\n    currentLine = word;\n    currentCharCount = wordLength;\n  }\n});\nif (currentLine) {\n  lines.push(currentLine);\n}\n\n// Calculate layout for the quote block\nconst lineHeight = quoteFontSize * lineHeightMultiplier;\nconst totalHeight = lines.length * lineHeight;\n\n// Build drawtext commands for each quote line (centered horizontally)\n// Each line is positioned so that the entire quote block is vertically centered.\nconst quoteCommands = lines.map((line, index) => {\n  // Escape any single quotes in the line\n  const escapedLine = line.replace(/'/g, \"\\\\'\");\n  return `drawtext=fontfile=${quoteFont}:text='${escapedLine}':fontsize=${quoteFontSize}:fontcolor=${fontColor}:x=(w-text_w)/2:y=((h-${totalHeight})/2)+(${index}*${lineHeight})`;\n});\n\n// Build the drawtext command for the author\n// Place the author text below the quote block with a small gap (e.g. 20 pixels)\n// Align it to the right by setting x = w - text_w - margin.\nconst authorY = `((h-${totalHeight})/2)+(${lines.length}*${lineHeight})+20`;\nconst escapedAuthor = author.replace(/'/g, \"\\\\'\");\nconst authorCommand = `drawtext=fontfile=${authorFont}:text='${escapedAuthor}':fontsize=${authorFontSize}:fontcolor=${fontColor}:x=w-text_w-${margin}:y=${authorY}`;\n\n// Combine all commands (separated by commas) into one drawtext filter string.\nconst fullDrawTextFilter = quoteCommands.concat(authorCommand).join(\", \");\n\n// Return the prepared filter string for insertion into your FFmpeg command.\nreturn {\n  json: {\n    drawText: fullDrawTextFilter\n  }\n};\n"
@@ -441,8 +441,8 @@
       "name": "Generate Final Video Clip",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        1640,
-        340
+        100,
+        6220
       ],
       "parameters": {
         "command": "=ffmpeg -i {{ $('Save Video Background Locally').item.json.fileName }} -i {{ $('Save Music Background Locally').item.json.fileName }} -filter_complex \"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920[vid]; color=black@0.3:size=1080x1920:d=10[bg]; [vid][bg]overlay=shortest=1[bgvid]; [bgvid]{{ $json.drawText }}[outv]; [1:a]volume=0.8[aout]\" -map \"[outv]\" -map \"[aout]\" -aspect 9:16 -c:v libx264 -c:a aac -shortest output.mp4 -y"
@@ -455,8 +455,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1100,
-        -120
+        100,
+        9100
       ],
       "parameters": {
         "color": 3,
@@ -472,8 +472,8 @@
       "name": "Initiate YouTube Resumable Upload",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1860,
-        20
+        100,
+        6400
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -519,8 +519,8 @@
       "name": "Read output file",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        2060,
-        20
+        100,
+        7480
       ],
       "parameters": {
         "options": {},
@@ -534,8 +534,8 @@
       "name": "Upload Video to YouTube",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2260,
-        20
+        100,
+        9820
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -570,8 +570,8 @@
       "name": "Update Quote Upload Status",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1860,
-        340
+        100,
+        9640
       ],
       "parameters": {
         "columns": {
@@ -664,8 +664,8 @@
       "name": "Mark Background as Used",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        2240,
-        340
+        100,
+        6940
       ],
       "parameters": {
         "columns": {
@@ -730,8 +730,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1820,
-        -120
+        100,
+        9280
       ],
       "parameters": {
         "width": 620,
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in b148528f-7d45-4a59-9b29-52c7229f05e8",
@@ -762,8 +762,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in 7965943e-e5c9-4c97-afca-18b3fc5881cd",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 221b0fa1",
@@ -792,8 +792,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 120db4aa",
@@ -807,8 +807,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 17e6585a",
@@ -822,8 +822,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0d819b1f",
@@ -837,8 +837,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3041385c",
@@ -852,8 +852,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7da639cb",
@@ -867,8 +867,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5ee8befc",
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fd8fd1f8",
@@ -897,8 +897,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9a8e1891",
@@ -912,8 +912,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b148528f",
@@ -927,8 +927,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e8a97b56",
@@ -942,8 +942,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7965943e",
@@ -957,8 +957,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 040f9064",
@@ -972,8 +972,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 526ffabc",
@@ -987,8 +987,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Start AutoClip Workflow**: manualTrigger\n- **Retrieve Video Background Data**: googleSheets\n- **Retrieve Quote Data**: googleSheets\n- **List Video Background Files**: googleDrive\n- **Configure Music Background Folder ID**: set\n- **List Music Background Files**: googleDrive\n- **Retrieve Music Background Data**: googleSheets\n- **Merge File Selection Data**: merge\n- **Select Random Video, Music & Quote**: code\n- **Sticky Note**: stickyNote\n- ... and 29 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1001,8 +1001,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1016,8 +1016,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1031,8 +1031,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1045,8 +1045,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1059,8 +1059,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1074,8 +1074,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1089,8 +1089,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1104,8 +1104,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1119,8 +1119,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1133,8 +1133,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1147,8 +1147,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1162,8 +1162,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1177,8 +1177,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1192,8 +1192,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1207,8 +1207,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10900
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 54\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1221,8 +1221,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11080
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1234,8 +1234,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1248,8 +1248,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1262,8 +1262,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11260
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1275,8 +1275,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1289,8 +1289,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1303,8 +1303,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11440
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1316,8 +1316,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1330,8 +1330,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11620
       ],
       "parameters": {
         "content": "# AutoClip – Automatically Generate Video Clips and Upload to YouTube\n\n## Overview\nAutomated workflow: AutoClip – Automatically Generate Video Clips and Upload to YouTube. This workflow integrates 11 different services: stickyNote, httpRequest, code, readWriteFile, merge. It contains 39 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1343,8 +1343,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -17,8 +17,8 @@
       "name": "Previous Month",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        360,
-        420
+        100,
+        4060
       ],
       "parameters": {
         "value": "={{Date()}}",
@@ -36,8 +36,8 @@
       "name": "1st of Every month at 8am",
       "type": "n8n-nodes-base.cron",
       "position": [
-        180,
-        420
+        100,
+        100
       ],
       "parameters": {
         "triggerTimes": {
@@ -57,8 +57,8 @@
       "name": "Check Summary for Illness or Holiday",
       "type": "n8n-nodes-base.switch",
       "position": [
-        760,
-        420
+        100,
+        460
       ],
       "parameters": {
         "rules": {
@@ -85,8 +85,8 @@
       "name": "Holiday",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        980,
-        220
+        100,
+        3520
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -97,8 +97,8 @@
       "name": "Illness",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        980,
-        400
+        100,
+        3700
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -109,8 +109,8 @@
       "name": "Filter Holiday Days",
       "type": "n8n-nodes-base.set",
       "position": [
-        1180,
-        220
+        100,
+        2980
       ],
       "parameters": {
         "values": {
@@ -140,8 +140,8 @@
       "name": "Filter Illness Days",
       "type": "n8n-nodes-base.set",
       "position": [
-        1180,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "values": {
@@ -171,8 +171,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1620,
-        320
+        100,
+        3880
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -183,8 +183,8 @@
       "name": "Get previous months events",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        560,
-        420
+        100,
+        3340
       ],
       "parameters": {
         "options": {
@@ -209,8 +209,8 @@
       "name": "Send email to payroll",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        1980,
-        320
+        100,
+        4240
       ],
       "parameters": {
         "text": "={{$json[\"message\"]}}",
@@ -233,8 +233,8 @@
       "name": "Combine Holiday Counts",
       "type": "n8n-nodes-base.code",
       "position": [
-        1380,
-        220
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "let names = $input.all().map(e => e.json.Name);\nlet unique_names = [...new Set(names)];\nlet results = [];\n\nfor (thisName of unique_names) {\n  let result = {\n    \"Name\": thisName,\n    \"Days\": 0,\n    \"Type\": \"Holiday\"\n  }\n\n  for (matching_item of $input.all().filter(e => e.json.Name === thisName)) {\n    result.Days += parseInt(matching_item.json.Days);\n  }\n  \n  results.push(result);\n}\n\nreturn results.map(e => { return {json: e} });"
@@ -247,8 +247,8 @@
       "name": "Combine Illness Counts",
       "type": "n8n-nodes-base.code",
       "position": [
-        1380,
-        400
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "let names = $input.all().map(e => e.json.Name);\nlet unique_names = [...new Set(names)];\nlet results = [];\n\nfor (thisName of unique_names) {\n  let result = {\n    \"Name\": thisName,\n    \"Days\": 0,\n    \"Type\": \"Illness\"\n  }\n\n  for (matching_item of $input.all().filter(e => e.json.Name === thisName)) {\n    result.Days += parseInt(matching_item.json.Days);\n  }\n  \n  results.push(result);\n}\n\nreturn results.map(e => { return {json: e} });"
@@ -261,8 +261,8 @@
       "name": "Build the message to send",
       "type": "n8n-nodes-base.code",
       "position": [
-        1800,
-        320
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "let illnessMessage = \"\";\nlet holidayMessage = \"\";\nlet message = \"Here is a breakdown of absences for the last month.\\n\\n\";\n\n// Loop the input items\nfor (item of $input.all()) {\n  if (item.json.Type == \"Holiday\") {\n    holidayMessage += item.json.Name + \" had \" + item.json.Days + \" days\\n\";\n  }\n  if (item.json.Type == \"Illness\") {\n    illnessMessage += item.json.Name + \" had \" + item.json.Days + \" days\\n\";\n  }\n}\n\nif (holidayMessage != \"\") {\n  message += \"Holiday Events\\n\";\n  message += holidayMessage + \"\\n\";\n} else {\n  message += \"No Holiday Events\\n\";\n}\n\nif (illnessMessage != \"\") {\n  message += \"Illness Events\\n\";\n  message += illnessMessage;\n} else {\n  message += \"No Illness Events\\n\";\n}\n\n// Return our message\nreturn [{json: {message}}];"
@@ -277,7 +277,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        6040
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 13 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -290,8 +290,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node daf227d9",
@@ -305,8 +305,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 19ec862a",
@@ -320,8 +320,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Previous Month**: dateTime\n- **1st of Every month at 8am**: cron\n- **Check Summary for Illness or Holiday**: switch\n- **Holiday**: noOp\n- **Illness**: noOp\n- **Filter Holiday Days**: set\n- **Filter Illness Days**: set\n- **Merge**: merge\n- **Get previous months events**: googleCalendar\n- **Send email to payroll**: emailSend\n- ... and 6 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -334,8 +334,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -349,8 +349,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -363,8 +363,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -392,8 +392,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -421,8 +421,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -435,8 +435,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -479,8 +479,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -492,8 +492,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -519,8 +519,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Datetime Workflow\n\n## Overview\nAutomated workflow: Datetime Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

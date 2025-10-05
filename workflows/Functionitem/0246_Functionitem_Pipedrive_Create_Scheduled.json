@@ -17,8 +17,8 @@
       "name": "Get customers",
       "type": "n8n-nodes-base.stripe",
       "position": [
-        5360,
-        1100
+        100,
+        2800
       ],
       "parameters": {
         "filters": {},
@@ -40,8 +40,8 @@
       "name": "Rename fields and keep only needed fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        5560,
-        1100
+        100,
+        3160
       ],
       "parameters": {
         "values": {
@@ -67,8 +67,8 @@
       "name": "Add customer name to charge data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        5860,
-        920
+        100,
+        100
       ],
       "parameters": {
         "mode": "mergeByKey",
@@ -83,8 +83,8 @@
       "name": "Search organisation",
       "type": "n8n-nodes-base.pipedrive",
       "position": [
-        6140,
-        1060
+        100,
+        3520
       ],
       "parameters": {
         "term": "={{ $json[\"customerName\"] }}",
@@ -106,8 +106,8 @@
       "name": "Add organisation Information to charge data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        6400,
-        940
+        100,
+        280
       ],
       "parameters": {
         "join": "inner",
@@ -121,8 +121,8 @@
       "name": "Create note with charge information",
       "type": "n8n-nodes-base.pipedrive",
       "position": [
-        6620,
-        940
+        100,
+        460
       ],
       "parameters": {
         "content": "={{ $json[\"description\"] }}: {{ $json[\"amount\"] / 100 }} {{ $json[\"currency\"] }}",
@@ -145,8 +145,8 @@
       "name": "Get last execution timestamp",
       "type": "n8n-nodes-base.functionItem",
       "position": [
-        5140,
-        900
+        100,
+        2980
       ],
       "parameters": {
         "functionCode": "// Code here will run once per input item.\n// More info and help: {{ $env.WEBHOOK_URL }}\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\n// Add a new field called 'myNewField' to the JSON of the item\nconst staticData = getWorkflowStaticData('global');\n\nif(!staticData.lastExecution){\n  staticData.lastExecution = Math.round( new Date().getTime() / 1000 );\n}\n\nitem.executionTimeStamp = Math.round( new Date().getTime() / 1000 );\nitem.lastExecution = staticData.lastExecution;\n\n\nreturn item;"
@@ -159,8 +159,8 @@
       "name": "Set new last execution timestamp",
       "type": "n8n-nodes-base.functionItem",
       "position": [
-        6820,
-        940
+        100,
+        3700
       ],
       "parameters": {
         "functionCode": "// Code here will run once per input item.\n// More info and help: {{ $env.WEBHOOK_URL }}\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\n// Add a new field called 'myNewField' to the JSON of the item\nconst staticData = getWorkflowStaticData('global');\n\nstaticData.lastExecution = $item(0).$node[\"Get last execution timestamp\"].executionTimeStamp;\n\nreturn item;"
@@ -174,8 +174,8 @@
       "name": "Split array of charges to items",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        5560,
-        900
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -189,8 +189,8 @@
       "name": "Search for charges in Stripe",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        5360,
-        900
+        100,
+        3340
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -220,8 +220,8 @@
       "name": "Every day at 8 am",
       "type": "n8n-nodes-base.cron",
       "position": [
-        4920,
-        900
+        100,
+        2620
       ],
       "parameters": {
         "triggerTimes": {
@@ -241,8 +241,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in b866ba46-6269-4c8d-8021-ea99591d676d",
@@ -257,7 +257,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        5680
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 12 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -270,8 +270,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b866ba46",
@@ -285,8 +285,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get customers**: stripe\n- **Rename fields and keep only needed fields**: set\n- **Add customer name to charge data**: merge\n- **Search organisation**: pipedrive\n- **Add organisation Information to charge data**: merge\n- **Create note with charge information**: pipedrive\n- **Get last execution timestamp**: functionItem\n- **Set new last execution timestamp**: functionItem\n- **Split array of charges to items**: itemLists\n- **Search for charges in Stripe**: httpRequest\n- ... and 4 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -299,8 +299,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -314,8 +314,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -328,8 +328,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -342,8 +342,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -357,8 +357,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -372,8 +372,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -386,8 +386,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -400,8 +400,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -415,8 +415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -430,8 +430,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -444,8 +444,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -457,8 +457,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -471,8 +471,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -484,8 +484,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -498,8 +498,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Stripe Workflow\n\n## Overview\nAutomated workflow: Stripe Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -538,8 +538,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",

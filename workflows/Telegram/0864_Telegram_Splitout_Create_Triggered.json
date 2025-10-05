@@ -5,8 +5,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        740,
-        180
+        100,
+        5500
       ],
       "webhookId": "231e8ee3-320f-47c7-8368-03965732d709",
       "parameters": {
@@ -20,8 +20,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        940,
-        140
+        100,
+        2620
       ],
       "parameters": {
         "model": {
@@ -47,8 +47,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1160,
-        140
+        100,
+        5140
       ],
       "parameters": {
         "jsonSchemaExample": "\n[{\"name\": \"total Protein\",\n  \"quantity\": 86,\n  \"unit\": \"gr\"\n},\n  {\"name\": \"total lipids\",\n  \"quantity\": 86,\n  \"unit\": \"gr\"\n},\n  {\"name\": \"total carbohydrats\",\n  \"quantity\": 86,\n  \"unit\": \"gr\"\n},\n  {\"name\": \"total potassium\",\n  \"quantity\": 86,\n  \"unit\": \"gr\"\n},\n  {\"name\": \"total magnesium\",\n  \"quantity\": 86,\n  \"unit\": \"gr\"\n},\n  {\"name\": \"total sodium\",\n  \"quantity\": 86,\n  \"unit\": \"gr\"\n},\n  {\"name\": \"total kcal\",\n  \"quantity\": 248,\n  \"unit\": \"kcal\"\n},\n  {\n    \"reasoning\": \"this is my reasoning\"\n  }\n]"
@@ -61,8 +61,8 @@
       "name": "Get Audio File",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        300,
-        -280
+        100,
+        1900
       ],
       "webhookId": "36dfe00d-6f05-419a-a80a-f6c7321e9a7d",
       "parameters": {
@@ -83,8 +83,8 @@
       "name": "Transcribe Recording",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        520,
-        -280
+        100,
+        5320
       ],
       "parameters": {
         "options": {},
@@ -106,8 +106,8 @@
       "name": "Limit",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1996,
-        -80
+        100,
+        2260
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -118,8 +118,8 @@
       "name": "Receive Telegram message",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        -140,
-        -180
+        100,
+        2800
       ],
       "webhookId": "34756bf0-27bd-4384-9e46-549473c307a0",
       "parameters": {
@@ -143,8 +143,8 @@
       "name": "If it's a voice message",
       "type": "n8n-nodes-base.if",
       "position": [
-        80,
-        -180
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -178,8 +178,8 @@
       "name": "Set chatInput from message",
       "type": "n8n-nodes-base.set",
       "position": [
-        740,
-        -80
+        100,
+        3160
       ],
       "parameters": {
         "options": {},
@@ -202,8 +202,8 @@
       "name": "Set chatInput from voice",
       "type": "n8n-nodes-base.set",
       "position": [
-        740,
-        -280
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -226,8 +226,8 @@
       "name": "List of Ingredients and nutrients",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        960,
-        -80
+        100,
+        2440
       ],
       "parameters": {
         "text": "=\n*\"Approximate the kcals, protein, carbohydrates, lipids (fats), and electrolyte (sodium, potassium, magnesium, Zinc and Iron) content in the following dietary intake statement:  \n\n{{ $json.chatInput }}\n\nProvide estimates for each component based on typical nutritional values. Break down the contributions from each food item (steak, salad, vinaigrette) and give a total number for each nutrient.  \n\nGive the total result as a json, with as name, the name of the nutrient, as quantity, the total summed value, and as unit the unit that been chosen (gr, mg).\nPut the reasoning in another variable called \"reasonning\"\n",
@@ -245,8 +245,8 @@
       "name": "Explode the list",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1336,
-        -80
+        100,
+        1720
       ],
       "parameters": {
         "include": "={{ $json.output }}",
@@ -261,8 +261,8 @@
       "name": "Add date",
       "type": "n8n-nodes-base.code",
       "position": [
-        1556,
-        -80
+        100,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -276,8 +276,8 @@
       "name": "Store in sheet",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1776,
-        -80
+        100,
+        4960
       ],
       "parameters": {
         "columns": {
@@ -360,8 +360,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -200,
-        -380
+        100,
+        3520
       ],
       "parameters": {
         "color": 4,
@@ -376,8 +376,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -680,
-        -380
+        100,
+        3700
       ],
       "parameters": {
         "color": 5,
@@ -392,8 +392,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1700,
-        -220
+        100,
+        3880
       ],
       "parameters": {
         "color": 4,
@@ -408,8 +408,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        260,
-        -380
+        100,
+        4060
       ],
       "parameters": {
         "color": 4,
@@ -425,8 +425,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        80
+        100,
+        4240
       ],
       "parameters": {
         "color": 4,
@@ -442,8 +442,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        920,
-        -220
+        100,
+        4420
       ],
       "parameters": {
         "color": 4,
@@ -459,8 +459,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2140,
-        -220
+        100,
+        4600
       ],
       "parameters": {
         "color": 4,
@@ -475,8 +475,8 @@
       "name": "Respond message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        2216,
-        -80
+        100,
+        2980
       ],
       "webhookId": "8e646f8a-1f21-4719-b5f2-0cc5fad144df",
       "parameters": {
@@ -500,8 +500,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -680,
-        -200
+        100,
+        4780
       ],
       "parameters": {
         "width": 460,
@@ -517,8 +517,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a32a646b",
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5a086fb6",
@@ -547,8 +547,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f72d4182",
@@ -562,8 +562,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fddaae3c",
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a0fd85ad",
@@ -592,8 +592,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c6b8206c",
@@ -607,8 +607,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When chat message received**: chatTrigger\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Structured Output Parser**: outputParserStructured\n- **Get Audio File**: telegram\n- **Transcribe Recording**: openAi\n- **Limit**: limit\n- **Receive Telegram message**: telegramTrigger\n- **If it's a voice message**: if\n- **Set chatInput from message**: set\n- **Set chatInput from voice**: set\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -635,8 +635,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -663,8 +663,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -691,8 +691,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -704,8 +704,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -717,8 +717,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -730,8 +730,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -744,8 +744,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Chattrigger Workflow\n\n## Overview\nAutomated workflow: Chattrigger Workflow. This workflow integrates 15 different services: telegramTrigger, stickyNote, telegram, code, agent. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -757,8 +757,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Workflow execution error",

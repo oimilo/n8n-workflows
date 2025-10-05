@@ -24,8 +24,8 @@
       "name": "n8n Form Trigger",
       "type": "n8n-nodes-base.formTrigger",
       "position": [
-        -300,
-        -260
+        100,
+        1000
       ],
       "webhookId": "68a70315-9f74-4cf5-9c68-828396b0f23b",
       "parameters": {
@@ -50,8 +50,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "3rd party API request",
       "position": [
-        700,
-        -440
+        2340,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -110,8 +110,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "🤖Generate XML Feed URL",
       "position": [
-        900,
-        -440
+        2900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -134,8 +134,8 @@
       "name": "Set Channel Username",
       "type": "n8n-nodes-base.set",
       "position": [
-        520,
-        -440
+        1780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -158,8 +158,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "🤖Generate XML Feed URL",
       "position": [
-        900,
-        -260
+        3180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -182,8 +182,8 @@
       "name": "Set Video ID",
       "type": "n8n-nodes-base.set",
       "position": [
-        520,
-        -80
+        2060,
+        100
       ],
       "parameters": {
         "options": {},
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "3rd party API request",
       "position": [
-        700,
-        -80
+        2620,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -266,8 +266,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "🤖Generate XML Feed URL",
       "position": [
-        900,
-        -80
+        3460,
+        100
       ],
       "parameters": {
         "options": {},
@@ -291,8 +291,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "3rd party API request",
       "position": [
-        320,
-        -440
+        1220,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -328,8 +328,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "3rd party API request",
       "position": [
-        320,
-        -80
+        1500,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -365,8 +365,8 @@
       "type": "n8n-nodes-base.aggregate",
       "notes": "🤖Combine results in one",
       "position": [
-        1080,
-        -260
+        4020,
+        100
       ],
       "parameters": {
         "options": {},
@@ -389,8 +389,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "RSS Feed for channel Posts",
       "position": [
-        1260,
-        -180
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "RSS Feed for channel Posts",
       "position": [
-        1260,
-        -400
+        4580,
+        100
       ],
       "parameters": {
         "options": {},
@@ -505,8 +505,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "notes": "Reply to the webhook request with table",
       "position": [
-        1900,
-        -280
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -521,8 +521,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -360,
-        140
+        100,
+        640
       ],
       "parameters": {
         "color": 7,
@@ -537,8 +537,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        60,
-        -260
+        940,
+        100
       ],
       "parameters": {
         "rules": {
@@ -624,8 +624,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -360,
-        -520
+        100,
+        460
       ],
       "parameters": {
         "color": 3,
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.code",
       "notes": "🤓Validate the YouTube input",
       "position": [
-        -120,
-        -260
+        380,
+        100
       ],
       "parameters": {
         "jsCode": "// JavaScript code to extract YouTube channel ID, username, or video ID from a given input and return in n8n compatible format\n\n// Initialize an array to hold the output items\nconst items = [];\n\n// Extract the input value from the previous node's output using the $input API\nconst inputData = $input.all(); // Get all input data\n// Assuming 'youtube Channel username or ID' is the correct key, and it's in the first input item\nconst input = inputData.length > 0 ? inputData[0].json[\"youtube Channel username or ID\"] : null;\n\n// Check if input exists\nif (!input) {\n    throw new Error('Input is undefined or not provided');\n}\n\n// Regular expressions for different YouTube URL and input formats\nconst usernamePattern = /^@?([a-zA-Z0-9_-]+)$/;\nconst channelIdPattern = /^(UC[a-zA-Z0-9_-]{22})$/; // Ensure channel ID starts with \"UC\"\nconst videoUrlPattern1 = /(?:https?:\\/\\/)?www\\.youtube\\.com\\/watch\\?v=([a-zA-Z0-9_-]+)/;\nconst videoUrlPattern2 = /(?:https?:\\/\\/)?youtu\\.be\\/([a-zA-Z0-9_-]+)/;\nconst channelUrlPattern1 = /(?:https?:\\/\\/)?www\\.youtube\\.com\\/@([a-zA-Z0-9_-]+)/;\nconst channelUrlPattern2 = /(?:https?:\\/\\/)?www\\.youtube\\.com\\/channel\\/(UC[a-zA-Z0-9_-]{22})/;\nconst customChannelUrlPattern = /(?:https?:\\/\\/)?www\\.youtube\\.com\\/c\\/([a-zA-Z0-9_-]+)/; // Pattern for custom channel URLs\n\n// Function to determine the type and value of the input\nfunction determineTypeAndValue(input) {\n    if (channelIdPattern.test(input)) {\n        return { type: 'channel ID', value: input };\n    } else if (usernamePattern.test(input)) {\n        return { type: 'channel username', value: input };\n    } else if (videoUrlPattern1.test(input) || videoUrlPattern2.test(input)) {\n        const videoId = videoUrlPattern1.test(input) ? input.match(videoUrlPattern1)[1] : input.match(videoUrlPattern2)[1];\n        return { type: 'video ID', value: videoId };\n    } else if (channelUrlPattern1.test(input) || customChannelUrlPattern.test(input)) {\n        const username = channelUrlPattern1.test(input) ? input.match(channelUrlPattern1)[1] : input.match(customChannelUrlPattern)[1];\n        return { type: 'channel username', value: username };\n    } else if (channelUrlPattern2.test(input)) {\n        return { type: 'channel ID', value: input.match(channelUrlPattern2)[1] };\n    } else {\n        return { error: 'Invalid input or unsupported format.' };\n    }\n}\n\n// Process the input and add the result to the items array\nconst result = determineTypeAndValue(input);\nitems.push({ json: result });\n\nreturn items; // Return the array of items\n"
@@ -655,8 +655,8 @@
       "name": "Format response as HTML Table",
       "type": "n8n-nodes-base.code",
       "position": [
-        1680,
-        -280
+        5140,
+        100
       ],
       "parameters": {
         "jsCode": "// Assuming inputData is dynamically retrieved as follows\nconst inputData = $item(\"0\").$node[\"Merga Data of Youtube & Community RSS\"].json;\n\n// Initialize HTML with a modern styled table\nlet html = `\n<style>\n  table {\n    width: 100%;\n    border-collapse: collapse;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    box-shadow: 0 2px 15px rgba(0,0,0,0.1);\n    border-radius: 8px;\n    overflow: hidden;\n    margin-top: 20px;\n  }\n  th, td {\n    border: 1px solid #ddd;\n    padding: 8px 16px;\n    text-align: left;\n    color: #333;\n  }\n  th {\n    background-color: #f0f0f0;\n    color: #000;\n    font-weight: 600;\n  }\n  tr:nth-child(even) {background-color: #f9f9f9;}\n  tr:hover {background-color: #f1f1f1;}\n  a {\n    text-decoration: none;\n    color: #0645AD;\n  }\n  a:hover {\n    text-decoration: underline;\n  }\n</style>\n<table>\n<tr>\n  <th>Type</th>\n  <th>Format</th>\n  <th>URL</th>\n</tr>`;\n\n// Function to process each item and add it to the HTML table\nObject.entries(inputData).forEach(([key, value]) => {\n  // Extract type and format from the key, assuming key format 'Category - Format'\n  const [type, format] = key.split(' - ');\n  html += `<tr>\n    <td>${type} RSS</td>\n    <td>${format}</td>\n    <td><a href=\"${value}\" target=\"_blank\">${value}</a></td>\n  </tr>`;\n});\n\n// Close the HTML table tag\nhtml += `</table>`;\n\n// Return the HTML string as output\nreturn [{json: {html: html}}];\n"
@@ -668,8 +668,8 @@
       "name": "Merga Data of Youtube & Community RSS",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1480,
-        -280
+        4860,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -685,8 +685,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        660,
+        100
       ],
       "parameters": {
         "content": "# [n8n] YouTube Channel Advanced RSS Feeds Generator\n\n## Overview\nProduction-ready workflow: [n8n] YouTube Channel Advanced RSS Feeds Generator. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -698,8 +698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        3740,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -712,8 +712,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# [n8n] YouTube Channel Advanced RSS Feeds Generator\n\n## Overview\nProduction-ready workflow: [n8n] YouTube Channel Advanced RSS Feeds Generator. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -725,8 +725,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -5,8 +5,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "maxTries": 3,
       "position": [
-        1050,
-        590
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -40,8 +40,8 @@
       "name": "Cron",
       "type": "n8n-nodes-base.cron",
       "position": [
-        710,
-        590
+        100,
+        100
       ],
       "parameters": {
         "triggerTimes": {
@@ -61,8 +61,8 @@
       "name": "Discord",
       "type": "n8n-nodes-base.discord",
       "position": [
-        1610,
-        580
+        1780,
+        100
       ],
       "parameters": {
         "text": "=Notifications In last minutes: <@userIdForTagging>\n{{$node[\"Function\"].json[\"reportMessage\"]}}"
@@ -74,8 +74,8 @@
       "name": "Function",
       "type": "n8n-nodes-base.function",
       "position": [
-        1230,
-        590
+        1220,
+        100
       ],
       "parameters": {
         "functionCode": "const newItems = [];\n\nfor (const item of items[0].json) {\n     newItems.push(`- [${item.reason}] => ${item.subject.title} @ ${item.subject.url.replace('api.','').replace('/repos','')}`);\n  }\n\nreturn [{json: {reportMessage: `${newItems.join('\\r\\n')}`, hasNotifications: items[0].json.length > 0}}];\n"
@@ -87,8 +87,8 @@
       "name": "IF",
       "type": "n8n-nodes-base.if",
       "position": [
-        1400,
-        590
+        1500,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -107,8 +107,8 @@
       "name": "@Get Date 1 min ago",
       "type": "n8n-nodes-base.function",
       "position": [
-        860,
-        590
+        380,
+        100
       ],
       "parameters": {
         "functionCode": "const date = new Date(new Date().setMinutes(new Date().getMinutes() - (1))).toISOString()\nreturn [{json: {since: date}}];"
@@ -122,8 +122,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -135,8 +135,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        660,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -149,8 +149,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -162,8 +162,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",

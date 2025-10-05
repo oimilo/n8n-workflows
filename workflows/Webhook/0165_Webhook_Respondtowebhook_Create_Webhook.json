@@ -4,8 +4,8 @@
       "name": "Receive Slash Command",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        240,
-        100
+        100,
+        640
       ],
       "webhookId": "3c0d3820-5896-41c5-83bf-1cd5e956c32c",
       "parameters": {
@@ -21,8 +21,8 @@
       "name": "Reject",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        680,
-        200
+        100,
+        820
       ],
       "parameters": {
         "options": {
@@ -37,8 +37,8 @@
       "name": "Set",
       "type": "n8n-nodes-base.set",
       "position": [
-        680,
-        0
+        380,
+        460
       ],
       "parameters": {
         "values": {
@@ -63,8 +63,8 @@
       "name": "Read Command",
       "type": "n8n-nodes-base.switch",
       "position": [
-        900,
-        0
+        660,
+        280
       ],
       "parameters": {
         "rules": {
@@ -85,8 +85,8 @@
       "name": "Wrong Command Error",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1120,
-        100
+        100,
+        1360
       ],
       "parameters": {
         "options": {},
@@ -100,8 +100,8 @@
       "name": "Acknowledge",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1340,
-        0
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -115,8 +115,8 @@
       "name": "Empty Email?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1120,
-        -100
+        380,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -135,8 +135,8 @@
       "name": "Missing Email Error",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1340,
-        -200
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -150,8 +150,8 @@
       "name": "Valid Token?",
       "type": "n8n-nodes-base.if",
       "position": [
-        460,
-        100
+        380,
+        640
       ],
       "parameters": {
         "conditions": {
@@ -170,8 +170,8 @@
       "name": "Paddle Data Deletion",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        1560,
-        0
+        660,
+        100
       ],
       "parameters": {
         "workflowId": "1231"
@@ -183,8 +183,8 @@
       "name": "Customer.io Data Deletion",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        1780,
-        0
+        1220,
+        100
       ],
       "parameters": {
         "workflowId": "1237"
@@ -196,8 +196,8 @@
       "name": "Zendesk Data Deletion",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        2000,
-        0
+        1780,
+        100
       ],
       "parameters": {
         "workflowId": "1240"
@@ -209,8 +209,8 @@
       "name": "Airtable",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1780,
-        200
+        1500,
+        100
       ],
       "parameters": {
         "table": "Log",
@@ -231,8 +231,8 @@
       "name": "Prepare Log Entry",
       "type": "n8n-nodes-base.function",
       "position": [
-        1340,
-        200
+        380,
+        280
       ],
       "parameters": {
         "functionCode": "let deletion_nodes = [\n  'Paddle Data Deletion',\n  'Customer.io Data Deletion',\n  'Zendesk Data Deletion'\n]\n\nconst deletion_results = deletion_nodes.map(node_name => $items(node_name)[0].json);\nconst deletion_success = deletion_results.filter(json => json.success == true).length == deletion_nodes.length;\n\nreturn [{\n  json: {\n    Result: deletion_success ? 'Done' : 'Error',\n    Notes: deletion_results.map(json => json.service + ': ' + json.message).join('\\n'),\n    Processed: new Date().toISOString()\n  }\n}];"
@@ -244,8 +244,8 @@
       "name": "Crypto",
       "type": "n8n-nodes-base.crypto",
       "position": [
-        1560,
-        200
+        940,
+        100
       ],
       "parameters": {
         "type": "SHA256",
@@ -259,8 +259,8 @@
       "name": "Respond to Slack",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2000,
-        200
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -289,8 +289,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -302,8 +302,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        940,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -316,8 +316,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -329,8 +329,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",

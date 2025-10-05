@@ -4,8 +4,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        310,
-        300
+        100,
+        280
       ],
       "webhookId": "6be952e8-e30f-4dd7-90b3-bc202ae9f174",
       "parameters": {
@@ -22,8 +22,8 @@
       "name": "SearchTorrent",
       "type": "n8n-nodes-base.functionItem",
       "position": [
-        530,
-        300
+        380,
+        100
       ],
       "parameters": {
         "functionCode": "const TorrentSearchApi = require('torrent-search-api');\n\nTorrentSearchApi.enableProvider('KickassTorrents');\nTorrentSearchApi.enableProvider('Rarbg');\n\nitem.title = $node[\"Webhook\"].json[\"body\"].title.trim();\n\nconst torrents = await TorrentSearchApi.search(item.title, 'All', 5);\n\nitem.torrents = torrents;\nitem.found = true;\n\nif(!torrents.length)\n  item.found = false;\n  \nconsole.log('Done!');\n\nreturn item;"
@@ -35,8 +35,8 @@
       "name": "Start download",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        960,
-        280
+        940,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -58,8 +58,8 @@
       "name": "IF",
       "type": "n8n-nodes-base.if",
       "position": [
-        740,
-        300
+        660,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -78,8 +78,8 @@
       "name": "Torrent not found",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        960,
-        470
+        1220,
+        100
       ],
       "parameters": {
         "text": "=Film {{$node[\"Webhook\"].json[\"body\"].title}} non trovato.",
@@ -96,8 +96,8 @@
       "name": "Telegram1",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1500,
-        490
+        2340,
+        100
       ],
       "parameters": {
         "text": "=Scarico {{$node[\"Webhook\"].json[\"body\"].title}}!\nTitolo: {{$node[\"SearchTorrent\"].json[\"torrents\"][0][\"title\"]}}",
@@ -114,8 +114,8 @@
       "name": "IF2",
       "type": "n8n-nodes-base.if",
       "position": [
-        1150,
-        280
+        1780,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -134,8 +134,8 @@
       "name": "Start download new token",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1340,
-        260
+        2060,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -158,8 +158,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -171,8 +171,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        1500,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -185,8 +185,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -198,8 +198,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

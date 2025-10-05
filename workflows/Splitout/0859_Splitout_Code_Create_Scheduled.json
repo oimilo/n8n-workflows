@@ -17,8 +17,8 @@
       "name": "Data Collection",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        3860
+        100,
+        1180
       ],
       "parameters": {
         "width": 380,
@@ -33,8 +33,8 @@
       "name": "Data Processing",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1260,
-        3860
+        100,
+        1360
       ],
       "parameters": {
         "width": 740,
@@ -49,8 +49,8 @@
       "name": "AI Selection",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2020,
-        3860
+        100,
+        100
       ],
       "parameters": {
         "width": 400,
@@ -65,8 +65,8 @@
       "name": "Email Generation",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1260,
-        4260
+        100,
+        1900
       ],
       "parameters": {
         "width": 1160,
@@ -81,8 +81,8 @@
       "name": "Send Daily News",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        2220,
-        4620
+        100,
+        7300
       ],
       "webhookId": "0de4d8cd-3519-4a4a-a05b-a9c973b64141",
       "parameters": {
@@ -107,8 +107,8 @@
       "name": "Get Date",
       "type": "n8n-nodes-base.function",
       "position": [
-        1300,
-        4640
+        100,
+        6040
       ],
       "parameters": {
         "functionCode": "const now = new Date();\nconst options = {\n  timeZone: 'Asia/Jerusalem',\n  day: '2-digit',\n  month: '2-digit',\n  year: 'numeric'\n};\n\n// Format date according to Israeli format\nconst dateToday = new Intl.DateTimeFormat('en-GB', options).format(now);\n\n// Keep the item\nitems[0].json.date_today = dateToday; // 12/04/2025\n\nreturn items;"
@@ -121,8 +121,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1480,
-        4620
+        100,
+        6220
       ],
       "parameters": {
         "mode": "combine",
@@ -138,8 +138,8 @@
       "name": "Create HTML",
       "type": "n8n-nodes-base.html",
       "position": [
-        2220,
-        4360
+        100,
+        1000
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n\n<html dir=\"rtl\">\n<head>\n  <meta charset=\"UTF-8\" />\n</head>\n<body style=\"margin: 0; padding: 20px; background-color: #f4f6fa; font-family: 'Heebo', 'Assistant', sans-serif; color: #2c3e50; direction: rtl; text-align: right;\">\n  <div style=\"max-width: 750px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); border: 1px solid #e0e6ed;\">\n\n    <h2 style=\"color: #0a3d62; font-size: 26px; font-weight: 700; margin-top: 0; margin-bottom: 24px;\">\n      סקירה ה-AI היומית שלך \"אל תבזבז זמן – תתמקד רק במה שחשוב באמת\"\n    </h2>\n\n    <p style=\"font-size: 16.5px; line-height: 1.8; margin-bottom: 36px; color: #3a3a3a;\">\nלהלן חמשת המאמרים המרכזיים שהתפרסמו ביממה האחרונה, המלווים בתקציר מקצועי שיסייע לך להתעדכן בהתפתחויות הבולטות ביותר בתחומי הכלכלה, הטכנולוגיה והאסטרטגיה.\n    </p>\n\n    <!-- Article 1 -->\n    <div style=\"margin-bottom: 35px;\">\n      <h3 style=\"color: #1e5f74; font-size: 19px; margin-bottom: 12px; font-weight: 600;\">\n        1. <span style=\"font-weight: 700;\">{{ $json.data[0].title }}</span>\n      </h3>\n      <p style=\"font-size: 16px; line-height: 1.7; margin-bottom: 10px; color: #444;\">{{ $json.data[0].summary }}</p>\n      <div style=\"text-align: left;\">\n        <a href=\"{{ $json.data[0].url }}\" style=\"display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #1e5f74; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;\">לקריאה המלאה</a>\n      </div>\n    </div>\n\n    <!-- Article 2 -->\n    <div style=\"margin-bottom: 35px;\">\n      <h3 style=\"color: #1e5f74; font-size: 19px; margin-bottom: 12px; font-weight: 600;\">\n        2. <span style=\"font-weight: 700;\">{{ $json.data[1].title }}</span>\n      </h3>\n      <p style=\"font-size: 16px; line-height: 1.7; margin-bottom: 10px; color: #444;\">{{ $json.data[1].summary }}</p>\n      <div style=\"text-align: left;\">\n        <a href=\"{{ $json.data[1].url }}\" style=\"display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #1e5f74; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;\">לקריאה המלאה</a>\n      </div>\n    </div>\n\n    <!-- Article 3 -->\n    <div style=\"margin-bottom: 35px;\">\n      <h3 style=\"color: #1e5f74; font-size: 19px; margin-bottom: 12px; font-weight: 600;\">\n        3. <span style=\"font-weight: 700;\">{{ $json.data[2].title }}</span>\n      </h3>\n      <p style=\"font-size: 16px; line-height: 1.7; margin-bottom: 10px; color: #444;\">{{ $json.data[2].summary }}</p>\n      <div style=\"text-align: left;\">\n        <a href=\"{{ $json.data[2].url }}\" style=\"display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #1e5f74; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;\">לקריאה המלאה</a>\n      </div>\n    </div>\n\n\n    <!-- Article 4 -->\n    <div style=\"margin-bottom: 35px;\">\n      <h3 style=\"color: #1e5f74; font-size: 19px; margin-bottom: 12px; font-weight: 600;\">\n        4. <span style=\"font-weight: 700;\">{{ $json.data[3].title }}</span>\n      </h3>\n      <p style=\"font-size: 16px; line-height: 1.7; margin-bottom: 10px; color: #444;\">{{ $json.data[3].summary }}</p>\n      <div style=\"text-align: left;\">\n        <a href=\"{{ $json.data[3].url }}\" style=\"display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #1e5f74; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;\">לקריאה המלאה</a>\n      </div>\n    </div>\n\n    <!-- Article 5 -->\n    <div style=\"margin-bottom: 35px;\">\n      <h3 style=\"color: #1e5f74; font-size: 19px; margin-bottom: 12px; font-weight: 600;\">\n        5. <span style=\"font-weight: 700;\">{{ $json.data[4].title }}</span>\n      </h3>\n      <p style=\"font-size: 16px; line-height: 1.7; margin-bottom: 10px; color: #444;\">{{ $json.data[4].summary }}</p>\n      <div style=\"text-align: left;\">\n        <a href=\"{{ $json.data[4].url }}\" style=\"display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #1e5f74; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;\">לקריאה המלאה</a>\n      </div>\n    </div>\n\n\n    <!-- Footer -->\n    <div style=\"margin-top: 50px; font-size: 14px; color: #7f8c8d; border-top: 1px solid #e0e6ed; padding-top: 20px; direction: lrt; text-align: left;\">\n      ✨ This daily Israeli economic newsletter was automatically built for you by <b>n8n AI Agent</b> – because technology can work for you\n    </div>\n\n  </div>\n</body>\n</html>"
@@ -152,8 +152,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        2040,
-        4360
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -167,8 +167,8 @@
       "name": "Clean Text",
       "type": "n8n-nodes-base.set",
       "position": [
-        1860,
-        4360
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -203,8 +203,8 @@
       "name": "Extract Text",
       "type": "n8n-nodes-base.html",
       "position": [
-        1680,
-        4360
+        100,
+        5680
       ],
       "parameters": {
         "options": {},
@@ -230,8 +230,8 @@
       "name": "Fetch HTML",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1480,
-        4360
+        100,
+        5860
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -245,8 +245,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1300,
-        4360
+        100,
+        7660
       ],
       "parameters": {
         "options": {},
@@ -260,8 +260,8 @@
       "name": "ChatGPT 4o",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2060,
-        4060
+        100,
+        460
       ],
       "parameters": {
         "modelId": {
@@ -299,8 +299,8 @@
       "name": "Clean List",
       "type": "n8n-nodes-base.code",
       "position": [
-        1860,
-        4060
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "// Input: items[] - each one is an article\n\n// Step 1: Remove duplicates by link\nconst uniqueMap = new Map();\nfor (const item of items) {\n  const link = item.json.link;\n  if (!uniqueMap.has(link)) {\n    uniqueMap.set(link, item.json);\n  }\n}\n\n// Step 2: Sort by publication date from newest to oldest\nconst uniqueArticles = Array.from(uniqueMap.values());\nuniqueArticles.sort((a, b) => b.pubDate - a.pubDate);\n\n// Step 3: Take the top 50 most recent articles\nconst top20 = uniqueArticles.slice(0, 50);\n\n// Step 4: Build clean, readable, efficient text\nconst formatted = top20.map((article, index) => {\n  const title = article.title?.replace(/\\(\\)$/, '').trim() || 'No Title';\n  const link = article.link || '';\n  return `${index + 1}. ${title}\\n${link}`;\n});\n\nreturn [\n  {\n    json: {\n      chatgpt_input: formatted.join('\\n\\n') // Paragraphs separated by newlines\n    }\n  }\n];"
@@ -313,8 +313,8 @@
       "name": "Sort List",
       "type": "n8n-nodes-base.sort",
       "position": [
-        1680,
-        4060
+        100,
+        7480
       ],
       "parameters": {
         "options": {},
@@ -335,8 +335,8 @@
       "name": "Remove NaN",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1480,
-        4060
+        100,
+        6940
       ],
       "parameters": {
         "options": {
@@ -371,8 +371,8 @@
       "name": "Merged RSS",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1300,
-        4060
+        100,
+        6400
       ],
       "parameters": {},
       "typeVersion": 3,
@@ -383,8 +383,8 @@
       "name": "Edit Fields - Mako",
       "type": "n8n-nodes-base.set",
       "position": [
-        1060,
-        4040
+        100,
+        1720
       ],
       "parameters": {
         "options": {},
@@ -419,8 +419,8 @@
       "name": "Edit Fields - Calcalist",
       "type": "n8n-nodes-base.set",
       "position": [
-        1060,
-        4320
+        100,
+        1540
       ],
       "parameters": {
         "options": {},
@@ -456,8 +456,8 @@
       "type": "n8n-nodes-base.rssFeedRead",
       "onError": "continueRegularOutput",
       "position": [
-        840,
-        4320
+        100,
+        6580
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -475,8 +475,8 @@
       "type": "n8n-nodes-base.rssFeedRead",
       "onError": "continueRegularOutput",
       "position": [
-        840,
-        4040
+        100,
+        6760
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -493,8 +493,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        500,
-        4320
+        100,
+        7120
       ],
       "parameters": {
         "rule": {
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in c8f061f1-57ad-4594-8ff1-baa7f0ef1427",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d846f068",
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c8f061f1",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7433ab1d",
@@ -575,8 +575,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Data Collection**: stickyNote\n- **Data Processing**: stickyNote\n- **AI Selection**: stickyNote\n- **Email Generation**: stickyNote\n- **Send Daily News**: emailSend\n- **Get Date**: function\n- **Merge**: merge\n- **Create HTML**: html\n- **Aggregate**: aggregate\n- **Clean Text**: set\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -589,8 +589,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -633,8 +633,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -647,8 +647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -662,8 +662,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -692,8 +692,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -735,8 +735,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -750,8 +750,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -765,8 +765,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -780,8 +780,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -795,8 +795,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -809,8 +809,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -822,8 +822,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -836,8 +836,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -850,8 +850,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -863,8 +863,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -877,8 +877,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -891,8 +891,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -904,8 +904,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -918,8 +918,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 16 different services: stickyNote, httpRequest, filter, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -931,8 +931,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Workflow execution error",

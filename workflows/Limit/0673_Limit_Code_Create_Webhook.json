@@ -18,8 +18,8 @@
       "type": "n8n-nodes-base.microsoftOutlookTrigger",
       "disabled": true,
       "position": [
-        -760,
-        1400
+        100,
+        15580
       ],
       "parameters": {
         "output": "raw",
@@ -51,8 +51,8 @@
       "name": "Retrieve Headers of Email",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -560,
-        1400
+        100,
+        12520
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -83,8 +83,8 @@
       "name": "Extract Received Headers",
       "type": "n8n-nodes-base.code",
       "position": [
-        80,
-        1460
+        100,
+        9640
       ],
       "parameters": {
         "jsCode": "// Extract the headers array from the JSON\nconst headers = $('Set Headers').item.json.headers;\n\n// Filter headers where the name is \"Received\"\nconst receivedHeaders = headers.filter(header => header.name === \"Received\");\n\n// Return the filtered headers\nreturn receivedHeaders;\n"
@@ -98,8 +98,8 @@
       "name": "Remove Extra Received Headers",
       "type": "n8n-nodes-base.limit",
       "position": [
-        300,
-        1460
+        100,
+        12160
       ],
       "parameters": {
         "keep": "lastItems"
@@ -112,8 +112,8 @@
       "name": "Extract Original From IP",
       "type": "n8n-nodes-base.set",
       "position": [
-        500,
-        1460
+        100,
+        9460
       ],
       "parameters": {
         "options": {},
@@ -136,8 +136,8 @@
       "name": "Query IP Quality Score API",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        980,
-        1360
+        100,
+        11800
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -151,8 +151,8 @@
       "name": "Query IP API",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1180,
-        1360
+        100,
+        11620
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -166,8 +166,8 @@
       "name": "Authentication-Results Header?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1440,
-        1600
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -201,8 +201,8 @@
       "name": "Extract Authentication-Results Header",
       "type": "n8n-nodes-base.code",
       "position": [
-        1720,
-        1360
+        100,
+        9100
       ],
       "parameters": {
         "jsCode": "// Extract the headers array from the JSON\nconst headers = $('Set Headers').item.json.headers;\n\n// Filter headers where the name is \"Received\"\nconst receivedHeaders = headers.filter(header => header.name === \"Authentication-Results\");\n\n// Return the filtered headers\nreturn receivedHeaders;\n"
@@ -216,8 +216,8 @@
       "name": "Received-SPF Header?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1700,
-        2220
+        100,
+        11980
       ],
       "parameters": {
         "options": {},
@@ -251,8 +251,8 @@
       "name": "DKIM-Signature Header?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1700,
-        2620
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -286,8 +286,8 @@
       "name": "Set SPF Value",
       "type": "n8n-nodes-base.set",
       "position": [
-        2480,
-        2140
+        100,
+        13240
       ],
       "parameters": {
         "options": {},
@@ -310,8 +310,8 @@
       "name": "Extract Received-SPF Header",
       "type": "n8n-nodes-base.code",
       "position": [
-        1940,
-        2140
+        100,
+        9820
       ],
       "parameters": {
         "jsCode": "// Extract the headers array from the JSON\nconst headers = $('Set Headers').item.json.headers;\n\n// Filter headers where the name is \"Received\"\nconst receivedHeaders = headers.filter(header => header.name === \"Received-SPF\");\n\n// Return the filtered headers\nreturn receivedHeaders;\n"
@@ -325,8 +325,8 @@
       "name": "DKIM Signature Found",
       "type": "n8n-nodes-base.set",
       "position": [
-        2480,
-        2520
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -349,8 +349,8 @@
       "name": "DMARC Header?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1700,
-        3060
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -384,8 +384,8 @@
       "name": "No DMARC Header",
       "type": "n8n-nodes-base.set",
       "position": [
-        2480,
-        3160
+        100,
+        10900
       ],
       "parameters": {
         "options": {},
@@ -408,8 +408,8 @@
       "name": "Extract DMARC Header",
       "type": "n8n-nodes-base.code",
       "position": [
-        2120,
-        2960
+        100,
+        9280
       ],
       "parameters": {
         "jsCode": "// Extract the headers array from the JSON\nconst headers = $('Set Headers').item.json.headers;\n\n// Filter headers where the name is \"Received\"\nconst receivedHeaders = headers.filter(header => header.name === \"dmarc\");\n\n// Return the filtered headers\nreturn receivedHeaders;\n"
@@ -423,8 +423,8 @@
       "name": "Set DMARC Value",
       "type": "n8n-nodes-base.set",
       "position": [
-        2480,
-        2960
+        100,
+        12700
       ],
       "parameters": {
         "options": {},
@@ -447,8 +447,8 @@
       "name": "Original IP Found?",
       "type": "n8n-nodes-base.if",
       "position": [
-        700,
-        1460
+        100,
+        11440
       ],
       "parameters": {
         "options": {},
@@ -482,8 +482,8 @@
       "name": "No DKIM Signature Found",
       "type": "n8n-nodes-base.set",
       "position": [
-        2480,
-        2720
+        100,
+        10720
       ],
       "parameters": {
         "options": {},
@@ -506,8 +506,8 @@
       "name": "Determine Auth Values",
       "type": "n8n-nodes-base.set",
       "position": [
-        2040,
-        1360
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -542,8 +542,8 @@
       "name": "No SPF Found",
       "type": "n8n-nodes-base.set",
       "position": [
-        2480,
-        2320
+        100,
+        11260
       ],
       "parameters": {
         "options": {},
@@ -566,8 +566,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2840,
-        1600
+        100,
+        10540
       ],
       "parameters": {
         "numberInputs": 3
@@ -580,8 +580,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        3000,
-        1600
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -595,8 +595,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        980,
-        1600
+        100,
+        11080
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -607,8 +607,8 @@
       "name": "Format Webhook Output",
       "type": "n8n-nodes-base.set",
       "position": [
-        3400,
-        1460
+        100,
+        10360
       ],
       "parameters": {
         "options": {},
@@ -625,8 +625,8 @@
       "name": "Format Individual Auth Outputs",
       "type": "n8n-nodes-base.set",
       "position": [
-        3180,
-        1600
+        100,
+        10180
       ],
       "parameters": {
         "options": {},
@@ -697,8 +697,8 @@
       "name": "Format Combined Auth Output",
       "type": "n8n-nodes-base.set",
       "position": [
-        2400,
-        1360
+        100,
+        10000
       ],
       "parameters": {
         "options": {},
@@ -769,8 +769,8 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        3620,
-        1460
+        100,
+        12340
       ],
       "parameters": {
         "options": {}
@@ -783,8 +783,8 @@
       "name": "Webhook1",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -780,
-        2140
+        100,
+        15760
       ],
       "webhookId": "da28e0c6-ebe2-43e7-92fe-dde3278746a9",
       "parameters": {
@@ -801,8 +801,8 @@
       "name": "Set Headers",
       "type": "n8n-nodes-base.set",
       "position": [
-        -100,
-        1460
+        100,
+        12880
       ],
       "parameters": {
         "options": {},
@@ -816,8 +816,8 @@
       "name": "Aggregate Received-SPF Headers",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        2140,
-        2140
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -831,8 +831,8 @@
       "name": "Set Headers Here",
       "type": "n8n-nodes-base.set",
       "position": [
-        -360,
-        1400
+        100,
+        13060
       ],
       "parameters": {
         "options": {},
@@ -855,8 +855,8 @@
       "name": "Set Webhook Headers Here",
       "type": "n8n-nodes-base.set",
       "position": [
-        -380,
-        2140
+        100,
+        13420
       ],
       "parameters": {
         "options": {},
@@ -879,8 +879,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -840,
-        849.3566000559811
+        100,
+        13600
       ],
       "parameters": {
         "color": 7,
@@ -896,8 +896,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -840,
-        1597.2834217449708
+        100,
+        13780
       ],
       "parameters": {
         "color": 7,
@@ -913,8 +913,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -195.35026277953466,
-        1001.1991904481583
+        100,
+        13960
       ],
       "parameters": {
         "color": 7,
@@ -930,8 +930,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        686.9090848322476,
-        800.8639469405958
+        100,
+        14140
       ],
       "parameters": {
         "color": 7,
@@ -947,8 +947,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1622.1779104636253,
-        911.7549500344078
+        100,
+        14320
       ],
       "parameters": {
         "color": 7,
@@ -964,8 +964,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2660,
-        890.7472796133279
+        100,
+        14500
       ],
       "parameters": {
         "color": 7,
@@ -981,8 +981,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1620,
-        1540
+        100,
+        14680
       ],
       "parameters": {
         "color": 7,
@@ -999,8 +999,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in 0da8b1ab-6dbe-41b7-92f1-6e8637d082cb",
@@ -1014,8 +1014,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14860
       ],
       "parameters": {
         "message": "Error occurred in 6093bcd2-1101-4685-8d2c-751dd451afc4",
@@ -1029,8 +1029,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15040
       ],
       "parameters": {
         "message": "Error occurred in feb4203c-4f9b-456c-9640-82ce8f6f550f",
@@ -1044,8 +1044,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15220
       ],
       "parameters": {
         "message": "Error occurred in 391615b6-4996-4687-a07c-3f9af1246840",
@@ -1059,8 +1059,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15400
       ],
       "parameters": {
         "message": "Error occurred in ff28eb77-d095-440e-a95f-9f3727a3c219",
@@ -1074,8 +1074,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0da8b1ab",
@@ -1089,8 +1089,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6093bcd2",
@@ -1104,8 +1104,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node feb4203c",
@@ -1119,8 +1119,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 391615b6",
@@ -1134,8 +1134,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ff28eb77",
@@ -1149,8 +1149,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15940
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Trigger on New Email**: microsoftOutlookTrigger\n- **Retrieve Headers of Email**: httpRequest\n- **Extract Received Headers**: code\n- **Remove Extra Received Headers**: limit\n- **Extract Original From IP**: set\n- **Query IP Quality Score API**: httpRequest\n- **Query IP API**: httpRequest\n- **Authentication-Results Header?**: if\n- **Extract Authentication-Results Header**: code\n- **Received-SPF Header?**: if\n- ... and 41 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1163,8 +1163,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1178,8 +1178,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1193,8 +1193,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1208,8 +1208,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1223,8 +1223,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1238,8 +1238,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16120
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 57\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1252,8 +1252,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16300
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1266,8 +1266,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1281,8 +1281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1296,8 +1296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1311,8 +1311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1326,8 +1326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1341,8 +1341,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1356,8 +1356,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1371,8 +1371,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1386,8 +1386,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1401,8 +1401,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1416,8 +1416,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16480
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 69\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1430,8 +1430,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16660
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 70\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1444,8 +1444,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1459,8 +1459,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1474,8 +1474,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1489,8 +1489,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1504,8 +1504,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1519,8 +1519,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1534,8 +1534,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1549,8 +1549,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1564,8 +1564,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1579,8 +1579,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1594,8 +1594,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16840
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 81\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1608,8 +1608,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17020
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 82\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1621,8 +1621,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1635,8 +1635,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1649,8 +1649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1663,8 +1663,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1677,8 +1677,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1691,8 +1691,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17200
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 88\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1704,8 +1704,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1718,8 +1718,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1732,8 +1732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1746,8 +1746,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1760,8 +1760,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1774,8 +1774,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17380
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1787,8 +1787,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1801,8 +1801,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17560
       ],
       "parameters": {
         "content": "# Microsoftoutlooktrigger Workflow\n\n## Overview\nAutomated workflow: Microsoftoutlooktrigger Workflow. This workflow integrates 13 different services: webhook, stickyNote, httpRequest, code, microsoftOutlookTrigger. It contains 51 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1814,8 +1814,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1580,
-        -220
+        100,
+        15760
       ],
       "parameters": {
         "rule": {
@@ -50,8 +50,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1380,
-        120
+        100,
+        14860
       ],
       "parameters": {
         "model": "gpt-4o",
@@ -71,8 +71,8 @@
       "name": "Google_Ads",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -400,
-        120
+        100,
+        14500
       ],
       "parameters": {
         "name": "Google_Ads",
@@ -92,8 +92,8 @@
       "name": "Meta_Ads",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -300,
-        120
+        100,
+        14680
       ],
       "parameters": {
         "name": "Meta_Ads",
@@ -113,8 +113,8 @@
       "name": "Analytics_Domain_1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1180,
-        120
+        100,
+        100
       ],
       "parameters": {
         "name": "EP_Data",
@@ -134,8 +134,8 @@
       "name": "Analytics_Domain_3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -860,
-        120
+        100,
+        460
       ],
       "parameters": {
         "name": "SBW_Data",
@@ -155,8 +155,8 @@
       "name": "Analytics_Domain_2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1020,
-        120
+        100,
+        280
       ],
       "parameters": {
         "name": "SER_Data",
@@ -176,8 +176,8 @@
       "name": "Analytics_Domain_4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -700,
-        120
+        100,
+        640
       ],
       "parameters": {
         "name": "SZO_Data",
@@ -197,8 +197,8 @@
       "name": "Analytics_Domain_5",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -540,
-        120
+        100,
+        820
       ],
       "parameters": {
         "name": "UCH_Data",
@@ -218,8 +218,8 @@
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        -1580,
-        460
+        100,
+        13600
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -230,8 +230,8 @@
       "name": "Calculator",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        380,
-        680
+        100,
+        2800
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -242,8 +242,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1660,
-        360
+        100,
+        16300
       ],
       "parameters": {
         "color": 6,
@@ -259,8 +259,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1660,
-        1440
+        100,
+        16660
       ],
       "parameters": {
         "color": 5,
@@ -276,8 +276,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1660,
-        -280
+        100,
+        16840
       ],
       "parameters": {
         "width": 2340,
@@ -292,8 +292,8 @@
       "name": "Calculator1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        440,
-        1200
+        100,
+        2980
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -304,8 +304,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1660,
-        880
+        100,
+        17020
       ],
       "parameters": {
         "color": 4,
@@ -321,8 +321,8 @@
       "name": "Calculator3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        460,
-        1760
+        100,
+        3160
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -333,8 +333,8 @@
       "name": "Call Google Analytics data: Last 7 days",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        -1320,
-        460
+        100,
+        3700
       ],
       "parameters": {
         "metricsGA4": {
@@ -395,8 +395,8 @@
       "name": "Call Google Analytics data: Last 7 days (previous year)",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        -400,
-        460
+        100,
+        3880
       ],
       "parameters": {
         "endDate": "={{ $json.endDate }}",
@@ -460,8 +460,8 @@
       "name": "Calculation same period previous year",
       "type": "n8n-nodes-base.code",
       "position": [
-        -620,
-        980
+        100,
+        2440
       ],
       "parameters": {
         "jsCode": "// Aktuelles Datum\nconst today = new Date();\n\n// Berechnung des Enddatums (letzter Tag vor dem aktuellen Datum im Vorjahr)\nconst end = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate() - 1);\n\n// Berechnung des Startdatums (7 Tage vor dem Enddatum)\nconst start = new Date(end);\nstart.setDate(end.getDate() - 6);\n\n// Formatierung zu YYYYMMDD\nfunction formatDate(date) {\n    const year = date.getFullYear();\n    const month = String(date.getMonth() + 1).padStart(2, '0');\n    const day = String(date.getDate()).padStart(2, '0');\n    return `${year}${month}${day}`;\n}\n\n// Ausgabe\nconst startDate = formatDate(start);\nconst endDate = formatDate(end);\n\nreturn {\n    startDate,\n    endDate\n};"
@@ -474,8 +474,8 @@
       "name": "Format data input (previous year)",
       "type": "n8n-nodes-base.code",
       "position": [
-        -240,
-        980
+        100,
+        14320
       ],
       "parameters": {
         "jsCode": "const inputData = items[0].json.results;\nconst totals = {\n   impressions: 0,\n   clicks: 0,\n   conversions: 0,\n   costMicros: 0,\n   conversionsValue: 0\n};\n\ninputData.forEach(campaign => {\n   totals.impressions += parseInt(campaign.metrics.impressions) || 0;\n   totals.clicks += parseInt(campaign.metrics.clicks) || 0;\n   totals.conversions += parseFloat(campaign.metrics.conversions) || 0;\n   totals.costMicros += parseInt(campaign.metrics.costMicros) || 0;\n   totals.conversionsValue += parseFloat(campaign.metrics.conversionsValue) || 0;\n});\n\nconst results = {\n   impressions: totals.impressions,\n   clicks: totals.clicks,\n   conversions: totals.conversions,\n   cost_micros: totals.costMicros,\n   ctr: totals.clicks / totals.impressions,\n   cost_per_conversion: totals.costMicros / totals.conversions,\n   cpm: (totals.costMicros / (totals.impressions / 1000)),\n   roas: totals.conversionsValue / (totals.costMicros / 1000000)\n};\nreturn results;"
@@ -488,8 +488,8 @@
       "name": "Format data input (current year)",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1200,
-        980
+        100,
+        14140
       ],
       "parameters": {
         "jsCode": "const inputData = items[0].json.results;\nconst totals = {\n    impressions: 0,\n    clicks: 0,\n    conversions: 0,\n    costMicros: 0,\n    conversionsValue: 0\n};\n\ninputData.forEach(campaign => {\n    totals.impressions += parseInt(campaign.metrics.impressions) || 0;\n    totals.clicks += parseInt(campaign.metrics.clicks) || 0; \n    totals.conversions += parseFloat(campaign.metrics.conversions) || 0;\n    totals.costMicros += parseInt(campaign.metrics.costMicros) || 0;\n    totals.conversionsValue += parseFloat(campaign.metrics.conversionsValue) || 0;\n});\n\nconst results = {\n    impressions: totals.impressions,\n    clicks: totals.clicks,\n    conversions: totals.conversions, \n    cost_micros: totals.costMicros,\n    ctr: totals.clicks / totals.impressions,\n    cost_per_conversion: totals.costMicros / totals.conversions,\n    cpm: (totals.costMicros / (totals.impressions / 1000)),\n    roas: totals.conversionsValue / (totals.costMicros / 1000000)\n};\n\nreturn results;"
@@ -502,8 +502,8 @@
       "name": "Assign data from input (current year)",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1020,
-        980
+        100,
+        1720
       ],
       "parameters": {
         "options": {},
@@ -568,8 +568,8 @@
       "name": "Summarize input (current year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        -820,
-        980
+        100,
+        18460
       ],
       "parameters": {
         "options": {},
@@ -618,8 +618,8 @@
       "name": "Assign input (previous year)",
       "type": "n8n-nodes-base.set",
       "position": [
-        -80,
-        980
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -685,7 +685,7 @@
       "type": "n8n-nodes-base.summarize",
       "position": [
         100,
-        980
+        18640
       ],
       "parameters": {
         "options": {},
@@ -734,8 +734,8 @@
       "name": "Calculate date format for Google Ads request (last 7 days)",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1600,
-        980
+        100,
+        2080
       ],
       "parameters": {
         "jsCode": "// Aktuelles Datum\nconst today = new Date();\n\n// Berechnung des Enddatums (letzter Tag vor dem aktuellen Datum)\nconst end = new Date(today);\nend.setDate(today.getDate() - 1);\n\n// Berechnung des Startdatums (7 Tage vor dem Enddatum)\nconst start = new Date(end);\nstart.setDate(end.getDate() - 6);\n\n// Formatierung zu YYYYMMDD\nfunction formatDate(date) {\n    const year = date.getFullYear();\n    const month = String(date.getMonth() + 1).padStart(2, '0');\n    const day = String(date.getDate()).padStart(2, '0');\n    return `${year}${month}${day}`;\n}\n\n// Ausgabe\nconst startDate = formatDate(start);\nconst endDate = formatDate(end);\n\nreturn { startDate, endDate };"
@@ -748,8 +748,8 @@
       "name": "Call Google Ads Data: Last 7 days",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1380,
-        980
+        100,
+        3340
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -794,8 +794,8 @@
       "name": "Call Google Ads Data: Last 7 days (previous year)",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -420,
-        980
+        100,
+        3520
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -840,8 +840,8 @@
       "name": "Call Meta Ads Data: Last 7 days",
       "type": "n8n-nodes-base.facebookGraphApi",
       "position": [
-        -1380,
-        1540
+        100,
+        4060
       ],
       "parameters": {
         "edge": "insights",
@@ -865,8 +865,8 @@
       "name": "Call Meta Ads Data: Last 7 days (previous year)",
       "type": "n8n-nodes-base.facebookGraphApi",
       "position": [
-        -640,
-        1540
+        100,
+        4240
       ],
       "parameters": {
         "edge": "insights",
@@ -890,8 +890,8 @@
       "name": "Summarize Meta input (current year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        -920,
-        1540
+        100,
+        18280
       ],
       "parameters": {
         "options": {},
@@ -940,8 +940,8 @@
       "name": "Assign Meta data from input (current year)",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1140,
-        1540
+        100,
+        1360
       ],
       "parameters": {
         "options": {},
@@ -1006,7 +1006,7 @@
       "name": "Assign Meta data input (previous year)",
       "type": "n8n-nodes-base.set",
       "position": [
-        -340,
+        100,
         1540
       ],
       "parameters": {
@@ -1072,8 +1072,8 @@
       "name": "Summarize Meta data input (previous year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        -40,
-        1540
+        100,
+        18100
       ],
       "parameters": {
         "options": {},
@@ -1122,8 +1122,8 @@
       "name": "Format all Meta data for LLM",
       "type": "n8n-nodes-base.code",
       "position": [
-        160,
-        1540
+        100,
+        13960
       ],
       "parameters": {
         "jsCode": "const currentData = $('Summarize Meta input (current year)').first().json;\nconst previousData = $('Summarize Meta data input (previous year)').first().json;\n\nfunction parseNumber(value) {\n    if (typeof value === 'string') {\n        return parseFloat(value.replace(/\\./g, '').replace(',', '.'));\n    }\n    return value || 0;\n}\n\nfunction formatNumber(number, decimals = 0) {\n    if (number === 0) return \"0\";\n    return parseNumber(number).toLocaleString('de-DE', {\n        minimumFractionDigits: decimals,\n        maximumFractionDigits: decimals\n    });\n}\n\nfunction calculateCPM(cpm) {\n    return parseNumber(cpm);\n}\n\nreturn [{\n    current_impressions: formatNumber(currentData.sum_Impressions),\n    current_cpm: formatNumber(calculateCPM(currentData.average_CPM), 2),\n    current_clicks: formatNumber(currentData.sum_Clicks),\n    current_ctr: formatNumber(parseNumber(currentData.average_CTR), 2),\n    current_conversions: formatNumber(currentData.sum_Conversions, 2),\n    current_cost_per_conversion: formatNumber(currentData.average_Cost_per_conversion, 2),\n    current_cost: formatNumber(currentData.sum_Spend, 2),\n    current_roas: formatNumber(parseNumber(currentData.average_ROAS), 2),\n    \n    previous_impressions: formatNumber(previousData.sum_Impressions),\n    previous_cpm: formatNumber(calculateCPM(previousData.average_CPM), 2),\n    previous_clicks: formatNumber(previousData.sum_Clicks),\n    previous_ctr: formatNumber(parseNumber(previousData.average_CTR), 2),\n    previous_conversions: formatNumber(previousData.sum_Conversions, 2),\n    previous_cost_per_conversion: formatNumber(previousData.average_Cost_per_conversion || 0, 2),\n    previous_cost: formatNumber(previousData.sum_Spend, 2),\n    previous_roas: formatNumber(parseNumber(previousData.average_ROAS), 2)\n}];"
@@ -1136,8 +1136,8 @@
       "name": "Processing for Google Ads report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        400,
-        980
+        100,
+        15040
       ],
       "parameters": {
         "modelId": {
@@ -1169,8 +1169,8 @@
       "name": "Format all Google data for LLM",
       "type": "n8n-nodes-base.code",
       "position": [
-        260,
-        980
+        100,
+        13780
       ],
       "parameters": {
         "jsCode": "const currentData = $('Summarize input (current year)').first().json;\nconst previousData = $('Summarize input (previous year)').first().json;\n\nfunction formatNumber(number, decimals = 0) {\n   if (number === 0) return \"0\";\n   return number.toLocaleString('de-DE', {\n       minimumFractionDigits: decimals,\n       maximumFractionDigits: decimals\n   });\n}\n\nfunction calculateCPM(costMicros, impressions) {\n   if (impressions === 0) return 0;\n   return (costMicros / 1000000 / impressions) * 1000;\n}\n\nreturn [{\n   current_impressions: formatNumber(currentData.sum_Impressions),\n   current_cpm: formatNumber(calculateCPM(currentData.sum_Spend, currentData.sum_Impressions), 2),\n   current_clicks: formatNumber(currentData.sum_Clicks),\n   current_ctr: formatNumber(currentData.average_CTR * 100, 2),\n   current_conversions: formatNumber(currentData.sum_Conversions, 2),\n   current_cost_per_conversion: formatNumber(currentData.average_Cost_per_Conversion / 1000000, 2),\n   current_cost: formatNumber(currentData.sum_Spend / 1000000, 2),\n   current_roas: formatNumber(currentData.average_ROAS, 2),\n   \n   previous_impressions: formatNumber(previousData.sum_Impressions),\n   previous_cpm: formatNumber(calculateCPM(previousData.sum_Spend, previousData.sum_Impressions), 2),\n   previous_clicks: formatNumber(previousData.sum_Clicks),\n   previous_ctr: formatNumber(previousData.average_CTR * 100, 2),\n   previous_conversions: formatNumber(previousData.sum_Conversions, 2),\n   previous_cost_per_conversion: formatNumber(previousData.average_Cost_per_conversion / 1000000, 2),\n   previous_cost: formatNumber(previousData.sum_Spend / 1000000, 2),\n   previous_roas: formatNumber(previousData.average_ROAS, 2)\n}];"
@@ -1183,8 +1183,8 @@
       "name": "Assign Google Analytics data input (current year)",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1080,
-        460
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -1255,8 +1255,8 @@
       "name": "Summarize Google Analytics input (current year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        -860,
-        460
+        100,
+        17740
       ],
       "parameters": {
         "options": {},
@@ -1308,8 +1308,8 @@
       "name": "Calculate date format for meta ads request s",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1600,
-        1540
+        100,
+        2260
       ],
       "parameters": {
         "jsCode": "// Aktuelles Datum\nconst now = new Date();\n\n// Gestern als Ende-Datum\nconst yesterday = new Date(now);\nyesterday.setDate(now.getDate() - 1);\n\n// Start-Datum (7 Tage vor gestern)\nconst weekStart = new Date(yesterday);\nweekStart.setDate(yesterday.getDate() - 6);\n\n// Vorjahreszeitraum\nconst lastYearStart = new Date(weekStart);\nlastYearStart.setFullYear(weekStart.getFullYear() - 1);\n\nconst lastYearEnd = new Date(yesterday);\nlastYearEnd.setFullYear(yesterday.getFullYear() - 1);\n\n// Formatierung YYYY-MM-DD\nfunction formatDate(date) {\n    return date.toISOString().split('T')[0];\n}\n\n// Ausgabe\nitems[0] = {\n  json: {\n    currentPeriod: {\n      since: formatDate(weekStart),\n      until: formatDate(yesterday)\n    },\n    lastYear: {\n      since: formatDate(lastYearStart),\n      until: formatDate(lastYearEnd)\n    }\n  }\n};\n\nreturn items;"
@@ -1322,8 +1322,8 @@
       "name": "Calculation same period previous year1",
       "type": "n8n-nodes-base.code",
       "position": [
-        -620,
-        460
+        100,
+        2620
       ],
       "parameters": {
         "jsCode": "return {\n  // Berechnung des Startdatums: Vorjahr, gleiche Woche, 7 Tage zurück\n  startDate: (() => {\n    const date = new Date();\n    date.setFullYear(date.getFullYear() - 1); // Zurück ins Vorjahr\n    date.setDate(date.getDate() - 7); // 7 Tage zurück\n    return date.toISOString().split('T')[0];\n  })(),\n  \n  // Berechnung des Enddatums: Vorjahr, heutiges Datum\n  endDate: (() => {\n    const date = new Date();\n    date.setFullYear(date.getFullYear() - 1); // Zurück ins Vorjahr\n    return date.toISOString().split('T')[0];\n  })(),\n};\n"
@@ -1336,8 +1336,8 @@
       "name": "Assign Google Analytics data input (previous year)",
       "type": "n8n-nodes-base.set",
       "position": [
-        -180,
-        460
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -1408,8 +1408,8 @@
       "name": "Summarize Google Analytics input (previous year)",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        40,
-        460
+        100,
+        17920
       ],
       "parameters": {
         "options": {},
@@ -1461,8 +1461,8 @@
       "name": "Send mail report",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        560,
-        -220
+        100,
+        16120
       ],
       "parameters": {
         "html": "={{ $json.output }}",
@@ -1485,8 +1485,8 @@
       "name": "Processing for Meta Ads Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        400,
-        1540
+        100,
+        15400
       ],
       "parameters": {
         "modelId": {
@@ -1518,8 +1518,8 @@
       "name": "Processing for Google Analytics Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        400,
-        460
+        100,
+        15220
       ],
       "parameters": {
         "modelId": {
@@ -1551,8 +1551,8 @@
       "name": "Processing for Telegram Report",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        0,
-        0
+        100,
+        15580
       ],
       "parameters": {
         "modelId": {
@@ -1584,8 +1584,8 @@
       "name": "Weekly Report Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -900,
-        -220
+        100,
+        18820
       ],
       "parameters": {
         "text": "=# Expert in Data Processing and Email Generation in N8N\nYOU ARE AN EXPERT IN DATA PROCESSING AND EMAIL GENERATION IN N8N. YOUR TASK IS TO CREATE AN ENGLISH-LANGUAGE HTML EMAIL THAT COMPREHENSIVELY SUMMARIZES GOOGLE ANALYTICS AND GOOGLE ADS DATA FROM VARIOUS WORKFLOWS. YOU MUST FORMAT THE CAPTURED DATA ACCORDING TO THE SPECIFIED SPECIFICATIONS AND DESIGN THE EMAIL FOR OPTIMAL READABILITY.\n\n## Instructions\n\n### 1. Collect Summary\n- First, retrieve the summary and table for `Analytics_Domain_1` from the `Analytics_Domain_1` workflow.\n- Second, retrieve the summary and table for `Analytics_Domain_2` from the `Analytics_Domain_2` workflow.\n- Third, retrieve the summary and table for `Analytics_Domain_3` from the `Analytics_Domain_3` workflow.\n- Fourth, retrieve the summary and table for `Analytics_Domain_4` from the `Analytics_Domain_4` workflow.\n- Fifth, retrieve the summary and table for `Analytics_Domain_5` from the `Analytics_Domain_5` workflow.\n- Sixth, retrieve the summary and table for `Google_Ads` from the `Google_Ads` workflow.\n- Seventh, retrieve the summary and table for `Meta_Ads` from the `Meta_Ads` workflow.\n\n### 2. Email Structure\n- Begin the email with the following introduction:  \n  \"Hi Freddy,  \n  Here is your weekly Online Marketing Report for the last 7 days from Domain 1, Domain 2, Domain 3, Domain 4, Domain 5, as well as Google Ads and Meta Ads!\"\n\n- Create a separate section for each dataset:  \n  - **Domain 1**: Contains the summary and table from `Analytics_Domain_1`\n  - **Domain 2**: Contains the summary and table from `Analytics_Domain_2`\n  - **Domain 3**: Contains the summary and table from `Analytics_Domain_3`\n  - **Domain 4**: Contains the summary and table from `Analytics_Domain_4`\n  - **Domain 5**: Contains the summary and table from `Analytics_Domain_5`\n  - **Google Ads**: Contains the summary and table from `Google Ads`\n  - **Meta Ads**: Contains the summary and table from `Meta Ads`\n\n- Present the sections clearly and readably as HTML.\n\n### 3. Design and Formatting\n- Use simple HTML structures with clear section titles (e.g., `<h2>` for titles).\n- Present the summary as a paragraph (e.g., `<p>`).\n- The table should be cleanly formatted (e.g., with `<table>`, `<tr>`, `<td>`).\n- Keep the presentation clear and easy to read.\n\n### 4. No Conclusion, No Signature\n\n### HTML Output Structure\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n        }\n        h2 {\n            color: #333;\n        }\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin: 10px 0;\n        }\n        table, th, td {\n            border: 1px solid #ddd;\n        }\n        th, td {\n            padding: 8px;\n            text-align: left;\n        }\n        th {\n            background-color: #f4f4f4;\n        }\n    </style>\n</head>\n<body>\n    <p>Hi,</p>\n    <p>Here is your weekly Online Marketing Report for the last 7 days from Domain 1, Domain 2, Domain 3, Domain 4, Domain 5, as well as Google Ads and Meta Ads!</p>\n    \n    <h2>Domain 1</h2>\n    <p>[Summary from Analytics_Domain_1 will be inserted here]</p>\n    <table>\n        [Table content from Analytics_Domain_1 will be inserted here]\n    </table>\n    \n    <h2>Domain 2</h2>\n    <p>[Summary from Analytics_Domain_2 will be inserted here]</p>\n    <table>\n        [Table content from Analytics_Domain_2 will be inserted here]\n    </table>\n</body>\n</html>\n```\n\n### 5. Output\n- Format the entire HTML content as a string for email transmission.\n\n### What Not to Do\n- No unwanted closings or signatures\n- No unstructured, hard-to-read data formatting\n- No missing sections or titles\n- No copying of data without HTML formatting",
@@ -1600,8 +1600,8 @@
       "name": "Send Telegram report",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        560,
-        0
+        100,
+        15940
       ],
       "parameters": {
         "text": "={{ $json.message.content }}",
@@ -1622,8 +1622,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2120,
-        -280
+        100,
+        16480
       ],
       "parameters": {
         "width": 440,
@@ -1639,8 +1639,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in a1b4d36a-c322-4771-bcf3-226870fcf000",
@@ -1654,8 +1654,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        17200
       ],
       "parameters": {
         "message": "Error occurred in 7246c0af-4e9d-4037-bc1d-c4fd16aae7d3",
@@ -1669,8 +1669,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        17380
       ],
       "parameters": {
         "message": "Error occurred in 13074a3d-6cf4-4ad7-9e26-002f8120e640",
@@ -1684,8 +1684,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        17560
       ],
       "parameters": {
         "message": "Error occurred in 06a32368-f9f1-4311-bd17-3fea6b0d2888",
@@ -1699,8 +1699,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9b25dfe7",
@@ -1714,8 +1714,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 165717a8",
@@ -1729,8 +1729,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node da636e2a",
@@ -1744,8 +1744,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a1b4d36a",
@@ -1759,8 +1759,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7246c0af",
@@ -1774,8 +1774,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 13074a3d",
@@ -1789,8 +1789,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 06a32368",
@@ -1804,8 +1804,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 146d6907",
@@ -1819,8 +1819,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 61311c11",
@@ -1834,8 +1834,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 928d15f2",
@@ -1849,8 +1849,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ce9175bd",
@@ -1864,8 +1864,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c960aed4",
@@ -1879,8 +1879,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2a405e35",
@@ -1894,8 +1894,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        19000
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 68\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Google_Ads**: toolWorkflow\n- **Meta_Ads**: toolWorkflow\n- **Analytics_Domain_1**: toolWorkflow\n- **Analytics_Domain_3**: toolWorkflow\n- **Analytics_Domain_2**: toolWorkflow\n- **Analytics_Domain_4**: toolWorkflow\n- **Analytics_Domain_5**: toolWorkflow\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- ... and 58 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1908,8 +1908,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1923,8 +1923,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1938,8 +1938,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1953,8 +1953,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1968,8 +1968,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1983,8 +1983,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        19180
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1997,8 +1997,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        19360
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 75\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2011,8 +2011,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2026,8 +2026,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2041,8 +2041,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2056,8 +2056,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2071,8 +2071,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2086,8 +2086,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2101,8 +2101,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2116,8 +2116,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2131,8 +2131,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2146,8 +2146,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2161,8 +2161,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        19540
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 86\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2175,8 +2175,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        19720
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 87\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2189,8 +2189,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2204,8 +2204,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2219,8 +2219,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2234,8 +2234,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2249,8 +2249,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2264,8 +2264,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2279,8 +2279,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2294,8 +2294,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2309,8 +2309,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2324,8 +2324,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2339,8 +2339,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        19900
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 98\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2353,8 +2353,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20080
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 99\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2366,8 +2366,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2380,8 +2380,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2394,8 +2394,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2408,8 +2408,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2422,8 +2422,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2436,8 +2436,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20260
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 105\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2449,8 +2449,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2463,8 +2463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2477,8 +2477,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2491,8 +2491,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2505,8 +2505,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2519,8 +2519,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20440
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2532,8 +2532,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2546,8 +2546,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20620
       ],
       "parameters": {
         "content": "# Online Marketing Weekly Report\n\n## Overview\nAutomated workflow: Online Marketing Weekly Report. This workflow integrates 17 different services: stickyNote, httpRequest, facebookGraphApi, telegram, code. It contains 68 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2559,8 +2559,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Workflow execution error",

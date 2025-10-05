@@ -26,8 +26,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -440,
-        -700
+        100,
+        4240
       ],
       "parameters": {
         "rule": {
@@ -46,8 +46,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        -100,
-        -120
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -61,8 +61,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -460,
-        -480
+        100,
+        4600
       ],
       "parameters": {
         "width": 1120,
@@ -77,8 +77,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -220,
-        -740
+        100,
+        4780
       ],
       "parameters": {
         "width": 480,
@@ -93,8 +93,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -460,
-        -180
+        100,
+        4960
       ],
       "parameters": {
         "width": 1120,
@@ -109,8 +109,8 @@
       "name": "not_saved_links_hd",
       "type": "n8n-nodes-base.code",
       "position": [
-        260,
-        -120
+        100,
+        7660
       ],
       "parameters": {
         "jsCode": "const linksCanalItems = $('channel_links_tg').all();\nconst saved_links_items = $('saved_links_hd').all();\n\n// Extract links\nconst saved_links = new Set(\n    saved_links_items.map(item => String(item.json.content.url))\n);\n\n// Filter\nconst filteredLinks = linksCanalItems.filter(item => {\n    return !saved_links.has(String(item.json.url));\n});\n\nreturn filteredLinks;\n\n\n\n\n\n\n\n\n"
@@ -123,8 +123,8 @@
       "name": "not_saved_links_rd",
       "type": "n8n-nodes-base.code",
       "position": [
-        260,
-        -420
+        100,
+        7840
       ],
       "parameters": {
         "jsCode": "const linksCanalItems = $('channel_links_tg').all();\nconst saved_links_items = $('saved_links_rd').all();\n\n// Extract urls\nconst saved_urls = new Set(\n    saved_links_items.map(item => String(item.json.url))\n);\n\n// Filter\nconst filteredLinks = linksCanalItems.filter(item => {\n    return !saved_urls.has(String(item.json.url));\n});\n\nreturn filteredLinks;\n\n\n\n\n\n\n\n\n"
@@ -137,8 +137,8 @@
       "name": "saved_links_rd",
       "type": "n8n-nodes-base.set",
       "position": [
-        80,
-        -420
+        100,
+        8560
       ],
       "parameters": {
         "options": {},
@@ -167,8 +167,8 @@
       "name": "save_link_rd",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        460,
-        -420
+        100,
+        8200
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -205,8 +205,8 @@
       "name": "save_link_hd",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        460,
-        -120
+        100,
+        8020
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -243,8 +243,8 @@
       "name": "get_links_rd",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -280,
-        -420
+        100,
+        7480
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -272,8 +272,8 @@
       "name": "get_links_hd",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -280,
-        -120
+        100,
+        7300
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -297,8 +297,8 @@
       "name": "saved_links_hd",
       "type": "n8n-nodes-base.set",
       "position": [
-        80,
-        -120
+        100,
+        8380
       ],
       "parameters": {
         "options": {},
@@ -321,8 +321,8 @@
       "name": "channel_links_tg",
       "type": "n8n-nodes-base.code",
       "position": [
-        120,
-        -700
+        100,
+        7120
       ],
       "parameters": {
         "jsCode": "// Define the chatId from the environment variable\nconst chatId = parseInt($env.TG_SHERLINK_ID, 10);\n// Access the \"result\" field from the previous node's output\nconst updates = $node[\"channel_items_tg\"].json[\"result\"];\n// Check if \"result\" is an array\nif (!Array.isArray(updates)) {\n  return []; // Return empty if there are no messages\n}\n// Filter and process the messages\nconst filteredUpdates = updates\n  .map(update => {\n    // Ensure message from the specified channel\n    if (update.channel_post && update.channel_post.chat && update.channel_post.chat.id === chatId) {\n      return {\n        id: update.channel_post.message_id,\n        url: update.channel_post.text\n      };\n    }\n    return null;\n  })\n  \n  .filter(item => item !== null) // Filter nulls\n  .filter(item => {\n    // Filter only with hyperlink in text\n    const text = item.url || \"\"; // Defined text\n    return /https?:\\/\\/[^\\s]+/.test(text); // hyperlink\n  });\n// Convert each array element into an individual item\nreturn filteredUpdates.map(update => ({ json: update }));\n"
@@ -336,8 +336,8 @@
       "name": "channel_items_tg",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -80,
-        -700
+        100,
+        6940
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -358,8 +358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 63d45b19-e878-418e-8eb5-c16b50af9669",
@@ -373,8 +373,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in 9416a858-1a25-4c3e-a49e-153118c268a7",
@@ -388,8 +388,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in 13693467-cd75-4774-9072-832419606ab2",
@@ -403,8 +403,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in e4ed315d-d065-425a-b30d-eca1509670cc",
@@ -418,8 +418,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in ca306aed-e682-4c35-a257-3b65bcfde895",
@@ -433,8 +433,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 63d45b19",
@@ -448,8 +448,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9416a858",
@@ -463,8 +463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 13693467",
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e4ed315d",
@@ -493,8 +493,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ca306aed",
@@ -508,8 +508,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Telegram channel to Readeck & Hoarder\n\n## Overview\nAutomated workflow: Telegram channel to Readeck & Hoarder. This workflow integrates 7 different services: stickyNote, httpRequest, code, scheduleTrigger, splitOut. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Split Out**: splitOut\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **not_saved_links_hd**: code\n- **not_saved_links_rd**: code\n- **saved_links_rd**: set\n- **save_link_rd**: httpRequest\n- **save_link_hd**: httpRequest\n- ... and 15 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -522,8 +522,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -537,8 +537,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -552,8 +552,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -567,8 +567,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -582,8 +582,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -597,8 +597,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Telegram channel to Readeck & Hoarder\n\n## Overview\nAutomated workflow: Telegram channel to Readeck & Hoarder. This workflow integrates 7 different services: stickyNote, httpRequest, code, scheduleTrigger, splitOut. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -611,8 +611,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -626,8 +626,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -656,8 +656,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -671,8 +671,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Telegram channel to Readeck & Hoarder\n\n## Overview\nAutomated workflow: Telegram channel to Readeck & Hoarder. This workflow integrates 7 different services: stickyNote, httpRequest, code, scheduleTrigger, splitOut. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -700,8 +700,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -715,8 +715,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -730,8 +730,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -745,8 +745,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -760,8 +760,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -775,8 +775,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Telegram channel to Readeck & Hoarder\n\n## Overview\nAutomated workflow: Telegram channel to Readeck & Hoarder. This workflow integrates 7 different services: stickyNote, httpRequest, code, scheduleTrigger, splitOut. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -789,8 +789,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Telegram channel to Readeck & Hoarder\n\n## Overview\nAutomated workflow: Telegram channel to Readeck & Hoarder. This workflow integrates 7 different services: stickyNote, httpRequest, code, scheduleTrigger, splitOut. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -802,8 +802,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -816,8 +816,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Telegram channel to Readeck & Hoarder\n\n## Overview\nAutomated workflow: Telegram channel to Readeck & Hoarder. This workflow integrates 7 different services: stickyNote, httpRequest, code, scheduleTrigger, splitOut. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -829,8 +829,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

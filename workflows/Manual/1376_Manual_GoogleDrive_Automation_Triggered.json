@@ -17,8 +17,8 @@
       "name": "When clicking \"Execute Workflow\"",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        260,
-        240
+        100,
+        4960
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "Embeddings OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1060,
-        460
+        100,
+        1360
       ],
       "parameters": {
         "options": {}
@@ -49,8 +49,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        426.9261940355327,
-        60.389291053299075
+        100,
+        4060
       ],
       "parameters": {
         "color": 7,
@@ -66,8 +66,8 @@
       "name": "Default Data Loader",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1240,
-        460
+        100,
+        1000
       ],
       "parameters": {
         "options": {
@@ -94,8 +94,8 @@
       "name": "Set file URL in Google Drive",
       "type": "n8n-nodes-base.set",
       "position": [
-        480,
-        240
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -118,8 +118,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -40,
-        140
+        100,
+        4420
       ],
       "parameters": {
         "height": 350.7942096493649,
@@ -133,8 +133,8 @@
       "name": "Add in metadata",
       "type": "n8n-nodes-base.code",
       "position": [
-        900,
-        240
+        100,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -148,8 +148,8 @@
       "name": "Download file",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        680,
-        240
+        100,
+        1180
       ],
       "parameters": {
         "fileId": {
@@ -174,8 +174,8 @@
       "name": "Chat Trigger",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        260,
-        960
+        100,
+        640
       ],
       "webhookId": "1727c687-aed0-49cf-96af-e7796819fbb3",
       "parameters": {},
@@ -187,8 +187,8 @@
       "name": "Prepare chunks",
       "type": "n8n-nodes-base.code",
       "position": [
-        1080,
-        960
+        100,
+        3340
       ],
       "parameters": {
         "jsCode": "let out = \"\"\nfor (const i in $input.all()) {\n let itemText = \"--- CHUNK \" + i + \" ---\\n\"\n itemText += $input.all()[i].json.document.pageContent + \"\\n\"\n itemText += \"\\n\"\n out += itemText\n}\n\nreturn {\n 'context': out\n};"
@@ -201,8 +201,8 @@
       "name": "Embeddings OpenAI2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        700,
-        1180
+        100,
+        1540
       ],
       "parameters": {
         "options": {}
@@ -221,8 +221,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1320,
-        1180
+        100,
+        3160
       ],
       "parameters": {
         "options": {}
@@ -241,8 +241,8 @@
       "name": "Set max chunks to send to model",
       "type": "n8n-nodes-base.set",
       "position": [
-        480,
-        960
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -266,8 +266,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1500,
-        1180
+        100,
+        4780
       ],
       "parameters": {
         "jsonSchema": "{\n \"type\": \"object\",\n \"properties\": {\n \"answer\": {\n \"type\": \"string\"\n },\n \"citations\": {\n \"type\": \"array\",\n \"items\": {\n \"type\": \"number\"\n }\n }\n }\n}"
@@ -280,8 +280,8 @@
       "name": "Compose citations",
       "type": "n8n-nodes-base.set",
       "position": [
-        1680,
-        960
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -305,8 +305,8 @@
       "name": "Generate response",
       "type": "n8n-nodes-base.set",
       "position": [
-        1900,
-        960
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -329,8 +329,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        428.71587064297796,
-        840
+        100,
+        4240
       ],
       "parameters": {
         "color": 7,
@@ -346,8 +346,8 @@
       "name": "Answer the query based on chunks",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1300,
-        960
+        100,
+        460
       ],
       "parameters": {
         "text": "=Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. Important: In your response, also include the the indexes of the chunks you used to generate the answer.\n\n{{ $json.context }}\n\nQuestion: {{ $(\"Chat Trigger\").first().json.chatInput }}\nHelpful Answer:",
@@ -362,8 +362,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        442.5682587140436,
-        150.50554725042372
+        100,
+        4600
       ],
       "parameters": {
         "color": 7,
@@ -379,8 +379,8 @@
       "name": "Get top chunks matching query",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        700,
-        960
+        100,
+        2980
       ],
       "parameters": {
         "mode": "load",
@@ -408,8 +408,8 @@
       "name": "Add to Pinecone vector store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1120,
-        240
+        100,
+        280
       ],
       "parameters": {
         "mode": "insert",
@@ -435,8 +435,8 @@
       "name": "Recursive Character Text Splitter",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1240,
-        620
+        100,
+        3520
       ],
       "parameters": {
         "chunkSize": 3000,
@@ -451,8 +451,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 61a38c00",
@@ -466,8 +466,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ab3131d5",
@@ -481,8 +481,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6356bce2",
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8fb697ea",
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking \"Execute Workflow\"**: manualTrigger\n- **Embeddings OpenAI**: embeddingsOpenAi\n- **Sticky Note**: stickyNote\n- **Default Data Loader**: documentDefaultDataLoader\n- **Set file URL in Google Drive**: set\n- **Sticky Note2**: stickyNote\n- **Add in metadata**: code\n- **Download file**: googleDrive\n- **Chat Trigger**: chatTrigger\n- **Prepare chunks**: code\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -567,8 +567,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -581,8 +581,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -595,8 +595,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -608,8 +608,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -648,8 +648,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 14 different services: stickyNote, vectorStorePinecone, textSplitterRecursiveCharacterTextSplitter, code, chainLlm. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",

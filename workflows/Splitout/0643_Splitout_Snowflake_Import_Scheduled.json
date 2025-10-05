@@ -25,8 +25,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        5620,
-        1440
+        100,
+        9100
       ],
       "parameters": {
         "color": 5,
@@ -42,8 +42,8 @@
       "name": "Manual mapping feature",
       "type": "n8n-nodes-base.set",
       "position": [
-        4380,
-        -180
+        100,
+        7120
       ],
       "parameters": {
         "fields": {
@@ -89,8 +89,8 @@
       "name": "get productboard companies",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        4060,
-        220
+        100,
+        13060
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -136,8 +136,8 @@
       "name": "Manual mapping companies",
       "type": "n8n-nodes-base.set",
       "position": [
-        4760,
-        220
+        100,
+        6760
       ],
       "parameters": {
         "fields": {
@@ -167,8 +167,8 @@
       "name": "get productboard notes",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        4500,
-        640
+        100,
+        13420
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -219,8 +219,8 @@
       "name": "Manual mapping notes",
       "type": "n8n-nodes-base.set",
       "position": [
-        5200,
-        640
+        100,
+        7660
       ],
       "parameters": {
         "fields": {
@@ -278,8 +278,8 @@
       "name": "Split features",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        3920,
-        -180
+        100,
+        8560
       ],
       "parameters": {
         "options": {},
@@ -293,8 +293,8 @@
       "name": "Split companies",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        4300,
-        220
+        100,
+        8380
       ],
       "parameters": {
         "options": {},
@@ -308,8 +308,8 @@
       "name": "Split notes",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        4740,
-        640
+        100,
+        8920
       ],
       "parameters": {
         "options": {},
@@ -323,8 +323,8 @@
       "name": "Split features in notes",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        5400,
-        900
+        100,
+        8740
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -340,8 +340,8 @@
       "name": "Combine Feature ID + Note ID",
       "type": "n8n-nodes-base.set",
       "position": [
-        5640,
-        900
+        100,
+        100
       ],
       "parameters": {
         "fields": {
@@ -367,8 +367,8 @@
       "name": "get productboard features",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3680,
-        -180
+        100,
+        13240
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -413,8 +413,8 @@
       "name": "Update Productboard Notes",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        5940,
-        660
+        100,
+        10360
       ],
       "parameters": {
         "table": "PRODUCTBOARD_NOTES",
@@ -434,8 +434,8 @@
       "name": "Empty Table Productboard Notes",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        4260,
-        640
+        100,
+        1000
       ],
       "parameters": {
         "query": "TRUNCATE TABLE PRODUCTBOARD_NOTES;",
@@ -456,8 +456,8 @@
       "name": "[CREATE] PRODUCTBOARD_NOTES",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        3280,
-        1140
+        100,
+        12700
       ],
       "parameters": {
         "query": "CREATE OR REPLACE TABLE PRODUCTBOARD_NOTES (\n    note_id STRING NOT NULL,\n    note_title STRING,\n    note_state STRING,\n    note_company_id STRING,\n    note_source STRING,\n    note_content STRING,\n    note_created_by STRING,\n    note_owner STRING,\n    note_url STRING,\n    note_created_at TIMESTAMP_NTZ\n);",
@@ -477,8 +477,8 @@
       "name": "[CREATE] PRODUCTBOARD_COMPANIES",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        3520,
-        1140
+        100,
+        12340
       ],
       "parameters": {
         "query": "CREATE OR REPLACE TABLE PRODUCTBOARD_COMPANIES (\n    company_id STRING NOT NULL,\n    company_name STRING,\n    company_domain STRING\n);",
@@ -498,8 +498,8 @@
       "name": "Update Productboard Companies",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        5280,
-        220
+        100,
+        9820
       ],
       "parameters": {
         "table": "PRODUCTBOARD_COMPANIES",
@@ -519,8 +519,8 @@
       "name": "Manual mapping companies db",
       "type": "n8n-nodes-base.set",
       "position": [
-        5020,
-        220
+        100,
+        6940
       ],
       "parameters": {
         "fields": {
@@ -550,8 +550,8 @@
       "name": "Manual mapping notes db",
       "type": "n8n-nodes-base.set",
       "position": [
-        5720,
-        660
+        100,
+        7840
       ],
       "parameters": {
         "fields": {
@@ -609,8 +609,8 @@
       "name": "Empty Table Productboard Companies",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        3820,
-        220
+        100,
+        460
       ],
       "parameters": {
         "query": "TRUNCATE TABLE PRODUCTBOARD_COMPANIES;",
@@ -631,8 +631,8 @@
       "name": "[CREATE] PRODUCTBOARD_NOTES_FEATURES",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        3760,
-        1140
+        100,
+        12880
       ],
       "parameters": {
         "query": "CREATE OR REPLACE TABLE PRODUCTBOARD_NOTES_FEATURES (\n    note_id STRING NOT NULL,\n    feature_id STRING\n)",
@@ -652,8 +652,8 @@
       "name": "Manual mapping feature note IDs db",
       "type": "n8n-nodes-base.set",
       "position": [
-        6160,
-        920
+        100,
+        7300
       ],
       "parameters": {
         "fields": {
@@ -679,8 +679,8 @@
       "name": "Update Productboard Note and Feature IDs",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        6380,
-        920
+        100,
+        10180
       ],
       "parameters": {
         "table": "PRODUCTBOARD_NOTES_FEATURES",
@@ -700,8 +700,8 @@
       "name": "Empty Table Productboard Note and Feature IDs",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        4040,
-        640
+        100,
+        820
       ],
       "parameters": {
         "query": "TRUNCATE TABLE PRODUCTBOARD_NOTES_FEATURES;",
@@ -722,8 +722,8 @@
       "name": "Loop Over Items notes",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        5460,
-        640
+        100,
+        6580
       ],
       "parameters": {
         "options": {},
@@ -737,8 +737,8 @@
       "name": "Loop Over Items features notes",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        5900,
-        900
+        100,
+        6400
       ],
       "parameters": {
         "options": {},
@@ -752,8 +752,8 @@
       "name": "[CREATE] PRODUCTBOARD_FEATURES",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        3040,
-        1140
+        100,
+        12520
       ],
       "parameters": {
         "query": "CREATE OR REPLACE TABLE PRODUCTBOARD_FEATURES (\n    feature_id STRING NOT NULL,\n    feature_name STRING,\n    feature_status STRING,\n    feature_start_date STRING,\n    feature_end_date STRING,\n    feature_owner STRING,\n    feature_created_at STRING\n);",
@@ -773,8 +773,8 @@
       "name": "Empty Table Productboard Features",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        3440,
-        -180
+        100,
+        640
       ],
       "parameters": {
         "query": "TRUNCATE TABLE PRODUCTBOARD_FEATURES;",
@@ -795,8 +795,8 @@
       "name": "Loop Over Items features",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        4640,
-        -180
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -810,8 +810,8 @@
       "name": "Manual mapping features db",
       "type": "n8n-nodes-base.set",
       "position": [
-        4900,
-        -160
+        100,
+        7480
       ],
       "parameters": {
         "fields": {
@@ -857,8 +857,8 @@
       "name": "Update Productboard Features",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        5140,
-        -160
+        100,
+        10000
       ],
       "parameters": {
         "table": "PRODUCTBOARD_FEATURES",
@@ -878,8 +878,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        2980,
-        -180
+        100,
+        8020
       ],
       "parameters": {
         "rule": {
@@ -903,8 +903,8 @@
       "type": "n8n-nodes-base.slack",
       "onError": "continueRegularOutput",
       "position": [
-        5900,
-        1220
+        100,
+        8200
       ],
       "parameters": {
         "text": "=",
@@ -934,8 +934,8 @@
       "name": "Count Notes Last 7 days and Unprocessed",
       "type": "n8n-nodes-base.snowflake",
       "position": [
-        5660,
-        1220
+        100,
+        280
       ],
       "parameters": {
         "query": "SELECT\n    COUNT(DISTINCT CASE \n        WHEN DATEDIFF(DAY, NOTE_CREATED_AT, CURRENT_DATE()) <= 7 THEN note_id \n    END) AS notes_7_days,\n    COUNT(DISTINCT CASE \n        WHEN NOTE_STATE = 'unprocessed' THEN note_id \n    END) AS notes_unprocessed\nFROM PRODUCTBOARD_NOTES;\n",
@@ -956,8 +956,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2980,
-        1060
+        100,
+        9280
       ],
       "parameters": {
         "color": 5,
@@ -974,8 +974,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in ca339c8f-71c0-432f-88ef-595b9bc24b98",
@@ -989,8 +989,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in d7c491cf-6545-40e1-9ee5-429e4f6b8cb4",
@@ -1004,8 +1004,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in b47db956-ec4f-4342-b973-aa3277e397f2",
@@ -1019,8 +1019,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ca339c8f",
@@ -1034,8 +1034,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d7c491cf",
@@ -1049,8 +1049,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b47db956",
@@ -1064,8 +1064,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3eb88f88",
@@ -1079,8 +1079,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note1**: stickyNote\n- **Manual mapping feature**: set\n- **get productboard companies**: httpRequest\n- **Manual mapping companies**: set\n- **get productboard notes**: httpRequest\n- **Manual mapping notes**: set\n- **Split features**: splitOut\n- **Split companies**: splitOut\n- **Split notes**: splitOut\n- **Split features in notes**: splitOut\n- ... and 32 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1093,8 +1093,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1108,8 +1108,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1123,8 +1123,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1138,8 +1138,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1152,8 +1152,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10900
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1166,8 +1166,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1181,8 +1181,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1196,8 +1196,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1211,8 +1211,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1226,8 +1226,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1241,8 +1241,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1256,8 +1256,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11080
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 54\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1270,8 +1270,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11260
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1284,8 +1284,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1299,8 +1299,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1314,8 +1314,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1329,8 +1329,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1344,8 +1344,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1359,8 +1359,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1374,8 +1374,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11440
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 62\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1388,8 +1388,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11620
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 63\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1401,8 +1401,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1415,8 +1415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1429,8 +1429,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1443,8 +1443,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11800
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 67\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1456,8 +1456,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1470,8 +1470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1484,8 +1484,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1498,8 +1498,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1511,8 +1511,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1525,8 +1525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# Import Productboard Notes, Companies and Features into Snowflake\n\n## Overview\nAutomated workflow: Import Productboard Notes, Companies and Features into Snowflake. This workflow integrates 9 different services: stickyNote, httpRequest, scheduleTrigger, splitOut, set. It contains 42 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1538,8 +1538,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "GET ALL COLUMNS",
       "type": "n8n-nodes-base.code",
       "position": [
-        1840,
-        -600
+        4020,
+        100
       ],
       "parameters": {
         "jsCode": "function createColumnValuesArray(data) {\n  const result = {};\n  data.forEach(item => {\n    const name = item.id;\n    result[name] = item;\n  });\n\n  return result;\n}\n\ncolumns = $input.last().json.column_values\ndata1 = { \"name\" : $input.last().json.name, \"id\" : $input.last().json.id }\ndata2 = createColumnValuesArray(columns)\n\nconst combinedData = { \"item\" : data1, columnValuesById: data2}\n\nreturn (combinedData)\n\n\n"
@@ -40,8 +40,8 @@
       "name": "GET ALL RELATIONS",
       "type": "n8n-nodes-base.code",
       "position": [
-        1860,
-        -220
+        4580,
+        100
       ],
       "parameters": {
         "jsCode": "var data = $input.last().json.columnValuesById;\ni = 0;\nrelations = [];\nfor (var key in data) {\n    if (data[key].type == \"board_relation\") {\n      relations[i] = data[key];\n      i++\n    }\n}\n\nreturn relations;\n\n"
@@ -54,8 +54,8 @@
       "name": "PULL LINKEDPULSE1",
       "type": "n8n-nodes-base.mondayCom",
       "position": [
-        1720,
-        -40
+        3460,
+        100
       ],
       "parameters": {
         "itemId": "=\n{{ $json.linkedPulse.linkedPulseId }}",
@@ -77,8 +77,8 @@
       "name": "GET LINKEDPULSES1",
       "type": "n8n-nodes-base.code",
       "position": [
-        1340,
-        -40
+        2340,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -92,8 +92,8 @@
       "name": "SPLIT LINKED PULSES1",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1540,
-        -40
+        2620,
+        100
       ],
       "parameters": {
         "include": "=",
@@ -108,8 +108,8 @@
       "name": "SPLIT SUBITEMS1",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1540,
-        200
+        2900,
+        100
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -125,8 +125,8 @@
       "name": "GET EACH SUBITEM1",
       "type": "n8n-nodes-base.mondayCom",
       "position": [
-        1700,
-        200
+        3180,
+        100
       ],
       "parameters": {
         "itemId": "=\n{{ $json.linkedPulseIds.linkedPulseId }}",
@@ -148,8 +148,8 @@
       "name": "GET ALL COLUMNS1",
       "type": "n8n-nodes-base.code",
       "position": [
-        1880,
-        200
+        4860,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -163,8 +163,8 @@
       "name": "GET ALL COLUMNS2",
       "type": "n8n-nodes-base.code",
       "position": [
-        1840,
-        -420
+        4300,
+        100
       ],
       "parameters": {
         "jsCode": "function createColumnValuesArray(data) {\n  const result = {};\n  data.forEach(item => {\n  if (item.type != \"subtasks\") {\n    const name = item.column.title;\n    result[name] = item;\n  }\n  });\n\n  return result;\n}\n\ncolumns = $input.last().json.column_values\ndata = createColumnValuesArray(columns)\nreturn {\"columnValuesByName\": data}\n\n\n"
@@ -178,7 +178,7 @@
       "type": "n8n-nodes-base.aggregate",
       "onError": "continueRegularOutput",
       "position": [
-        2180,
+        5700,
         100
       ],
       "parameters": {
@@ -195,8 +195,8 @@
       "name": "PULL SUBITEMS",
       "type": "n8n-nodes-base.code",
       "position": [
-        1320,
-        200
+        2060,
+        100
       ],
       "parameters": {
         "jsCode": "//Search for \"Subitems\" column\nconst columnName = \"Subitems\"\nfunction getColumnValue(item, columnId) {\n    const column = item.column_values.find(column => column.column.title === columnId);\n    if (column) {\n          return column\n    } else {\n        return null;\n    }\n}\nconst columnValue = getColumnValue($input.last().json, columnName);\nreturn JSON.parse(columnValue.value);\n\n//ALT OPTION - direct access by column_values[0]\n//var ids = $input.last().json['column_values'][0]['value'];\n//return JSON.parse(ids)"
@@ -209,8 +209,8 @@
       "name": "GET ITEM",
       "type": "n8n-nodes-base.mondayCom",
       "position": [
-        1180,
-        -600
+        940,
+        100
       ],
       "parameters": {
         "itemId": "=\n{{ $input.item.json.pulse }}",
@@ -232,8 +232,8 @@
       "name": "GET ALL COLUMNS3",
       "type": "n8n-nodes-base.code",
       "position": [
-        1880,
-        -40
+        5140,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -247,8 +247,8 @@
       "name": "Merge4",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2180,
-        -100
+        5980,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -265,8 +265,8 @@
       "type": "n8n-nodes-base.aggregate",
       "onError": "continueRegularOutput",
       "position": [
-        2340,
-        -100
+        6260,
+        100
       ],
       "parameters": {
         "options": {},
@@ -283,8 +283,8 @@
       "type": "n8n-nodes-base.merge",
       "onError": "continueRegularOutput",
       "position": [
-        2540,
-        0
+        6820,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -301,8 +301,8 @@
       "type": "n8n-nodes-base.merge",
       "onError": "continueRegularOutput",
       "position": [
-        2480,
-        -240
+        6540,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -318,8 +318,8 @@
       "name": "Merge1",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2680,
-        -160
+        7100,
+        100
       ],
       "parameters": {
         "mode": "combine",
@@ -334,8 +334,8 @@
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        980,
-        -600
+        100,
+        280
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -346,8 +346,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1300,
-        -240
+        1500,
+        100
       ],
       "parameters": {
         "width": 752.1995067108865,
@@ -362,8 +362,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1300,
-        120
+        1780,
+        100
       ],
       "parameters": {
         "width": 748.2468880082052,
@@ -378,8 +378,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1720,
-        -640
+        3740,
+        100
       ],
       "parameters": {
         "color": 4,
@@ -395,8 +395,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2140,
-        -298.05978270268713
+        5420,
+        100
       ],
       "parameters": {
         "color": 5,
@@ -412,8 +412,8 @@
       "name": "Execute Workflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        1180,
-        -780
+        1220,
+        100
       ],
       "parameters": {
         "options": {
@@ -429,8 +429,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        980,
-        -780
+        380,
+        100
       ],
       "parameters": {
         "fields": {
@@ -451,8 +451,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        940,
-        -920
+        100,
+        460
       ],
       "parameters": {
         "color": 6,
@@ -469,8 +469,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **GET ALL COLUMNS**: code\n- **GET ALL RELATIONS**: code\n- **PULL LINKEDPULSE1**: mondayCom\n- **GET LINKEDPULSES1**: code\n- **SPLIT LINKED PULSES1**: splitOut\n- **SPLIT SUBITEMS1**: splitOut\n- **GET EACH SUBITEM1**: mondayCom\n- **GET ALL COLUMNS1**: code\n- **GET ALL COLUMNS2**: code\n- **Aggregate1**: aggregate\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -483,8 +483,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -497,8 +497,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -566,8 +566,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -579,8 +579,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -592,8 +592,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        660,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2260
       ],
       "parameters": {
         "content": "# MONDAY GET FULL ITEM\n\n## Overview\nAutomated workflow: MONDAY GET FULL ITEM. This workflow integrates 9 different services: stickyNote, code, splitOut, merge, set. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

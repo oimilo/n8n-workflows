@@ -17,8 +17,8 @@
       "name": "Lemlist - Add lead to campaign",
       "type": "n8n-nodes-base.lemlist",
       "position": [
-        1220,
-        180
+        100,
+        4420
       ],
       "parameters": {
         "email": "={{ $json[\"properties\"][\"email\"][\"value\"] }}",
@@ -45,8 +45,8 @@
       "name": "HubSpot - Follow up task",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        980,
-        480
+        100,
+        3160
       ],
       "parameters": {
         "type": "task",
@@ -76,8 +76,8 @@
       "name": "Attempted to contact?",
       "type": "n8n-nodes-base.if",
       "position": [
-        740,
-        500
+        100,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -97,8 +97,8 @@
       "name": "Lonescale - New  Job Intent",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -840,
-        320
+        100,
+        4600
       ],
       "webhookId": "fe426a62-eee5-4fed-bc74-45d4ac09b338",
       "parameters": {
@@ -114,8 +114,8 @@
       "name": "Dropcontact",
       "type": "n8n-nodes-base.dropcontact",
       "position": [
-        -620,
-        320
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -141,8 +141,8 @@
       "name": "HubSpot - Search company",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        -400,
-        320
+        100,
+        3520
       ],
       "parameters": {
         "limit": 1,
@@ -175,8 +175,8 @@
       "name": "New Company?",
       "type": "n8n-nodes-base.if",
       "position": [
-        740,
-        320
+        100,
+        4780
       ],
       "parameters": {
         "conditions": {
@@ -205,8 +205,8 @@
       "name": "Is Customer?",
       "type": "n8n-nodes-base.if",
       "position": [
-        740,
-        860
+        100,
+        4240
       ],
       "parameters": {
         "conditions": {
@@ -226,8 +226,8 @@
       "name": "Slack - Notify CS team on Slack1",
       "type": "n8n-nodes-base.slack",
       "position": [
-        980,
-        840
+        100,
+        5140
       ],
       "parameters": {
         "text": "={{ $node[\"Lonescale - New  Job Intent\"].json[\"body\"][\"company_name\"] }} Sales Team is hiring a {{ $node[\"Lonescale - New  Job Intent\"].json[\"body\"][\"people_buying_signals_title\"] }}\n\nMight be the right team to upsell our product. 🚀",
@@ -250,8 +250,8 @@
       "name": "HubSpot Update Account",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        40,
-        180
+        100,
+        3880
       ],
       "parameters": {
         "resource": "company",
@@ -278,8 +278,8 @@
       "name": "HubSpot",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        280,
-        320
+        100,
+        2800
       ],
       "parameters": {
         "resource": "contact",
@@ -326,8 +326,8 @@
       "name": "HubSpot Create Account",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        40,
-        460
+        100,
+        3700
       ],
       "parameters": {
         "name": "={{ $node[\"Lonescale - New  Job Intent\"].json[\"body\"][\"company_name\"] }}",
@@ -354,8 +354,8 @@
       "name": "Is Account in Hubspot",
       "type": "n8n-nodes-base.if",
       "position": [
-        -200,
-        320
+        100,
+        4060
       ],
       "parameters": {
         "conditions": {
@@ -375,8 +375,8 @@
       "name": "HubSpot - Create/Update Contact",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        460,
-        320
+        100,
+        2980
       ],
       "parameters": {
         "email": "={{ $node[\"Dropcontact\"].json[\"email\"][0][\"email\"] }}",
@@ -413,8 +413,8 @@
       "name": "Slack - Notify sales team on Slack",
       "type": "n8n-nodes-base.slack",
       "position": [
-        980,
-        660
+        100,
+        5320
       ],
       "parameters": {
         "text": "={{ $node[\"Lonescale - New  Job Intent\"].json[\"body\"][\"company_name\"] }} Sales Team is hiring a {{ $node[\"Lonescale - New  Job Intent\"].json[\"body\"][\"people_buying_signals_title\"] }}\n\nHubspot Record URL:  {{ $env.WEBHOOK_URL }}{{ $node[\"HubSpot - Search company\"].json[\"portalId\"] }}/company/{{ $node[\"HubSpot - Search company\"].json[\"companyId\"] }} ",
@@ -437,8 +437,8 @@
       "name": "Open Deal?",
       "type": "n8n-nodes-base.if",
       "position": [
-        740,
-        680
+        100,
+        4960
       ],
       "parameters": {
         "conditions": {
@@ -458,8 +458,8 @@
       "name": "email found",
       "type": "n8n-nodes-base.if",
       "position": [
-        980,
-        300
+        100,
+        7480
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -470,8 +470,8 @@
       "name": "HubSpot - Linkedin Outreach",
       "type": "n8n-nodes-base.hubspot",
       "position": [
-        1220,
-        360
+        100,
+        3340
       ],
       "parameters": {
         "type": "task",
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in 5aaab2a3-5e46-4045-a98d-2c2ff972fe5d",
@@ -519,7 +519,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        7120
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 19 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5aaab2a3",
@@ -547,8 +547,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dd2974c7",
@@ -562,8 +562,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4c5a2ebe",
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Lemlist - Add lead to campaign**: lemlist\n- **HubSpot - Follow up task**: hubspot\n- **Attempted to contact?**: if\n- **Lonescale - New  Job Intent**: webhook\n- **Dropcontact**: dropcontact\n- **HubSpot - Search company**: hubspot\n- **New Company?**: if\n- **Is Customer?**: if\n- **Slack - Notify CS team on Slack1**: slack\n- **HubSpot Update Account**: hubspot\n- ... and 13 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -620,8 +620,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -692,8 +692,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -749,8 +749,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -776,8 +776,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -803,8 +803,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -817,8 +817,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Lemlist Workflow\n\n## Overview\nAutomated workflow: Lemlist Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -830,8 +830,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",

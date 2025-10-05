@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        180,
-        -240
+        100,
+        13240
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "gpt-4o-mini",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        820,
-        -40
+        100,
+        15220
       ],
       "parameters": {
         "options": {
@@ -60,8 +60,8 @@
       "name": "Structured Output - JSON",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        -40
+        100,
+        12700
       ],
       "parameters": {
         "jsonSchemaExample": "{\n    \"title\": \"title\",\n    \"content\": \"content\"\n}"
@@ -74,8 +74,8 @@
       "name": "Separate Title & Content",
       "type": "n8n-nodes-base.code",
       "position": [
-        1300,
-        -340
+        100,
+        9820
       ],
       "parameters": {
         "jsCode": "try {\n  // Check if input exists and has the expected structure\n  const input = $input.all();\n  if (!input || !input.length) {\n    throw new Error('No input data received');\n  }\n\n  const firstItem = input[0];\n  if (!firstItem || !firstItem.json || !firstItem.json.output || !firstItem.json.output.output) {\n    throw new Error('Invalid input structure: missing required properties');\n  }\n\n  const output = firstItem.json.output.output;\n  \n  // Validate title exists\n  if (!output.title) {\n    throw new Error('Missing title in output');\n  }\n\n  // Validate content exists\n  if (!output.content) {\n    throw new Error('Missing content in output');\n  }\n\n  const title = output.title;\n  const content = output.content.replace(/<h1>.*?<\\/h1>/s, '').trim();\n\n  // Validate final content is not empty after processing\n  if (!content) {\n    throw new Error('Content is empty after processing');\n  }\n\n  // console.log('Successfully processed content');\n\n  // console.log(title)\n  // console.log(content)\n  \n  return { title, content };\n\n} catch (error) {\n  // Log the error for debugging\n  console.error('Error processing content:', error.message);\n  \n  // Return a graceful failure object\n  return {\n    error: true,\n    message: error.message,\n    title: '',\n    content: '',\n    timestamp: new Date().toISOString()\n  };\n}"
@@ -88,8 +88,8 @@
       "name": "gpt-4o-mini1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1760,
-        260
+        100,
+        15400
       ],
       "parameters": {
         "model": "gpt-4o-mini-2024-07-18",
@@ -111,8 +111,8 @@
       "name": "If1",
       "type": "n8n-nodes-base.if",
       "position": [
-        2120,
-        60
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -156,8 +156,8 @@
       "name": "gpt-4o-mini2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        920,
-        700
+        100,
+        15580
       ],
       "parameters": {
         "options": {
@@ -178,8 +178,8 @@
       "name": "If2",
       "type": "n8n-nodes-base.if",
       "position": [
-        1280,
-        500
+        100,
+        8020
       ],
       "parameters": {
         "options": {},
@@ -223,8 +223,8 @@
       "name": "gpt-4o-mini3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        920,
-        1200
+        100,
+        15760
       ],
       "parameters": {
         "options": {
@@ -245,8 +245,8 @@
       "name": "If3",
       "type": "n8n-nodes-base.if",
       "position": [
-        1280,
-        1000
+        100,
+        8200
       ],
       "parameters": {
         "options": {},
@@ -290,8 +290,8 @@
       "name": "Rewrite for Grade 5 Reading Level",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        920,
-        500
+        100,
+        8560
       ],
       "parameters": {
         "text": "=Rewrite this article at a grade 5 reading level. Include some light humour and metaphorical examples that are age appropriate.  Ensure you retain all original content and only use the provided original content for the rewriting.  Provide final response in html format following these guidelines:\n\n## Formatting Guidelines\n- Use proper HTML tags throughout\n- Limit yourself to bold, italics, paragraphs and lists\n- Structure with <p> tags for paragraphs\n- Include appropriate spacing\n- Use <blockquote> for direct quotes\n- Maintain consistent formatting\n- Write in clear, professional tone\n- Break up long paragraphs\n- Use engaging subheadings\n- Include transitional phrases\n\n\n## Original content:  {{ $json.data }}",
@@ -307,8 +307,8 @@
       "name": "Rewrite for Grade 2 Reading Level",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        920,
-        1000
+        100,
+        8380
       ],
       "parameters": {
         "text": "=Rewrite this article at a grade 2 reading level. Include some light humour and metaphorical examples that are age appropriate.  Ensure you retain all original content and only use the provided original content for the rewriting.  Provide final response in html format following these guidelines:\n\n## Formatting Guidelines\n- Use proper HTML tags throughout\n- Limit yourself to bold, italics, paragraphs and lists\n- Structure with <p> tags for paragraphs\n- Include appropriate spacing\n- Use <blockquote> for direct quotes\n- Maintain consistent formatting\n- Write in clear, professional tone\n- Break up long paragraphs\n- Use engaging subheadings\n- Include transitional phrases\n\n\n## Original content:  {{ $json.data }}",
@@ -324,8 +324,8 @@
       "name": "Rewrite for Grade 9 Reading Level",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1760,
-        60
+        100,
+        8740
       ],
       "parameters": {
         "text": "=Rewrite this article at a grade 9 reading level using appropriate metaphors.  Ensure you retain all original content and only use the provided original content for the rewriting.  Do not create a Title.\n\nProvide final response in html format following these guidelines:\n\n## Formatting Guidelines\n- Use proper HTML tags throughout\n- Limit yourself to bold, italics, paragraphs and lists\n- Structure with <p> tags for paragraphs\n- Include appropriate spacing\n- Use <blockquote> for direct quotes\n- Maintain consistent formatting\n- Write in clear, professional tone\n- Break up long paragraphs\n- Use engaging subheadings\n- Include transitional phrases\n\n\n## Original content:  {{ $json.data }}",
@@ -341,8 +341,8 @@
       "name": "Create Structured Blog Post",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        840,
-        -240
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.topic }}",
@@ -362,8 +362,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        -380
+        100,
+        11800
       ],
       "parameters": {
         "color": 4,
@@ -379,8 +379,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1660,
-        -380
+        100,
+        11980
       ],
       "parameters": {
         "color": 6,
@@ -396,8 +396,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1660,
-        -40
+        100,
+        12160
       ],
       "parameters": {
         "color": 5,
@@ -413,8 +413,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "color": 3,
@@ -430,8 +430,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        900
+        100,
+        10900
       ],
       "parameters": {
         "width": 726,
@@ -447,8 +447,8 @@
       "type": "n8n-nodes-base.noOp",
       "disabled": true,
       "position": [
-        820,
-        120
+        100,
+        460
       ],
       "parameters": {
         "model": "=deepseek-reasoner",
@@ -468,8 +468,8 @@
       "name": "Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1760,
-        -260
+        100,
+        7480
       ],
       "parameters": {
         "name": "={{$('Separate Title & Content').item.json.title }}",
@@ -502,8 +502,8 @@
       "name": "Set Blog Topic",
       "type": "n8n-nodes-base.set",
       "position": [
-        500,
-        -240
+        100,
+        10000
       ],
       "parameters": {
         "options": {},
@@ -526,8 +526,8 @@
       "name": "pollinations.ai",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2040,
-        700
+        100,
+        15940
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -541,8 +541,8 @@
       "name": "Create Wordpress Post",
       "type": "n8n-nodes-base.wordpress",
       "position": [
-        1760,
-        700
+        100,
+        280
       ],
       "parameters": {
         "title": "={{ $('Separate Title & Content').item.json.title }}",
@@ -565,8 +565,8 @@
       "name": "Upload Image to Wordpress",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2320,
-        700
+        100,
+        13060
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -601,8 +601,8 @@
       "name": "Set Image on Wordpress Post",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2520,
-        700
+        100,
+        10180
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -634,8 +634,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1660,
-        460
+        100,
+        10360
       ],
       "parameters": {
         "color": 4,
@@ -651,8 +651,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1940,
-        560
+        100,
+        10540
       ],
       "parameters": {
         "width": 300,
@@ -667,8 +667,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        320
+        100,
+        11080
       ],
       "parameters": {
         "color": 7,
@@ -684,8 +684,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        -380
+        100,
+        11260
       ],
       "parameters": {
         "color": 5,
@@ -701,8 +701,8 @@
       "name": "HTML to Markdown",
       "type": "n8n-nodes-base.markdown",
       "position": [
-        1500,
-        -140
+        100,
+        7660
       ],
       "parameters": {
         "html": "={{ $json.content }}",
@@ -716,8 +716,8 @@
       "name": "Tiltle & Content Exist?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1300,
-        -140
+        100,
+        12880
       ],
       "parameters": {
         "options": {},
@@ -761,8 +761,8 @@
       "name": "Send Error Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1300,
-        100
+        100,
+        8920
       ],
       "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
       "parameters": {
@@ -786,8 +786,8 @@
       "name": "Send Error Message1",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        2320,
-        60
+        100,
+        9100
       ],
       "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
       "parameters": {
@@ -811,8 +811,8 @@
       "name": "Send Error Message2",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1280,
-        680
+        100,
+        9280
       ],
       "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
       "parameters": {
@@ -836,8 +836,8 @@
       "name": "Send Error Message3",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1280,
-        1180
+        100,
+        9460
       ],
       "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
       "parameters": {
@@ -862,7 +862,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         100,
-        -380
+        11440
       ],
       "parameters": {
         "color": 4,
@@ -878,8 +878,8 @@
       "name": "Send Success Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        2520,
-        940
+        100,
+        9640
       ],
       "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
       "parameters": {
@@ -904,7 +904,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         100,
-        20
+        11620
       ],
       "parameters": {
         "width": 600,
@@ -920,8 +920,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 2b2718f6-2ca8-4c50-9d0e-2705329ccdcc",
@@ -935,8 +935,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12340
       ],
       "parameters": {
         "message": "Error occurred in 61243361-dd22-4237-910d-726717306f2b",
@@ -950,8 +950,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12520
       ],
       "parameters": {
         "message": "Error occurred in 9576157b-3687-4490-b435-6207f4fbf0de",
@@ -965,8 +965,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9df33245",
@@ -980,8 +980,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 40f0ef7d",
@@ -995,8 +995,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4674ff83",
@@ -1010,8 +1010,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3f8a1f7f",
@@ -1025,8 +1025,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b2638528",
@@ -1040,8 +1040,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c588d522",
@@ -1055,8 +1055,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2b2718f6",
@@ -1070,8 +1070,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 61243361",
@@ -1085,8 +1085,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9576157b",
@@ -1100,8 +1100,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ada832e8",
@@ -1115,8 +1115,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6c5f55b9",
@@ -1130,8 +1130,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d0b2a677",
@@ -1145,8 +1145,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 60104733",
@@ -1160,8 +1160,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a622ecc7",
@@ -1175,8 +1175,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13420
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **gpt-4o-mini**: lmChatOpenAi\n- **Structured Output - JSON**: outputParserStructured\n- **Separate Title & Content**: code\n- **gpt-4o-mini1**: lmChatOpenAi\n- **If1**: if\n- **gpt-4o-mini2**: lmChatOpenAi\n- **If2**: if\n- **gpt-4o-mini3**: lmChatOpenAi\n- **If3**: if\n- ... and 46 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1189,8 +1189,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1204,8 +1204,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1219,8 +1219,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1234,8 +1234,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13600
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1248,8 +1248,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13780
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1262,8 +1262,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1277,8 +1277,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1292,8 +1292,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1307,8 +1307,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1322,8 +1322,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1337,8 +1337,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1352,8 +1352,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13960
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 68\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1366,8 +1366,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14140
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 69\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1380,8 +1380,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1395,8 +1395,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1410,8 +1410,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1425,8 +1425,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1440,8 +1440,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1455,8 +1455,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1470,8 +1470,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14320
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 76\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1484,8 +1484,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14500
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 77\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1497,8 +1497,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1511,8 +1511,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1525,8 +1525,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1539,8 +1539,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14680
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 81\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1552,8 +1552,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1566,8 +1566,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1580,8 +1580,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1594,8 +1594,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14860
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1607,8 +1607,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1621,8 +1621,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15040
       ],
       "parameters": {
         "content": "# ✍️🌄 Your First Wordpress Content Creator - Quick Start\n\n## Overview\nAutomated workflow: ✍️🌄 Your First Wordpress Content Creator - Quick Start. This workflow integrates 14 different services: stickyNote, httpRequest, wordpress, markdown, telegram. It contains 56 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1634,8 +1634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Workflow execution error",

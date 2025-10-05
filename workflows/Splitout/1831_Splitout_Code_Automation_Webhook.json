@@ -27,8 +27,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "disabled": true,
       "position": [
-        -160,
-        80
+        100,
+        7660
       ],
       "parameters": {
         "inputSource": "jsonExample",
@@ -42,8 +42,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -300,
-        -80
+        100,
+        6400
       ],
       "parameters": {
         "color": 7,
@@ -59,8 +59,8 @@
       "name": "Create YouTube API URL",
       "type": "n8n-nodes-base.code",
       "position": [
-        500,
-        100
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Define the base URL for the YouTube Data API\nconst BASE_URL = '{{ $env.API_BASE_URL }}';\n\n// Get the first input item\nconst item = $input.first();\n\n// Extract the videoId and google_api_key from the input JSON\nconst VIDEO_ID = item.json.VIDEO_ID;\nconst GOOGLE_API_KEY = item.json.GOOGLE_API_KEY; // Dynamically retrieve API key\n\nif (!VIDEO_ID) {\n  throw new Error('The video ID parameter is empty.');\n}\n\nif (!GOOGLE_API_KEY) {\n  throw new Error('The Google API Key is missing.');\n}\n\n// Construct the API URL with the video ID and dynamically retrieved API key\nconst youtubeUrl = `${BASE_URL}?part=snippet,contentDetails,status,statistics,player,topicDetails&id=${VIDEO_ID}&key=${GOOGLE_API_KEY}`;\n\n// Return the constructed URL\nreturn [\n  {\n    json: {\n      youtubeUrl: youtubeUrl,\n    },\n  },\n];\n"
@@ -73,8 +73,8 @@
       "name": "Get YouTube Video Details",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        700,
-        100
+        100,
+        4960
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -88,8 +88,8 @@
       "name": "Merge YouTube Details & Transcript",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1200,
-        120
+        100,
+        5500
       ],
       "parameters": {
         "mode": "combine",
@@ -104,8 +104,8 @@
       "name": "Create One JSON Object",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1200,
-        440
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -119,8 +119,8 @@
       "name": "Workflow Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        160,
-        260
+        100,
+        9820
       ],
       "parameters": {
         "options": {},
@@ -149,8 +149,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        60,
-        20
+        100,
+        6580
       ],
       "parameters": {
         "width": 300,
@@ -165,8 +165,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        -20
+        100,
+        6760
       ],
       "parameters": {
         "color": 3,
@@ -182,8 +182,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        320
+        100,
+        6940
       ],
       "parameters": {
         "color": 5,
@@ -199,8 +199,8 @@
       "name": "Combine Comments",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        900,
-        440
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -221,8 +221,8 @@
       "name": "Split Out Comments",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        700,
-        440
+        100,
+        5860
       ],
       "parameters": {
         "options": {},
@@ -237,8 +237,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "disabled": true,
       "position": [
-        1200,
-        820
+        100,
+        4780
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -252,8 +252,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -160,
-        400
+        100,
+        7840
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -265,8 +265,8 @@
       "type": "n8n-nodes-base.code",
       "disabled": true,
       "position": [
-        980,
-        820
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "// Define the base URL for the YouTube Data API\nconst BASE_URL = '{{ $env.API_BASE_URL }}';\n\n// Get the first input item\nconst item = $input.first();\n\n// Extract the videoId and google_api_key from the input JSON\nconst VIDEO_ID = item.json.VIDEO_ID;\nconst GOOGLE_API_KEY = item.json.GOOGLE_API_KEY; // Dynamically retrieve API key\nconst MAX_RESULTS = 100;  //item.json.MAX_RESULTS;\n\nconst url = `${BASE_URL}?part=snippet&videoId=${encodeURIComponent(VIDEO_ID)}&key=${encodeURIComponent(GOOGLE_API_KEY)}&maxResults=${encodeURIComponent(MAX_RESULTS)}`;\n\n// Now you can send this URL to the HTTP node for the GET request.\nreturn { json: { url } };\n"
@@ -279,8 +279,8 @@
       "name": "Gmail Report",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        520,
-        800
+        100,
+        5140
       ],
       "webhookId": "2bad33f7-38f8-40ca-9bcd-2f51179c8db5",
       "parameters": {
@@ -305,8 +305,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -300,
-        720
+        100,
+        6040
       ],
       "parameters": {
         "color": 6,
@@ -322,8 +322,8 @@
       "name": "gpt-4o-mini",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -120,
-        1040
+        100,
+        10180
       ],
       "parameters": {
         "model": {
@@ -347,8 +347,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -240,
-        320
+        100,
+        6220
       ],
       "parameters": {
         "color": 4,
@@ -364,8 +364,8 @@
       "name": "Markdown to HTML",
       "type": "n8n-nodes-base.markdown",
       "position": [
-        280,
-        860
+        100,
+        5320
       ],
       "parameters": {
         "mode": "markdownToHtml",
@@ -381,8 +381,8 @@
       "name": "YouTube Video Report Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -100,
-        860
+        100,
+        10000
       ],
       "parameters": {
         "text": "=This is the YouTube video detals and comments: {{ $json.data.toJsonString() }}",
@@ -400,8 +400,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        840,
-        720
+        100,
+        7120
       ],
       "parameters": {
         "color": 5,
@@ -417,8 +417,8 @@
       "name": "Get Video Comments with Pagination",
       "type": "n8n-nodes-base.code",
       "position": [
-        500,
-        440
+        100,
+        4600
       ],
       "parameters": {
         "jsCode": "// Define a helper function to build a query string from an object\nfunction buildQueryString(params) {\n\treturn Object.keys(params)\n\t\t.map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)\n\t\t.join('&');\n}\n\n// Define the base URL for the YouTube Data API\nconst BASE_URL = \"{{ $env.API_BASE_URL }}\";\n\n// Get the first input item\nconst item = $input.first();\n\n// Extract the videoId and google_api_key from the input JSON\nconst videoId = item.json.VIDEO_ID;\nconst apiKey = item.json.GOOGLE_API_KEY; // Dynamically retrieve API key\n\nconst comments = [];\nlet nextPageToken = undefined;\n\nwhile (true) {\n    // Construct URL parameters using an object literal\n    const params = {\n        part: \"snippet\",\n        videoId: videoId,\n        key: apiKey\n    };\n\n    if (nextPageToken) {\n        params.pageToken = nextPageToken;\n    }\n\n    // Build the full URL without using URLSearchParams\n    const queryString = buildQueryString(params);\n    const url = `${BASE_URL}?${queryString}`;\n    \n    // Set up the options for the HTTP request helper\n    const options = {\n        method: \"GET\",\n        uri: url,\n        json: true\n    };\n\n    // Use n8n's built-in HTTP request helper instead of fetch\n    const data = await this.helpers.request(options);\n\n    // console.log(data.items)\n\n    // Process each comment in the response\n    data.items.forEach(item => {\n        comments.push(item.snippet.topLevelComment.snippet.textOriginal);\n    });\n\n    // console.log(data.nextPageToken)\n\n    // Exit loop if no further pages exist\n    if (!data.nextPageToken) {\n        break;\n    }\n    nextPageToken = data.nextPageToken;\n}\n\n// Return the collected comments as an item output for n8n\nreturn [{ json: { comments } }];\n"
@@ -431,8 +431,8 @@
       "name": "Save Report to Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        520,
-        1000
+        100,
+        5680
       ],
       "parameters": {
         "name": "=YouTube Video Report - {{ $('Merge YouTube Details & Transcript').item.json.items.first().snippet.title }}",
@@ -465,8 +465,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -860,
-        -80
+        100,
+        7300
       ],
       "parameters": {
         "width": 520,
@@ -482,8 +482,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in d715b012-7842-498c-8fda-1b2812b7bc1e",
@@ -497,8 +497,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in 3a62fd7f-9185-4243-b9fd-34e0ad2046e6",
@@ -512,8 +512,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d715b012",
@@ -527,8 +527,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3a62fd7f",
@@ -542,8 +542,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 511827aa",
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 91869f81",
@@ -572,8 +572,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Node Types**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When Executed by Another Workflow**: executeWorkflowTrigger\n- **Sticky Note10**: stickyNote\n- **Create YouTube API URL**: code\n- **Get YouTube Video Details**: httpRequest\n- **Merge YouTube Details & Transcript**: merge\n- **Create One JSON Object**: aggregate\n- **Workflow Variables**: set\n- **Sticky Note12**: stickyNote\n- **Sticky Note14**: stickyNote\n- **Sticky Note15**: stickyNote\n- ... and 21 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -586,8 +586,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -616,8 +616,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -630,8 +630,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -644,8 +644,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -659,8 +659,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -674,8 +674,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -689,8 +689,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -704,8 +704,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -718,8 +718,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -762,8 +762,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -792,8 +792,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -806,8 +806,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -819,8 +819,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -833,8 +833,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -847,8 +847,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -860,8 +860,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -874,8 +874,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -888,8 +888,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -901,8 +901,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -915,8 +915,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# 🎦🚀 YouTube Video Comment Analysis Agent\n\n## Overview\nAutomated workflow: 🎦🚀 YouTube Video Comment Analysis Agent. This workflow integrates 16 different services: stickyNote, httpRequest, markdown, code, agent. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -928,8 +928,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Workflow execution error",

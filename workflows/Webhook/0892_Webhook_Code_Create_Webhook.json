@@ -17,8 +17,8 @@
       "name": "OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        420,
-        -240
+        100,
+        5860
       ],
       "parameters": {
         "modelId": {
@@ -50,8 +50,8 @@
       "name": "Configure",
       "type": "n8n-nodes-base.set",
       "position": [
-        -700,
-        0
+        100,
+        280
       ],
       "parameters": {
         "values": {
@@ -95,8 +95,8 @@
       "name": "Iterate over email attachments",
       "type": "n8n-nodes-base.code",
       "position": [
-        -200,
-        0
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "// {{ $env.WEBHOOK_URL }}\nlet results = [];\n\nfor (const item of $input.all()) {\n  console.log(item);\n  for (const key of Object.keys(item.binary)) {\n    results.push({\n        json: {},\n        binary: {\n            data: item.binary[key],\n        }\n    });\n  }\n}\n\nreturn results;"
@@ -109,8 +109,8 @@
       "name": "Not a PDF",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        120,
-        80
+        100,
+        5680
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -121,8 +121,8 @@
       "name": "Is text within token limit?",
       "type": "n8n-nodes-base.if",
       "position": [
-        300,
-        -100
+        100,
+        5140
       ],
       "parameters": {
         "conditions": {
@@ -142,8 +142,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        720,
-        -120
+        100,
+        5500
       ],
       "parameters": {
         "mode": "combine",
@@ -164,8 +164,8 @@
       "name": "Is matched",
       "type": "n8n-nodes-base.if",
       "position": [
-        880,
-        -120
+        100,
+        4960
       ],
       "parameters": {
         "conditions": {
@@ -185,8 +185,8 @@
       "name": "Upload file to folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1100,
-        -140
+        100,
+        7480
       ],
       "parameters": {
         "name": "={{ $binary.data.fileName }}",
@@ -210,8 +210,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -1080,
-        0
+        100,
+        7660
       ],
       "webhookId": "cded3af3-31df-47c2-a826-ff84eb4a41df",
       "parameters": {
@@ -235,8 +235,8 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        -720,
-        -240
+        100,
+        6400
       ],
       "parameters": {
         "options": {
@@ -253,8 +253,8 @@
       "name": "Create folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        -920,
-        0
+        100,
+        460
       ],
       "parameters": {
         "name": "={{ \"invoices_\" + $json.body.startDate.split('T')[0] }}",
@@ -286,8 +286,8 @@
       "name": "Aggregate attachments",
       "type": "n8n-nodes-base.code",
       "position": [
-        1200,
-        -340
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// \"items\" is the array coming from the previous node (14 items)\nconst merged = { json: {}, binary: {} };\n\nfor (const item of $input.all()) {\n  const data = {\n    [item.binary.data.fileName]: item.binary.data\n  };\n  Object.assign(merged.binary, data); // copy every file property\n}\n\nreturn [merged];     // one single item goes out"
@@ -300,8 +300,8 @@
       "name": "Send email with invoices?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1000,
-        -320
+        100,
+        6580
       ],
       "parameters": {
         "options": {},
@@ -335,8 +335,8 @@
       "name": "Send to my accountant",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1360,
-        -280
+        100,
+        6760
       ],
       "webhookId": "3ea4dac1-58fe-4d0e-811b-065ecaef77df",
       "parameters": {
@@ -368,8 +368,8 @@
       "name": "Get emails with attachments",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        -500,
-        0
+        100,
+        4600
       ],
       "webhookId": "6e2ca9f7-6d22-4d94-86bc-8a299bc8e752",
       "parameters": {
@@ -402,8 +402,8 @@
       "type": "n8n-nodes-base.readPDF",
       "onError": "continueErrorOutput",
       "position": [
-        120,
-        -80
+        100,
+        6220
       ],
       "parameters": {},
       "notesInFlow": false,
@@ -415,8 +415,8 @@
       "name": "Is attachment a PDF?",
       "type": "n8n-nodes-base.if",
       "position": [
-        -40,
-        0
+        100,
+        4780
       ],
       "parameters": {
         "conditions": {
@@ -436,8 +436,8 @@
       "name": "Optional filter for emails",
       "type": "n8n-nodes-base.filter",
       "position": [
-        -360,
-        0
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -470,8 +470,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1600,
-        -340
+        100,
+        6940
       ],
       "parameters": {
         "width": 440,
@@ -486,8 +486,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -780,
-        -40
+        100,
+        7120
       ],
       "parameters": {
         "width": 260,
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 7681eb62-ba86-4c89-9b88-3ce6fc438bd4",
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in aab3d940-55c2-40d3-917a-83412d4e378d",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c84f3a9a",
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 074ffb7a",
@@ -563,8 +563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7681eb62",
@@ -578,8 +578,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node aab3d940",
@@ -593,8 +593,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 29a4122f",
@@ -608,8 +608,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI**: openAi\n- **Configure**: set\n- **Iterate over email attachments**: code\n- **Not a PDF**: noOp\n- **Is text within token limit?**: if\n- **Merge**: merge\n- **Is matched**: if\n- **Upload file to folder**: googleDrive\n- **Webhook**: webhook\n- **Respond to Webhook**: respondToWebhook\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -622,8 +622,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -637,8 +637,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -652,8 +652,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -666,8 +666,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -680,8 +680,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -695,8 +695,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -710,8 +710,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -725,8 +725,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -740,8 +740,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -754,8 +754,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -768,8 +768,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -783,8 +783,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -798,8 +798,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -813,8 +813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -828,8 +828,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -842,8 +842,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -855,8 +855,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -869,8 +869,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -883,8 +883,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -896,8 +896,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -924,8 +924,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -937,8 +937,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -951,8 +951,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Openai Workflow\n\n## Overview\nAutomated workflow: Openai Workflow. This workflow integrates 14 different services: webhook, filter, stickyNote, code, readPDF. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -964,8 +964,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Workflow execution error",

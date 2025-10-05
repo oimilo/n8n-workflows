@@ -17,8 +17,8 @@
       "name": "LoadDingTalkAccountMap",
       "type": "n8n-nodes-base.mySql",
       "position": [
-        -600,
-        720
+        100,
+        3700
       ],
       "parameters": {
         "table": {
@@ -45,8 +45,8 @@
       "name": "ReceiveTfsPullRequestCreatedMessage",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -860,
-        720
+        100,
+        3880
       ],
       "webhookId": "05a0f565-7a1e-44f2-956d-1c68982ce314",
       "parameters": {
@@ -62,8 +62,8 @@
       "name": "BuildDingTalkWebHookData",
       "type": "n8n-nodes-base.code",
       "position": [
-        -340,
-        720
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Code here will run only once, no matter how many input items there are.\n// More info and help: {{ $env.WEBHOOK_URL }}\n\nconsole.log(\"items:\");\nconsole.log(items);\n\nvar mapUserMobile = function (tfsAccount) {\n  for(var i = 0; i < items.length; i++) {\n    var map = items[i].json;\n    if(tfsAccount.lastIndexOf(map.TfsAccount) != -1) {\n      return map.DingTalkMobile;\n    }\n  }\n\n  return null;\n}\nvar mapUserName = function (tfsAccount) {\n  for(var i = 0; i < items.length; i++) {\n    var map = items[i].json;\n    if(tfsAccount.lastIndexOf(map.TfsAccount) != -1) {\n      return map.UserName;\n    }\n  }\n\n  return null;\n}\n\nvar tfsMessage = $node[\"ReceiveTfsPullRequestCreatedMessage\"].json.body;\nconsole.log(\"TFS Message:\");\nconsole.log(tfsMessage);\n\nvar output = {};\nvar atMobiles = [];\nvar isAtAll = false;\nvar atUsers = [];\nvar messageText = tfsMessage.message.markdown;\nvar prCreatorTfsDomainName = tfsMessage.resource.createdBy.uniqueName;\nvar prCreatorTfsDisplayName = tfsMessage.resource.createdBy.displayName;\nvar prCreatorDingTalkName = mapUserName(prCreatorTfsDomainName);\n\nif (prCreatorDingTalkName !== null) {\n  messageText = messageText.replace(prCreatorTfsDisplayName, prCreatorDingTalkName);\n}\n\nfor (reviewer of tfsMessage.resource.reviewers) {\n  console.log(reviewer.uniqueName);\n  if(reviewer.uniqueName.lastIndexOf(\"团队\") != -1) {\n    //当@所有人时，消息内容中的手机号就不会被转义成用户名了，暂时不启用该功能\n    isAtAll = true;\n    continue;\n  }\n\n  var mobile = mapUserMobile(reviewer.uniqueName);\n\n  if(mobile !== null) {\n    atMobiles.push(mobile);\n  }\n\n  var userName = mapUserName(reviewer.uniqueName);\n\n  if(userName !== null) {\n    atUsers.push(userName);\n  }\n}\n\nif(isAtAll) {\n  atUsers.unshift(\"所有人\");\n  atMobiles = [];\n} else {\n  atUsers = atMobiles;\n}\n\nif (atUsers.length > 0) {\n  messageText = messageText + \"<br />请 @\" + atUsers.join(\" @\") + \" 评审\";\n}\n\noutput.isAtAll = isAtAll;\noutput.text = messageText;\noutput.atMobiles = atMobiles.join(\", \");\n\nconsole.log('Done:');\nconsole.log(output);\n\nreturn [{json: output}];"
@@ -76,8 +76,8 @@
       "name": "SendDingTalkMessageViaWebHook",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -80,
-        720
+        100,
+        4060
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -94,8 +94,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1449,
-        560
+        100,
+        4240
       ],
       "parameters": {
         "width": 484,
@@ -111,8 +111,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 25d2a3aa-af18-4ff2-af6c-c2bf6618a511",
@@ -126,8 +126,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in dc6c235b-c1ac-4195-a404-e79c8ad1c8ef",
@@ -141,8 +141,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 25d2a3aa",
@@ -156,8 +156,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dc6c235b",
@@ -171,8 +171,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 9\n- **Node Types**: 6\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **LoadDingTalkAccountMap**: mySql\n- **ReceiveTfsPullRequestCreatedMessage**: webhook\n- **BuildDingTalkWebHookData**: code\n- **SendDingTalkMessageViaWebHook**: httpRequest\n- **Sticky Note**: stickyNote\n- **Error Handler**: stopAndError\n- **Stopanderror 1**: stopAndError\n- **Error Handler for 25d2a3aa**: stopAndError\n- **Error Handler for dc6c235b**: stopAndError\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -185,8 +185,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -200,8 +200,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -215,8 +215,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -229,8 +229,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -243,8 +243,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -258,8 +258,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -273,8 +273,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -288,8 +288,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -303,8 +303,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -317,8 +317,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -331,8 +331,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -346,8 +346,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -361,8 +361,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -376,8 +376,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -391,8 +391,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -405,8 +405,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -418,8 +418,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -432,8 +432,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -446,8 +446,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -459,8 +459,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -487,8 +487,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -514,8 +514,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Mysql Workflow\n\n## Overview\nAutomated workflow: Mysql Workflow. This workflow integrates 6 different services: webhook, stickyNote, httpRequest, mySql, code. It contains 9 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -527,8 +527,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

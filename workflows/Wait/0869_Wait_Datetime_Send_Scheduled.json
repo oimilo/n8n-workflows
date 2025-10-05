@@ -17,8 +17,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -60,
-        -240
+        100,
+        4240
       ],
       "parameters": {
         "rule": {
@@ -39,8 +39,8 @@
       "type": "n8n-nodes-base.mySql",
       "onError": "continueRegularOutput",
       "position": [
-        640,
-        0
+        100,
+        6760
       ],
       "parameters": {
         "query": "SELECT\n  --  budget_data.fiscal_year AS `Year`,\n  --  budget_data.cost_center AS `Cost Center`,\n    budget_data.budget_group AS `Budget Group`,\n--    budget_data.sort_order AS `Sort Order`,\n\n    -- YTD Totals up to previous month (up to dynamic month)\n    SUM(budget_data.budget_amount) AS `Budget YTD`,\n    SUM(COALESCE(actual_data.actual_amount, 0)) AS `Actual YTD`,\n    SUM(COALESCE(actual_data.actual_amount, 0)) - SUM(budget_data.budget_amount) AS `Variance YTD`,\n\n    -- Previous Month Totals Only\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN budget_data.budget_amount ELSE 0 END) AS `Budget PM`,\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN COALESCE(actual_data.actual_amount, 0) ELSE 0 END) AS `Actual PM`,\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN COALESCE(actual_data.actual_amount, 0) ELSE 0 END) -\n    SUM(CASE WHEN budget_data.budget_month = {{ $('PreviousMonth').item.json.previousMonth }} THEN budget_data.budget_amount ELSE 0 END) AS `Variance PM`\n\nFROM\n    (\n        SELECT\n            bg.budget_group_name AS budget_group,\n            bg.sort_order,\n            bgd.fiscal_year,\n            bgd.budget_month,\n            bgd.cost_center,\n            CAST(bgd.budget_amount AS DECIMAL(18,6)) AS budget_amount\n        FROM\n            `tabBudget Group Detail` bgd\n        JOIN\n            `tabBudget Group` bg ON bg.name = bgd.parent\n        WHERE\n            bgd.fiscal_year = {{ $('PreviousMonth').item.json.year }}\n            AND bgd.budget_month <= {{ $('PreviousMonth').item.json.previousMonth }}\n            AND bgd.cost_center = '{{ $json.CostCenter }}'\n    ) AS budget_data\n\nLEFT JOIN (\n    SELECT\n        acc.budget_group AS budget_group,\n        YEAR(gl.posting_date) AS fiscal_year,\n        MONTH(gl.posting_date) AS budget_month,\n        gl.cost_center,\n        SUM(\n            CASE \n                WHEN acc.root_type = 'Income' THEN gl.credit - gl.debit\n                WHEN acc.root_type = 'Expense' THEN gl.debit - gl.credit\n                ELSE 0\n            END\n        ) AS actual_amount\n    FROM\n        `tabGL Entry` gl\n    JOIN\n        `tabAccount` acc ON gl.account = acc.name\n    WHERE\n        acc.budget_group IS NOT NULL\n        AND acc.root_type IN ('Income', 'Expense')\n        AND gl.docstatus = 1\n        AND YEAR(gl.posting_date) = {{ $('PreviousMonth').item.json.year }}\n        AND MONTH(gl.posting_date) <= {{ $('PreviousMonth').item.json.previousMonth }}\n        AND gl.cost_center = '{{ $('Filter').item.json['Cost Center'] }}'\n    GROUP BY\n        acc.budget_group,\n        YEAR(gl.posting_date),\n        MONTH(gl.posting_date),\n        gl.cost_center\n) AS actual_data\nON\n    budget_data.budget_group = actual_data.budget_group AND\n    budget_data.fiscal_year = actual_data.fiscal_year AND\n    budget_data.budget_month = actual_data.budget_month AND\n    budget_data.cost_center = actual_data.cost_center\n\nGROUP BY\n    budget_data.fiscal_year,\n    budget_data.cost_center,\n    budget_data.budget_group,\n    budget_data.sort_order\n\nORDER BY\n    budget_data.cost_center,\n    budget_data.sort_order,\n    budget_data.budget_group;\n",
@@ -56,8 +56,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -40,
-        200
+        100,
+        3340
       ],
       "parameters": {
         "options": {}
@@ -70,8 +70,8 @@
       "name": "CostCentrs",
       "type": "n8n-nodes-base.set",
       "position": [
-        1100,
-        -240
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -94,8 +94,8 @@
       "name": "Date & Time",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        260,
-        -240
+        100,
+        1000
       ],
       "parameters": {
         "options": {}
@@ -108,8 +108,8 @@
       "name": "PreviousMonth",
       "type": "n8n-nodes-base.code",
       "position": [
-        520,
-        -240
+        100,
+        3880
       ],
       "parameters": {
         "jsCode": "// Get the input date from the previous node\nconst inputDateStr = $input.first().json.currentDate;\nconst inputDate = new Date(inputDateStr);\n\n// Move to the first day of the current month\ninputDate.setDate(1);\n\n// Step back one day to land in the previous month\ninputDate.setDate(0);\n\n// Extract previous month and year\nconst previousMonth = inputDate.getMonth() + 1; // Months are 0-based\nconst year = inputDate.getFullYear(); // This will reflect the correct year, even in January\n\nreturn [\n  {\n    json: {\n      previousMonth: previousMonth.toString().padStart(2, '0'), // e.g., \"01\", \"12\"\n      year: year.toString()                                     // e.g., \"2024\"\n    }\n  }\n];\n"
@@ -122,8 +122,8 @@
       "name": "Selected Cost Center",
       "type": "n8n-nodes-base.set",
       "position": [
-        260,
-        220
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -158,8 +158,8 @@
       "name": "Get Cost Centers with Budgets",
       "type": "n8n-nodes-base.mySql",
       "position": [
-        800,
-        -240
+        100,
+        2800
       ],
       "parameters": {
         "query": "SELECT DISTINCT\n    budget_data.cost_center AS `Cost Center`\nFROM\n(\n    SELECT\n        bgd.cost_center,\n        bgd.fiscal_year,\n        bgd.budget_month\n    FROM\n        `tabBudget Group Detail` bgd\n    JOIN\n        `tabBudget Group` bg ON bg.name = bgd.parent\n    WHERE\n        bgd.fiscal_year = {{ $json.year }}\n        AND bgd.budget_month <= {{ $json.previousMonth }}\n) AS budget_data\n\nINNER JOIN\n(\n    SELECT DISTINCT\n        gl.cost_center,\n        YEAR(gl.posting_date) AS fiscal_year,\n        MONTH(gl.posting_date) AS budget_month\n    FROM\n        `tabGL Entry` gl\n    JOIN\n        `tabAccount` acc ON gl.account = acc.name\n    WHERE\n        acc.budget_group IS NOT NULL\n        AND acc.root_type IN ('Income', 'Expense')\n        AND gl.docstatus = 1\n        AND YEAR(gl.posting_date) = {{ $json.year }}\n        AND MONTH(gl.posting_date) <= {{ $json.previousMonth }}\n        AND gl.cost_center IS NOT NULL\n) AS gl_data\nON\n    budget_data.cost_center = gl_data.cost_center\n    AND budget_data.fiscal_year = gl_data.fiscal_year\n    AND budget_data.budget_month = gl_data.budget_month\n\nORDER BY\n    budget_data.cost_center;\n",
@@ -174,8 +174,8 @@
       "name": "Filter",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1380,
-        -240
+        100,
+        2440
       ],
       "parameters": {
         "options": {},
@@ -209,8 +209,8 @@
       "name": "HTML",
       "type": "n8n-nodes-base.html",
       "position": [
-        40,
-        920
+        100,
+        3160
       ],
       "parameters": {
         "html": "{{ $json.html }}"
@@ -223,8 +223,8 @@
       "name": "verticalPL",
       "type": "n8n-nodes-base.code",
       "position": [
-        900,
-        220
+        100,
+        6940
       ],
       "parameters": {
         "jsCode": "const rows = items;\n\n// Get column names from the first row\nconst headers = Object.keys(rows[0].json);\n\n// Build header HTML\nlet headerHtml = headers.map(col => `<th>${col}</th>`).join('');\n\n// Build rows\nlet bodyHtml = rows.map(row => {\n  return `<tr>${headers.map(col => `<td>${row.json[col]}</td>`).join('')}</tr>`;\n}).join('');\n\n// Combine into one table\nconst tableHtml = `\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">\n  <thead><tr>${headerHtml}</tr></thead>\n  <tbody>${bodyHtml}</tbody>\n</table>\n`;\n\nreturn [{ json: { table: tableHtml } }];\n"
@@ -237,8 +237,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1380,
-        220
+        100,
+        3520
       ],
       "parameters": {
         "numberInputs": 4
@@ -251,8 +251,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        1420,
-        580
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "const table1 = $input.first().json.table; // From the first input node\nconst table2 = $items(\"verticalPL\")[0].json.table; // From the node named 'verticalPL'\nconst table3 = $items(\"WIP1\")[0].json.table; // From the node named 'WIP1'\nconst table4 = $items(\"Employees1\")[0].json.table; // From the node named 'Employees1'\n\nconst htmlOutput = `\n<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial, sans-serif; font-size: 14px; color: #333; }\n    h2 { margin-top: 30px; }\n    table { border-collapse: collapse; width: 100%; margin-top: 10px; }\n    th, td { border: 1px solid #ccc; padding: 8px; text-align: right; }\n    th:first-child, td:first-child { text-align: left; }\n    thead { background-color: #f0f0f0; }\n  </style>\n</head>\n<body>\n  <h2>📊 Financial Overview – YTD & PM Summary</h2>\n  ${table1}\n\n  <h2>📊 Financial Overview – Vertical Profit & Loss</h2>\n  ${table2}\n\n  <h2>📊 Financial Overview – WIP Summary</h2>\n  ${table3}\n\n  <h2>👥 Employees in the Business Unit</h2>\n  ${table4}\n</body>\n</html>\n`;\n\nreturn [{ json: { html: htmlOutput } }];\n"
@@ -265,8 +265,8 @@
       "name": "Microsoft Outlook2",
       "type": "n8n-nodes-base.microsoftOutlook",
       "position": [
-        1240,
-        920
+        100,
+        3700
       ],
       "webhookId": "0cdef86a-9910-49aa-bdd3-1beecb260035",
       "parameters": {
@@ -285,8 +285,8 @@
       "name": "CostCenter",
       "type": "n8n-nodes-base.code",
       "position": [
-        920,
-        0
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "const rows = items;\n\n// Get column names from the first row\nconst headers = Object.keys(rows[0].json);\n\n// Build header HTML\nlet headerHtml = headers.map(col => `<th>${col}</th>`).join('');\n\n// Build rows\nlet bodyHtml = rows.map(row => {\n  return `<tr>${headers.map(col => `<td>${row.json[col]}</td>`).join('')}</tr>`;\n}).join('');\n\n// Combine into one table\nconst tableHtml = `\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">\n  <thead><tr>${headerHtml}</tr></thead>\n  <tbody>${bodyHtml}</tbody>\n</table>\n`;\n\nreturn [{ json: { table: tableHtml } }];\n"
@@ -299,8 +299,8 @@
       "name": "WIP1",
       "type": "n8n-nodes-base.code",
       "position": [
-        900,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "const rows = items;\n\n// Get column names from the first row\nconst headers = Object.keys(rows[0].json);\n\n// Build header HTML\nlet headerHtml = headers.map(col => `<th>${col}</th>`).join('');\n\n// Build rows\nlet bodyHtml = rows.map(row => {\n  return `<tr>${headers.map(col => `<td>${row.json[col]}</td>`).join('')}</tr>`;\n}).join('');\n\n// Combine into one table\nconst tableHtml = `\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">\n  <thead><tr>${headerHtml}</tr></thead>\n  <tbody>${bodyHtml}</tbody>\n</table>\n`;\n\nreturn [{ json: { table: tableHtml } }];\n"
@@ -314,8 +314,8 @@
       "type": "n8n-nodes-base.mySql",
       "onError": "continueRegularOutput",
       "position": [
-        640,
-        600
+        100,
+        1540
       ],
       "parameters": {
         "query": "SELECT\n   -- e.payroll_cost_center AS `Payroll Cost Center`,\n    COUNT(*) AS `Total Employees`,\n    COUNT(CASE WHEN YEAR(e.date_of_joining) = YEAR(CURDATE()) THEN 1 END) AS `Joined This Year`,\n    COUNT(CASE WHEN YEAR(e.date_of_joining) = YEAR(CURDATE()) AND MONTH(e.date_of_joining) = MONTH(CURDATE()) THEN 1 END) AS `Joined This Month`\nFROM\n    `tabEmployee` e\nWHERE\n    e.status = 'Active'\n    AND e.payroll_cost_center = '{{ $json.CostCenter }}'\nGROUP BY\n    e.payroll_cost_center;\n",
@@ -331,8 +331,8 @@
       "name": "Employees1",
       "type": "n8n-nodes-base.code",
       "position": [
-        900,
-        600
+        100,
+        1720
       ],
       "parameters": {
         "jsCode": "const rows = items;\n\n// Get column names from the first row\nconst headers = Object.keys(rows[0].json);\n\n// Build header HTML\nlet headerHtml = headers.map(col => `<th>${col}</th>`).join('');\n\n// Build rows\nlet bodyHtml = rows.map(row => {\n  return `<tr>${headers.map(col => `<td>${row.json[col]}</td>`).join('')}</tr>`;\n}).join('');\n\n// Combine into one table\nconst tableHtml = `\n<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">\n  <thead><tr>${headerHtml}</tr></thead>\n  <tbody>${bodyHtml}</tbody>\n</table>\n`;\n\nreturn [{ json: { table: tableHtml } }];\n"
@@ -345,8 +345,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1480,
-        1180
+        100,
+        5500
       ],
       "webhookId": "83d7ae9a-e309-4bac-a0b4-5ff651e3afe3",
       "parameters": {
@@ -360,8 +360,8 @@
       "name": "Financial Performance",
       "type": "n8n-nodes-base.code",
       "position": [
-        700,
-        920
+        100,
+        2620
       ],
       "parameters": {
         "jsCode": "let html = $input.first().json.output || '';\n\n// Remove ```html at the start and ``` at the end (if present)\nhtml = html.trim().replace(/^```html\\s*/i, '').replace(/```$/i, '');\n\nreturn [{\n  json: {\n    cleaned_html: html\n  }\n}];\n"
@@ -374,8 +374,8 @@
       "name": "Email Data",
       "type": "n8n-nodes-base.set",
       "position": [
-        940,
-        920
+        100,
+        1360
       ],
       "parameters": {
         "options": {},
@@ -410,8 +410,8 @@
       "name": "Calculator",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        620,
-        1220
+        100,
+        280
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -423,8 +423,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueRegularOutput",
       "position": [
-        300,
-        920
+        100,
+        100
       ],
       "parameters": {
         "text": "=You are a Business Performance Analyst Expert in Financial Management of Syncbricks LLC,  you willbe given an input to Analyze the Financial Performance of syncbricks which is an AI and Automation Company.\nThe sections Given to you will be below\n\n1. Financial Overview – YTD & PM Summary (whis is income and expense of the Company, this data doesn't include the calculation of Gross Profit and Net Profit that you must do. This should be used together in one section only don't seperate them)\n2. Financial Overview – Vertical Profit & Loss (This containers the Verticials within the Cost Center, these are in fact the Sub Business Unit, you don't need to calculate anything but the information is for analysis to see how the Verticals within the Business Unit Perfored )\n3. Financial Overview – WIP Summary (This is the Projects Summary about how many projects are currently open and work is the WIP - Work in Process of the Project, the WIP figure should be added for Profit and Loss Statement Under Proejct Reveneu as expected WIP)\n4. Employees in the Business Unit (These will be the number of Employees who are directly working in this BU, which means these employees are only serving the Company, other staff which are in back office support are not included in this. )\n*** Your Role ***\n\nYour Role is to Prepare a comprehensive Report : \n1. Executive Summary : Tell how was the overall performance of the Business Unit.\n2. Analayze the Financial Overview - YTD together with PM Summary (Which is Previous Month) which is previous month Income and Expenses you must use Proper Strcuture of Financial Statement with Budget Vs Actuals (follow same input already given). \n\nYou must use the Section that will be shared with you in detail that says \"Financial Overview – YTD & PM Summary \" and from there you must ensure to create sections based on best Practices of Performance Analysis that should include;\n\nSection: Revenue\n-Projects - Revenue\n-Trading - Revenue\n-Service - Revenue\nNet Sales (Total)\nSection: Project Work in Process\nWIP (Revenue to Book)\nTotal: Gross Sale\nSection: Cost of Sale\nProjects - COGS\nTrading - COGS\nService - COGS\nTotal Cost of Sales\nGross Profit\nOther Income\nGross Income\n\nSection: Indirect Cost (here you must all the detail of expenses from \"Financial Overview – YTD & PM Summary\"\nThen you must calculate\nProfit / (Loss) before tax\nNP % to Revenue\n\nUse the calculator tool to ensure precise calculations.\n\n\n- Don't add decimals give format in currency but don't add symbol.\nUse the standard P&L Format where you should first use Sale, then Cost of Sale and GP, then use Indirect Expenses and then Net Profile. Ensure to calculate the Perentages as well.\n3. Provide the Summary of the Verticials Performance with their Profit and Loss and Percetage and Total of all Verticlals\n4. Current Project Progress.\n5. Employees Summary, Number of Employees, How many joined in this Year and what is per Eployee Revenue and Gross Profit \n\nAnalyze Overall Performance of the Company and provide the Business Managers an Overview of what should be done next. Calculate per employee profit as well and suggest what is the performance overall\n\n**Tools**\nUse calculator tool to do all calculations for accurate calculations\n\n** Formatting and Output **\n\nGive output in html format fully responsive in with beauty added using CSS,  ready to be shared with all possible tables, in hightly attracrtive format, headings, add colors green for good, red for bad, organge for acceptable and so on, also add remarks to show how the performance was, enusre to response as if you were as an Expert in Analyzing the Bususiness Performance. Don't add any other infomration or symbols which are not part of html. Don't give additional message saying ok, I will do and so on.\nAlign Text in table on left and numbers on right\nNumber formatting : ##,###\n\n\nHere is the data\n\nMonth : {{ $('PreviousMonth').first().json.previousMonth }}\nYear  : {{ $('PreviousMonth').first().json.year }}\n\n{{ $json.html }}\n\n",
@@ -439,8 +439,8 @@
       "name": "Think",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        460,
-        1220
+        100,
+        5140
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -451,8 +451,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        220,
-        1220
+        100,
+        2980
       ],
       "parameters": {
         "options": {},
@@ -467,8 +467,8 @@
       "type": "n8n-nodes-base.mySql",
       "onError": "continueRegularOutput",
       "position": [
-        640,
-        200
+        100,
+        1180
       ],
       "parameters": {
         "query": "SELECT\n   -- gl.vertical AS `Vertical`,\n\n    -- Total Income (based on root_type)\n    ROUND(SUM(CASE WHEN acc.root_type = 'Income' THEN gl.credit - gl.debit ELSE 0 END), 0) AS `Total Income`,\n\n    -- Total Expenses (based on root_type)\n    ROUND(SUM(CASE WHEN acc.root_type = 'Expense' THEN gl.debit - gl.credit ELSE 0 END), 0) AS `Total Expenses`,\n\n    -- Profit or Loss = Income - Expenses\n    ROUND(SUM(\n        CASE \n            WHEN acc.root_type = 'Income' THEN gl.credit - gl.debit\n            WHEN acc.root_type = 'Expense' THEN -1 * (gl.debit - gl.credit)\n            ELSE 0\n        END\n    ), 0) AS `Profit or Loss`\n\nFROM\n    `tabGL Entry` gl\nJOIN\n    `tabAccount` acc ON gl.account = acc.name\n\nWHERE\n    acc.root_type IN ('Income', 'Expense')\n    AND gl.docstatus = 1\n    AND gl.cost_center = '{{ $(\"Selected Cost Center\").item.json.CostCenter }}'\n    AND MONTH(gl.posting_date) = {{ $(\"Selected Cost Center\").item.json.previousMonth }}\n    AND YEAR(gl.posting_date) = {{ $(\"Selected Cost Center\").item.json.year }}\n\nGROUP BY\n    gl.vertical\n",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.mySql",
       "onError": "continueRegularOutput",
       "position": [
-        620,
-        380
+        100,
+        4060
       ],
       "parameters": {
         "query": "SELECT\n   -- p.cost_center AS `Cost Center`,\n    COUNT(DISTINCT p.name) AS `Projects`,\n\n    FORMAT(SUM(p.contract_value), 0) AS `Contract Value`,\n    FORMAT(SUM(p.total_opening_revenue), 0) AS `Opening Revenue`,\n    FORMAT(SUM(p.total_opening_cost), 0) AS `Opening Cost`,\n\n    -- New Revenue (GL)\n    IFNULL((\n        SELECT SUM(gl.credit - gl.debit)\n        FROM `tabGL Entry` gl\n        JOIN `tabAccount` acc ON acc.name = gl.account\n        WHERE gl.docstatus = 1 AND acc.root_type = 'Income' AND acc.is_group = 0\n          AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n          AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n    ), 0) AS `New Revenue`,\n\n    -- New Cost (GL)\n    IFNULL((\n        SELECT SUM(gl.debit - gl.credit)\n        FROM `tabGL Entry` gl\n        JOIN `tabAccount` acc ON acc.name = gl.account\n        WHERE gl.docstatus = 1 AND acc.root_type = 'Expense' AND acc.is_group = 0\n          AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n          AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n    ), 0) AS `New Cost`,\n\n    -- Actual Revenue\n    FORMAT(\n        SUM(p.total_opening_revenue) +\n        IFNULL((\n            SELECT SUM(gl.credit - gl.debit)\n            FROM `tabGL Entry` gl\n            JOIN `tabAccount` acc ON acc.name = gl.account\n            WHERE gl.docstatus = 1 AND acc.root_type = 'Income' AND acc.is_group = 0\n              AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n              AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n        ), 0), 0\n    ) AS `Actual Revenue`,\n\n    -- Actual Cost\n    FORMAT(\n        SUM(p.total_opening_cost) +\n        IFNULL((\n            SELECT SUM(gl.debit - gl.credit)\n            FROM `tabGL Entry` gl\n            JOIN `tabAccount` acc ON acc.name = gl.account\n            WHERE gl.docstatus = 1 AND acc.root_type = 'Expense' AND acc.is_group = 0\n              AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n              AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n        ), 0), 0\n    ) AS `Actual Cost`,\n\n    -- Invoice %\n    CONCAT(ROUND((\n        (\n            SUM(p.total_opening_revenue) +\n            IFNULL((\n                SELECT SUM(gl.credit - gl.debit)\n                FROM `tabGL Entry` gl\n                JOIN `tabAccount` acc ON acc.name = gl.account\n                WHERE gl.docstatus = 1 AND acc.root_type = 'Income' AND acc.is_group = 0\n                  AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n                  AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n            ), 0)\n        ) / NULLIF(SUM(p.contract_value), 0) * 100\n    ), 0), '%') AS `Invoice %`,\n\n    -- Cost %\n    CONCAT(ROUND((\n        (\n            SUM(p.total_opening_cost) +\n            IFNULL((\n                SELECT SUM(gl.debit - gl.credit)\n                FROM `tabGL Entry` gl\n                JOIN `tabAccount` acc ON acc.name = gl.account\n                WHERE gl.docstatus = 1 AND acc.root_type = 'Expense' AND acc.is_group = 0\n                  AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n                  AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n            ), 0)\n        ) / NULLIF(SUM(p.budgeted_project_cost), 0) * 100\n    ), 0), '%') AS `Cost %`,\n\n    -- WIP Calculation\n    FORMAT(\n        CASE\n            WHEN SUM(p.budgeted_project_cost) = 0 THEN 0\n            WHEN (\n                SUM(p.total_opening_cost) +\n                IFNULL((\n                    SELECT SUM(gl.debit - gl.credit)\n                    FROM `tabGL Entry` gl\n                    JOIN `tabAccount` acc ON acc.name = gl.account\n                    WHERE gl.docstatus = 1 AND acc.root_type = 'Expense' AND acc.is_group = 0\n                      AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n                      AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n                ), 0)\n            ) > SUM(p.budgeted_project_cost)\n            THEN\n                SUM(p.contract_value) -\n                (SUM(p.total_opening_revenue) +\n                IFNULL((\n                    SELECT SUM(gl.credit - gl.debit)\n                    FROM `tabGL Entry` gl\n                    JOIN `tabAccount` acc ON acc.name = gl.account\n                    WHERE gl.docstatus = 1 AND acc.root_type = 'Income' AND acc.is_group = 0\n                      AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n                      AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n                ), 0))\n            ELSE\n                (SUM(p.contract_value) * (\n                    (SUM(p.total_opening_cost) +\n                    IFNULL((\n                        SELECT SUM(gl.debit - gl.credit)\n                        FROM `tabGL Entry` gl\n                        JOIN `tabAccount` acc ON acc.name = gl.account\n                        WHERE gl.docstatus = 1 AND acc.root_type = 'Expense' AND acc.is_group = 0\n                          AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n                          AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n                    ), 0)) / NULLIF(SUM(p.budgeted_project_cost), 0)\n                )) -\n                (SUM(p.total_opening_revenue) +\n                IFNULL((\n                    SELECT SUM(gl.credit - gl.debit)\n                    FROM `tabGL Entry` gl\n                    JOIN `tabAccount` acc ON acc.name = gl.account\n                    WHERE gl.docstatus = 1 AND acc.root_type = 'Income' AND acc.is_group = 0\n                      AND gl.project IN (SELECT name FROM `tabProject` WHERE cost_center = p.cost_center AND status = 'Open')\n                      AND gl.posting_date <= LAST_DAY(CURDATE() - INTERVAL 1 MONTH)\n                ), 0))\n        END,\n    0) AS `WIP`\n\nFROM\n    `tabProject` p\nWHERE\n    p.cost_center = '{{ $json.CostCenter }}'\n    AND p.status = 'Open'\nGROUP BY\n    p.cost_center;\n",
@@ -502,8 +502,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1260,
-        -20
+        100,
+        4600
       ],
       "parameters": {
         "width": 1120,
@@ -518,8 +518,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1960,
-        580
+        100,
+        4780
       ],
       "parameters": {
         "color": 4,
@@ -535,8 +535,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1960,
-        0
+        100,
+        4960
       ],
       "parameters": {
         "color": 4,
@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 97bac1cb",
@@ -568,8 +568,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Node Types**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **YTD vs Prevoius Month1**: mySql\n- **Loop Over Items**: splitInBatches\n- **CostCentrs**: set\n- **Date & Time**: dateTime\n- **PreviousMonth**: code\n- **Selected Cost Center**: set\n- **Get Cost Centers with Budgets**: mySql\n- **Filter**: filter\n- **HTML**: html\n- ... and 21 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -582,8 +582,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -610,8 +610,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -624,8 +624,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -637,8 +637,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 17 different services: filter, microsoftOutlook, mySql, wait, stickyNote. It contains 31 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",

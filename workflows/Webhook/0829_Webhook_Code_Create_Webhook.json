@@ -17,8 +17,8 @@
       "name": "Input Arguments",
       "type": "n8n-nodes-base.set",
       "position": [
-        520,
-        740
+        100,
+        16480
       ],
       "parameters": {
         "options": {},
@@ -65,8 +65,8 @@
       "name": "Format response",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        2000,
-        840
+        100,
+        15400
       ],
       "parameters": {
         "include": "allFieldsExcept",
@@ -84,8 +84,8 @@
       "name": "Sort",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        1760,
-        840
+        100,
+        19180
       ],
       "parameters": {
         "options": {},
@@ -106,8 +106,8 @@
       "name": "Available Start Times & Ranges",
       "type": "n8n-nodes-base.code",
       "position": [
-        2240,
-        840
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Input data\nconst inputData = $input.all()[0].json.response;\n\n// Define workday hours in CST\nconst WORKDAY_START = \"09:00:00 CST\";\nconst WORKDAY_END = \"18:00:00 CST\";\nconst SLOT_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds\n\n// Helper to parse CST datetime strings\nconst parseCST = (datetime) => {\n  const parsedDate = new Date(datetime.replace(\" CST\", \"-06:00\"));\n  return isNaN(parsedDate) ? null : parsedDate;\n};\n\n// Function to generate 30-minute start times\nconst generateStartTimes = (start, end) => {\n  const startTimes = [];\n  let current = new Date(start);\n\n  while (current < end) {\n    startTimes.push(\n      current.toLocaleTimeString('en-US', {\n        timeZone: 'CST',\n        hour: '2-digit',\n        minute: '2-digit',\n      })\n    );\n    current = new Date(current.getTime() + SLOT_DURATION);\n  }\n\n  return startTimes;\n};\n\n// Function to find wide open ranges\nconst findWideOpenRanges = (startTimes) => {\n  if (startTimes.length < 3) return []; // Not enough slots for a wide open range\n\n  const ranges = [];\n  let rangeStart = null;\n  let consecutiveCount = 0;\n\n  for (let i = 0; i < startTimes.length - 1; i++) {\n    const currentTime = parseCST(`2000-01-01 ${startTimes[i]} CST`);\n    const nextTime = parseCST(`2000-01-01 ${startTimes[i + 1]} CST`);\n    const diff = nextTime - currentTime;\n\n    if (diff === SLOT_DURATION) {\n      consecutiveCount += 1;\n      if (rangeStart === null) rangeStart = startTimes[i];\n    } else {\n      if (consecutiveCount >= 2) {\n        ranges.push(`${rangeStart} to ${startTimes[i]}`);\n      }\n      rangeStart = null;\n      consecutiveCount = 0;\n    }\n  }\n\n  // Handle the final range\n  if (consecutiveCount >= 2) {\n    ranges.push(`${rangeStart} to ${startTimes[startTimes.length - 1]}`);\n  }\n\n  return ranges;\n};\n\n// Group meetings by date, ignoring invalid dates\nconst meetingsByDate = inputData.reduce((acc, meeting) => {\n  const start = parseCST(meeting.start);\n  const end = parseCST(meeting.end);\n\n  if (!start || !end) {\n    return acc; // Ignore invalid dates\n  }\n\n  const dateKey = start.toISOString().split('T')[0];\n\n  if (!acc[dateKey]) {\n    acc[dateKey] = [];\n  }\n\n  acc[dateKey].push({ start, end });\n  return acc;\n}, {});\n\n// Generate availability\nconst availability = Object.keys(meetingsByDate)\n  .filter((date) => {\n    // Exclude Saturdays (6) and Sundays (0)\n    const dayOfWeek = new Date(date).getUTCDay();\n    return dayOfWeek !== 0 && dayOfWeek !== 6;\n  })\n  .map((date) => {\n    const workdayStart = parseCST(`${date} ${WORKDAY_START}`);\n    const workdayEnd = parseCST(`${date} ${WORKDAY_END}`);\n\n    const dayMeetings = meetingsByDate[date].sort((a, b) => a.start - b.start);\n\n    let availableStartTimes = [];\n    let lastEnd = workdayStart;\n\n    for (const meeting of dayMeetings) {\n      if (meeting.start > lastEnd) {\n        availableStartTimes = availableStartTimes.concat(generateStartTimes(lastEnd, meeting.start));\n      }\n      lastEnd = meeting.end > lastEnd ? meeting.end : lastEnd;\n    }\n\n    if (lastEnd < workdayEnd) {\n      availableStartTimes = availableStartTimes.concat(generateStartTimes(lastEnd, workdayEnd));\n    }\n\n    const wideOpenRanges = findWideOpenRanges(availableStartTimes);\n\n    return {\n      date: new Date(date).toLocaleDateString('en-US', {\n        weekday: 'long',\n        year: 'numeric',\n        month: 'long',\n        day: 'numeric',\n      }),\n      availableStartTimes,\n      wideOpenRanges,\n    };\n  });\n\n// Format output as plaintext\nconst availableTimes = availability\n  .map(({ date, availableStartTimes, wideOpenRanges }) => {\n    const times = availableStartTimes.map((time) => `- ${time}`).join('\\n');\n    const ranges = wideOpenRanges.length\n      ? `Wide Open Ranges:\\n${wideOpenRanges.map((range) => `- ${range}`).join('\\n')}`\n      : \"Wide Open Ranges: None\";\n\n    return `### ${date}\\nAvailable Start Times:\\n${times}\\n\\n${ranges}`;\n  })\n  .join('\\n\\n');\n\n// Set the output\nreturn {\n  json: {\n    availableTimes,\n  },\n};\n"
@@ -120,8 +120,8 @@
       "name": "Flatten Slots",
       "type": "n8n-nodes-base.code",
       "position": [
-        2460,
-        840
+        100,
+        15220
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -135,8 +135,8 @@
       "name": "Enrich Date",
       "type": "n8n-nodes-base.code",
       "position": [
-        2680,
-        840
+        100,
+        3340
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -150,8 +150,8 @@
       "name": "Build Response Payload",
       "type": "n8n-nodes-base.set",
       "position": [
-        2900,
-        840
+        100,
+        1360
       ],
       "parameters": {
         "options": {},
@@ -180,8 +180,8 @@
       "name": "Booking Payload",
       "type": "n8n-nodes-base.set",
       "position": [
-        1980,
-        1400
+        100,
+        640
       ],
       "parameters": {
         "options": {
@@ -254,8 +254,8 @@
       "name": "Success Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        2200,
-        1400
+        100,
+        28180
       ],
       "parameters": {
         "options": {},
@@ -284,8 +284,8 @@
       "name": "Add Friendly Error",
       "type": "n8n-nodes-base.code",
       "position": [
-        1980,
-        1760
+        100,
+        100
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -299,8 +299,8 @@
       "name": "Error Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        2200,
-        1760
+        100,
+        14320
       ],
       "parameters": {
         "options": {},
@@ -329,8 +329,8 @@
       "name": "Escape Json",
       "type": "n8n-nodes-base.code",
       "position": [
-        1260,
-        1580
+        100,
+        14500
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -344,8 +344,8 @@
       "name": "Has all information",
       "type": "n8n-nodes-base.if",
       "position": [
-        940,
-        1800
+        100,
+        15940
       ],
       "parameters": {
         "options": {},
@@ -379,8 +379,8 @@
       "name": "Respond with Error",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1480,
-        1900
+        100,
+        17920
       ],
       "parameters": {
         "options": {}
@@ -393,8 +393,8 @@
       "name": "Build Error Response Payload",
       "type": "n8n-nodes-base.set",
       "position": [
-        1260,
-        1900
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -423,8 +423,8 @@
       "name": "Build Error Response Payload2",
       "type": "n8n-nodes-base.set",
       "position": [
-        1560,
-        2840
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -453,8 +453,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        260,
-        620
+        100,
+        19360
       ],
       "parameters": {
         "color": 4,
@@ -470,8 +470,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        920
+        100,
+        23680
       ],
       "parameters": {
         "width": 230,
@@ -486,8 +486,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1320,
-        520
+        100,
+        24940
       ],
       "parameters": {
         "width": 310,
@@ -502,8 +502,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1280,
-        1020
+        100,
+        25120
       ],
       "parameters": {
         "width": 190,
@@ -518,8 +518,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2140,
-        1020
+        100,
+        25300
       ],
       "parameters": {
         "width": 350,
@@ -534,8 +534,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3280,
-        1000
+        100,
+        25480
       ],
       "parameters": {
         "width": 230,
@@ -550,8 +550,8 @@
       "name": "Sticky Note BookSlot Webhook",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        1680
+        100,
+        20620
       ],
       "parameters": {
         "color": 5,
@@ -567,8 +567,8 @@
       "name": "Sticky Note BookSlot Check",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        880,
-        1700
+        100,
+        19720
       ],
       "parameters": {
         "width": 230,
@@ -583,8 +583,8 @@
       "name": "Sticky Note BookSlot Error",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1440,
-        2060
+        100,
+        19900
       ],
       "parameters": {
         "width": 190,
@@ -599,8 +599,8 @@
       "name": "Sticky Note BookSlot GCal",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1660,
-        1740
+        100,
+        20260
       ],
       "parameters": {
         "width": 190,
@@ -615,8 +615,8 @@
       "name": "Sticky Note BookSlot Error Handle",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1920,
-        1920
+        100,
+        20080
       ],
       "parameters": {
         "width": 230,
@@ -631,8 +631,8 @@
       "name": "Sticky Note BookSlot Response",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2420,
-        1740
+        100,
+        20440
       ],
       "parameters": {
         "width": 210,
@@ -647,8 +647,8 @@
       "name": "Sticky Note BookSlot Airtable",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3100,
-        1740
+        100,
+        19540
       ],
       "parameters": {
         "width": 230,
@@ -663,8 +663,8 @@
       "name": "Sticky Note CancelSlot Webhook",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        440,
-        3480
+        100,
+        22240
       ],
       "parameters": {
         "color": 3,
@@ -680,8 +680,8 @@
       "name": "Sticky Note CancelSlot Check",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        960,
-        3780
+        100,
+        21340
       ],
       "parameters": {
         "width": 230,
@@ -696,8 +696,8 @@
       "name": "Sticky Note CancelSlot Error",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1520,
-        3940
+        100,
+        21520
       ],
       "parameters": {
         "width": 150,
@@ -712,8 +712,8 @@
       "name": "Sticky Note CancelSlot Search",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1300,
-        3440
+        100,
+        22060
       ],
       "parameters": {
         "width": 190,
@@ -728,8 +728,8 @@
       "name": "Sticky Note CancelSlot GCal Delete",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1720,
-        3720
+        100,
+        21700
       ],
       "parameters": {
         "width": 190,
@@ -744,8 +744,8 @@
       "name": "Sticky Note CancelSlot Airtable Update",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2060,
-        3400
+        100,
+        21160
       ],
       "parameters": {
         "width": 190,
@@ -760,8 +760,8 @@
       "name": "Sticky Note CancelSlot Response",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2380,
-        3740
+        100,
+        21880
       ],
       "parameters": {
         "width": 190,
@@ -776,8 +776,8 @@
       "name": "Sticky Note UpdateSlot Webhook",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        2600
+        100,
+        23500
       ],
       "parameters": {
         "color": 6,
@@ -793,8 +793,8 @@
       "name": "Sticky Note UpdateSlot Check",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        2900
+        100,
+        22600
       ],
       "parameters": {
         "width": 230,
@@ -809,8 +809,8 @@
       "name": "Sticky Note UpdateSlot Error",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1500,
-        3020
+        100,
+        22780
       ],
       "parameters": {
         "width": 190,
@@ -825,8 +825,8 @@
       "name": "Sticky Note UpdateSlot Search",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1580,
-        2460
+        100,
+        23320
       ],
       "parameters": {
         "width": 190,
@@ -841,8 +841,8 @@
       "name": "Sticky Note UpdateSlot GCal Update",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1940,
-        2720
+        100,
+        22960
       ],
       "parameters": {
         "width": 190,
@@ -857,8 +857,8 @@
       "name": "Sticky Note UpdateSlot Airtable Update",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2240,
-        2320
+        100,
+        22420
       ],
       "parameters": {
         "width": 170,
@@ -873,8 +873,8 @@
       "name": "Sticky Note UpdateSlot Response",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2720,
-        2460
+        100,
+        23140
       ],
       "parameters": {
         "width": 230,
@@ -889,8 +889,8 @@
       "name": "Sticky Note CallResults Webhook",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        440,
-        4160
+        100,
+        20980
       ],
       "parameters": {
         "color": 2,
@@ -906,8 +906,8 @@
       "name": "Sticky Note CallResults Airtable",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        860,
-        4460
+        100,
+        20800
       ],
       "parameters": {
         "width": 230,
@@ -922,8 +922,8 @@
       "name": "Getslot_tool",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        260,
-        740
+        100,
+        15760
       ],
       "webhookId": "42afdbc1-afd0-4d65-a713-cf7a59062d6c",
       "parameters": {
@@ -940,8 +940,8 @@
       "name": "Check Availability",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        800,
-        740
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -964,8 +964,8 @@
       "name": "Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1540,
-        640
+        100,
+        18280
       ],
       "parameters": {
         "options": {},
@@ -980,8 +980,8 @@
       "name": "Check if time is available or not",
       "type": "n8n-nodes-base.if",
       "position": [
-        1020,
-        740
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -1015,8 +1015,8 @@
       "name": "Time available (true) & Call_id",
       "type": "n8n-nodes-base.set",
       "position": [
-        1320,
-        640
+        100,
+        28360
       ],
       "parameters": {
         "options": {},
@@ -1045,8 +1045,8 @@
       "name": "Get All Calendar Events",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        1320,
-        840
+        100,
+        15580
       ],
       "parameters": {
         "options": {
@@ -1074,8 +1074,8 @@
       "name": "Extract start, end and name",
       "type": "n8n-nodes-base.set",
       "position": [
-        1540,
-        840
+        100,
+        14680
       ],
       "parameters": {
         "options": {
@@ -1118,8 +1118,8 @@
       "name": "Convert into Json format for Vapi",
       "type": "n8n-nodes-base.code",
       "position": [
-        3120,
-        840
+        100,
+        2620
       ],
       "parameters": {
         "jsCode": "// Get the input data for the first item\nconst inputData = $input.first().json;\nconsole.log(\"Input Data:\", inputData); // Log input for debugging\n\n// Access the message string from the correct path within the input structure.\n// The input comes from the \"Build Response Payload\" node, which structures data under 'results'.\n// Use optional chaining (?.) for safety in case the structure is not as expected.\nlet message = inputData.results?.[0]?.result;\n\n// Check if the message was found and is a string\nif (typeof message !== 'string') {\n    console.error(\"Could not find the message string at inputData.results[0].result or it's not a string. Input:\", inputData);\n    // Return an object with an empty message or an error indicator\n    return { message: \"\" }; // Or potentially throw an error: throw new Error(\"Input message not found or not a string\");\n}\n\n// Start cleaning the message string\n\n// 1. Replace the literal string \"\\\\n\" (backslash followed by n) with a space.\n// This handles the newline representation seen in the input screenshot.\nlet cleanedMessage = message.replace(/\\\\n/g, ' ');\n\n// 2. Remove spaces immediately surrounding colons (e.g., \"Times : \" becomes \"Times:\").\ncleanedMessage = cleanedMessage.replace(/\\s*:\\s*/g, ':');\n\n// 3. Replace sequences of multiple whitespace characters (including spaces from replaced \\n)\n// with a single space. Then, trim any leading or trailing whitespace from the result.\ncleanedMessage = cleanedMessage.replace(/\\s+/g, ' ').trim();\n\n// Create the final output JSON object containing the cleaned message.\nconst output = {\n    message: cleanedMessage\n};\n\n// Return the output object. This will be the output of the Code node.\nreturn output;"
@@ -1132,8 +1132,8 @@
       "name": "Response to Vapi",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        3360,
-        840
+        100,
+        18640
       ],
       "parameters": {
         "options": {},
@@ -1148,8 +1148,8 @@
       "name": "bookslots_tool",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        400,
-        1800
+        100,
+        30340
       ],
       "webhookId": "42afdbc1-afd0-4d65-a713-cf7a59062d6c",
       "parameters": {
@@ -1166,8 +1166,8 @@
       "name": "Input Arguments from booking tools",
       "type": "n8n-nodes-base.set",
       "position": [
-        720,
-        1800
+        100,
+        16660
       ],
       "parameters": {
         "options": {},
@@ -1244,8 +1244,8 @@
       "name": "Convert time to CST America / Chicago",
       "type": "n8n-nodes-base.code",
       "position": [
-        1480,
-        1580
+        100,
+        2800
       ],
       "parameters": {
         "jsCode": "// Get all input items\nconst items = $input.all();\n\n// Loop through each item\nfor (const item of items) {\n  // Get the values from the current item's JSON data\n  const startTimeUTC = item.json.starttime;\n  const endTimeUTC = item.json.endtime;\n  const targetTimeZone = item.json.timeZone; // e.g., \"America/Chicago\"\n\n  // Basic validation: ensure the necessary fields exist\n  if (!startTimeUTC || !endTimeUTC || !targetTimeZone) {\n    console.warn(`Skipping item due to missing time data or timezone. Item JSON: ${JSON.stringify(item.json)}`);\n    item.json.conversionError = \"Missing starttime, endtime, or timeZone\";\n    continue; // Move to the next item\n  }\n\n  try {\n    // --- Start Time Conversion ---\n    // Parse the original UTC ISO string using Luxon (NO $ prefix)\n    const startDt = luxon.DateTime.fromISO(startTimeUTC, { zone: 'utc' });\n\n    // Convert the DateTime object to the target timezone\n    const startDtTargetZone = startDt.setZone(targetTimeZone);\n\n    // Check if the conversion was valid\n    if (!startDtTargetZone.isValid) {\n      throw new Error(`Failed to convert start time. Reason: ${startDtTargetZone.invalidReason || 'Unknown'}`);\n    }\n\n    // Format the result back into an ISO string with the correct offset\n    item.json.starttime = startDtTargetZone.toISO();\n\n    // --- End Time Conversion ---\n    // Parse the original UTC ISO string using Luxon (NO $ prefix)\n    const endDt = luxon.DateTime.fromISO(endTimeUTC, { zone: 'utc' });\n\n    // Convert the DateTime object to the target timezone\n    const endDtTargetZone = endDt.setZone(targetTimeZone);\n\n     // Check if the conversion was valid\n    if (!endDtTargetZone.isValid) {\n      throw new Error(`Failed to convert end time. Reason: ${endDtTargetZone.invalidReason || 'Unknown'}`);\n    }\n\n    // Format the result back into an ISO string with the correct offset\n    item.json.endtime = endDtTargetZone.toISO();\n\n    // Optionally remove the error flag if conversion was successful this time\n    delete item.json.conversionError;\n\n  } catch (error) {\n    console.error(`Error converting time for item: ${JSON.stringify(item.json)}. Error: ${error.message}`);\n    // Add/update the error flag to the item's JSON\n    item.json.conversionError = error.message;\n  }\n}\n// Return the modified array of items\nreturn items;"
@@ -1259,8 +1259,8 @@
       "type": "n8n-nodes-base.googleCalendar",
       "onError": "continueErrorOutput",
       "position": [
-        1700,
-        1580
+        100,
+        2980
       ],
       "parameters": {
         "end": "={{ $json.endtime }}",
@@ -1296,8 +1296,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "onError": "continueRegularOutput",
       "position": [
-        2480,
-        1580
+        100,
+        17380
       ],
       "parameters": {
         "options": {},
@@ -1313,8 +1313,8 @@
       "name": "If the booking is confirmed then true",
       "type": "n8n-nodes-base.if",
       "position": [
-        2700,
-        1580
+        100,
+        16120
       ],
       "parameters": {
         "options": {},
@@ -1349,8 +1349,8 @@
       "name": "Information to be Saved in Airtable",
       "type": "n8n-nodes-base.set",
       "position": [
-        2940,
-        1560
+        100,
+        16300
       ],
       "parameters": {
         "options": {},
@@ -1445,8 +1445,8 @@
       "name": "Logs the confirmed booking details",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        3160,
-        1560
+        100,
+        17200
       ],
       "parameters": {
         "base": {
@@ -1632,8 +1632,8 @@
       "name": "Updateslots_tool",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        460,
-        2720
+        100,
+        29080
       ],
       "webhookId": "66b278fe-97d1-4413-b6dd-4288d8ec66b2",
       "parameters": {
@@ -1650,8 +1650,8 @@
       "name": "Input Arguments from updateslot tool",
       "type": "n8n-nodes-base.set",
       "position": [
-        840,
-        2720
+        100,
+        17020
       ],
       "parameters": {
         "options": {},
@@ -1722,8 +1722,8 @@
       "name": "Checks if required info is provided.",
       "type": "n8n-nodes-base.if",
       "position": [
-        1060,
-        2720
+        100,
+        2440
       ],
       "parameters": {
         "options": {},
@@ -1799,8 +1799,8 @@
       "type": "n8n-nodes-base.airtable",
       "maxTries": 2,
       "position": [
-        1600,
-        2560
+        100,
+        14860
       ],
       "parameters": {
         "base": {
@@ -1839,8 +1839,8 @@
       "name": "Response with Error",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1780,
-        2840
+        100,
+        18820
       ],
       "parameters": {
         "options": {}
@@ -1854,8 +1854,8 @@
       "type": "n8n-nodes-base.googleCalendar",
       "onError": "continueErrorOutput",
       "position": [
-        1980,
-        2560
+        100,
+        28720
       ],
       "parameters": {
         "eventId": "={{ $json.eventId }}",
@@ -1881,8 +1881,8 @@
       "name": "Updates Airtable record",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        2280,
-        2440
+        100,
+        28900
       ],
       "parameters": {
         "base": {
@@ -2069,8 +2069,8 @@
       "name": "Response & call_id",
       "type": "n8n-nodes-base.set",
       "position": [
-        2620,
-        2580
+        100,
+        18460
       ],
       "parameters": {
         "options": {},
@@ -2099,8 +2099,8 @@
       "name": "Respond to Vapi about Updating slots",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2820,
-        2580
+        100,
+        17560
       ],
       "parameters": {
         "options": {},
@@ -2115,8 +2115,8 @@
       "name": "CancelSlots_tool",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        440,
-        3620
+        100,
+        1720
       ],
       "webhookId": "00fedd5a-c03d-4302-b8e0-22c79f26ed05",
       "parameters": {
@@ -2133,8 +2133,8 @@
       "name": "Input Arguments from cancelslot tool",
       "type": "n8n-nodes-base.set",
       "position": [
-        800,
-        3620
+        100,
+        16840
       ],
       "parameters": {
         "options": {},
@@ -2193,8 +2193,8 @@
       "name": "Checks if required info is provided for cancelation",
       "type": "n8n-nodes-base.if",
       "position": [
-        1020,
-        3620
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -2249,8 +2249,8 @@
       "name": "Finds the appointment record",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1300,
-        3560
+        100,
+        15040
       ],
       "parameters": {
         "base": {
@@ -2288,8 +2288,8 @@
       "name": "Build Error Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        1300,
-        3780
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -2318,8 +2318,8 @@
       "name": "Respond with Error to Vapi",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1500,
-        3780
+        100,
+        18100
       ],
       "parameters": {
         "options": {}
@@ -2333,8 +2333,8 @@
       "type": "n8n-nodes-base.googleCalendar",
       "onError": "continueErrorOutput",
       "position": [
-        1720,
-        3560
+        100,
+        3160
       ],
       "parameters": {
         "eventId": "={{ $json.eventId }}",
@@ -2358,8 +2358,8 @@
       "name": "Update Airtable record",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1940,
-        3440
+        100,
+        28540
       ],
       "parameters": {
         "base": {
@@ -2544,8 +2544,8 @@
       "name": "Call_id & Response",
       "type": "n8n-nodes-base.set",
       "position": [
-        2160,
-        3580
+        100,
+        1540
       ],
       "parameters": {
         "options": {},
@@ -2574,8 +2574,8 @@
       "name": "Respond to Vapi about cancelation",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        2400,
-        3580
+        100,
+        17740
       ],
       "parameters": {
         "options": {},
@@ -2590,8 +2590,8 @@
       "name": "call_results",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        440,
-        4300
+        100,
+        30520
       ],
       "webhookId": "4a6205cd-4277-4686-8008-540b802b99fe",
       "parameters": {
@@ -2607,8 +2607,8 @@
       "name": "All Input Arguments",
       "type": "n8n-nodes-base.set",
       "position": [
-        720,
-        4300
+        100,
+        280
       ],
       "parameters": {
         "options": {
@@ -2717,8 +2717,8 @@
       "name": "Save all information",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        900,
-        4300
+        100,
+        19000
       ],
       "parameters": {
         "base": {
@@ -2911,8 +2911,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1800,
-        1980
+        100,
+        25660
       ],
       "parameters": {
         "color": 4,
@@ -2928,8 +2928,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        280,
-        900
+        100,
+        24040
       ],
       "parameters": {
         "color": 7,
@@ -2945,8 +2945,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        1960
+        100,
+        24220
       ],
       "parameters": {
         "color": 7,
@@ -2962,8 +2962,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        2880
+        100,
+        24400
       ],
       "parameters": {
         "color": 7,
@@ -2979,8 +2979,8 @@
       "name": "Sticky Note18",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        440,
-        3780
+        100,
+        24580
       ],
       "parameters": {
         "color": 7,
@@ -2996,8 +2996,8 @@
       "name": "Sticky Note19",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        440,
-        4440
+        100,
+        24760
       ],
       "parameters": {
         "color": 7,
@@ -3013,8 +3013,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1800,
-        340
+        100,
+        25840
       ],
       "parameters": {
         "color": 7,
@@ -3030,8 +3030,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        40,
-        300
+        100,
+        23860
       ],
       "parameters": {
         "color": 7,
@@ -3048,8 +3048,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in 6f0bb9e6-9d82-4cc6-a98f-4d00c47ed910",
@@ -3063,8 +3063,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        26020
       ],
       "parameters": {
         "message": "Error occurred in e5622e9e-9b0a-43b2-ab80-e3e33a4b0409",
@@ -3078,8 +3078,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        26740
       ],
       "parameters": {
         "message": "Error occurred in 1e064283-2964-4eba-a893-e4270157c603",
@@ -3093,8 +3093,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        26920
       ],
       "parameters": {
         "message": "Error occurred in e00cf72a-af6a-441b-9b76-81bd8096d3df",
@@ -3108,8 +3108,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        27100
       ],
       "parameters": {
         "message": "Error occurred in facf3bf9-e05e-4953-a221-bf7f566a3b0f",
@@ -3123,8 +3123,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        27280
       ],
       "parameters": {
         "message": "Error occurred in b8890ab2-9850-4608-996d-45c8a6d3a52e",
@@ -3138,8 +3138,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        27460
       ],
       "parameters": {
         "message": "Error occurred in 154bee14-9281-4b92-8204-57c5436785ba",
@@ -3153,8 +3153,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        27640
       ],
       "parameters": {
         "message": "Error occurred in a3fd9971-20bb-414a-b06c-1af4da053241",
@@ -3168,8 +3168,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        27820
       ],
       "parameters": {
         "message": "Error occurred in bb7dc099-c4ac-48d4-bf8c-50f4f8858dd4",
@@ -3183,8 +3183,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        28000
       ],
       "parameters": {
         "message": "Error occurred in 2154c9c8-acd3-4144-9fa6-f6f7de7bbf48",
@@ -3198,8 +3198,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        26200
       ],
       "parameters": {
         "message": "Error occurred in ca74e845-ee23-4f8a-ba8e-789186fe7add",
@@ -3213,8 +3213,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        26380
       ],
       "parameters": {
         "message": "Error occurred in 41ff13bf-0793-4082-8be6-51f0617ab0f8",
@@ -3228,8 +3228,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        26560
       ],
       "parameters": {
         "message": "Error occurred in 599592b1-214c-4e99-84f6-e244e690ed79",
@@ -3243,8 +3243,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6f0bb9e6",
@@ -3258,8 +3258,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e5622e9e",
@@ -3273,8 +3273,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e15781cf",
@@ -3288,8 +3288,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1e064283",
@@ -3303,8 +3303,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fb7ad8c6",
@@ -3318,8 +3318,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e00cf72a",
@@ -3333,8 +3333,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node facf3bf9",
@@ -3348,8 +3348,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2c8b2884",
@@ -3363,8 +3363,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b8890ab2",
@@ -3378,8 +3378,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 154bee14",
@@ -3393,8 +3393,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a3fd9971",
@@ -3408,8 +3408,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0731f0ae",
@@ -3423,8 +3423,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node bb7dc099",
@@ -3438,8 +3438,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2154c9c8",
@@ -3453,8 +3453,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ca74e845",
@@ -3468,8 +3468,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ad3c2ad0",
@@ -3483,8 +3483,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 41ff13bf",
@@ -3498,8 +3498,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 599592b1",
@@ -3513,8 +3513,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        29260
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: webhook, itemLists, stickyNote, airtable, code. It contains 123 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 123\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Input Arguments**: set\n- **Format response**: itemLists\n- **Sort**: itemLists\n- **Available Start Times & Ranges**: code\n- **Flatten Slots**: code\n- **Enrich Date**: code\n- **Build Response Payload**: set\n- **Booking Payload**: set\n- **Success Response**: set\n- **Add Friendly Error**: code\n- ... and 113 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -3527,8 +3527,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3542,8 +3542,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3557,8 +3557,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3572,8 +3572,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3587,8 +3587,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3602,8 +3602,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3617,8 +3617,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3632,8 +3632,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3647,8 +3647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3662,8 +3662,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3677,8 +3677,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3692,8 +3692,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3707,8 +3707,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3722,8 +3722,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        29440
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: webhook, itemLists, stickyNote, airtable, code. It contains 123 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 137\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -3736,8 +3736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3751,8 +3751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3766,8 +3766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3781,8 +3781,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3796,8 +3796,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3811,8 +3811,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3826,8 +3826,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3841,8 +3841,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3856,8 +3856,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3871,8 +3871,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3886,8 +3886,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3901,8 +3901,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3916,8 +3916,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3931,8 +3931,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        29620
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: webhook, itemLists, stickyNote, airtable, code. It contains 123 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 151\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -3945,8 +3945,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3960,8 +3960,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3975,8 +3975,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3990,8 +3990,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4005,8 +4005,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4020,8 +4020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4035,8 +4035,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4050,8 +4050,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4065,8 +4065,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4080,8 +4080,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4095,8 +4095,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4110,8 +4110,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4125,8 +4125,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -4140,8 +4140,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        29800
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: webhook, itemLists, stickyNote, airtable, code. It contains 123 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 165\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -4154,8 +4154,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        29980
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: webhook, itemLists, stickyNote, airtable, code. It contains 123 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -4167,8 +4167,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -4181,8 +4181,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        30160
       ],
       "parameters": {
         "content": "# Set Workflow\n\n## Overview\nAutomated workflow: Set Workflow. This workflow integrates 10 different services: webhook, itemLists, stickyNote, airtable, code. It contains 123 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -4194,8 +4194,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -17,8 +17,8 @@
       "name": "For Each User ID...",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1640,
-        1438
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -32,8 +32,8 @@
       "name": "Get User",
       "type": "n8n-nodes-base.slack",
       "position": [
-        1900,
-        1278
+        100,
+        4780
       ],
       "parameters": {
         "user": {
@@ -51,8 +51,8 @@
       "name": "Search for Invite Requests",
       "type": "n8n-nodes-base.slack",
       "position": [
-        340,
-        840
+        100,
+        5860
       ],
       "parameters": {
         "limit": 3,
@@ -68,8 +68,8 @@
       "name": "Get Existing Invite EventID",
       "type": "n8n-nodes-base.code",
       "position": [
-        815,
-        883
+        100,
+        4060
       ],
       "parameters": {
         "jsCode": "const channel =  $('Search for Invite Requests').item.json.channel;\n\nreturn $input\n  .all()\n  .filter(item => !item.json.thread_ts || item.json.ts === item.json.thread_ts)\n  .map(invite => {\n    const replies = $input\n      .all()\n      .filter(reply => reply.json.thread_ts === invite.json.thread_ts);\n    const replyWithEventTag = replies\n      .find(reply => reply.json.bot_id && reply.json.text.match(/#event([a-z0-9]+)/i));\n    const eventId = replyWithEventTag\n      ? replyWithEventTag.json.text.match(/#event([a-z0-9]+)/i)[1]\n      : null;\n    return {\n      eventId,\n      invite,\n      channel,\n    }\n  });\n\nreturn output;"
@@ -83,8 +83,8 @@
       "name": "Should Create Event?",
       "type": "n8n-nodes-base.if",
       "position": [
-        995,
-        883
+        100,
+        6400
       ],
       "parameters": {
         "options": {},
@@ -118,8 +118,8 @@
       "name": "Create Event",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        1940,
-        600
+        100,
+        460
       ],
       "parameters": {
         "end": "={{ $json.output.output.event_end_date ? $json.output.output.event_end_date + ' ' + $json.output.output.event_end_time : (new Date($json.output.output.event_start_date + ' ' + $json.output.output.event_start_time)).plus(3, 'hour').format('yyyy-MM-dd HH:mm:ss') }}",
@@ -147,8 +147,8 @@
       "name": "Get Invite Reactions",
       "type": "n8n-nodes-base.slack",
       "position": [
-        1640,
-        1258
+        100,
+        4240
       ],
       "parameters": {
         "resource": "reaction",
@@ -168,8 +168,8 @@
       "name": "Get Invite Replies",
       "type": "n8n-nodes-base.slack",
       "position": [
-        635,
-        883
+        100,
+        4420
       ],
       "parameters": {
         "ts": "={{ $json.ts }}",
@@ -192,8 +192,8 @@
       "name": "Extract Invite Reactions",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1320,
-        1438
+        100,
+        3520
       ],
       "parameters": {
         "options": {},
@@ -207,8 +207,8 @@
       "name": "Get Old EventId",
       "type": "n8n-nodes-base.set",
       "position": [
-        1320,
-        1258
+        100,
+        4600
       ],
       "parameters": {
         "mode": "raw",
@@ -224,8 +224,8 @@
       "name": "Add Attendee to Event",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        2380,
-        1278
+        100,
+        100
       ],
       "parameters": {
         "eventId": "={{ $('Get Old EventId').item.json.eventId }}",
@@ -250,8 +250,8 @@
       "name": "Get Event Details",
       "type": "n8n-nodes-base.googleCalendar",
       "position": [
-        1480,
-        1258
+        100,
+        3880
       ],
       "parameters": {
         "eventId": "={{ $json.eventId }}",
@@ -272,8 +272,8 @@
       "name": "Is Attending",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1480,
-        1438
+        100,
+        5140
       ],
       "parameters": {
         "options": {},
@@ -305,8 +305,8 @@
       "name": "Get User Email",
       "type": "n8n-nodes-base.set",
       "position": [
-        2220,
-        1278
+        100,
+        4960
       ],
       "parameters": {
         "options": {},
@@ -329,8 +329,8 @@
       "name": "Should Add Attendee?",
       "type": "n8n-nodes-base.if",
       "position": [
-        2060,
-        1278
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -363,8 +363,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1620,
-        680
+        100,
+        8560
       ],
       "parameters": {
         "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"event_title\": { \"type\": \"string\" },\n    \"event_start_date\": { \"type\": \"string\" },\n    \"event_start_time\": { \"type\": \"string\" },\n    \"event_end_date\": { \"type\": \"string\" },\n    \"event_end_time\": { \"type\": \"string\" },\n    \"location_address\": { \"type\": \"string\" },\n    \"location_url\": { \"type\": \"string\" },\n    \"event_type\": { \"type\": \"string\" }\n  }\n}"
@@ -377,8 +377,8 @@
       "name": "SerpAPI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1440,
-        740
+        100,
+        6040
       ],
       "parameters": {
         "options": {}
@@ -391,8 +391,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1340,
-        680
+        100,
+        5320
       ],
       "parameters": {
         "options": {}
@@ -405,8 +405,8 @@
       "name": "Wikipedia",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1520,
-        740
+        100,
+        8740
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -417,8 +417,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        140,
-        840
+        100,
+        5680
       ],
       "parameters": {
         "rule": {
@@ -438,8 +438,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        65.15658774955875,
-        620
+        100,
+        6580
       ],
       "parameters": {
         "color": 7,
@@ -455,8 +455,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        643.4948198232535
+        100,
+        6760
       ],
       "parameters": {
         "color": 7,
@@ -472,8 +472,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        264.3100105144731
+        100,
+        7120
       ],
       "parameters": {
         "color": 7,
@@ -489,8 +489,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1260,
-        1040
+        100,
+        7300
       ],
       "parameters": {
         "color": 7,
@@ -506,8 +506,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1860,
-        1107
+        100,
+        7660
       ],
       "parameters": {
         "color": 7,
@@ -523,8 +523,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -320,
-        600
+        100,
+        7840
       ],
       "parameters": {
         "width": 359.6648027457353,
@@ -539,8 +539,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1840,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "color": 7,
@@ -556,8 +556,8 @@
       "name": "Reply Invite with EventId",
       "type": "n8n-nodes-base.slack",
       "position": [
-        2120,
-        600
+        100,
+        5500
       ],
       "parameters": {
         "text": "=Event Created!\nAdd to Calendar: {{ $json.htmlLink }}\n#event{{ $json.id }}",
@@ -583,8 +583,8 @@
       "name": "Calendar Event Booking Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1380,
-        540
+        100,
+        280
       ],
       "parameters": {
         "text": "=Your role is to create professional event calendar events based on user message.\nGiven the following user message, do the following 5 tasks. Note, Assume all dates are within the current year which is {{ $now.format(\"yyyy\") }} unless stated otherwise.\n1. Summarize the message and generate a title for the event. Make sure it's eye-catching to attract more attendees!\n2. Determine and extract the start date and time for the event. Date must be in the format yyyy-MM-dd and time in the format of hh:mm:ss. If no start time is indicated, the start time is 9am. If you are unable to do so, just leave it blank.\n3. Determine and extract the end date and time for the event. Date must be in the format yyyy-MM-dd and time in the format of hh:mm:ss. If you are unable to do so, just leave it blank.\n4. Where the user message refers to a location or venue, use the SerpAPI tool to search for this location or venue on the web and retrieve the full address.\n5. Additionally, if the location or venue has a website or relevant webpage, return the URL of the location or venue.\n6. Try to identify the event type as one of \"social meeting\", \"social gathering\", \"business meeting\", \"business gathering\" or \"unknown\".\n\nuser message:\n```{{ $json.invite.json.text }}```",
@@ -601,8 +601,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        160
+        100,
+        7480
       ],
       "parameters": {
         "color": 5,
@@ -618,8 +618,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1260,
-        940
+        100,
+        8200
       ],
       "parameters": {
         "color": 5,
@@ -635,8 +635,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        300,
-        820
+        100,
+        8380
       ],
       "parameters": {
         "width": 179.82769272818715,
@@ -651,8 +651,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1900,
-        580
+        100,
+        6940
       ],
       "parameters": {
         "width": 179.82769272818715,
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in f4518e1e-595f-4492-8439-9de9e8701665",
@@ -683,8 +683,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8a932c63",
@@ -698,8 +698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fefe8889",
@@ -713,8 +713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d051c89a",
@@ -728,8 +728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9b4ab665",
@@ -743,8 +743,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 783e0e31",
@@ -758,8 +758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a83ea855",
@@ -773,8 +773,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 80b74ca6",
@@ -788,8 +788,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f4518e1e",
@@ -803,8 +803,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 821c4388",
@@ -818,8 +818,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3d3a6d11",
@@ -833,8 +833,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Splitout Workflow\n\n## Overview\nAutomated workflow: Splitout Workflow. This workflow integrates 15 different services: filter, stickyNote, code, toolSerpApi, scheduleTrigger. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **For Each User ID...**: splitOut\n- **Get User**: slack\n- **Search for Invite Requests**: slack\n- **Get Existing Invite EventID**: code\n- **Should Create Event?**: if\n- **Create Event**: googleCalendar\n- **Get Invite Reactions**: slack\n- **Get Invite Replies**: slack\n- **Extract Invite Reactions**: splitOut\n- **Get Old EventId**: set\n- ... and 34 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -847,8 +847,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -862,8 +862,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Splitout Workflow\n\n## Overview\nAutomated workflow: Splitout Workflow. This workflow integrates 15 different services: filter, stickyNote, code, toolSerpApi, scheduleTrigger. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -876,8 +876,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -891,8 +891,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Splitout Workflow\n\n## Overview\nAutomated workflow: Splitout Workflow. This workflow integrates 15 different services: filter, stickyNote, code, toolSerpApi, scheduleTrigger. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -905,8 +905,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -920,8 +920,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Splitout Workflow\n\n## Overview\nAutomated workflow: Splitout Workflow. This workflow integrates 15 different services: filter, stickyNote, code, toolSerpApi, scheduleTrigger. It contains 44 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -934,8 +934,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Splitout Workflow\n\n## Overview\nAutomated workflow: Splitout Workflow. This workflow integrates 15 different services: filter, stickyNote, code, toolSerpApi, scheduleTrigger. It contains 44 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -947,8 +947,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -961,8 +961,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# Splitout Workflow\n\n## Overview\nAutomated workflow: Splitout Workflow. This workflow integrates 15 different services: filter, stickyNote, code, toolSerpApi, scheduleTrigger. It contains 44 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -974,8 +974,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",

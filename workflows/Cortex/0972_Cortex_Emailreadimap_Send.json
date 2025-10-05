@@ -9,7 +9,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        3160
       ],
       "parameters": {}
     },
@@ -17,8 +17,8 @@
       "name": "IMAP Email",
       "type": "n8n-nodes-base.emailReadImap",
       "position": [
-        -300,
-        200
+        100,
+        2800
       ],
       "parameters": {
         "format": "resolved",
@@ -38,8 +38,8 @@
       "name": "TheHive",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        -20,
-        200
+        100,
+        3880
       ],
       "parameters": {
         "tags": "Email",
@@ -73,8 +73,8 @@
       "name": "Create Case",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        280,
-        200
+        100,
+        640
       ],
       "parameters": {
         "id": "={{$node[\"TheHive\"].json[\"_id\"]}}",
@@ -96,8 +96,8 @@
       "name": "Case",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        540,
-        200
+        100,
+        280
       ],
       "parameters": {
         "id": "={{$node[\"Create Case\"].json[\"_id\"]}}",
@@ -119,8 +119,8 @@
       "name": "Observable",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        1060,
-        200
+        100,
+        3700
       ],
       "parameters": {
         "caseId": "={{$node[\"Case\"].json[\"_id\"]}}",
@@ -143,8 +143,8 @@
       "name": "Analyzer Email",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        1340,
-        200
+        100,
+        100
       ],
       "parameters": {
         "id": "={{$node[\"Observable\"].json[\"_id\"]}}",
@@ -171,8 +171,8 @@
       "name": "Cortex",
       "type": "n8n-nodes-base.cortex",
       "position": [
-        1560,
-        200
+        100,
+        460
       ],
       "parameters": {
         "jobId": "={{$node[\"Analyzer Email\"].json[\"cortexJobId\"]}}",
@@ -193,8 +193,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        -20,
-        600
+        100,
+        2980
       ],
       "parameters": {
         "conditions": {
@@ -223,8 +223,8 @@
       "name": "Update Case Domain",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        420,
-        480
+        100,
+        4060
       ],
       "parameters": {
         "ioc": true,
@@ -253,8 +253,8 @@
       "name": "Update Case Email",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        420,
-        620
+        100,
+        4240
       ],
       "parameters": {
         "ioc": true,
@@ -283,8 +283,8 @@
       "name": "Update Case Ip",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        420,
-        760
+        100,
+        4420
       ],
       "parameters": {
         "ioc": true,
@@ -313,8 +313,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        800,
-        200
+        100,
+        4600
       ],
       "webhookId": "ecada1d5-a671-44fc-906e-c64c6f05e760",
       "parameters": {
@@ -329,8 +329,8 @@
       "name": "Email Reputation",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        640,
-        620
+        100,
+        820
       ],
       "parameters": {
         "id": "={{$node[\"Update Case Email\"].json[\"id\"]}}",
@@ -355,8 +355,8 @@
       "name": "OTX IP",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        640,
-        760
+        100,
+        3520
       ],
       "parameters": {
         "id": "={{$node[\"Update Case Ip\"].json[\"id\"]}}",
@@ -381,8 +381,8 @@
       "name": "OTX DOMAIN",
       "type": "n8n-nodes-base.theHive",
       "position": [
-        640,
-        480
+        100,
+        3340
       ],
       "parameters": {
         "id": "={{$node[\"Update Case Domain\"].json[\"id\"]}}",
@@ -410,7 +410,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        4780
       ],
       "parameters": {
         "content": "# Email\n\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 15 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -423,8 +423,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -438,8 +438,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -453,8 +453,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -467,8 +467,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -481,8 +481,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -554,8 +554,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -583,8 +583,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -610,8 +610,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -623,8 +623,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -637,8 +637,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -650,8 +650,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Email\n\n## Overview\nAutomated workflow: Email. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Workflow execution error",

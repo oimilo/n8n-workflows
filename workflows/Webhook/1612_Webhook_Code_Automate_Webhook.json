@@ -26,8 +26,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1260,
-        100
+        100,
+        6400
       ],
       "parameters": {
         "width": 400,
@@ -42,8 +42,8 @@
       "name": "Image slip URL in Line",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1200,
-        300
+        100,
+        5680
       ],
       "parameters": {
         "options": {},
@@ -66,8 +66,8 @@
       "name": "Get image to Binary",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1000,
-        300
+        100,
+        5500
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -89,8 +89,8 @@
       "name": "Line Chat Bot",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -1440,
-        300
+        100,
+        5860
       ],
       "webhookId": "23ba996d-3242-42a1-946c-f04a680b320a",
       "parameters": {
@@ -106,8 +106,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -840,
-        100
+        100,
+        6580
       ],
       "parameters": {
         "color": 2,
@@ -123,8 +123,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -600,
-        100
+        100,
+        6760
       ],
       "parameters": {
         "color": 3,
@@ -140,8 +140,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -40,
-        100
+        100,
+        6940
       ],
       "parameters": {
         "color": 5,
@@ -157,8 +157,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1500,
-        100
+        100,
+        7120
       ],
       "parameters": {
         "color": 5,
@@ -174,8 +174,8 @@
       "name": "Upload image to Google Drive",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        -780,
-        300
+        100,
+        7660
       ],
       "parameters": {
         "name": "={{ $('Line Chat Bot').item.json.body.events[0].message.id }}.jpg",
@@ -205,8 +205,8 @@
       "name": "Record in Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        20,
-        300
+        100,
+        6040
       ],
       "parameters": {
         "columns": {
@@ -368,8 +368,8 @@
       "name": "Send Image URL to OCR Space for Text Extraction",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -520,
-        300
+        100,
+        6220
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -383,8 +383,8 @@
       "name": "Extract Transaction Details",
       "type": "n8n-nodes-base.code",
       "position": [
-        -260,
-        300
+        100,
+        5320
       ],
       "parameters": {
         "jsCode": "const text = $json[\"ParsedResults\"][0][\"ParsedText\"];\n\n// Split text by line breaks and trim spaces\nconst lines = text.split(\"\\n\").map(line => line.trim());\n\n// Debugging: Log extracted lines for verification\nconsole.log(\"Extracted Lines:\", lines);\n\n// Helper function to find text after a keyword, with OCR variations\nfunction getValueAfterKeyword(keywords, offset = 1) {\n    let index = lines.findIndex(line => keywords.some(keyword => line.includes(keyword)));\n    return index !== -1 && lines[index + offset] ? lines[index + offset] : null;\n}\n\n// **Extracting Data for Both Standard & PromptPay Transactions**\nconst transaction_type = lines[0] || null;  // First line\nconst date_time = lines[1] || null;  // Second line\n\n// **Sender Details**\nconst sender_name_index = lines.findIndex(line => line.startsWith(\"นาย\"));\nconst sender_name = sender_name_index !== -1 ? lines[sender_name_index] : null;\nconst sender_bank = sender_name_index !== -1 ? lines[sender_name_index + 1] : null;\nconst sender_account = sender_name_index !== -1 ? lines[sender_name_index + 2] : null;\n\n// **Determine if it's a Standard Bank Transfer or PromptPay**\nconst isPromptPay = lines.some(line => line.includes(\"Prompt\") || line.includes(\"รหัสพร้อมเพย์\"));\nlet receiver_name = null;\nlet receiver_bank = null;\nlet receiver_account = null;\n\nif (isPromptPay) {\n    // **Handling PromptPay Transactions**\n    const receiver_index = lines.findIndex(line => line.includes(\"Prompt\"));\n    receiver_bank = \"PromptPay\"; // Fixed for PromptPay transactions\n    receiver_name = receiver_index !== -1 ? lines[receiver_index + 2] : null; // Receiver's actual name\n\n    // **Fix Receiver Account for PromptPay**\n    const receiver_account_index = lines.findIndex(line => line.includes(\"รหัสพร้อมเพย์\"));\n    receiver_account = receiver_account_index !== -1 ? lines[receiver_account_index + 1] : null; // The actual account number\n\n} else {\n    // **Handling Standard Bank Transfers**\n    const receiver_index = lines.findIndex(line => line.includes(\"นิติบุคคล\") || line.includes(\"บริษัท\") || line.includes(\"นาย\"));\n    receiver_name = receiver_index !== -1 ? lines[receiver_index] : null;\n    receiver_bank = receiver_index !== -1 ? lines[receiver_index + 2] : null;\n    receiver_account = receiver_index !== -1 ? lines[receiver_index + 3] : null;\n}\n\n// **Fix Transaction ID Extraction**\nlet transaction_id = null;\n\n// **First, try \"เลขที่รายการ:\" for Standard Transactions**\nconst transaction_index = lines.findIndex(line => line.includes(\"เลขที่รายการ:\"));\nif (transaction_index !== -1) {\n    if (/\\d{10,}/.test(lines[transaction_index])) {\n        // If the same line contains the transaction ID, extract it\n        transaction_id = lines[transaction_index].match(/\\d{10,}/)[0];\n    } else if (transaction_index + 1 < lines.length && /\\d{10,}/.test(lines[transaction_index + 1])) {\n        // If transaction ID is on the next line, extract it\n        transaction_id = lines[transaction_index + 1];\n    }\n}\n\n// ✅ **If transaction_id is still missing, use \"จำนวน:\" or possible OCR errors (\"จำนวนะ\")**\nif (!transaction_id) {\n    let amount_index = lines.findIndex(line => line.includes(\"จำนวน\") || line.includes(\"จำนวนะ\"));\n    if (amount_index !== -1) {\n        for (let i = amount_index + 1; i < lines.length; i++) {\n            if (/^[A-Za-z0-9]+$/.test(lines[i])) { // Ensure it's a valid ID\n                transaction_id = lines[i];\n                break; // **Break early for efficiency**\n            }\n        }\n    }\n}\n\n// **Extract Amount Correctly**\nconst amount_index = lines.findIndex(line => line.includes(\"บาท\") && !line.includes(\"ค่าธรรมเนียม\"));\nconst amount = amount_index !== -1 ? lines[amount_index].replace(\" บาท\", \"\").replace(/[^0-9.]/g, \"\") : null;\n\n// **Extract Fee Correctly**\nconst fee_index = lines.findIndex(line => line.includes(\"ค่าธรรมเนียม\"));\nconst fee = fee_index !== -1 && lines[fee_index + 1] ? lines[fee_index + 1].replace(\" บาท\", \"\").replace(/[^0-9.]/g, \"\") : null;\n\n// **Ensure Essential Details Exist**\nif (transaction_type && date_time && sender_name && sender_bank && sender_account && receiver_name && receiver_bank && receiver_account && transaction_id && amount) {\n    return [\n        {\n            json: {\n                \"transaction_type\": transaction_type,\n                \"date_time\": date_time,\n                \"sender_name\": sender_name,\n                \"sender_bank\": sender_bank,\n                \"sender_account\": sender_account,\n                \"receiver_name\": receiver_name,\n                \"receiver_bank\": receiver_bank,\n                \"receiver_account\": receiver_account,\n                \"transaction_id\": transaction_id,\n                \"amount\": amount,\n                \"fee\": fee\n            }\n        }\n    ];\n} else {\n    return [\n        {\n            json: {\n                \"error\": \"Some values could not be extracted\",\n                \"raw_text\": text\n            }\n        }\n    ];\n}\n"
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 172ed09e-8caf-4bee-9f09-a9b8b00470f7",
@@ -413,8 +413,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in 79753b3d-d6a9-4047-af48-947e6221de48",
@@ -428,8 +428,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in 22fbba4f-ad1f-43a5-99de-db7084cd3fc5",
@@ -443,8 +443,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 172ed09e",
@@ -458,8 +458,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 79753b3d",
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 802a7b11",
@@ -488,8 +488,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b37b4b7a",
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 22fbba4f",
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **Image slip URL in Line**: set\n- **Get image to Binary**: httpRequest\n- **Line Chat Bot**: webhook\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Sticky Note4**: stickyNote\n- **Upload image to Google Drive**: googleDrive\n- **Record in Google Sheets**: googleSheets\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -547,8 +547,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -562,8 +562,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -605,8 +605,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -620,8 +620,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -635,8 +635,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -650,8 +650,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -665,8 +665,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -680,8 +680,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -695,8 +695,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -709,8 +709,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -723,8 +723,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -738,8 +738,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -753,8 +753,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -768,8 +768,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -783,8 +783,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -798,8 +798,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -813,8 +813,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -827,8 +827,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -840,8 +840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -868,8 +868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 45\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -909,8 +909,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -923,8 +923,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -937,8 +937,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -950,8 +950,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -964,8 +964,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# LINE BOT - Google Sheets Record Receipt\n\n## Overview\nAutomated workflow: LINE BOT - Google Sheets Record Receipt. This workflow integrates 8 different services: webhook, stickyNote, httpRequest, code, googleDrive. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -977,8 +977,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Workflow execution error",

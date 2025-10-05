@@ -17,8 +17,8 @@
       "name": "Webhook1",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -1820,
-        860
+        100,
+        7120
       ],
       "webhookId": "7116a2e3-c07f-4638-9140-3548a7957d15",
       "parameters": {
@@ -44,8 +44,8 @@
       "name": "Json Parser",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1060,
-        860
+        100,
+        5860
       ],
       "parameters": {
         "jsCode": "function processPayload(items) {\n  // Create a new array to store the processed items\n  const processedItems = [];\n  \n  // Process each item in the input array\n  for (const item of items) {\n    try {\n      // Extract the decryptedPayload string from the current item\n      const decryptedPayloadString = item.json.decryptedPayload;\n      \n      // Parse the decryptedPayload string into a JavaScript object\n      const decryptedPayloadObject = JSON.parse(decryptedPayloadString);\n      \n      // Extract the date from the data object\n      const date = decryptedPayloadObject.data.date;\n      \n      // Extract the screen value\n      const screen = decryptedPayloadObject.screen;\n\n      // Extract the flow_token object\n      const flow_token = decryptedPayloadObject.flow_token;\n      \n      // Create a new item with the extracted date and screen\n      const newItem = {\n        json: {\n          date: date,\n          screen: screen,\n          flow_token: flow_token,\n          // Optionally preserve original data\n          originalPayload: item.json\n        }\n      };\n      \n      // Add the processed item to our array\n      processedItems.push(newItem);\n    } catch (error) {\n      // If there's an error, create an item with error information\n      processedItems.push({\n        json: {\n          error: error.message,\n          originalItem: item.json\n        }\n      });\n    }\n  }\n  \n  return processedItems;\n}\n\nreturn processPayload(items);"
@@ -58,8 +58,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -740,
-        860
+        100,
+        6940
       ],
       "parameters": {
         "rules": {
@@ -121,8 +121,8 @@
       "name": "Respond to Webhook1",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        40,
-        760
+        100,
+        6040
       ],
       "parameters": {
         "options": {
@@ -139,8 +139,8 @@
       "name": "Data Extraction Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        -400,
-        760
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "const groupedAppointments = items.reduce((acc, { json: { appointment_date, start_time } }) => {\n  const dateKey = new Date(appointment_date).toISOString().split('T')[0];\n  if (!acc[dateKey]) {\n    acc[dateKey] = [];\n  }\n  acc[dateKey].push(start_time);\n  return acc;\n}, {});\n\nreturn Object.entries(groupedAppointments).map(([date, times]) => ({\n  json: { appointment_date: date, start_times: times }\n}));\n"
@@ -153,8 +153,8 @@
       "name": "Respond to Webhook2",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        40,
-        1000
+        100,
+        6220
       ],
       "parameters": {
         "options": {
@@ -171,8 +171,8 @@
       "name": "Data Extraction Code1",
       "type": "n8n-nodes-base.code",
       "position": [
-        -400,
-        1000
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "const jsonData = items;\n\n// Parse the decryptedPayload string into a JSON object\nconst decryptedPayload = JSON.parse(jsonData[0].json.originalPayload.decryptedPayload);\n\n// Extract the seats array\nconst seats = decryptedPayload.data.seats;\n\n// Return the result properly formatted for n8n\nreturn seats.map(seat => ({ json: { seat } }));\n"
@@ -185,8 +185,8 @@
       "name": "move to base64",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1600,
-        860
+        100,
+        9100
       ],
       "parameters": {
         "jsCode": "console.log($json);\n\nreturn [\n  {\n    encryptedFlowData: Buffer.from($json.body?.encrypted_flow_data || \"\", \"base64\"),\n    encryptedAesKey: Buffer.from($json.body?.encrypted_aes_key || \"\", \"base64\"),\n    initialVector: Buffer.from($json.body?.initial_vector || \"\", \"base64\"),\n  }\n];\n"
@@ -199,8 +199,8 @@
       "name": "Decryption Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1320,
-        860
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "const crypto = require(\"crypto\");\n\nconst privateKey = `-----BEGIN PRIVATE KEY-----\n[INSERT YOUR KEY HERE]\n-----END PRIVATE KEY-----`;\n\n// Convert input buffers\nconst encryptedAesKeyBuffer = Buffer.from($json.encryptedAesKey.data);\nconst initialVector = Buffer.from($json.initialVector.data);\nconst encryptedFlowData = Buffer.from($json.encryptedFlowData.data);\n\n// Check if encrypted AES key, IV, and encrypted flow data exist\nif (!encryptedAesKeyBuffer || !initialVector || !encryptedFlowData) {\n  throw new Error(\"Missing required data (encrypted AES key, IV, or flow data)\");\n}\n\n// Decrypt AES key using RSA\nconst decryptedKey = crypto.privateDecrypt(\n  {\n    key: privateKey,\n    padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,\n    oaepHash: \"sha256\",\n  },\n  encryptedAesKeyBuffer\n);\n\n// Ensure AES key is exactly 16 bytes (AES-128 requires it)\nconst aesKey = decryptedKey.slice(0, 16);\nif (aesKey.length !== 16) {\n  throw new Error(\"Invalid AES Key length\");\n}\n\n// Handle initialization vector (IV): If needed, flip the IV bits (standardize behavior)\nconst standardizedIv = Buffer.from(initialVector);\nif (standardizedIv.length !== 16) {\n  throw new Error(\"Invalid IV length, must be 16 bytes\");\n}\n\n// Extract the last 16 bytes as the authentication tag (GCM uses 16-byte tags)\nconst authTag = encryptedFlowData.slice(-16);\nconst encryptedDataWithoutTag = encryptedFlowData.slice(0, -16);\n\n// AES Decryption\nconst decipher = crypto.createDecipheriv(\"aes-128-gcm\", aesKey, standardizedIv);\ndecipher.setAuthTag(authTag);\n\nlet decrypted;\ntry {\n  decrypted = Buffer.concat([\n    decipher.update(encryptedDataWithoutTag),\n    decipher.final(),\n  ]);\n} catch (error) {\n  throw new Error(\"Decryption failed: \" + error.message);\n}\n\nreturn [{ \n  decryptedPayload: decrypted.toString(\"utf-8\"),\n  aesKey: aesKey.toString(\"base64\")\n}];\n"
@@ -213,8 +213,8 @@
       "name": "Encrypt Return",
       "type": "n8n-nodes-base.code",
       "position": [
-        -200,
-        760
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "const crypto = require(\"crypto\");\n\n// Access initial_vector from the correct path\nconst initialVector = $('move to base64').first().json.initialVector;\n\nif (!initialVector) {\n    throw new Error(\"Initial Vector is undefined or missing.\");\n}\n\n// Check if 'data' is a property of initialVector\nconst ivData = initialVector.data || initialVector; // Fallback to initialVector if no 'data' property\n\nif (!ivData) {\n    throw new Error(\"Initial Vector 'data' is undefined or missing.\");\n}\n\n// Check for various formats of initialVector\nlet ivBuffer;\nif (typeof ivData === \"string\") {\n    ivBuffer = Buffer.from(ivData, 'base64');\n} else if (Buffer.isBuffer(ivData)) {\n    ivBuffer = ivData;\n} else if (Array.isArray(ivData)) {\n    ivBuffer = Buffer.from(ivData);\n} else {\n    throw new Error(\"Initial Vector 'data' is in an unsupported format.\");\n}\n\n// Invert Initialization Vector\nconst invertedIV = Buffer.from(ivBuffer.map((b) => ~b & 0xFF)); // Ensure the result stays a valid byte\n\n// Access AES Key from the correct path\nconst aesKeyBase64 = $('Decryption Code').first().json.aesKey || \"\";\nif (!aesKeyBase64) {\n    throw new Error(\"AES Key is missing.\");\n}\n\nconst aesKey = Buffer.from(aesKeyBase64, \"base64\");\n\n// Extract data from the input with proper error handling\nlet date = \"2025-03-14\"; // Default fallback date\nlet startTimes = []; // Default empty array for start times\n\n// Check if $json exists and has the expected structure\nif ($json) {\n    // Check if $json is an array\n    if (Array.isArray($json) && $json.length > 0) {\n        const appointmentData = $json[0];\n        if (appointmentData && appointmentData.appointment_date) {\n            date = appointmentData.appointment_date;\n        }\n        if (appointmentData && Array.isArray(appointmentData.start_times)) {\n            startTimes = appointmentData.start_times;\n        }\n    } else if ($json.appointment_date) {\n        // If $json is not an array but has appointment_date directly\n        date = $json.appointment_date;\n        if (Array.isArray($json.start_times)) {\n            startTimes = $json.start_times;\n        }\n    }\n}\n\n// Log the structure of $json for debugging\nconsole.log(\"Input JSON structure:\", JSON.stringify($json, null, 2));\n\n// Ensure we have time slots (use defaults if none found)\nif (!startTimes.length) {\n    console.log(\"No time slots found in input, using defaults\");\n    startTimes = [\"12:00:00\", \"12:30:00\", \"13:30:00\", \"14:00:00\"];\n}\n\n// Map the time slots to the required format\nconst timeSlots = startTimes.map((timeString, index) => ({\n    id: `time_${index + 1}`,\n    title: timeString\n}));\n\n// Map the date slots for each time slot\nconst dateSlots = [{\n    id: \"date_1\",\n    title: date\n}];\n\n// Define the response data with the extracted time and date\nconst responseData = {\n    status: \"active\",\n    time: timeSlots,\n    date: dateSlots\n};\n\n// Define the flow_token (accessed from the correct path)\nconst flowToken = $('Json Parser').first().json.flow_token || \"\"; // Fetch the flow_token dynamically from the path\n\nif (!flowToken) {\n    throw new Error(\"Flow token is missing.\");\n}\n\n// Define the next screen (this should be based on your flow logic)\nconst nextScreen = \"APPOINTMENT\"; // You can set this dynamically depending on the flow\n\n// Define Response Message (updated to match the required response format)\nconst responseMessage = JSON.stringify({\n    version: \"3.0\", // Fixed version as per your requirements\n    action: \"data_exchange\", // Since we're responding to a data exchange request\n    screen: nextScreen, // The next screen that the user will be redirected to\n    data: responseData, // Data to send back (includes the time and date)\n    flow_token: flowToken, // Flow token for session identification\n});\n\n// Encrypt Response using AES-GCM\nconst cipher = crypto.createCipheriv(\"aes-128-gcm\", aesKey, invertedIV);\nlet encryptedResponse = Buffer.concat([\n    cipher.update(responseMessage, \"utf-8\"),\n    cipher.final()\n]);\n\n// Get the authentication tag\nconst authTag = cipher.getAuthTag();\n\n// Append the authentication tag to the encrypted response\nconst result = Buffer.concat([encryptedResponse, authTag]);\n\n// Encode the entire response as Base64\nconst base64Response = result.toString(\"base64\");\n\n// Return the Base64-encoded response as the body\nreturn [{ body: base64Response }];\n"
@@ -227,8 +227,8 @@
       "name": "Encrypt Return1",
       "type": "n8n-nodes-base.code",
       "position": [
-        -200,
-        1000
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "const crypto = require(\"crypto\");\n\nconst jsonData = items;\n\n// Parse the decryptedPayload string into a JSON object\nconst decryptedPayload = JSON.parse(jsonData[0].json.originalPayload.decryptedPayload);\n\n// Extract the seats array\nconst seats = decryptedPayload.data.seats;\n\nif (!seats || !Array.isArray(seats) || seats.length === 0) {\n    throw new Error(\"Seats data is missing or invalid.\");\n}\n\n// Access initial_vector from the correct path\nconst initialVector = $('move to base64').first().json.initialVector;\nif (!initialVector) {\n    throw new Error(\"Initial Vector is undefined or missing.\");\n}\n\nconst ivData = initialVector.data || initialVector;\nif (!ivData) {\n    throw new Error(\"Initial Vector 'data' is undefined or missing.\");\n}\n\nlet ivBuffer;\nif (typeof ivData === \"string\") {\n    ivBuffer = Buffer.from(ivData, 'base64');\n} else if (Buffer.isBuffer(ivData)) {\n    ivBuffer = ivData;\n} else if (Array.isArray(ivData)) {\n    ivBuffer = Buffer.from(ivData);\n} else {\n    throw new Error(\"Initial Vector 'data' is in an unsupported format.\");\n}\n\nconst invertedIV = Buffer.from(ivBuffer.map((b) => ~b & 0xFF));\n\n// Access AES Key from the correct path\nconst aesKeyBase64 = $('Decryption Code').first().json.aesKey || \"\";\nif (!aesKeyBase64) {\n    throw new Error(\"AES Key is missing.\");\n}\nconst aesKey = Buffer.from(aesKeyBase64, \"base64\");\n\n// Define the response data with the extracted seats\nconst responseData = {\n    status: \"active\",\n    seats: seats.map((seat, index) => ({\n        id: `seat_${index + 1}`,\n        title: seat\n    }))\n};\n\n// Define the flow_token\nconst flowToken = $('Json Parser').first().json.flow_token || \"\";\nif (!flowToken) {\n    throw new Error(\"Flow token is missing.\");\n}\n\nconst nextScreen = \"SUMMARY\";\n\nconst responseMessage = JSON.stringify({\n    version: \"3.0\",\n    action: \"data_exchange\",\n    screen: nextScreen,\n    data: responseData,\n    flow_token: flowToken,\n});\n\n// Encrypt Response using AES-GCM\nconst cipher = crypto.createCipheriv(\"aes-128-gcm\", aesKey, invertedIV);\nlet encryptedResponse = Buffer.concat([\n    cipher.update(responseMessage, \"utf-8\"),\n    cipher.final()\n]);\n\nconst authTag = cipher.getAuthTag();\nconst result = Buffer.concat([encryptedResponse, authTag]);\nconst base64Response = result.toString(\"base64\");\n\n// Return the encrypted response\nreturn [{ body: base64Response }];\n"
@@ -241,8 +241,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2480,
-        140
+        100,
+        6400
       ],
       "parameters": {
         "width": 580,
@@ -258,8 +258,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in 1874c66a-97f0-4a33-a4e9-ab27b950edb4",
@@ -273,8 +273,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in 76fad406-2591-4531-acab-01cbfcf41c3f",
@@ -288,8 +288,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in 8bd15faf-3a9b-4bb4-ac83-c913a7373480",
@@ -303,8 +303,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1874c66a",
@@ -318,8 +318,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 76fad406",
@@ -333,8 +333,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8bd15faf",
@@ -348,8 +348,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Node Types**: 6\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Webhook1**: webhook\n- **Json Parser**: code\n- **Switch**: switch\n- **Respond to Webhook1**: respondToWebhook\n- **Data Extraction Code**: code\n- **Respond to Webhook2**: respondToWebhook\n- **Data Extraction Code1**: code\n- **move to base64**: code\n- **Decryption Code**: code\n- **Encrypt Return**: code\n- ... and 8 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -362,8 +362,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -392,8 +392,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -421,8 +421,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -435,8 +435,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -480,8 +480,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -495,8 +495,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -510,8 +510,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -568,8 +568,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -583,8 +583,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -598,8 +598,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -613,8 +613,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -657,8 +657,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -670,8 +670,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -684,8 +684,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -698,8 +698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -712,8 +712,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -725,8 +725,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -739,8 +739,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -753,8 +753,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -767,8 +767,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -780,8 +780,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -794,8 +794,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 6 different services: webhook, stickyNote, code, switch, respondToWebhook. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -807,8 +807,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Workflow execution error",

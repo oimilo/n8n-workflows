@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        3520
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        360,
-        -600
+        100,
+        3160
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -64,8 +64,8 @@
       "name": "Convert to File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        780,
-        -600
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -80,8 +80,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        560,
-        -600
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -95,8 +95,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -220,
-        -600
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.content }}",
@@ -113,8 +113,8 @@
       "name": "OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -420,
-        -600
+        100,
+        3700
       ],
       "parameters": {
         "modelId": {
@@ -142,8 +142,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -260,
-        -380
+        100,
+        3880
       ],
       "parameters": {
         "model": {
@@ -167,8 +167,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1000,
-        -560
+        100,
+        4780
       ],
       "webhookId": "22b3dae3-95e5-4bfa-8187-9dca2dc72f85",
       "parameters": {
@@ -182,8 +182,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        -700,
-        -560
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -216,8 +216,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        140,
-        -600
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "const rawContent = $json.output;\n\n// 1. Replace all line breaks with spaces\nlet cleaned = rawContent.replace(/\\n/g, ' ');\n\n// 2. Trim any extra spaces at the beginning and end\ncleaned = cleaned.trim();\n\n// 3. Escape backslashes and double quotes for JSON safety\nlet escaped = cleaned.replace(/\\\\/g, '\\\\\\\\').replace(/\"/g, '\\\\\"');\n\n// 4. Remove leading or trailing escaped quotes if accidentally included\nescaped = escaped.replace(/^\\\\\\\"/, '').replace(/\\\\\\\"$/, '');\n\n// 5. Return the cleaned and fully escaped string\nreturn [\n  {\n    json: {\n      escapedString: escaped\n    }\n  }\n];\n"
@@ -230,8 +230,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1060,
-        -640
+        100,
+        4240
       ],
       "parameters": {
         "width": 280,
@@ -246,8 +246,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -460,
-        -680
+        100,
+        4420
       ],
       "parameters": {
         "color": 5,
@@ -263,8 +263,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        280,
-        -680
+        100,
+        4600
       ],
       "parameters": {
         "color": 3,
@@ -281,8 +281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 97ce19f8-d83b-481d-a5c4-8ed46a06f18d",
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 97ce19f8",
@@ -311,8 +311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3ba73c97",
@@ -326,8 +326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f54f401d",
@@ -341,8 +341,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b867eeda",
@@ -356,8 +356,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **HTTP Request**: httpRequest\n- **Convert to File**: convertToFile\n- **Split Out**: splitOut\n- **AI Agent**: agent\n- **OpenAI**: openAi\n- **OpenAI Chat Model**: lmChatOpenAi\n- **When chat message received**: chatTrigger\n- **If Node**: if\n- **Code**: code\n- **Sticky Note**: stickyNote\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -370,8 +370,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -385,8 +385,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -399,8 +399,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -413,8 +413,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -428,8 +428,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -443,8 +443,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -457,8 +457,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -471,8 +471,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -486,8 +486,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -501,8 +501,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -528,8 +528,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -542,8 +542,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -555,8 +555,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -569,8 +569,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -582,8 +582,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# AI T-Shirt Redesign Workflow from any Mockup Image\n\n## Overview\nAutomated workflow: AI T-Shirt Redesign Workflow from any Mockup Image. This workflow integrates 11 different services: convertToFile, stickyNote, httpRequest, code, agent. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -609,8 +609,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",

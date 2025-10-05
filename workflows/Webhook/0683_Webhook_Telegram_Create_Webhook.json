@@ -5,8 +5,8 @@
       "name": "telegram account",
       "type": "n8n-nodes-base.code",
       "position": [
-        -220,
-        0
+        100,
+        5860
       ],
       "parameters": {
         "jsCode": "const accountId = $('jira-webhook').first().json.body.fields.assignee?.accountId\n\nconst telegramAccounts = {\n  \"[jira account id]\": 00000000, // telegram chat id\n}\n\nconst telegramChatId = telegramAccounts[accountId]\n\nreturn [{telegramChatId}]"
@@ -19,8 +19,8 @@
       "name": "check tg account exists",
       "type": "n8n-nodes-base.if",
       "position": [
-        40,
-        120
+        100,
+        5320
       ],
       "parameters": {
         "options": {},
@@ -55,8 +55,8 @@
       "name": "check type",
       "type": "n8n-nodes-base.switch",
       "position": [
-        300,
-        0
+        100,
+        5500
       ],
       "parameters": {
         "rules": {
@@ -140,8 +140,8 @@
       "name": "Send Update",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        580,
-        0
+        100,
+        2980
       ],
       "parameters": {
         "text": "=⚠️ Update {{ $('jira-webhook').item.json.body.fields.issuetype.name }}\n\n🔰 Project: `{{ $('jira-webhook').item.json.body.fields.project.name }}`\n\n🆔 Key: `{{ $('jira-webhook').item.json.body.key }}`\n\n🔰 Title: `{{ $('jira-webhook').item.json.body.fields.summary }}`\n\n🔰 Description: `{{ $('jira-webhook').item.json.body.fields.description }}`\n\nCreate Time: `{{ DateTime.fromMillis($('jira-webhook').item.json.body.fields.created).format(\"yyyy-MM-dd HH:mm\") }}`",
@@ -164,8 +164,8 @@
       "name": "Send Create",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        580,
-        -180
+        100,
+        2800
       ],
       "parameters": {
         "text": "=🆕 New {{ $('jira-webhook').item.json.body.fields.issuetype.name }}\n\n🔰 Project: `{{ $('jira-webhook').item.json.body.fields.project.name }}`\n\n🆔 Key: `{{ $('jira-webhook').item.json.body.key }}`\n\n🔰 Title: `{{ $('jira-webhook').item.json.body.fields.summary }}`\n\n🔰 Description: `{{ $('jira-webhook').item.json.body.fields.description }}`\n\nCreate Time: `{{ DateTime.fromMillis($('jira-webhook').item.json.body.fields.created).format(\"yyyy-MM-dd HH:mm\") }}`",
@@ -188,8 +188,8 @@
       "name": "Send Assign Alert",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        580,
-        180
+        100,
+        2620
       ],
       "parameters": {
         "text": "=👩‍💻👨‍💻 Assigned to you {{ $('jira-webhook').item.json.body.fields.issuetype.name }}\n\n🔰 Project: `{{ $('jira-webhook').item.json.body.fields.project.name }}`\n\n🆔 Key: `{{ $('jira-webhook').item.json.body.key }}`\n\n🔰 Title: `{{ $('jira-webhook').item.json.body.fields.summary }}`\n\n🔰 Description: `{{ $('jira-webhook').item.json.body.fields.description }}`\n\nCreate Time: `{{ DateTime.fromMillis($('jira-webhook').item.json.body.fields.created).format(\"yyyy-MM-dd HH:mm\") }}`",
@@ -212,8 +212,8 @@
       "name": "check issue body, assignee and hook type",
       "type": "n8n-nodes-base.if",
       "position": [
-        -480,
-        120
+        100,
+        5140
       ],
       "parameters": {
         "options": {},
@@ -267,8 +267,8 @@
       "name": "jira-webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -740,
-        0
+        100,
+        5680
       ],
       "webhookId": "1e4989bf-6a23-4415-bd17-72d08130c5c4",
       "parameters": {
@@ -292,8 +292,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 6ed72f04-7b15-4fb4-8699-0691beac69c0",
@@ -308,7 +308,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        4780
       ],
       "parameters": {
         "content": "# Code Workflow\n\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 9 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -321,8 +321,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 251f6e9b",
@@ -336,8 +336,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8efbed55",
@@ -351,8 +351,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9c2889e7",
@@ -366,8 +366,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6ed72f04",
@@ -381,8 +381,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **telegram account**: code\n- **check tg account exists**: if\n- **check type**: switch\n- **Send Update**: telegram\n- **Send Create**: telegram\n- **Send Assign Alert**: telegram\n- **check issue body, assignee and hook type**: if\n- **jira-webhook**: webhook\n- **Error Handler**: stopAndError\n- **Workflow Documentation**: stickyNote\n- ... and 4 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -395,8 +395,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -410,8 +410,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -424,8 +424,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -438,8 +438,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -453,8 +453,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -468,8 +468,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -482,8 +482,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -526,8 +526,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -540,8 +540,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -567,8 +567,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -580,8 +580,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -607,8 +607,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",

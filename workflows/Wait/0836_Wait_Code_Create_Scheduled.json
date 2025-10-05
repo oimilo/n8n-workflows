@@ -17,8 +17,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -2440,
-        220
+        100,
+        3340
       ],
       "parameters": {
         "rule": {
@@ -36,8 +36,8 @@
       "type": "n8n-nodes-base.set",
       "onError": "continueRegularOutput",
       "position": [
-        -1440,
-        220
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -85,8 +85,8 @@
       "type": "n8n-nodes-base.code",
       "onError": "continueRegularOutput",
       "position": [
-        -1180,
-        220
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "const now = new Date();\nconst setdays = 3; // Edit the Days, if you need the News from more the 3 Days\nconst cutoffDate = new Date();\ncutoffDate.setDate(now.getDate() - setdays); \nreturn $input.all().filter(item => {\n    const pubDate = new Date(Date.parse(item.json.pubDate));\n    return !isNaN(pubDate.getTime()) && pubDate >= cutoffDate;\n});"
@@ -100,8 +100,8 @@
       "type": "n8n-nodes-base.markdown",
       "onError": "continueRegularOutput",
       "position": [
-        -900,
-        460
+        100,
+        2440
       ],
       "parameters": {
         "html": "={{ $json.output }}",
@@ -117,8 +117,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "onError": "continueRegularOutput",
       "position": [
-        -920,
-        220
+        100,
+        1900
       ],
       "parameters": {
         "options": {}
@@ -132,8 +132,8 @@
       "type": "n8n-nodes-base.wait",
       "onError": "continueRegularOutput",
       "position": [
-        -900,
-        880
+        100,
+        4780
       ],
       "webhookId": "85941a4b-202f-4368-a331-dbfdf018326b",
       "parameters": {
@@ -149,8 +149,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "onError": "continueRegularOutput",
       "position": [
-        -1820,
-        220
+        100,
+        2080
       ],
       "parameters": {
         "options": {}
@@ -164,8 +164,8 @@
       "type": "n8n-nodes-base.rssFeedRead",
       "onError": "continueRegularOutput",
       "position": [
-        -1800,
-        480
+        100,
+        2620
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -180,8 +180,8 @@
       "type": "n8n-nodes-base.code",
       "onError": "continueRegularOutput",
       "position": [
-        -100,
-        220
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "const now = new Date();\nconst setdays = 3; // Edit the Days, if you need the News from more the 3 Days\nconst cutoffDate = new Date();\ncutoffDate.setDate(now.getDate() - setdays);  \n\nconst oldRows = $input.all().filter(item => {\n    const pubDate = new Date(item.json.pubDate);\n    return pubDate < cutoffDate;\n});\noldRows.sort((a, b) => b.json.row_number - a.json.row_number);\nreturn oldRows.map(item => ({ json: { rowNumber: item.json.row_number } }));\n"
@@ -195,8 +195,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "onError": "continueRegularOutput",
       "position": [
-        240,
-        220
+        100,
+        2260
       ],
       "parameters": {
         "options": {}
@@ -211,8 +211,8 @@
       "type": "n8n-nodes-base.wait",
       "onError": "continueRegularOutput",
       "position": [
-        260,
-        680
+        100,
+        4960
       ],
       "webhookId": "69b1b17d-85d1-4681-8887-85e2644f4752",
       "parameters": {
@@ -227,8 +227,8 @@
       "type": "n8n-nodes-base.wait",
       "onError": "continueRegularOutput",
       "position": [
-        -660,
-        220
+        100,
+        5140
       ],
       "webhookId": "69b1b17d-85d1-4681-8887-85e2644f4752",
       "parameters": {
@@ -244,8 +244,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2480,
-        -120
+        100,
+        3520
       ],
       "parameters": {
         "width": 500,
@@ -260,8 +260,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1960,
-        -120
+        100,
+        3700
       ],
       "parameters": {
         "width": 440,
@@ -276,8 +276,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1500,
-        -120
+        100,
+        3880
       ],
       "parameters": {
         "width": 480,
@@ -292,8 +292,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1000,
-        -120
+        100,
+        4060
       ],
       "parameters": {
         "width": 300,
@@ -308,8 +308,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -680,
-        -120
+        100,
+        4240
       ],
       "parameters": {
         "width": 420,
@@ -324,8 +324,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -240,
-        -120
+        100,
+        4420
       ],
       "parameters": {
         "width": 360,
@@ -340,8 +340,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
-        -120
+        100,
+        4600
       ],
       "parameters": {
         "width": 360,
@@ -357,7 +357,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "onError": "continueRegularOutput",
       "position": [
-        260,
+        100,
         460
       ],
       "parameters": {
@@ -394,8 +394,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "onError": "continueErrorOutput",
       "position": [
-        -440,
-        220
+        100,
+        2980
       ],
       "parameters": {
         "options": {
@@ -442,8 +442,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "onError": "continueRegularOutput",
       "position": [
-        -900,
-        680
+        100,
+        3160
       ],
       "parameters": {
         "columns": {
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "onError": "continueErrorOutput",
       "position": [
-        -2200,
-        220
+        100,
+        2800
       ],
       "parameters": {
         "options": {
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3a800065",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 31d13f16",
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 13bb0584",
@@ -636,8 +636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d3224fc9",
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Edit Fields**: set\n- **Code**: code\n- **Markdown**: markdown\n- **Loop Over Items**: splitInBatches\n- **Wait**: wait\n- **Loop Over Items1**: splitInBatches\n- **RSS**: rssFeedRead\n- **Code1**: code\n- **Loop Over Items2**: splitInBatches\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -665,8 +665,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -735,8 +735,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -761,8 +761,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -788,8 +788,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, markdown, wait, code, scheduleTrigger. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -801,8 +801,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

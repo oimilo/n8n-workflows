@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -220,
-        100
+        100,
+        6400
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Mark As Read",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        580,
-        -240
+        100,
+        4240
       ],
       "webhookId": "b1551d40-6d53-47ec-ad90-0386c04de860",
       "parameters": {
@@ -60,8 +60,8 @@
       "name": "Star",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        780,
-        -240
+        100,
+        5140
       ],
       "webhookId": "b1551d40-6d53-47ec-ad90-0386c04de860",
       "parameters": {
@@ -85,8 +85,8 @@
       "name": "Get Starred From Inbox",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        300,
-        20
+        100,
+        3340
       ],
       "webhookId": "848b9f06-db3c-4c74-aac3-fb40feb1187b",
       "parameters": {
@@ -112,8 +112,8 @@
       "name": "Get Unread From Inbox",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        300,
-        -160
+        100,
+        3520
       ],
       "webhookId": "848b9f06-db3c-4c74-aac3-fb40feb1187b",
       "parameters": {
@@ -139,8 +139,8 @@
       "name": "If Task Not Exist",
       "type": "n8n-nodes-base.if",
       "position": [
-        -140,
-        800
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -174,8 +174,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        220,
-        820
+        100,
+        4780
       ],
       "parameters": {
         "model": {
@@ -199,8 +199,8 @@
       "name": "Structure Output Todoist Ready",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        600,
-        820
+        100,
+        6040
       ],
       "parameters": {
         "jsonSchemaExample": "{\n\t\"content\": \"Task name\",\n\t\"description\": \"Description of the thread\",\n    \"actions\": \"What actions should you take before closing this task\",\n    \"answer\": \"Proposed answer to the thread or propositions of possible actions\"\n}"
@@ -213,8 +213,8 @@
       "name": "If AI responded properly",
       "type": "n8n-nodes-base.if",
       "position": [
-        740,
-        580
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -258,8 +258,8 @@
       "name": "Create Todoist Task",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        980,
-        560
+        100,
+        280
       ],
       "parameters": {
         "content": "={{ $json.output.content }}",
@@ -287,8 +287,8 @@
       "name": "Get Full Message",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        140,
-        580
+        100,
+        2980
       ],
       "webhookId": "d20c5a51-4078-47e2-bec4-54af54ddf4dd",
       "parameters": {
@@ -311,8 +311,8 @@
       "name": "Summarize Message",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        340,
-        580
+        100,
+        6220
       ],
       "parameters": {
         "text": "=You are a professional email assistant. Your task is to analyze provided email content and transform email into task. Your output will be JSON and will have:\n\n- \"content\", which is exactly \"{{ $json.subject }}\"\n- \"description\", which is short summary what this email is about and what is whole thread point\n- \"actions\", which is your proposition on what actions should be done before responding or closing this email thread\n- \"answer\", which is your proposition on how to respond to this email, when all actions are done\n\nAnswer should be detailed and assuming that content of the email is not known to reader.\n\nEmail content is:\n\n{{ $json.html }}",
@@ -329,8 +329,8 @@
       "name": "Enrich Emails With Tasks",
       "type": "n8n-nodes-base.merge",
       "position": [
-        760,
-        380
+        100,
+        640
       ],
       "parameters": {
         "mode": "combine",
@@ -356,8 +356,8 @@
       "name": "Enrich Tasks with Emails",
       "type": "n8n-nodes-base.merge",
       "position": [
-        900,
-        180
+        100,
+        820
       ],
       "parameters": {
         "mode": "combine",
@@ -383,8 +383,8 @@
       "name": "If Email Unstarred (Not Exist)",
       "type": "n8n-nodes-base.if",
       "position": [
-        -200,
-        1160
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -418,8 +418,8 @@
       "name": "Close Task",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        80,
-        1100
+        100,
+        100
       ],
       "parameters": {
         "taskId": "={{ $json.id }}",
@@ -440,8 +440,8 @@
       "type": "n8n-nodes-base.emailReadImap",
       "disabled": true,
       "position": [
-        -220,
-        -80
+        100,
+        460
       ],
       "parameters": {
         "options": {}
@@ -461,8 +461,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "disabled": true,
       "position": [
-        -220,
-        -260
+        100,
+        4960
       ],
       "parameters": {
         "rule": {
@@ -479,8 +479,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        0,
-        100
+        100,
+        4600
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -491,8 +491,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -280,
-        -360
+        100,
+        5320
       ],
       "parameters": {
         "width": 500,
@@ -507,8 +507,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        -380
+        100,
+        5500
       ],
       "parameters": {
         "width": 560,
@@ -523,8 +523,8 @@
       "name": "Merge Starred and Unread Messages",
       "type": "n8n-nodes-base.merge",
       "position": [
-        600,
-        40
+        100,
+        4420
       ],
       "parameters": {},
       "typeVersion": 3.1,
@@ -535,8 +535,8 @@
       "name": "Get Open Tasks",
       "type": "n8n-nodes-base.todoist",
       "position": [
-        300,
-        200
+        100,
+        3160
       ],
       "parameters": {
         "filters": {
@@ -558,8 +558,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -240,
-        1000
+        100,
+        5680
       ],
       "parameters": {
         "width": 720,
@@ -574,8 +574,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -200,
-        380
+        100,
+        5860
       ],
       "parameters": {
         "width": 1420,
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7f0ce1d6",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4004e68a",
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Mark As Read**: gmail\n- **Star**: gmail\n- **Get Starred From Inbox**: gmail\n- **Get Unread From Inbox**: gmail\n- **If Task Not Exist**: if\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Structure Output Todoist Ready**: outputParserStructured\n- **If AI responded properly**: if\n- **Create Todoist Task**: todoist\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -635,8 +635,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -650,8 +650,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -708,8 +708,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -751,8 +751,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -780,8 +780,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -793,8 +793,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -807,8 +807,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -820,8 +820,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -834,8 +834,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -847,8 +847,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -861,8 +861,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Email mailbox as Todoist tasks\n\n## Overview\nAutomated workflow: Email mailbox as Todoist tasks. This workflow integrates 13 different services: stickyNote, scheduleTrigger, agent, outputParserStructured, merge. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -874,8 +874,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

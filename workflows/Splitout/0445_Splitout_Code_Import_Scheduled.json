@@ -5,8 +5,8 @@
       "name": "Every day at 06:00",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        960,
-        600
+        100,
+        640
       ],
       "parameters": {
         "rule": {
@@ -25,8 +25,8 @@
       "name": "Get all your team's tickets",
       "type": "n8n-nodes-base.graphql",
       "position": [
-        1200,
-        600
+        100,
+        1000
       ],
       "parameters": {
         "query": "query ($filter: IssueFilter) {\n  issues(filter: $filter, first: 100) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    nodes {\n      id\n      identifier\n      url\n      title\n      priorityLabel\n      createdAt\n      completedAt\n      state {\n        type\n        name\n      }\n      cycle {\n        number\n      }\n      estimate\n      labels { nodes { name } }\n    }\n  }\n}",
@@ -49,8 +49,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1200,
-        460
+        100,
+        2080
       ],
       "parameters": {
         "color": 7,
@@ -66,8 +66,8 @@
       "name": "if has next page",
       "type": "n8n-nodes-base.if",
       "position": [
-        1400,
-        780
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -100,8 +100,8 @@
       "name": "Get end cursor",
       "type": "n8n-nodes-base.set",
       "position": [
-        1620,
-        920
+        100,
+        1180
       ],
       "parameters": {
         "fields": {
@@ -123,8 +123,8 @@
       "name": "Get next page",
       "type": "n8n-nodes-base.graphql",
       "position": [
-        1880,
-        920
+        100,
+        1360
       ],
       "parameters": {
         "query": "=query ($filter: IssueFilter) {\n  issues(filter: $filter, first: 100, after: \"{{ $json.after }}\") {\n    nodes {\n      id\n      identifier\n      url\n      title\n      priorityLabel\n      createdAt\n      completedAt\n      state {\n        type\n        name\n      }\n      cycle {\n        number\n      }\n      estimate\n      labels { nodes { name } }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}",
@@ -147,8 +147,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2060,
-        940
+        100,
+        1900
       ],
       "parameters": {
         "color": 7,
@@ -164,8 +164,8 @@
       "name": "Split out the tickets",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        2020,
-        600
+        100,
+        1720
       ],
       "parameters": {
         "options": {},
@@ -179,8 +179,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2240,
-        460
+        100,
+        2260
       ],
       "parameters": {
         "color": 7,
@@ -196,8 +196,8 @@
       "name": "Set custom fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        2240,
-        600
+        100,
+        1540
       ],
       "parameters": {
         "fields": {
@@ -223,8 +223,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        300
+        100,
+        2440
       ],
       "parameters": {
         "color": 5,
@@ -240,8 +240,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2700,
-        780
+        100,
+        2620
       ],
       "parameters": {
         "color": 7,
@@ -257,8 +257,8 @@
       "name": "Write tickets to Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        2720,
-        600
+        100,
+        4600
       ],
       "parameters": {
         "columns": {
@@ -313,8 +313,8 @@
       "name": "Flatten object to have simple fields to filter by",
       "type": "n8n-nodes-base.code",
       "position": [
-        2480,
-        600
+        100,
+        820
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -329,8 +329,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ba08e0c7",
@@ -344,8 +344,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2800
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Every day at 06:00**: scheduleTrigger\n- **Get all your team's tickets**: graphql\n- **Sticky Note1**: stickyNote\n- **if has next page**: if\n- **Get end cursor**: set\n- **Get next page**: graphql\n- **Sticky Note**: stickyNote\n- **Split out the tickets**: splitOut\n- **Sticky Note2**: stickyNote\n- **Set custom fields**: set\n- ... and 5 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -358,8 +358,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2980
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -372,8 +372,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -386,8 +386,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -400,8 +400,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -414,8 +414,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -428,8 +428,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -441,8 +441,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -454,8 +454,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -467,8 +467,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -481,8 +481,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 9 different services: stickyNote, code, scheduleTrigger, graphql, splitOut. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",

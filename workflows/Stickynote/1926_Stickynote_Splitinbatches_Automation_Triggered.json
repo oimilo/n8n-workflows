@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        1540
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1880,
-        -3280
+        100,
+        3520
       ],
       "webhookId": "a74752f3-419a-4510-856f-3efeaceec019",
       "parameters": {
@@ -52,8 +52,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -340,
-        -3280
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.chatInput }}",
@@ -70,8 +70,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -1000,
-        -3280
+        100,
+        1360
       ],
       "parameters": {
         "options": {}
@@ -84,8 +84,8 @@
       "name": "Extract mentions",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1220,
-        -3280
+        100,
+        1000
       ],
       "parameters": {
         "jsCode": "// Analyzes the user message and extracts @mentions in the order they appear. If there are none, all Assistants will be called in random order.\n// --- Configuration: Adjust these lines ---\nconst chatMessageNodeName = 'When chat message received'; // <-- Replace with your Chat Message node name\nconst agentSetupNodeName = 'Define Agent Settings';         // <-- Replace with your Agent Setup node name\nconst chatTextPath = 'json.chatInput';               // <-- Replace with path to text in Chat node output (e.g., 'json.message')\n// --- End Configuration ---\n\n// Helper function for safe nested property access (alternative to _.get)\nfunction getSafe(obj, path, defaultValue = undefined) {\n    const pathParts = path.split('.');\n    let current = obj;\n    for (const part of pathParts) {\n        if (current === null || current === undefined || typeof current !== 'object' || !Object.prototype.hasOwnProperty.call(current, part)) {\n            return defaultValue;\n        }\n        current = current[part];\n    }\n    return current ?? defaultValue;\n}\n\n// 1. Get Chat Text\nconst chatMessageNode = $(chatMessageNodeName);\nconst chatText = getSafe(chatMessageNode.item, chatTextPath, '');\n\n// 2. Get Agent Data and Names\nconst agentSetupNode = $(agentSetupNodeName);\nconst agentData = getSafe(agentSetupNode.item, 'json', {}); // e.g., { Chad: {...}, Gemma: {...}, Claude: {...} }\nconst agentNames = Object.keys(agentData);\n\n// 3. Find all mentions, their names, and their positions in the text\nconst foundMentions = [];\nif (chatText && agentNames.length > 0) {\n    const escapeRegex = (s) => s.replace(/[-\\/\\\\^$*+?.()|[\\]{}]/g, '\\\\$&');\n    const agentPatternPart = agentNames.map(escapeRegex).join('|');\n\n    if (agentPatternPart) {\n        const mentionPattern = new RegExp(`\\\\B@(${agentPatternPart})\\\\b`, 'gi');\n        const matches = chatText.matchAll(mentionPattern);\n\n        for (const match of matches) {\n            const matchedNameCaseInsensitive = match[1];\n            const matchIndex = match.index;\n            const canonicalName = agentNames.find(name => name.toLowerCase() === matchedNameCaseInsensitive.toLowerCase());\n            if (canonicalName) {\n                foundMentions.push({ name: canonicalName, index: matchIndex });\n            }\n        }\n    }\n}\n\n// 4. Sort the found mentions by their index (order of appearance)\nfoundMentions.sort((a, b) => a.index - b.index);\n\n// 5. Map the sorted mentions to the desired output format (array of agent detail objects)\nlet outputArray = foundMentions.map(mention => {\n    const agentDetails = agentData[mention.name];\n    if (!agentDetails) {\n        console.warn(`Could not find details for agent: ${mention.name}`);\n        return null;\n    }\n    return {\n        name: agentDetails.name,\n        model: agentDetails.model,\n        systemMessage: agentDetails.systemMessage\n    };\n}).filter(item => item !== null);\n\n// 6. Check if any mentions were specifically found. If not, populate outputArray with ALL agents in RANDOM order.\nif (outputArray.length === 0 && foundMentions.length === 0) { // Check if NO mentions were found initially\n    // --- NO MENTIONS FOUND ---\n    // Populate outputArray with ALL agents from agentData\n    const allAgentDetailsArray = Object.values(agentData);\n\n    // --- Simple Randomization ---\n    // Shuffle the array in place using sort with a random comparator\n    allAgentDetailsArray.sort(() => 0.5 - Math.random());\n    // --- End Randomization ---\n\n    // Map all agents (now in random order) to the output structure\n    outputArray = allAgentDetailsArray.map(agentObject => ({\n        name: agentObject.name,\n        model: agentObject.model,\n        systemMessage: agentObject.systemMessage\n    }));\n} // Intentionally no 'else' here, if outputArray already had items from mentions, we use that.\n\n// 7. Final Output Formatting (Handles both cases: specific mentions OR all agents)\n// Check if, after everything, the outputArray is *still* empty (e.g., if agentData was empty initially)\nif (outputArray.length === 0) {\n    // If still empty, return a status or error as a fallback\n     return [{ json: { status: \"no_agents_available\", message: \"No mentions found and no agents defined.\" } }];\n} else {\n    // Return the array of agent objects formatted for n8n (multiple items)\n    return outputArray.map(agentObject => ({ json: agentObject }));\n}"
@@ -98,8 +98,8 @@
       "name": "Simple Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -192,
-        -3060
+        100,
+        2440
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -114,8 +114,8 @@
       "name": "Set last Assistant message as input",
       "type": "n8n-nodes-base.set",
       "position": [
-        -560,
-        -3180
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -138,8 +138,8 @@
       "name": "Set user message as input",
       "type": "n8n-nodes-base.set",
       "position": [
-        -560,
-        -3380
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -162,8 +162,8 @@
       "name": "First loop?",
       "type": "n8n-nodes-base.if",
       "position": [
-        -780,
-        -3280
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -196,8 +196,8 @@
       "name": "Set lastAssistantMessage",
       "type": "n8n-nodes-base.set",
       "position": [
-        36,
-        -3155
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -220,8 +220,8 @@
       "name": "Combine and format responses",
       "type": "n8n-nodes-base.code",
       "position": [
-        -780,
-        -3480
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Get the array of items from the input (output of the loop)\nconst inputItems = items;\n\n// Extract the 'lastAssistantMessage' from each item's JSON data.\n// If the field is missing or not a string, use an empty string to avoid errors.\nconst messages = inputItems.map(item => {\n  const message = item.json.lastAssistantMessage;\n  return typeof message === 'string' ? message : '';\n});\n\n// Join the extracted messages together with a horizontal rule separator\nconst combinedText = messages.join('\\n\\n---\\n\\n');\n\n// Return a new single item containing the combined text.\n// You can rename 'output' if you like.\nreturn [{ json: { output: combinedText } }];"
@@ -234,8 +234,8 @@
       "name": "Define Global Settings",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1660,
-        -3280
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "// Configure Global settings. This includes information about you - the user - and a section of the System Message that all Assistants will see. (Assistant-specific System Message sections can be set in the 'Define Agent Settings' node.)\nreturn [\n  {\n    json: {\n      \"user\": {\n        \"name\": \"Jon\",\n        \"location\": \"Melbourne, Australia\",\n        \"notes\": \"Jon likes a casual, informal conversation style.\"\n      },\n      \"global\": {\n        \"systemMessage\": \"Don't overdo the helpful, agreeable approach.\"\n      }\n    }\n  }\n];\n"
@@ -248,8 +248,8 @@
       "name": "Define Agent Settings",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1440,
-        -3280
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Configure Assistants. The number of Assistants can be changed by adding or removing JSON objects. Use the OpenRouter model naming convention.\nreturn [\n  {\n    json: {\n      \"Chad\": {\n        \"name\": \"Chad\",\n        \"model\": \"openai/gpt-4o\",\n        \"systemMessage\": \"You are a helpful Assistant. You are eccentric and creative, and try to take discussions into unexpected territory.\"\n      },\n      \"Claude\": {\n        \"name\": \"Claude\",\n        \"model\": \"anthropic/claude-3.7-sonnet\",\n        \"systemMessage\": \"You are logical and practical.\"\n      },\n      \"Gemma\": {\n        \"name\": \"Gemma\",\n        \"model\": \"google/gemini-2.0-flash-lite-001\",\n        \"systemMessage\": \"You are super friendly and love to debate.\"\n      }\n    }\n  }\n];\n"
@@ -262,8 +262,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1750,
-        -3620
+        100,
+        2620
       ],
       "parameters": {
         "color": 4,
@@ -279,8 +279,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -400,
-        -3620
+        100,
+        2800
       ],
       "parameters": {
         "color": 4,
@@ -296,8 +296,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1940,
-        -3900
+        100,
+        2980
       ],
       "parameters": {
         "color": 5,
@@ -313,8 +313,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1200,
-        -3860
+        100,
+        3160
       ],
       "parameters": {
         "width": 380,
@@ -329,8 +329,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -820,
-        -3860
+        100,
+        3340
       ],
       "parameters": {
         "width": 380,
@@ -345,8 +345,8 @@
       "name": "OpenRouter Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -312,
-        -3060
+        100,
+        1720
       ],
       "parameters": {
         "model": "={{ $('Extract mentions').item.json.model }}",
@@ -367,8 +367,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When chat message received**: chatTrigger\n- **AI Agent**: agent\n- **Loop Over Items**: splitInBatches\n- **Extract mentions**: code\n- **Simple Memory**: memoryBufferWindow\n- **Set last Assistant message as input**: set\n- **Set user message as input**: set\n- **First loop?**: if\n- **Set lastAssistantMessage**: set\n- **Combine and format responses**: code\n- ... and 8 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -381,8 +381,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -395,8 +395,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -409,8 +409,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -423,8 +423,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -451,8 +451,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -477,8 +477,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -490,8 +490,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -504,8 +504,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Multi-Agent Conversation\n\n## Overview\nAutomated workflow: Multi-Agent Conversation. This workflow integrates 9 different services: stickyNote, code, agent, set, memoryBufferWindow. It contains 18 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -517,8 +517,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",

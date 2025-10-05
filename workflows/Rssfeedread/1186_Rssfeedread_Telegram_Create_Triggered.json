@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1340,
-        1520
+        100,
+        2080
       ],
       "parameters": {
         "model": {
@@ -51,8 +51,8 @@
       "name": "Set Query",
       "type": "n8n-nodes-base.set",
       "position": [
-        -780,
-        1340
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -81,8 +81,8 @@
       "name": "Crypto News & Sentiment Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -1280,
-        1340
+        100,
+        460
       ],
       "parameters": {
         "text": "={{ $('Send Crypto or Company Name for Analysis').item.json.message.text }}",
@@ -99,8 +99,8 @@
       "name": "RSS Cointelegraph",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        500
+        100,
+        3160
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -114,8 +114,8 @@
       "name": "RSS Bitcoinmagazine",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        660
+        100,
+        2800
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -129,8 +129,8 @@
       "name": "RSS Coindesk",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        820
+        100,
+        2980
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -144,8 +144,8 @@
       "name": "RSS Bitcoinist",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        980
+        100,
+        2620
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -159,8 +159,8 @@
       "name": "RSS Newsbtc",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        1140
+        100,
+        3880
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -174,8 +174,8 @@
       "name": "RSS Cryptopotato",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        1500
+        100,
+        3700
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -189,8 +189,8 @@
       "name": "RSS 99bitcoins",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        1680
+        100,
+        2440
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -204,8 +204,8 @@
       "name": "RSS Cryptobriefing",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        1860
+        100,
+        3520
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -219,8 +219,8 @@
       "name": "RSS Crypto.news",
       "type": "n8n-nodes-base.rssFeedRead",
       "position": [
-        -160,
-        2020
+        100,
+        3340
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -234,8 +234,8 @@
       "name": "Merge All Articles",
       "type": "n8n-nodes-base.merge",
       "position": [
-        520,
-        1180
+        100,
+        1900
       ],
       "parameters": {
         "numberInputs": 10
@@ -248,8 +248,8 @@
       "name": "Filter by Query",
       "type": "n8n-nodes-base.code",
       "position": [
-        760,
-        1320
+        100,
+        1720
       ],
       "parameters": {
         "jsCode": "const term = $node[\"Set Query\"].json.query.toLowerCase();\nreturn items.filter(item => {\n  const j            = item.json;\n  const title        = (j.title || \"\").toLowerCase();\n  const snippet      = (j.contentSnippet || j.description || \"\").toLowerCase();\n  const fullContent  = (j.content || \"\").toLowerCase();\n  return title.includes(term)\n      || snippet.includes(term)\n      || fullContent.includes(term);\n});"
@@ -262,8 +262,8 @@
       "name": "Build Prompt",
       "type": "n8n-nodes-base.code",
       "position": [
-        1080,
-        1320
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "const q   = $node[\"Set Query\"].json.query;\nconst list = items\n  .map(i => `- ${i.json.title} (${i.json.link})`)\n  .join(\"\\n\");\nconst prompt = `\nYou are a crypto-industry news analyst.\nSummarize current news and market sentiment for **${q}** based on these articles:\n${list}\n\nAnswer in 3 parts:\n1. Summary of News\n2. Market Sentiment\n3. Links to reference news articles\n`;\nreturn [{ json: { prompt } }];"
@@ -276,8 +276,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2080,
-        1020
+        100,
+        4600
       ],
       "parameters": {
         "color": 3,
@@ -293,8 +293,8 @@
       "name": "Adds the sessionId",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1740,
-        1340
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -317,8 +317,8 @@
       "name": "Summarize News & Sentiment (GPT-4o)",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1360,
-        1320
+        100,
+        6400
       ],
       "parameters": {
         "modelId": {
@@ -354,8 +354,8 @@
       "name": "Prepare Telegram Message",
       "type": "n8n-nodes-base.set",
       "position": [
-        1780,
-        1320
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -378,8 +378,8 @@
       "name": "Sends Response",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        2180,
-        1320
+        100,
+        4240
       ],
       "webhookId": "8018c16f-426e-4a8b-8fbf-55cc013d1226",
       "parameters": {
@@ -403,8 +403,8 @@
       "name": "Send Crypto or Company Name for Analysis",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        -2180,
-        1340
+        100,
+        4060
       ],
       "webhookId": "37a1f055-1670-472d-9850-d89555b7ed47",
       "parameters": {
@@ -427,8 +427,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2320,
-        1200
+        100,
+        4780
       ],
       "parameters": {
         "color": 4,
@@ -444,8 +444,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1860,
-        1220
+        100,
+        4960
       ],
       "parameters": {
         "width": 360,
@@ -460,8 +460,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1440,
-        1200
+        100,
+        5140
       ],
       "parameters": {
         "color": 6,
@@ -477,8 +477,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -320,
-        300
+        100,
+        5320
       ],
       "parameters": {
         "color": 5,
@@ -494,8 +494,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        440,
-        980
+        100,
+        5500
       ],
       "parameters": {
         "color": 2,
@@ -511,8 +511,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        1140
+        100,
+        5680
       ],
       "parameters": {
         "color": 7,
@@ -528,8 +528,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1320,
-        1100
+        100,
+        5860
       ],
       "parameters": {
         "color": 3,
@@ -545,8 +545,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1720,
-        1060
+        100,
+        6040
       ],
       "parameters": {
         "color": 6,
@@ -561,8 +561,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1140,
-        320
+        100,
+        6220
       ],
       "parameters": {
         "width": 520,
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e10ed4da",
@@ -592,8 +592,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4dd3e531",
@@ -607,8 +607,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 95cb909b",
@@ -622,8 +622,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a783bddf",
@@ -637,8 +637,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Set Query**: set\n- **Crypto News & Sentiment Agent**: agent\n- **RSS Cointelegraph**: rssFeedRead\n- **RSS Bitcoinmagazine**: rssFeedRead\n- **RSS Coindesk**: rssFeedRead\n- **RSS Bitcoinist**: rssFeedRead\n- **RSS Newsbtc**: rssFeedRead\n- **RSS Cryptopotato**: rssFeedRead\n- **RSS 99bitcoins**: rssFeedRead\n- ... and 24 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -665,8 +665,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -721,8 +721,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -734,8 +734,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -760,8 +760,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Crypto News & Sentiment\n\n## Overview\nAutomated workflow: Crypto News & Sentiment. This workflow integrates 11 different services: stickyNote, telegramTrigger, telegram, code, agent. It contains 34 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",

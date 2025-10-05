@@ -26,8 +26,8 @@
       "name": "When clicking \"Execute Workflow\"",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        340,
-        360
+        100,
+        5860
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Settings",
       "type": "n8n-nodes-base.set",
       "position": [
-        620,
-        360
+        100,
+        4600
       ],
       "parameters": {
         "fields": {
@@ -64,8 +64,8 @@
       "name": "Create Import Request Body",
       "type": "n8n-nodes-base.code",
       "position": [
-        1260,
-        360
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// importing crypto package to create md5 hashes for the media ids\nconst crypto = require('crypto');\nconst md5 = data => crypto.createHash('md5').update(data).digest(\"hex\")\n\nfunction addTranslation(translations, code, name, description) {\n  return translations = {\n    ...translations,\n    [code]: {\n      ...name && {\n        name: name\n      },\n      ...description && {\n        description: description\n      }\n    }\n  }\n}\n\nfor (const item of $input.all()) {\n  const { name, website, description, logo_url } = item.json\n\n  // If you add another language to the Google Sheet, extract values here\n  const { translation_language_code_1, translation_language_code_2, translation_language_code_3, translation_name_1, translation_name_2, translation_name_3, translation_description_1, translation_description_2, translation_description_3 } = item.json\n  \n  let translations = {}\n\n  if(translation_language_code_1 && (translation_name_1 || translation_description_1)){\n    translations = addTranslation(translations, translation_language_code_1, translation_name_1, translation_description_1)\n  }\n\n  if(translation_language_code_2 && (translation_name_2 || translation_description_2)){\n    translations = addTranslation(translations, translation_language_code_2, translation_name_2, translation_description_2)\n  }\n\n    if(translation_language_code_3 && (translation_name_3 || translation_description_3)){\n    translations = addTranslation(translations, translation_language_code_3, translation_name_3, translation_description_3)\n  }\n\n  //If you add another language to the Google Sheet, call addTranslation with the values of the new language as already done above with three languages\n  \n  item.json.manufacturer = {\n    entity: \"product_manufacturer\",\n    action: \"upsert\",\n    payload: [\n      {\n        name: name,\n        link: website,\n        description: description,\n        ...Object.keys(translations).length && {\n          translations: translations\n        },\n        ...logo_url &&  { \n          media:{\n            id: md5(\"media-\"+item.json.name)\n          }\n        }\n      }\n    ]\n  }\n}\n\nreturn $input.all();"
@@ -78,8 +78,8 @@
       "name": "Upload Manufacturer Logo",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2300,
-        360
+        100,
+        5680
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -124,8 +124,8 @@
       "name": "Import Manufacturer",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1800,
-        380
+        100,
+        4240
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -166,8 +166,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        540,
-        240
+        100,
+        4780
       ],
       "parameters": {
         "width": 271,
@@ -182,8 +182,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        900,
-        120
+        100,
+        4960
       ],
       "parameters": {
         "width": 272,
@@ -198,8 +198,8 @@
       "name": "Loop Over Manufacturers",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1520,
-        360
+        100,
+        4420
       ],
       "parameters": {
         "options": {}
@@ -212,8 +212,8 @@
       "name": "Get Manufacturer from Google Sheet",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        980,
-        360
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -246,8 +246,8 @@
       "name": "If has Logo",
       "type": "n8n-nodes-base.if",
       "position": [
-        2040,
-        380
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -280,8 +280,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1740,
-        60
+        100,
+        5140
       ],
       "parameters": {
         "height": 499.67801857585135,
@@ -295,8 +295,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2240,
-        160
+        100,
+        5320
       ],
       "parameters": {
         "height": 399.1455108359133,
@@ -311,8 +311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 2e6d1b94-ffb0-46bf-8197-32865764e753",
@@ -326,8 +326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in 6c219e67-1547-475a-aa4f-0018d10ccf5f",
@@ -341,8 +341,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2e6d1b94",
@@ -356,8 +356,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6c219e67",
@@ -371,8 +371,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f37d7f57",
@@ -386,8 +386,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking \"Execute Workflow\"**: manualTrigger\n- **Settings**: set\n- **Create Import Request Body**: code\n- **Upload Manufacturer Logo**: httpRequest\n- **Import Manufacturer**: httpRequest\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Loop Over Manufacturers**: splitInBatches\n- **Get Manufacturer from Google Sheet**: googleSheets\n- **If has Logo**: if\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -400,8 +400,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -415,8 +415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -430,8 +430,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -444,8 +444,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -458,8 +458,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -488,8 +488,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -532,8 +532,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -561,8 +561,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -576,8 +576,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -620,8 +620,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -633,8 +633,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -647,8 +647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -674,8 +674,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -688,8 +688,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -702,8 +702,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -715,8 +715,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -729,8 +729,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Import multiple Manufacturers from Google Sheets to Shopware 6\n\n## Overview\nAutomated workflow: Import multiple Manufacturers from Google Sheets to Shopware 6. This workflow integrates 9 different services: stickyNote, httpRequest, code, set, stopAndError. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -742,8 +742,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

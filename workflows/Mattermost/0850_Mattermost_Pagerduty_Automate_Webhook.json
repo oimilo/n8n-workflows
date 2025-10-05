@@ -4,8 +4,8 @@
       "name": "Ack",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -160,
-        1440
+        100,
+        100
       ],
       "webhookId": "d3025d6c-5956-439e-9c9a-db3ef524a24f",
       "parameters": {
@@ -20,8 +20,8 @@
       "name": "Resolve",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        120,
-        1880
+        100,
+        460
       ],
       "webhookId": "92d7ddfa-20f9-49bc-976e-4f6c76c0b3b4",
       "parameters": {
@@ -36,8 +36,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        60,
-        1040
+        100,
+        640
       ],
       "webhookId": "9888d896-dd23-4e97-9d16-c12055b64133",
       "parameters": {
@@ -52,8 +52,8 @@
       "name": "Jira1",
       "type": "n8n-nodes-base.jira",
       "position": [
-        680,
-        1040
+        1780,
+        100
       ],
       "parameters": {
         "project": "10016",
@@ -76,8 +76,8 @@
       "name": "Jira2",
       "type": "n8n-nodes-base.jira",
       "position": [
-        540,
-        1880
+        1500,
+        100
       ],
       "parameters": {
         "issueKey": "={{$node[\"Resolve\"].json[\"body\"][\"context\"][\"jira_key\"]}}",
@@ -99,8 +99,8 @@
       "name": "PagerDuty1",
       "type": "n8n-nodes-base.pagerDuty",
       "position": [
-        60,
-        1440
+        380,
+        280
       ],
       "parameters": {
         "email": "address@mail.com",
@@ -126,8 +126,8 @@
       "name": "PagerDuty2",
       "type": "n8n-nodes-base.pagerDuty",
       "position": [
-        340,
-        1880
+        940,
+        100
       ],
       "parameters": {
         "email": "address@mail.com",
@@ -153,8 +153,8 @@
       "name": "Mattermost5",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        300,
-        1440
+        660,
+        100
       ],
       "parameters": {
         "message": "💪🏼 Incident status has been changed to Acknowledged on PagerDuty.",
@@ -175,8 +175,8 @@
       "name": "Mattermost6",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        760,
-        1760
+        2060,
+        100
       ],
       "parameters": {
         "message": "💪 This issue got closed in PagerDuty and Jira.",
@@ -197,8 +197,8 @@
       "name": "Mattermost4",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        900,
-        1180
+        2620,
+        100
       ],
       "parameters": {
         "message": "=⚠️ {{$node[\"Webhook\"].json[\"body\"][\"messages\"][0][\"log_entries\"][0][\"incident\"][\"summary\"]}}\nPagerDuty incident: {{$node[\"Webhook\"].json[\"body\"][\"messages\"][0][\"log_entries\"][0][\"incident\"][\"html_url\"]}}\nJira issue: https://n8n.atlassian.net/browse/{{$json[\"key\"]}}",
@@ -268,8 +268,8 @@
       "name": "Mattermost3",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        900,
-        940
+        2900,
+        100
       ],
       "parameters": {
         "message": "=🚨 New incident: \nAuxiliary Channel -> https://mattermost.internal.n8n.io/test/channels/{{$node[\"Mattermost1\"].json[\"name\"]}}\nPagerDuty Incident -> {{$node[\"Webhook\"].json[\"body\"][\"event\"][\"data\"][\"html_url\"]}}\nJira Issue -> https://n8n.atlassian.net/browse/{{$json[\"key\"]}}",
@@ -290,8 +290,8 @@
       "name": "Mattermost2",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        480,
-        1040
+        1220,
+        100
       ],
       "parameters": {
         "userId": "qwertz12345",
@@ -312,8 +312,8 @@
       "name": "Mattermost1",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        280,
-        1040
+        380,
+        100
       ],
       "parameters": {
         "teamId": "qwertz12345",
@@ -334,8 +334,8 @@
       "name": "Mattermost7",
       "type": "n8n-nodes-base.mattermost",
       "position": [
-        760,
-        1980
+        2340,
+        100
       ],
       "parameters": {
         "message": "=🎉 The incident ({{$node[\"PagerDuty2\"].json[\"summary\"]}}) was resolved by the lovely folks in the on-call team!",
@@ -358,8 +358,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        380,
+        460
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -371,8 +371,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        3180,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -385,8 +385,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",

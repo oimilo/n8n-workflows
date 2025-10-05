@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        200,
-        -555
+        100,
+        9100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        200,
-        -1020
+        100,
+        8020
       ],
       "parameters": {
         "width": 400,
@@ -54,8 +54,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        640,
-        -1020
+        100,
+        8200
       ],
       "parameters": {
         "width": 480,
@@ -70,8 +70,8 @@
       "name": "Set Esty Search Query",
       "type": "n8n-nodes-base.set",
       "position": [
-        420,
-        -555
+        100,
+        7660
       ],
       "parameters": {
         "options": {},
@@ -100,8 +100,8 @@
       "name": "Perform Esty Web Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        640,
-        -680
+        100,
+        7300
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -151,8 +151,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        948,
-        -460
+        100,
+        6400
       ],
       "parameters": {
         "options": {},
@@ -172,8 +172,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1460,
-        -680
+        100,
+        6940
       ],
       "parameters": {
         "options": {}
@@ -186,8 +186,8 @@
       "name": "Perform Esty web request over the loop",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1680,
-        -560
+        100,
+        7480
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -237,8 +237,8 @@
       "name": "Initiate a Webhook Notification for the extracted data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2320,
-        -560
+        100,
+        6760
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -261,8 +261,8 @@
       "name": "Extract Item List with the Product Info",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1920,
-        -560
+        100,
+        5860
       ],
       "parameters": {
         "text": "=Extract the product info in JSON\n\n{{ $json.data }}",
@@ -278,8 +278,8 @@
       "name": "Google Gemini Chat Model for product info",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2000,
-        -300
+        100,
+        6580
       ],
       "parameters": {
         "options": {},
@@ -299,8 +299,8 @@
       "name": "Extract Paginated Resultset",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        860,
-        -680
+        100,
+        6040
       ],
       "parameters": {
         "text": "=Analyze and Extract the below content. Make sure to produce a unique resultset. Exclude page_numbers which are not numbers.\n\n {{ $json.data }}",
@@ -316,8 +316,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1400,
-        -780
+        100,
+        8380
       ],
       "parameters": {
         "color": 5,
@@ -333,8 +333,8 @@
       "name": "Write the scraped content to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        2560,
-        -760
+        100,
+        11080
       ],
       "parameters": {
         "options": {},
@@ -349,8 +349,8 @@
       "name": "Create a binary data",
       "type": "n8n-nodes-base.function",
       "position": [
-        2360,
-        -760
+        100,
+        100
       ],
       "parameters": {
         "functionCode": "items[0].binary = {\n  data: {\n    data: new Buffer(JSON.stringify(items[0].json, null, 2)).toString('base64')\n  }\n};\nreturn items;"
@@ -363,8 +363,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1240,
-        -680
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -378,8 +378,8 @@
       "name": "Extract Paginated Resultset With OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        880,
-        -120
+        100,
+        6220
       ],
       "parameters": {
         "text": "=Analyze and Extract the below content. Make sure to produce a unique resultset. Exclude page_numbers which are not numbers.\n\n {{ $json.data }}",
@@ -395,8 +395,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        880,
-        80
+        100,
+        7120
       ],
       "parameters": {
         "model": {
@@ -420,8 +420,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        640,
-        -260
+        100,
+        8560
       ],
       "parameters": {
         "color": 6,
@@ -438,8 +438,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 4cb51368-bb69-4d99-a0b6-e8e8013f1dfd",
@@ -453,8 +453,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in 47f23aa1-63ee-49e3-a465-283c7ab71b76",
@@ -468,8 +468,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in 0b5ea206-a5a0-49b5-8f53-10b4dec5806c",
@@ -483,8 +483,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4cb51368",
@@ -498,8 +498,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9fb7bdc5",
@@ -513,8 +513,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 47f23aa1",
@@ -528,8 +528,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0b5ea206",
@@ -543,8 +543,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c3798c64",
@@ -558,8 +558,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d4f18f2b",
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node aa42d335",
@@ -588,8 +588,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Set Esty Search Query**: set\n- **Perform Esty Web Request**: httpRequest\n- **Google Gemini Chat Model**: lmChatGoogleGemini\n- **Loop Over Items**: splitInBatches\n- **Perform Esty web request over the loop**: httpRequest\n- **Initiate a Webhook Notification for the extracted data**: httpRequest\n- **Extract Item List with the Product Info**: informationExtractor\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -602,8 +602,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -617,8 +617,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -632,8 +632,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -647,8 +647,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -675,8 +675,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -690,8 +690,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -705,8 +705,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -720,8 +720,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -735,8 +735,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -750,8 +750,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -765,8 +765,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -779,8 +779,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -793,8 +793,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -808,8 +808,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -823,8 +823,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -853,8 +853,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -868,8 +868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -883,8 +883,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -897,8 +897,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 50\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -924,8 +924,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -938,8 +938,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -952,8 +952,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10540
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 54\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -965,8 +965,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -979,8 +979,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -993,8 +993,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1007,8 +1007,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10720
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1034,8 +1034,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10900
       ],
       "parameters": {
         "content": "# Automate Etsy Data Mining with Bright Data Scrape & Google Gemini\n\n## Overview\nAutomated workflow: Automate Etsy Data Mining with Bright Data Scrape & Google Gemini. This workflow integrates 12 different services: stickyNote, httpRequest, lmChatGoogleGemini, readWriteFile, function. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1047,8 +1047,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Workflow execution error",

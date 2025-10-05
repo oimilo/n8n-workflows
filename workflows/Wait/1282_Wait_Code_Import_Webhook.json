@@ -26,8 +26,8 @@
       "name": "Get image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1160,
-        480
+        100,
+        24400
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -50,8 +50,8 @@
       "name": "Generate Image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        880,
-        480
+        100,
+        22780
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -80,8 +80,8 @@
       "name": "Image-to-Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        520,
-        1000
+        100,
+        24580
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -109,8 +109,8 @@
       "name": "Get Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        780,
-        1000
+        100,
+        24220
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -133,8 +133,8 @@
       "name": "List Elements",
       "type": "n8n-nodes-base.code",
       "position": [
-        1400,
-        1040
+        100,
+        24760
       ],
       "parameters": {
         "jsCode": "return [\n  {\n    scene_titles: items.map(item => item.json.response.text),\n    video_urls: items.map(item => item.json.data.output.video_url),\n    input_tokens: $('Calculate Token Usage').first().json.total_prompt_tokens,\n    output_tokens: $('Calculate Token Usage').first().json.total_completion_tokens,\n    model: $('Generate Image Prompts').first().json.model\n  }\n];"
@@ -147,8 +147,8 @@
       "name": "Wait 10min",
       "type": "n8n-nodes-base.wait",
       "position": [
-        660,
-        1000
+        100,
+        32140
       ],
       "webhookId": "1f9d716f-6544-4e4e-94ec-408ac3ea6e82",
       "parameters": {
@@ -163,8 +163,8 @@
       "name": "Wait 3min",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1020,
-        480
+        100,
+        32320
       ],
       "webhookId": "77cdee73-5e99-456a-b5e7-410b4d257669",
       "parameters": {
@@ -179,8 +179,8 @@
       "name": "Wait 5min",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1480,
-        400
+        100,
+        32500
       ],
       "webhookId": "31d5b1a2-dbb5-4849-ae25-cb491539c16e",
       "parameters": {
@@ -194,8 +194,8 @@
       "name": "Generate voice",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        880,
-        1460
+        100,
+        23500
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -229,8 +229,8 @@
       "name": "List Elements1",
       "type": "n8n-nodes-base.code",
       "position": [
-        1400,
-        1260
+        100,
+        24940
       ],
       "parameters": {
         "jsCode": "return [\n  {\n    sound_urls: items.map(item => $('Upload Voice Audio').first().json.webContentLink)\n  }\n];"
@@ -243,8 +243,8 @@
       "name": "Fail check",
       "type": "n8n-nodes-base.if",
       "position": [
-        920,
-        1000
+        100,
+        22420
       ],
       "parameters": {
         "options": {},
@@ -278,8 +278,8 @@
       "name": "Wait to retry",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1060,
-        960
+        100,
+        32680
       ],
       "webhookId": "3b0fae8f-4419-45cd-8380-8f72eca05ff8",
       "parameters": {
@@ -293,8 +293,8 @@
       "name": "Generate Image Prompts",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        400,
-        560
+        100,
+        22960
       ],
       "parameters": {
         "modelId": {
@@ -321,8 +321,8 @@
       "name": "Calculate Token Usage",
       "type": "n8n-nodes-base.code",
       "position": [
-        700,
-        560
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Get all input items (the 5 LLM responses)\nconst items = $input.all();\n\n// Calculate total prompt tokens and total completion tokens\nconst totalPromptTokens = items.reduce((sum, item) => sum + item.json.usage.prompt_tokens, 0);\nconst totalCompletionTokens = items.reduce((sum, item) => sum + item.json.usage.completion_tokens, 0);\n\n// Create new items with original data plus the totals\nconst outputItems = items.map(item => ({\n  json: {\n    ...item.json,                   // Spread the original item data\n    total_prompt_tokens: totalPromptTokens,     // Add total prompt tokens\n    total_completion_tokens: totalCompletionTokens // Add total completion tokens\n  }\n}));\n\n// Return the modified items\nreturn outputItems;"
@@ -335,8 +335,8 @@
       "name": "Check for failures",
       "type": "n8n-nodes-base.if",
       "position": [
-        1300,
-        480
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -370,8 +370,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        240
+        100,
+        27100
       ],
       "parameters": {
         "color": 5,
@@ -387,8 +387,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        480,
-        720
+        100,
+        26920
       ],
       "parameters": {
         "color": 6,
@@ -404,8 +404,8 @@
       "name": "Generate Video Captions",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -40,
-        1220
+        100,
+        23320
       ],
       "parameters": {
         "modelId": {
@@ -436,8 +436,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        480,
-        1240
+        100,
+        27280
       ],
       "parameters": {
         "color": 4,
@@ -453,8 +453,8 @@
       "name": "Match captions with videos",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1240,
-        1040
+        100,
+        25300
       ],
       "parameters": {
         "mode": "combine",
@@ -469,8 +469,8 @@
       "name": "Generate Script",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        520,
-        1460
+        100,
+        23140
       ],
       "parameters": {
         "modelId": {
@@ -502,8 +502,8 @@
       "name": "Upload Voice Audio",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1080,
-        1460
+        100,
+        31780
       ],
       "parameters": {
         "name": "={{ $('Load Google Sheet').item.json.id }}-voiceover.mp3",
@@ -529,8 +529,8 @@
       "name": "Set Access Permissions",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1260,
-        1460
+        100,
+        26560
       ],
       "parameters": {
         "fileId": {
@@ -556,8 +556,8 @@
       "name": "Pair Videos with Audio",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1620,
-        1140
+        100,
+        25840
       ],
       "parameters": {
         "mode": "combine",
@@ -572,8 +572,8 @@
       "name": "Render Final Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1800,
-        1140
+        100,
+        26200
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -606,8 +606,8 @@
       "name": "Notify me on Discord",
       "type": "n8n-nodes-base.discord",
       "position": [
-        2780,
-        1140
+        100,
+        25480
       ],
       "webhookId": "1541bc50-06e4-48e8-8c76-23850ee4edf6",
       "parameters": {
@@ -623,8 +623,8 @@
       "name": "Once Per Day",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -600,
-        1220
+        100,
+        25660
       ],
       "parameters": {
         "rule": {
@@ -643,8 +643,8 @@
       "name": "Load Google Sheet",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -180,
-        1220
+        100,
+        25120
       ],
       "parameters": {
         "options": {
@@ -682,8 +682,8 @@
       "name": "Create List",
       "type": "n8n-nodes-base.code",
       "position": [
-        280,
-        1140
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Get the text directly from the OpenAI response\nconst text = $input.first().json.choices[0].message.content;\n\n// Split the text on literal '\\\\n', trim, and filter empty lines\nconst lines = text.split('\\\\n').map(line => line.trim()).filter(line => line !== '');\n\n// Create an array of items for n8n\nconst items = lines.map(line => ({\n  json: {\n    response: { text: line }\n  }\n}));\n\n// Return the array of items\nreturn items;"
@@ -696,8 +696,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1560,
-        920
+        100,
+        27460
       ],
       "parameters": {
         "color": 3,
@@ -713,8 +713,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -320,
-        280
+        100,
+        27640
       ],
       "parameters": {
         "width": 620,
@@ -729,8 +729,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -480,
-        780
+        100,
+        27820
       ],
       "parameters": {
         "color": 7,
@@ -746,8 +746,8 @@
       "name": "Wait1",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1920,
-        1140
+        100,
+        32860
       ],
       "webhookId": "206d0cdf-b71f-44a7-909f-97df885c471a",
       "parameters": {
@@ -762,8 +762,8 @@
       "name": "Get Final Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2040,
-        1140
+        100,
+        23860
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -791,8 +791,8 @@
       "name": "Upload Final Video",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        2300,
-        1140
+        100,
+        30700
       ],
       "parameters": {
         "name": "=POV-{{ $('Render Final Video').item.json.id }}.mp4",
@@ -824,8 +824,8 @@
       "name": "Get Raw File",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2160,
-        1140
+        100,
+        24040
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -845,8 +845,8 @@
       "name": "Set Permissions",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        2440,
-        1140
+        100,
+        26740
       ],
       "parameters": {
         "fileId": {
@@ -878,8 +878,8 @@
       "name": "Update Google Sheet",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        2600,
-        1140
+        100,
+        30520
       ],
       "parameters": {
         "columns": {
@@ -1246,8 +1246,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "SET BEFORE STARTING",
       "position": [
-        -380,
-        1220
+        100,
+        26380
       ],
       "parameters": {
         "options": {},
@@ -1288,8 +1288,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -440,
-        1160
+        100,
+        28000
       ],
       "parameters": {
         "color": 3,
@@ -1305,8 +1305,8 @@
       "name": "Validate list formatting",
       "type": "n8n-nodes-base.if",
       "position": [
-        280,
-        1280
+        100,
+        31960
       ],
       "parameters": {
         "options": {},
@@ -1341,8 +1341,8 @@
       "type": "n8n-nodes-base.noOp",
       "notes": "Extract the audio from video for generate the description",
       "position": [
-        3820,
-        1360
+        100,
+        23680
       ],
       "parameters": {
         "options": {},
@@ -1366,8 +1366,8 @@
       "type": "n8n-nodes-base.noOp",
       "notes": "Request to OpenAi for generate description with the audio extracted from the video",
       "position": [
-        4060,
-        1360
+        100,
+        22600
       ],
       "parameters": {
         "modelId": {
@@ -1406,8 +1406,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "Generate in upload-post.com the token and add to the credentials in the header-> Authorization: Apikey (token here)",
       "position": [
-        4880,
-        940
+        100,
+        31420
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1454,8 +1454,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "Generate in upload-post.com the token and add to the credentials in the header-> Authorization: Apikey (token here)",
       "position": [
-        4880,
-        1140
+        100,
+        31060
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1502,8 +1502,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "Generate in upload-post.com the token and add to the credentials in the header-> Authorization: Apikey (token here)",
       "position": [
-        4880,
-        1360
+        100,
+        31600
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1550,8 +1550,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "Generate in upload-post.com the token and add to the credentials in the header-> Authorization: Apikey (token here)",
       "position": [
-        4880,
-        1600
+        100,
+        30880
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1602,8 +1602,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "Generate in upload-post.com the token and add to the credentials in the header-> Authorization: Apikey (token here)",
       "position": [
-        4880,
-        1840
+        100,
+        31240
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -1649,8 +1649,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2940,
-        920
+        100,
+        28180
       ],
       "parameters": {
         "width": 2480,
@@ -1665,8 +1665,8 @@
       "name": "Read Video from Google Drive",
       "type": "n8n-nodes-base.readBinaryFile",
       "position": [
-        4420,
-        1360
+        100,
+        26020
       ],
       "parameters": {
         "filePath": "={{ $('Write video').item.json.originalFilename.replaceAll(\" \", \"_\") }}",
@@ -1680,8 +1680,8 @@
       "name": "Write video",
       "type": "n8n-nodes-base.writeBinaryFile",
       "position": [
-        3440,
-        1360
+        100,
+        34840
       ],
       "parameters": {
         "options": {},
@@ -1696,8 +1696,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in e5095169-dc78-4d90-9662-04cfc82c38d9",
@@ -1711,8 +1711,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        28360
       ],
       "parameters": {
         "message": "Error occurred in f477250a-fc8e-407e-a632-cffc0e564596",
@@ -1726,8 +1726,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        29080
       ],
       "parameters": {
         "message": "Error occurred in 622ce9f5-ad58-485b-a3c6-1265700b04da",
@@ -1741,8 +1741,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        29260
       ],
       "parameters": {
         "message": "Error occurred in ed14eac3-1d63-481d-871c-a04c52977fc6",
@@ -1756,8 +1756,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        29440
       ],
       "parameters": {
         "message": "Error occurred in afd66320-dfe0-4872-a09d-d53fe08152ce",
@@ -1771,8 +1771,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        29620
       ],
       "parameters": {
         "message": "Error occurred in 60a80c6f-0385-48e6-9b71-c23a74cbc15c",
@@ -1786,8 +1786,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        29800
       ],
       "parameters": {
         "message": "Error occurred in 33781e51-ef30-437b-8499-94e39bfb38fa",
@@ -1801,8 +1801,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        29980
       ],
       "parameters": {
         "message": "Error occurred in 3893d1de-7464-48ad-91a3-14b867c2a516",
@@ -1816,8 +1816,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        30160
       ],
       "parameters": {
         "message": "Error occurred in 2f9f753d-86f3-4489-9dd2-a691f2da80ba",
@@ -1831,8 +1831,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        30340
       ],
       "parameters": {
         "message": "Error occurred in 4f007ef7-3f0a-4b4d-8dca-96028f29dd0c",
@@ -1846,8 +1846,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        28540
       ],
       "parameters": {
         "message": "Error occurred in 3805750b-65c4-4f28-b811-967681eda0ff",
@@ -1861,8 +1861,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        28720
       ],
       "parameters": {
         "message": "Error occurred in 754e3f54-87cd-4b50-947e-a9b20ce2d2ab",
@@ -1876,8 +1876,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        28900
       ],
       "parameters": {
         "message": "Error occurred in 4090c098-2381-4e57-8e53-d24a2bed57cd",
@@ -1891,8 +1891,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        21160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e5095169",
@@ -1906,8 +1906,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        22240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f477250a",
@@ -1921,8 +1921,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        19180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 622ce9f5",
@@ -1936,8 +1936,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        21520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ed14eac3",
@@ -1951,8 +1951,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        20800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node afd66320",
@@ -1966,8 +1966,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        18460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 48ec39c9",
@@ -1981,8 +1981,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        19720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8404a390",
@@ -1996,8 +1996,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        20080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8da7e16e",
@@ -2011,8 +2011,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        20620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ad87317d",
@@ -2026,8 +2026,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        21700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node eec529e9",
@@ -2041,8 +2041,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        19000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 60a80c6f",
@@ -2056,8 +2056,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        19900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 89c0e958",
@@ -2071,8 +2071,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        18640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4de1f1c7",
@@ -2086,8 +2086,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        17740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 33781e51",
@@ -2101,8 +2101,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        20980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b0d0fe6f",
@@ -2116,8 +2116,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        18100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3893d1de",
@@ -2131,8 +2131,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        19360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 74de5f28",
@@ -2146,8 +2146,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        20440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a2c07158",
@@ -2161,8 +2161,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        20260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 98a3761e",
@@ -2176,8 +2176,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        21340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ec498643",
@@ -2191,8 +2191,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        17560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2f9f753d",
@@ -2206,8 +2206,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        18820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4f007ef7",
@@ -2221,8 +2221,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        17920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3805750b",
@@ -2236,8 +2236,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        19540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 754e3f54",
@@ -2251,8 +2251,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        18280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4090c098",
@@ -2266,8 +2266,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        22060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f3524df6",
@@ -2281,8 +2281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        21880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f082675c",
@@ -2296,8 +2296,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        33040
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 91\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get image**: httpRequest\n- **Generate Image**: httpRequest\n- **Image-to-Video**: httpRequest\n- **Get Video**: httpRequest\n- **List Elements**: code\n- **Wait 10min**: wait\n- **Wait 3min**: wait\n- **Wait 5min**: wait\n- **Generate voice**: httpRequest\n- **List Elements1**: code\n- ... and 81 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -2310,8 +2310,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2325,8 +2325,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2340,8 +2340,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2355,8 +2355,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2370,8 +2370,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2385,8 +2385,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2400,8 +2400,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2415,8 +2415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2430,8 +2430,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2445,8 +2445,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2460,8 +2460,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2475,8 +2475,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2490,8 +2490,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2505,8 +2505,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        33220
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 105\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2519,8 +2519,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        33400
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 106\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2533,8 +2533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2548,8 +2548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2563,8 +2563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2578,8 +2578,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2593,8 +2593,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2608,8 +2608,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2623,8 +2623,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2638,8 +2638,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2653,8 +2653,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2668,8 +2668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2683,8 +2683,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2698,8 +2698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2713,8 +2713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2728,8 +2728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2743,8 +2743,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2758,8 +2758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2773,8 +2773,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2788,8 +2788,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2803,8 +2803,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2818,8 +2818,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2833,8 +2833,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2848,8 +2848,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2863,8 +2863,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2878,8 +2878,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2893,8 +2893,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2908,8 +2908,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2923,8 +2923,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        33580
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 133\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2937,8 +2937,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        33760
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 134\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2951,8 +2951,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2966,8 +2966,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2981,8 +2981,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2996,8 +2996,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3011,8 +3011,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3026,8 +3026,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3041,8 +3041,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3056,8 +3056,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3071,8 +3071,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3086,8 +3086,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3101,8 +3101,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3116,8 +3116,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3131,8 +3131,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3146,8 +3146,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3161,8 +3161,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3176,8 +3176,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3191,8 +3191,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3206,8 +3206,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3221,8 +3221,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3236,8 +3236,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3251,8 +3251,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3266,8 +3266,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3281,8 +3281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3296,8 +3296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3311,8 +3311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3326,8 +3326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3341,8 +3341,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        33940
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 161\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -3355,8 +3355,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        34120
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 162\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -3368,8 +3368,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3382,8 +3382,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3396,8 +3396,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        12880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3410,8 +3410,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3424,8 +3424,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3438,8 +3438,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3452,8 +3452,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3466,8 +3466,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3480,8 +3480,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        13960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3494,8 +3494,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3508,8 +3508,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3522,8 +3522,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3536,8 +3536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3550,8 +3550,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        34300
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 176\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -3563,8 +3563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        14860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3577,8 +3577,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3591,8 +3591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3605,8 +3605,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3619,8 +3619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3633,8 +3633,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3647,8 +3647,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        15940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3661,8 +3661,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        16120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3675,8 +3675,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        16300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3689,8 +3689,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        16480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3703,8 +3703,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        16660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3717,8 +3717,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        16840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3731,8 +3731,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        17020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -3745,8 +3745,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        34480
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -3758,8 +3758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        17200
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -3772,8 +3772,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        34660
       ],
       "parameters": {
         "content": "# AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all ...\n\n## Overview\nAutomated workflow: AI-Powered Short-Form Video Generator with OpenAI, Flux, Kling, and ElevenLabs and upload to all social networks. This workflow integrates 15 different services: writeBinaryFile, stickyNote, httpRequest, wait, readBinaryFile. It contains 91 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -3785,8 +3785,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        17380
       ],
       "parameters": {
         "message": "Workflow execution error",

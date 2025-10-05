@@ -26,8 +26,8 @@
       "name": "Watch Notion Updates",
       "type": "n8n-nodes-base.notionTrigger",
       "position": [
-        -620,
-        -100
+        100,
+        280
       ],
       "parameters": {
         "event": "pagedUpdatedInDatabase",
@@ -59,8 +59,8 @@
       "name": "AI Task Planner",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        320,
-        -100
+        4020,
+        100
       ],
       "parameters": {
         "text": "=You are an expert in SEO content writing.\nYour mission is to create, publish, and notify about a search engine-optimized article for a blog.\nHere are the keywords related to my topic:  {{ $('Watch Notion Updates').item.json.Name }}\n\nFollow the steps below:\n\n1. **Write an SEO-optimized article with a maximum of 20 lines** based on the provided information:\n   - Structure the article with a catchy **H1 title**, one or two **H2 subtitles**, and a professional yet accessible tone.\n   - Extract and include relevant keywords from the data.\n   - Optimize for readability: short sentences, clear paragraphs, and a CTA if relevant.\n   - Do not exceed 20 lines of content.\n\n2. **Publish the article on WordPress**, including:\n   - The **title** as the article's headline\n   - The **SEO content** as the body\n\n3. **Send an email** to my address : {{ $json.emailAddress }} containing:\n   - The article's title\n   - The **URL** of the published article on WordPress\n\n4. **Retrieve the list of available Notion tools first** using “Notion Tools”.\n   Then, **add a update the entry to my Notion database** (ID database: {{ $json.notionDatabaseId }}) ID items : {{ $json.notionItemId }}\nwith the following fields:\n   - The 'Name' column is of type 'title'  → {{ $('Watch Notion Updates').item.json.Name }}\n   The 'Subject' column is of type 'rich_text' → [the article's headline]\n   - The 'Content'column is of type 'rich_text' → [The SEO content]\n   - The 'URL' column is of type 'URL': → [The article link]\n   - The 'Status' column is of type 'select' → Select: `publish`\n\nImportant: Ensure that each step is successfully completed **before proceeding to the next**.",
@@ -75,8 +75,8 @@
       "name": "Send Email",
       "type": "n8n-nodes-base.gmailTool",
       "position": [
-        380,
-        160
+        4300,
+        100
       ],
       "webhookId": "f87279e8-34e4-4fd1-81d3-677707e215de",
       "parameters": {
@@ -99,8 +99,8 @@
       "name": "Publish Blog Post",
       "type": "n8n-nodes-base.wordpressTool",
       "position": [
-        500,
-        160
+        4580,
+        100
       ],
       "parameters": {
         "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
@@ -123,8 +123,8 @@
       "name": "Notion List Available Tools",
       "type": "n8n-nodes-mcp.mcpClientTool",
       "position": [
-        660,
-        160
+        4860,
+        100
       ],
       "parameters": {},
       "credentials": {
@@ -141,8 +141,8 @@
       "name": "Notion Run a Tool",
       "type": "n8n-nodes-mcp.mcpClientTool",
       "position": [
-        820,
-        160
+        5140,
+        100
       ],
       "parameters": {
         "toolName": "={{ $fromAI(\"tool\", \"the tool selected\")  }}",
@@ -163,8 +163,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -60,
-        -220
+        940,
+        100
       ],
       "parameters": {
         "width": 1100,
@@ -179,8 +179,8 @@
       "name": "Edit Workflow Variables",
       "type": "n8n-nodes-base.set",
       "position": [
-        -300,
-        -100
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -216,8 +216,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -440,
-        -220
+        380,
+        100
       ],
       "parameters": {
         "color": 6,
@@ -233,8 +233,8 @@
       "name": "DeepSeek Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        100,
-        160
+        3740,
+        100
       ],
       "parameters": {
         "options": {}
@@ -254,8 +254,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1220,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 10\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Watch Notion Updates**: notionTrigger\n- **AI Task Planner**: agent\n- **Send Email**: gmailTool\n- **Publish Blog Post**: wordpressTool\n- **Notion List Available Tools**: mcpClientTool\n- **Notion Run a Tool**: mcpClientTool\n- **Sticky Note**: stickyNote\n- **Edit Workflow Variables**: set\n- **Sticky Note2**: stickyNote\n- **DeepSeek Chat Model**: lmChatDeepSeek\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -268,8 +268,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1500,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -282,8 +282,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1780,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2060,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -310,8 +310,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2340,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -324,8 +324,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2620,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2900,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -351,8 +351,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        3180,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -364,8 +364,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        3460,
+        100
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -377,8 +377,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        5420,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -391,8 +391,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# DeepSeek v3.1\n\n## Overview\nAutomated workflow: DeepSeek v3.1. This workflow integrates 8 different services: notionTrigger, stickyNote, gmailTool, agent, mcpClientTool. It contains 10 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -404,8 +404,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

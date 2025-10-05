@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        560,
-        940
+        100,
+        5500
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        760,
-        360
+        100,
+        4780
       ],
       "parameters": {
         "color": 6,
@@ -55,8 +55,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        760,
-        600
+        100,
+        4960
       ],
       "parameters": {
         "color": 4,
@@ -72,8 +72,8 @@
       "name": "Get Page Engagement Stats for this week",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        840,
-        740
+        100,
+        2980
       ],
       "parameters": {
         "simple": false,
@@ -131,8 +131,8 @@
       "name": "Get Page Engagement Stats for prior week",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        1240,
-        740
+        100,
+        2800
       ],
       "parameters": {
         "simple": false,
@@ -193,8 +193,8 @@
       "name": "Get Google Search Results for this week",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        1640,
-        740
+        100,
+        2620
       ],
       "parameters": {
         "simple": false,
@@ -268,8 +268,8 @@
       "name": "Get Country views data for this week",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        1240,
-        940
+        100,
+        2260
       ],
       "parameters": {
         "simple": false,
@@ -338,8 +338,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        360
+        100,
+        5140
       ],
       "parameters": {
         "color": 6,
@@ -355,8 +355,8 @@
       "name": "Aggregate Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        1040,
-        1140
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Helper function to decode and parse a URL-encoded JSON string\nfunction decodeUrlString(urlString) {\n    try {\n        const decoded = JSON.parse(decodeURIComponent(urlString));\n        console.log('Decoded URL string:', JSON.stringify(decoded, null, 2));\n        return decoded;\n    } catch (error) {\n        console.log('Error decoding URL string:', error.message);\n        return [];\n    }\n}\n\n// Main function to aggregate data\nfunction aggregateData(items) {\n    // Extract each urlString from the input\n    const data = items[0]?.json; // Get the first JSON object from input\n\n    if (!data) {\n        console.log('No data found in input items.');\n        return {};\n    }\n\n    // Decode each urlString\n    const engagementStatsThisWeek = decodeUrlString(data.urlString1 || '');\n    const engagementStatsPriorWeek = decodeUrlString(data.urlString2 || '');\n    const searchResultsThisWeek = decodeUrlString(data.urlString3 || '');\n    const searchResultsLastWeek = decodeUrlString(data.urlString4 || '');\n    const countryViewsThisWeek = decodeUrlString(data.urlString5 || '');\n    const countryViewsLastWeek = decodeUrlString(data.urlString6 || '');\n\n    // Aggregate the decoded data into a structured object\n    const aggregatedData = {\n        engagementStats: {\n            thisWeek: engagementStatsThisWeek,\n            priorWeek: engagementStatsPriorWeek,\n        },\n        searchResults: {\n            thisWeek: searchResultsThisWeek,\n            lastWeek: searchResultsLastWeek,\n        },\n        countryViews: {\n            thisWeek: countryViewsThisWeek,\n            lastWeek: countryViewsLastWeek,\n        },\n    };\n\n    console.log('Final Aggregated Data:', JSON.stringify(aggregatedData, null, 2));\n    return aggregatedData;\n}\n\n// Get input data from all nodes\nconst items = $input.all();\nconsole.log('Input items to Aggregate Data:', JSON.stringify(items, null, 2));\n\n// Perform aggregation\nconst aggregatedResult = aggregateData(items);\n\n// Output the aggregated result for downstream processing\nreturn { json: aggregatedResult };\n"
@@ -369,8 +369,8 @@
       "name": "Get Google Search Results for prior week",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        840,
-        940
+        100,
+        2440
       ],
       "parameters": {
         "simple": false,
@@ -447,8 +447,8 @@
       "name": "Get Country views data for prior week",
       "type": "n8n-nodes-base.googleAnalytics",
       "position": [
-        1640,
-        940
+        100,
+        2080
       ],
       "parameters": {
         "simple": false,
@@ -520,8 +520,8 @@
       "name": "Parse - Get Page Engagement This Week",
       "type": "n8n-nodes-base.code",
       "position": [
-        1040,
-        740
+        100,
+        4240
       ],
       "parameters": {
         "jsCode": "function transformToUrlString(items) {\n    // Debug logging\n    console.log('Input items:', JSON.stringify(items, null, 2));\n    \n    // Check if items is an array and has content\n    if (!Array.isArray(items) || items.length === 0) {\n        console.log('Items is not an array or is empty');\n        throw new Error('Invalid data structure');\n    }\n\n    // Check if first item exists and has json property\n    if (!items[0] || !items[0].json) {\n        console.log('First item is missing or has no json property');\n        throw new Error('Invalid data structure');\n    }\n\n    // Get the analytics data\n    const analyticsData = items[0].json;\n    \n    // Check if analyticsData has rows\n    if (!analyticsData || !Array.isArray(analyticsData.rows)) {\n        console.log('Analytics data is missing or has no rows array');\n        throw new Error('Invalid data structure');\n    }\n    \n    // Map each row to a simplified object\n    const simplified = analyticsData.rows.map(row => {\n        if (!row.dimensionValues?.[0]?.value || !row.metricValues?.length) {\n            console.log('Invalid row structure:', row);\n            throw new Error('Invalid row structure');\n        }\n        \n        return {\n            page: row.dimensionValues[0].value,\n            pageViews: parseInt(row.metricValues[0].value) || 0,\n            activeUsers: parseInt(row.metricValues[1].value) || 0,\n            viewsPerUser: parseFloat(row.metricValues[2].value) || 0,\n            eventCount: parseInt(row.metricValues[3].value) || 0\n        };\n    });\n    \n    // Convert to JSON string and encode for URL\n    return encodeURIComponent(JSON.stringify(simplified));\n}\n\n// Get input data and transform it\nconst urlString = transformToUrlString($input.all());\n\n// Return the result\nreturn { json: { urlString } };"
@@ -534,8 +534,8 @@
       "name": "Parse - Get Page Engagement Prior Week",
       "type": "n8n-nodes-base.code",
       "position": [
-        1440,
-        740
+        100,
+        4060
       ],
       "parameters": {
         "jsCode": "function transformToUrlString(items) {\n    // Debug logging\n    console.log('Input items:', JSON.stringify(items, null, 2));\n    \n    // Check if items is an array and has content\n    if (!Array.isArray(items) || items.length === 0) {\n        console.log('Items is not an array or is empty');\n        throw new Error('Invalid data structure');\n    }\n\n    // Check if first item exists and has json property\n    if (!items[0] || !items[0].json) {\n        console.log('First item is missing or has no json property');\n        throw new Error('Invalid data structure');\n    }\n\n    // Get the analytics data\n    const analyticsData = items[0].json;\n    \n    // Check if analyticsData has rows\n    if (!analyticsData || !Array.isArray(analyticsData.rows)) {\n        console.log('Analytics data is missing or has no rows array');\n        throw new Error('Invalid data structure');\n    }\n    \n    // Filter out invalid rows and map each valid row to a simplified object\n    const simplified = analyticsData.rows\n        .filter(row => {\n            // Check if row is valid and its properties exist\n            const isValid = row \n                && row.dimensionValues \n                && row.dimensionValues[0] \n                && row.dimensionValues[0].value \n                && row.metricValues \n                && row.metricValues.length > 0;\n            \n            if (!isValid) {\n                console.log('Ignoring invalid or null row:', row);\n            }\n            return isValid;\n        })\n        .map(row => ({\n            page: row.dimensionValues[0].value,\n            pageViews: parseInt(row.metricValues[0].value) || 0,\n            activeUsers: parseInt(row.metricValues[1]?.value) || 0,\n            viewsPerUser: parseFloat(row.metricValues[2]?.value) || 0,\n            eventCount: parseInt(row.metricValues[3]?.value) || 0\n        }));\n    \n    // Convert to JSON string and encode for URL\n    return encodeURIComponent(JSON.stringify(simplified));\n}\n\n// Get input data and transform it\nconst urlString = transformToUrlString($input.all());\n\n// Return the result\nreturn { json: { urlString } };\n"
@@ -548,8 +548,8 @@
       "name": "Parse - Get Google Search This Week",
       "type": "n8n-nodes-base.code",
       "position": [
-        1840,
-        740
+        100,
+        3880
       ],
       "parameters": {
         "jsCode": "function transformToUrlString(items) {\n    // Check if items is an array and get the JSON property\n    const data = items[0]?.json;\n\n    if (!data || !Array.isArray(data.rows)) {\n        console.log('No valid data found');\n        return encodeURIComponent(JSON.stringify([]));\n    }\n\n    try {\n        // Process each row, skipping invalid or null entries\n        const simplified = data.rows\n            .filter(row => {\n                // Skip null rows or rows without dimensionValues or metricValues\n                const isValid = row && row.dimensionValues && Array.isArray(row.metricValues);\n                if (!isValid) {\n                    console.log('Skipping invalid row:', row);\n                }\n                return isValid;\n            })\n            .map(row => ({\n                page: row.dimensionValues[0]?.value || 'Unknown',\n                activeUsers: parseInt(row.metricValues[0]?.value) || 0,\n                engagedSessions: parseInt(row.metricValues[1]?.value) || 0,\n                engagementRate: parseFloat(row.metricValues[2]?.value) || 0.0,\n                eventCount: parseInt(row.metricValues[3]?.value) || 0,\n                avgPosition: parseFloat(row.metricValues[4]?.value) || 0.0,\n                ctr: parseFloat(row.metricValues[5]?.value) || 0.0,\n                clicks: parseInt(row.metricValues[6]?.value) || 0,\n                impressions: parseInt(row.metricValues[7]?.value) || 0\n            }));\n\n        // Encode the simplified data as a URL-safe string\n        return encodeURIComponent(JSON.stringify(simplified));\n    } catch (error) {\n        console.log('Error processing data:', error.message);\n        throw new Error('Invalid data structure');\n    }\n}\n\n// Get the input data\nconst items = $input.all();\n\n// Process the data\nconst result = transformToUrlString(items);\n\n// Return the result\nreturn { json: { urlString: result } };\n"
@@ -562,8 +562,8 @@
       "name": "Parse - Get Google Search Prior Week",
       "type": "n8n-nodes-base.code",
       "position": [
-        1040,
-        940
+        100,
+        3700
       ],
       "parameters": {
         "jsCode": "function transformToUrlString(items) {\n    // Ensure the input is valid and contains data\n    const data = items[0]?.json;\n\n    if (!data || !Array.isArray(data.rows)) {\n        console.log('No valid data found');\n        return encodeURIComponent(JSON.stringify([]));\n    }\n\n    try {\n        // Process each row, skipping null or invalid rows\n        const simplified = data.rows\n            .filter(row => {\n                // Skip null rows\n                const isValid = row && row.dimensionValues && Array.isArray(row.metricValues);\n                if (!isValid) {\n                    console.log('Skipping invalid or null row:', row);\n                }\n                return isValid;\n            })\n            .map(row => ({\n                page: row.dimensionValues[0]?.value || 'Unknown',\n                activeUsers: parseInt(row.metricValues[0]?.value) || 0,\n                engagedSessions: parseInt(row.metricValues[1]?.value) || 0,\n                engagementRate: parseFloat(row.metricValues[2]?.value) || 0.0,\n                eventCount: parseInt(row.metricValues[3]?.value) || 0,\n                avgPosition: parseFloat(row.metricValues[4]?.value) || 0.0,\n                ctr: parseFloat(row.metricValues[5]?.value) || 0.0,\n                clicks: parseInt(row.metricValues[6]?.value) || 0,\n                impressions: parseInt(row.metricValues[7]?.value) || 0\n            }));\n\n        // If no valid rows, return an empty array\n        if (simplified.length === 0) {\n            console.log('No valid rows to process');\n            return encodeURIComponent(JSON.stringify([]));\n        }\n\n        // Encode the simplified data as a URL-safe string\n        return encodeURIComponent(JSON.stringify(simplified));\n    } catch (error) {\n        console.log('Error processing data:', error.message);\n        throw new Error('Invalid data structure');\n    }\n}\n\n// Get the input data\nconst items = $input.all();\n\n// Process the data\nconst result = transformToUrlString(items);\n\n// Return the result\nreturn { json: { urlString: result } };\n"
@@ -576,8 +576,8 @@
       "name": "Parse - Country Views This Week",
       "type": "n8n-nodes-base.code",
       "position": [
-        1440,
-        940
+        100,
+        3520
       ],
       "parameters": {
         "jsCode": "function transformToUrlString(items) {\n    // In n8n, we need to check if items is an array and get the json property\n    const data = items[0].json;\n    \n    if (!data || !data.rows) {\n        console.log('No valid data found');\n        return encodeURIComponent(JSON.stringify([]));\n    }\n    \n    try {\n        // Process each row\n        const simplified = data.rows.map(row => ({\n            country: row.dimensionValues[0].value,\n            activeUsers: parseInt(row.metricValues[0].value) || 0,\n            newUsers: parseInt(row.metricValues[1].value) || 0,\n            engagementRate: parseFloat(row.metricValues[2].value) || 0,\n            engagedSessions: parseInt(row.metricValues[3].value) || 0,\n            eventCount: parseInt(row.metricValues[4].value) || 0,\n            totalUsers: parseInt(row.metricValues[5].value) || 0,\n            sessions: parseInt(row.metricValues[6].value) || 0\n        }));\n        \n        return encodeURIComponent(JSON.stringify(simplified));\n    } catch (error) {\n        console.log('Error processing data:', error);\n        throw new Error('Invalid data structure');\n    }\n}\n\n// Get the input data\nconst items = $input.all();\n\n// Process the data\nconst result = transformToUrlString(items);\n\n// Return the result\nreturn { json: { urlString: result } };"
@@ -590,8 +590,8 @@
       "name": "Parse - Country Views Prior Week",
       "type": "n8n-nodes-base.code",
       "position": [
-        1840,
-        940
+        100,
+        3340
       ],
       "parameters": {
         "jsCode": "function transformToUrlString(items) {\n    // Ensure the input is valid and contains data\n    const data = items[0]?.json;\n\n    if (!data || !Array.isArray(data.rows)) {\n        console.log('No valid data found');\n        return encodeURIComponent(JSON.stringify([]));\n    }\n\n    try {\n        // Process each row, skipping invalid or null rows\n        const simplified = data.rows\n            .filter(row => {\n                // Skip null rows or rows without required properties\n                const isValid = row && row.dimensionValues && Array.isArray(row.metricValues);\n                if (!isValid) {\n                    console.log('Skipping invalid or null row:', row);\n                }\n                return isValid;\n            })\n            .map(row => ({\n                country: row.dimensionValues[0]?.value || 'Unknown',\n                activeUsers: parseInt(row.metricValues[0]?.value) || 0,\n                newUsers: parseInt(row.metricValues[1]?.value) || 0,\n                engagementRate: parseFloat(row.metricValues[2]?.value) || 0.0,\n                engagedSessions: parseInt(row.metricValues[3]?.value) || 0,\n                eventCount: parseInt(row.metricValues[4]?.value) || 0,\n                totalUsers: parseInt(row.metricValues[5]?.value) || 0,\n                sessions: parseInt(row.metricValues[6]?.value) || 0\n            }));\n\n        // If no valid rows, return an empty array\n        if (simplified.length === 0) {\n            console.log('No valid rows to process');\n            return encodeURIComponent(JSON.stringify([]));\n        }\n\n        // Encode the simplified data as a URL-safe string\n        return encodeURIComponent(JSON.stringify(simplified));\n    } catch (error) {\n        console.log('Error processing data:', error.message);\n        throw new Error('Invalid data structure');\n    }\n}\n\n// Get the input data\nconst items = $input.all();\n\n// Process the data\nconst result = transformToUrlString(items);\n\n// Return the result\nreturn { json: { urlString: result } };\n"
@@ -604,8 +604,8 @@
       "name": "Set urlStrings",
       "type": "n8n-nodes-base.set",
       "position": [
-        840,
-        1140
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -658,8 +658,8 @@
       "name": "Format Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        840,
-        1480
+        100,
+        1900
       ],
       "parameters": {
         "jsCode": "const input = $input.first().json;\n\n// Extract data\nconst engagementStats = input.engagementStats || {};\nconst searchResults = input.searchResults || {};\nconst countryViews = input.countryViews || {};\n\n// Helper function to generate HTML for a table\nfunction generateTable(headers, rows, color) {\n    let table = `<table border=\"1\" style=\"border-collapse:collapse; width:100%; border:1px solid ${color};\">`;\n    // Add table headers\n    table += `<thead style=\"background-color:${color}; color:white;\"><tr>`;\n    headers.forEach(header => {\n        table += `<th style=\"padding:8px; text-align:left; border:1px solid ${color};\">${header}</th>`;\n    });\n    table += '</tr></thead>';\n    // Add table rows\n    table += '<tbody>';\n    rows.forEach(row => {\n        table += '<tr>';\n        row.forEach(cell => {\n            table += `<td style=\"padding:8px; border:1px solid ${color};\">${cell}</td>`;\n        });\n        table += '</tr>';\n    });\n    table += '</tbody></table>';\n    return table;\n}\n\n// Get today's date\nconst today = new Date();\nconst formattedDate = today.toLocaleDateString(undefined, {\n    year: 'numeric',\n    month: 'long',\n    day: 'numeric',\n});\n\n// Generate HTML content\nconst title = `GA Report for ${formattedDate}`;\nlet htmlContent = `<h1 style=\"text-align:center; color:#333;\">${title}</h1>`;\n\n// Colors for each segment\nconst engagementColor = '#4CAF50';\nconst searchColor = '#2196F3';\nconst countryColor = '#FF9800';\n\nhtmlContent += `<h2 style=\"color:${engagementColor};\">Engagement Stats</h2>`;\nhtmlContent += `<h3 style=\"color:#333;\">This Week</h3>`;\nif (engagementStats.thisWeek?.length) {\n    const headers = ['Page', 'Page Views', 'Active Users', 'Views per User', 'Event Count'];\n    const rows = engagementStats.thisWeek.map(stat => [\n        stat.page,\n        stat.pageViews,\n        stat.activeUsers,\n        stat.viewsPerUser.toFixed(2),\n        stat.eventCount,\n    ]);\n    htmlContent += generateTable(headers, rows, engagementColor);\n} else {\n    htmlContent += `<p style=\"color:${engagementColor};\">No data available for this week.</p>`;\n}\n\nhtmlContent += `<h3 style=\"color:#333;\">Prior Week</h3>`;\nif (engagementStats.priorWeek?.length) {\n    const headers = ['Page', 'Page Views', 'Active Users', 'Views per User', 'Event Count'];\n    const rows = engagementStats.priorWeek.map(stat => [\n        stat.page,\n        stat.pageViews,\n        stat.activeUsers,\n        stat.viewsPerUser.toFixed(2),\n        stat.eventCount,\n    ]);\n    htmlContent += generateTable(headers, rows, engagementColor);\n} else {\n    htmlContent += `<p style=\"color:${engagementColor};\">No data available for prior week.</p>`;\n}\n\nhtmlContent += `<h2 style=\"color:${searchColor};\">Search Results</h2>`;\nhtmlContent += `<h3 style=\"color:#333;\">This Week</h3>`;\nif (searchResults.thisWeek?.length) {\n    const headers = ['Page', 'Active Users', 'Engaged Sessions', 'Engagement Rate', 'Event Count', 'Avg Position', 'CTR', 'Clicks', 'Impressions'];\n    const rows = searchResults.thisWeek.map(result => [\n        result.page,\n        result.activeUsers,\n        result.engagedSessions,\n        result.engagementRate.toFixed(2),\n        result.eventCount,\n        result.avgPosition.toFixed(2),\n        result.ctr.toFixed(2),\n        result.clicks,\n        result.impressions,\n    ]);\n    htmlContent += generateTable(headers, rows, searchColor);\n} else {\n    htmlContent += `<p style=\"color:${searchColor};\">No data available for this week.</p>`;\n}\n\nhtmlContent += `<h3 style=\"color:#333;\">Last Week</h3>`;\nif (searchResults.lastWeek?.length) {\n    const headers = ['Page', 'Active Users', 'Engaged Sessions', 'Engagement Rate', 'Event Count', 'Avg Position', 'CTR', 'Clicks', 'Impressions'];\n    const rows = searchResults.lastWeek.map(result => [\n        result.page,\n        result.activeUsers,\n        result.engagedSessions,\n        result.engagementRate.toFixed(2),\n        result.eventCount,\n        result.avgPosition.toFixed(2),\n        result.ctr.toFixed(2),\n        result.clicks,\n        result.impressions,\n    ]);\n    htmlContent += generateTable(headers, rows, searchColor);\n} else {\n    htmlContent += `<p style=\"color:${searchColor};\">No data available for last week.</p>`;\n}\n\nhtmlContent += `<h2 style=\"color:${countryColor};\">Country Views</h2>`;\nhtmlContent += `<h3 style=\"color:#333;\">This Week</h3>`;\nif (countryViews.thisWeek?.length) {\n    const headers = ['Country', 'Active Users', 'New Users', 'Engagement Rate', 'Engaged Sessions', 'Event Count', 'Total Users', 'Sessions'];\n    const rows = countryViews.thisWeek.map(view => [\n        view.country,\n        view.activeUsers,\n        view.newUsers,\n        view.engagementRate.toFixed(2),\n        view.engagedSessions,\n        view.eventCount,\n        view.totalUsers,\n        view.sessions,\n    ]);\n    htmlContent += generateTable(headers, rows, countryColor);\n} else {\n    htmlContent += `<p style=\"color:${countryColor};\">No data available for this week.</p>`;\n}\n\nhtmlContent += `<h3 style=\"color:#333;\">Last Week</h3>`;\nif (countryViews.lastWeek?.length) {\n    const headers = ['Country', 'Active Users', 'New Users', 'Engagement Rate', 'Engaged Sessions', 'Event Count', 'Total Users', 'Sessions'];\n    const rows = countryViews.lastWeek.map(view => [\n        view.country,\n        view.activeUsers,\n        view.newUsers,\n        view.engagementRate.toFixed(2),\n        view.engagedSessions,\n        view.eventCount,\n        view.totalUsers,\n        view.sessions,\n    ]);\n    htmlContent += generateTable(headers, rows, countryColor);\n} else {\n    htmlContent += `<p style=\"color:${countryColor};\">No data available for last week.</p>`;\n}\n\n// Output the title and formatted HTML\nreturn {\n    json: {\n        title,\n        htmlContent,\n    }\n};\n"
@@ -672,8 +672,8 @@
       "name": "Input All",
       "type": "n8n-nodes-base.code",
       "position": [
-        1240,
-        1140
+        100,
+        3160
       ],
       "parameters": {
         "jsCode": "console.log($input.all());\nreturn $input.all();\n"
@@ -686,8 +686,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        760,
-        1380
+        100,
+        5320
       ],
       "parameters": {
         "color": 5,
@@ -703,8 +703,8 @@
       "name": "Email the Report",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1040,
-        1480
+        100,
+        280
       ],
       "webhookId": "80d4d964-449a-4599-b2de-bca9c8822bbd",
       "parameters": {
@@ -729,8 +729,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        560,
-        1140
+        100,
+        4420
       ],
       "parameters": {
         "rule": {
@@ -748,8 +748,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cc1c37f3",
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c6b8f171",
@@ -778,8 +778,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3c056c98",
@@ -793,8 +793,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ea5cdc7a",
@@ -808,8 +808,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 14fea93c",
@@ -823,8 +823,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 436c7977",
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Get Page Engagement Stats for this week**: googleAnalytics\n- **Get Page Engagement Stats for prior week**: googleAnalytics\n- **Get Google Search Results for this week**: googleAnalytics\n- **Get Country views data for this week**: googleAnalytics\n- **Sticky Note4**: stickyNote\n- **Aggregate Data**: code\n- **Get Google Search Results for prior week**: googleAnalytics\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -852,8 +852,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -866,8 +866,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -894,8 +894,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -908,8 +908,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -922,8 +922,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -935,8 +935,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -948,8 +948,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -961,8 +961,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -975,8 +975,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Automate Google Analytics Reporting - AlexK1919\n\n## Overview\nAutomated workflow: Automate Google Analytics Reporting - AlexK1919. This workflow integrates 8 different services: stickyNote, code, scheduleTrigger, googleAnalytics, set. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -988,8 +988,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Workflow execution error",

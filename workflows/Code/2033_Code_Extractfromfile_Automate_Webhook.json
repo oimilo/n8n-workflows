@@ -26,8 +26,8 @@
       "name": "WhatsApp Trigger",
       "type": "n8n-nodes-base.whatsAppTrigger",
       "position": [
-        -700,
-        80
+        100,
+        11800
       ],
       "webhookId": "d3978cae-2aca-4553-8ac7-ab89068deabc",
       "parameters": {
@@ -50,8 +50,8 @@
       "name": "Download Image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        720,
-        120
+        100,
+        1000
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -73,8 +73,8 @@
       "name": "Analyze Image",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        960,
-        120
+        100,
+        280
       ],
       "parameters": {
         "text": "=You are an advanced image description AI assistant . Your primary function is to provide detailed, accurate descriptions of images submitted through WhatsApp.\n\nCORE FUNCTIONALITY:\n- When presented with an image, you will analyze it thoroughly and provide a comprehensive description in English.\n- Your descriptions should capture both the obvious and subtle elements within the image.\n\nIMAGE DESCRIPTION GUIDELINES:\n- Begin with a broad overview of what the image contains\n- Describe key subjects, people, objects, and their relationships\n- Note significant visual elements such as colors, lighting, composition, and perspective\n- Identify any text visible in the image\n- Describe the setting or environment\n- Mention any notable actions or events taking place\n- Comment on mood, tone, or atmosphere when relevant\n- If applicable, identify landmarks, famous people, or cultural references\n\nRESPONSE FORMAT:\n- Start with \"Image Description:\" followed by your analysis\n- Structure your description in a logical manner (general to specific)\n- Use clear, precise language appropriate for visual description\n- Format longer descriptions with paragraphs to enhance readability\n- End with any notable observations that might require special attention\n\nLIMITATIONS:\n- If the image is blurry, low resolution, or difficult to interpret, acknowledge these limitations\n- If an image contains potentially sensitive content, provide a factual description without judgment\n- Do not make assumptions about elements that cannot be clearly determined\n\nYour descriptions should be informative, objective, and thorough, enabling someone who cannot see the image to form an accurate mental picture of its contents.",
@@ -105,8 +105,8 @@
       "name": "Download Audio",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        720,
-        -180
+        100,
+        640
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -128,8 +128,8 @@
       "name": "Transcribe Audio",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        960,
-        -180
+        100,
+        11620
       ],
       "parameters": {
         "options": {},
@@ -150,8 +150,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        160,
-        1440
+        100,
+        9280
       ],
       "parameters": {
         "model": {
@@ -175,8 +175,8 @@
       "name": "AI Agent1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        160,
-        1220
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.text }}",
@@ -193,8 +193,8 @@
       "name": "Download File",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        720,
-        460
+        100,
+        820
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -216,8 +216,8 @@
       "name": "Extract from File",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        980,
-        460
+        100,
+        6940
       ],
       "parameters": {
         "options": {},
@@ -231,8 +231,8 @@
       "name": "Simple Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        300,
-        1440
+        100,
+        9820
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -247,8 +247,8 @@
       "name": "Get File Url",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        500,
-        460
+        100,
+        8020
       ],
       "webhookId": "280bd5de-32d7-4d8f-93d2-e91e3b0bc161",
       "parameters": {
@@ -270,8 +270,8 @@
       "name": "Only PDF File",
       "type": "n8n-nodes-base.if",
       "position": [
-        220,
-        480
+        100,
+        9100
       ],
       "parameters": {
         "options": {},
@@ -305,8 +305,8 @@
       "name": "Fix mimeType for Audio",
       "type": "n8n-nodes-base.code",
       "position": [
-        1040,
-        1080
+        100,
+        7300
       ],
       "parameters": {
         "jsCode": "for (const item of $input.all()) {\n  if (item.binary) {\n    const binaryPropertyNames = Object.keys(item.binary);\n    for (const propName of binaryPropertyNames) {\n      if (item.binary[propName].mimeType === 'audio/mp3') {\n        item.binary[propName].mimeType = 'audio/mpeg';\n      }\n    }\n  }\n}\n\nreturn $input.all();"
@@ -319,8 +319,8 @@
       "name": "Send message",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        840,
-        1360
+        100,
+        9640
       ],
       "webhookId": "23834751-5066-48ba-8e19-549680df2b27",
       "parameters": {
@@ -344,8 +344,8 @@
       "name": "Send audio",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        1260,
-        1080
+        100,
+        9460
       ],
       "webhookId": "d18b2c98-84e4-43cf-a532-0c47d5161684",
       "parameters": {
@@ -370,8 +370,8 @@
       "name": "Incorrect format",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        500,
-        700
+        100,
+        8560
       ],
       "webhookId": "23834751-5066-48ba-8e19-549680df2b27",
       "parameters": {
@@ -395,8 +395,8 @@
       "name": "Text",
       "type": "n8n-nodes-base.set",
       "position": [
-        1240,
-        -520
+        100,
+        11440
       ],
       "parameters": {
         "options": {},
@@ -419,8 +419,8 @@
       "name": "Audio",
       "type": "n8n-nodes-base.set",
       "position": [
-        1240,
-        -180
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -443,8 +443,8 @@
       "name": "Image",
       "type": "n8n-nodes-base.set",
       "position": [
-        1220,
-        120
+        100,
+        8380
       ],
       "parameters": {
         "options": {},
@@ -467,8 +467,8 @@
       "name": "File",
       "type": "n8n-nodes-base.set",
       "position": [
-        1240,
-        460
+        100,
+        7120
       ],
       "parameters": {
         "options": {},
@@ -491,8 +491,8 @@
       "name": "Not supported",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        -260,
-        360
+        100,
+        8920
       ],
       "webhookId": "23834751-5066-48ba-8e19-549680df2b27",
       "parameters": {
@@ -516,8 +516,8 @@
       "name": "Get Image Url",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        480,
-        120
+        100,
+        8200
       ],
       "webhookId": "280bd5de-32d7-4d8f-93d2-e91e3b0bc161",
       "parameters": {
@@ -539,8 +539,8 @@
       "name": "Get Audio Url",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        460,
-        -180
+        100,
+        7840
       ],
       "webhookId": "87caa300-7204-47b5-959a-94f4a8fbf8cf",
       "parameters": {
@@ -562,8 +562,8 @@
       "name": "Generate Audio Response",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        840,
-        1080
+        100,
+        7660
       ],
       "parameters": {
         "input": "={{ $('AI Agent1').item.json.output }}",
@@ -585,8 +585,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        -560
+        100,
+        10000
       ],
       "parameters": {
         "width": 1340,
@@ -601,8 +601,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        -240
+        100,
+        10180
       ],
       "parameters": {
         "width": 1340,
@@ -617,8 +617,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        80
+        100,
+        10360
       ],
       "parameters": {
         "width": 1340,
@@ -633,8 +633,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        420
+        100,
+        10540
       ],
       "parameters": {
         "width": 1340,
@@ -649,8 +649,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        960
+        100,
+        10720
       ],
       "parameters": {
         "color": 5,
@@ -666,8 +666,8 @@
       "name": "From audio to audio?",
       "type": "n8n-nodes-base.if",
       "position": [
-        580,
-        1220
+        100,
+        7480
       ],
       "parameters": {
         "options": {},
@@ -701,8 +701,8 @@
       "name": "Input type",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -420,
-        40
+        100,
+        8740
       ],
       "parameters": {
         "rules": {
@@ -821,8 +821,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1580,
-        -1140
+        100,
+        10900
       ],
       "parameters": {
         "color": 3,
@@ -839,8 +839,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in 4cc0b70b-3ecc-4415-af2f-e50d4f302786",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in b8898138-f987-4ef7-a5c1-d6d6b9c815f0",
@@ -869,8 +869,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in 103825d0-8521-43c7-8246-9cc1faca42e1",
@@ -884,8 +884,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4cc0b70b",
@@ -899,8 +899,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 528984be",
@@ -914,8 +914,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b8898138",
@@ -929,8 +929,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e68bea55",
@@ -944,8 +944,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1c0aa0c3",
@@ -959,8 +959,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 103825d0",
@@ -974,8 +974,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 98077f98",
@@ -989,8 +989,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b23f8467",
@@ -1004,8 +1004,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        11980
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **WhatsApp Trigger**: whatsAppTrigger\n- **Download Image**: httpRequest\n- **Analyze Image**: openAi\n- **Download Audio**: httpRequest\n- **Transcribe Audio**: openAi\n- **OpenAI Chat Model**: lmChatOpenAi\n- **AI Agent1**: agent\n- **Download File**: httpRequest\n- **Extract from File**: extractFromFile\n- **Simple Memory**: memoryBufferWindow\n- ... and 33 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1018,8 +1018,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1033,8 +1033,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1048,8 +1048,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1063,8 +1063,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1077,8 +1077,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1091,8 +1091,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1106,8 +1106,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1121,8 +1121,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1136,8 +1136,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1151,8 +1151,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1166,8 +1166,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1181,8 +1181,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1195,8 +1195,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1209,8 +1209,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1224,8 +1224,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1239,8 +1239,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1254,8 +1254,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1269,8 +1269,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1284,8 +1284,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1299,8 +1299,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 63\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1313,8 +1313,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1326,8 +1326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1340,8 +1340,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1354,8 +1354,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1368,8 +1368,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13240
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 68\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1381,8 +1381,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1395,8 +1395,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1409,8 +1409,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1423,8 +1423,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13420
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1436,8 +1436,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1450,8 +1450,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13600
       ],
       "parameters": {
         "content": "# AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs\n\n## Overview\nAutomated workflow: AI-Powered WhatsApp Chatbot for Text, Voice, Images & PDFs. This workflow integrates 14 different services: stickyNote, httpRequest, code, agent, switch. It contains 43 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1463,8 +1463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Workflow execution error",

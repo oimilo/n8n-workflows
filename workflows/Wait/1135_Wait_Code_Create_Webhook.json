@@ -26,8 +26,8 @@
       "name": "Create Bluesky Session",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -2160,
-        540
+        100,
+        100
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -55,8 +55,8 @@
       "name": "Create Reply",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1200,
-        540
+        100,
+        820
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -83,8 +83,8 @@
       "name": "Run Daily at 9 AM",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -2640,
-        540
+        100,
+        9820
       ],
       "parameters": {
         "rule": {
@@ -103,8 +103,8 @@
       "name": "Set Bluesky Credentials",
       "type": "n8n-nodes-base.set",
       "position": [
-        -2380,
-        540
+        100,
+        10000
       ],
       "parameters": {
         "options": {},
@@ -133,8 +133,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2440,
-        340
+        100,
+        10180
       ],
       "parameters": {
         "color": 3,
@@ -150,8 +150,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1960,
-        340
+        100,
+        10360
       ],
       "parameters": {
         "color": 4,
@@ -167,8 +167,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1480,
-        340
+        100,
+        10540
       ],
       "parameters": {
         "color": 5,
@@ -184,8 +184,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2440,
-        740
+        100,
+        10720
       ],
       "parameters": {
         "width": 440,
@@ -200,8 +200,8 @@
       "name": "Create Reply Text",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1420,
-        540
+        100,
+        1000
       ],
       "parameters": {
         "jsCode": "// Create the reply text\nconst replyText = \"[reply post - hidden]\";\n\n// Calculate timestamp 1 second from now\nconst futureDate = new Date(Date.now() + 1000);\n\n// Create the reply post object\nconst replyPostData = {\n    repo: $('Set Bluesky Credentials').first().json.BlueskyHandle,\n    collection: \"app.bsky.feed.post\",\n    record: {\n        \"$type\": \"app.bsky.feed.post\",\n        text: replyText,\n        reply: {\n            root: {\n                cid: $('Create Initial Post').first().json.cid,\n                uri: $('Create Initial Post').first().json.uri\n            },\n            parent: {\n                cid: $('Create Initial Post').first().json.cid,\n                uri: $('Create Initial Post').first().json.uri\n            }\n        },\n        createdAt: futureDate.toISOString()\n    }\n};\n\nreturn replyPostData;"
@@ -214,8 +214,8 @@
       "name": "Create Sibling Text",
       "type": "n8n-nodes-base.code",
       "position": [
-        -2380,
-        780
+        100,
+        1540
       ],
       "parameters": {
         "jsCode": "// Create the sibling text\nconst siblingText = \"[first sibling - hidden]\";\n\n// Calculate timestamp 2 seconds from now\nconst futureDate = new Date(Date.now() + 2000);\n\n// Create the sibling post object\nconst siblingPostData = {\n    repo: $('Set Bluesky Credentials').first().json.BlueskyHandle,\n    collection: \"app.bsky.feed.post\",\n    record: {\n        \"$type\": \"app.bsky.feed.post\",\n        text: siblingText,\n        reply: {\n            root: {\n                cid: $('Create Initial Post').first().json.cid,\n                uri: $('Create Initial Post').first().json.uri\n            },\n            parent: {\n                cid: $('Create Reply').first().json.cid,\n                uri: $('Create Reply').first().json.uri\n            }\n        },\n        createdAt: futureDate.toISOString()\n    }\n};\n\nreturn siblingPostData;"
@@ -228,8 +228,8 @@
       "name": "Create Sibling",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -2160,
-        780
+        100,
+        1180
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -256,8 +256,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2700,
-        340
+        100,
+        10900
       ],
       "parameters": {
         "color": 7,
@@ -273,8 +273,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1960,
-        740
+        100,
+        11080
       ],
       "parameters": {
         "color": 6,
@@ -290,8 +290,8 @@
       "name": "Loop Posts",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        -1720,
-        780
+        100,
+        9640
       ],
       "parameters": {
         "options": {}
@@ -304,8 +304,8 @@
       "name": "Create Initial Post",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1680,
-        540
+        100,
+        280
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -332,8 +332,8 @@
       "name": "Create Post",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1360,
-        780
+        100,
+        460
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -360,8 +360,8 @@
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        -1200,
-        780
+        100,
+        11980
       ],
       "webhookId": "0414c5a9-938c-427d-98a2-1295eb02380d",
       "parameters": {
@@ -375,8 +375,8 @@
       "name": "Create Post Text",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1900,
-        540
+        100,
+        640
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -390,8 +390,8 @@
       "name": "Create Sibling Array",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1900,
-        780
+        100,
+        1360
       ],
       "parameters": {
         "jsCode": "const items = [\n    { id: 2, name: '[sibling two - hidden]' },\n    { id: 3, name: '[sibling three - hidden]' },\n    { id: 4, name: '[sibling four - hidden]' },\n    { id: 5, name: '[sibling five - hidden]' },\n    { id: 6, name: '[sibling six - hidden]' },\n    { id: 7, name: '[sibling seven - hidden]' },\n    { id: 8, name: '[sibling eight - hidden]' },\n    { id: 9, name: '[sibling nine - visible]' },\n    { id: 10, name: '[sibling ten - visible]' }\n];\n\nreturn items;"
@@ -404,8 +404,8 @@
       "name": "Create Sibling Text (Loop)",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1540,
-        780
+        100,
+        1720
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -420,8 +420,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in 5fea442d-80e7-4e9c-9214-12fa8bc98a71",
@@ -435,8 +435,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in 8339e67d-87f8-48a5-a9c9-48d90d9baf49",
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in f554f5bc-bd81-4b09-887b-6c4167e8f5f1",
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in 449a0269-61cb-477c-b315-943daada65ba",
@@ -480,8 +480,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11800
       ],
       "parameters": {
         "message": "Error occurred in e29aa109-2b11-44c7-9a85-b5199ef4923c",
@@ -495,8 +495,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5fea442d",
@@ -510,8 +510,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8339e67d",
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node f554f5bc",
@@ -540,8 +540,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 449a0269",
@@ -555,8 +555,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e29aa109",
@@ -570,8 +570,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Create Bluesky Session**: httpRequest\n- **Create Reply**: httpRequest\n- **Run Daily at 9 AM**: scheduleTrigger\n- **Set Bluesky Credentials**: set\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Create Reply Text**: code\n- **Create Sibling Text**: code\n- ... and 20 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -584,8 +584,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -599,8 +599,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -629,8 +629,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -644,8 +644,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -659,8 +659,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -673,8 +673,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -687,8 +687,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -702,8 +702,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -717,8 +717,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -762,8 +762,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -792,8 +792,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -807,8 +807,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -822,8 +822,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -837,8 +837,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -851,8 +851,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -865,8 +865,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -925,8 +925,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -940,8 +940,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -970,8 +970,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -985,8 +985,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1000,8 +1000,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1015,8 +1015,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 60\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1029,8 +1029,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13240
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1042,8 +1042,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1056,8 +1056,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1070,8 +1070,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1084,8 +1084,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1098,8 +1098,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1112,8 +1112,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13420
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 67\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1125,8 +1125,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1139,8 +1139,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1153,8 +1153,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1167,8 +1167,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1181,8 +1181,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1195,8 +1195,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13600
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1208,8 +1208,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1222,8 +1222,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13780
       ],
       "parameters": {
         "content": "# Create Threads on Bluesky\n\n## Overview\nAutomated workflow: Create Threads on Bluesky. This workflow integrates 8 different services: stickyNote, httpRequest, wait, code, scheduleTrigger. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1235,8 +1235,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Workflow execution error",

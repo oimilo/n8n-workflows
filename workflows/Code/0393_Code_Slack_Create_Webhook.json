@@ -17,8 +17,8 @@
       "name": "Get Automated Task",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1040,
-        660
+        100,
+        4600
       ],
       "parameters": {
         "id": "={{ $('Entered View  \"First Task - Create Task\"').item.json[\"id\"] }}",
@@ -43,8 +43,8 @@
       "name": "Create Task",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2140,
-        660
+        100,
+        460
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -73,8 +73,8 @@
       "name": "Get Task Template",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1240,
-        660
+        100,
+        4960
       ],
       "parameters": {
         "id": "={{ $item(\"0\").$node[\"Get Automated Task\"].json[\"Template\"][\"0\"] }}",
@@ -99,8 +99,8 @@
       "name": "Get Assignee",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1460,
-        660
+        100,
+        4420
       ],
       "parameters": {
         "id": "={{ $item(\"0\").$node[\"Get Automated Task\"].json[\"Assigned Team Member\"][\"0\"] }}",
@@ -125,8 +125,8 @@
       "name": "Get Client",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        1660,
-        660
+        100,
+        4780
       ],
       "parameters": {
         "id": "={{ $item(\"0\").$node[\"Get Automated Task\"].json[\"Client\"][\"0\"] }}",
@@ -151,8 +151,8 @@
       "name": "Calculate Dates",
       "type": "n8n-nodes-base.code",
       "position": [
-        1880,
-        660
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Retrieve values from the previous node\nconst firstTaskCreated = $item(\"0\").$node[\"Get Automated Task\"].json[\"First Task Created\"];\nconst startDate = $item(\"0\").$node[\"Get Automated Task\"].json[\"Start Date\"];\nconst lastTaskCreated = $item(\"0\").$node[\"Get Automated Task\"].json[\"Last Task Created\"];\nconst timeValue = $item(\"0\").$node[\"Get Automated Task\"].json[\"Time Value\"];\nconst daysForSoftDueDate = $item(\"0\").$node[\"Get Automated Task\"].json[\"Days for Soft Due Date\"];\n\n// Helper function to add days to a date\nfunction addDays(date, days) {\n  let result = new Date(date);\n  result.setDate(result.getDate() + days);\n  return result;\n}\n\n// Helper function to format date in MM/DD/YYYY\nfunction formatDate(date) {\n  return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();\n}\n\n// Calculate Kickoff Date\nlet kickoffDate;\nif (firstTaskCreated === \"false\") {\n  kickoffDate = new Date(startDate);\n} else {\n  kickoffDate = addDays(new Date(lastTaskCreated), timeValue);\n}\n\n// Calculate Soft Due Date\nconst softDueDate = addDays(kickoffDate, timeValue - daysForSoftDueDate);\n\n// Calculate Hard Due Date\nconst hardDueDate = addDays(kickoffDate, timeValue);\n\n// Get today's date\nconst today = new Date();\n\n// Calculate Next Task Creation Date (Hard Due Date minus 1 day)\nconst nextTaskCreationDate = addDays(hardDueDate, -1);\n\n// Prepare the output\nreturn [{\n  json: {\n    \"Kickoff Date\": formatDate(kickoffDate),\n    \"Soft Due Date\": formatDate(softDueDate),\n    \"Hard Due Date\": formatDate(hardDueDate),\n    \"Today\": formatDate(today),\n    \"Next Task Creation Date\": formatDate(nextTaskCreationDate)\n  }\n}];\n"
@@ -165,8 +165,8 @@
       "name": "Update Automated Record",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2420,
-        660
+        100,
+        6220
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -196,8 +196,8 @@
       "type": "n8n-nodes-base.slack",
       "disabled": true,
       "position": [
-        2680,
-        660
+        100,
+        5140
       ],
       "parameters": {
         "select": "channel",
@@ -216,8 +216,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        240
+        100,
+        5320
       ],
       "parameters": {
         "width": 577.8258549588782,
@@ -232,8 +232,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1860,
-        520
+        100,
+        5500
       ],
       "parameters": {
         "width": 519.2937872252622,
@@ -248,8 +248,8 @@
       "name": "Entered View  \"First Task - Create Task\"",
       "type": "n8n-nodes-base.airtableTrigger",
       "position": [
-        500,
-        660
+        100,
+        640
       ],
       "parameters": {
         "baseId": {
@@ -283,8 +283,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        960,
-        240
+        100,
+        5680
       ],
       "parameters": {
         "width": 408.1448240473296,
@@ -299,8 +299,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        520
+        100,
+        5860
       ],
       "parameters": {
         "width": 400.220686283071,
@@ -315,8 +315,8 @@
       "name": "Airtable Base ID's",
       "type": "n8n-nodes-base.set",
       "position": [
-        720,
-        660
+        100,
+        100
       ],
       "parameters": {
         "fields": {
@@ -359,8 +359,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in 4a29d735-5039-4935-9803-66df6a67e590",
@@ -374,8 +374,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in ba33b165-57cf-4e9a-8f86-52b248333a04",
@@ -389,8 +389,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4a29d735",
@@ -404,8 +404,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ba33b165",
@@ -419,8 +419,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c2893a32",
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get Automated Task**: airtable\n- **Create Task**: httpRequest\n- **Get Task Template**: airtable\n- **Get Assignee**: airtable\n- **Get Client**: airtable\n- **Calculate Dates**: code\n- **Update Automated Record**: httpRequest\n- **Notify Assignee**: slack\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- ... and 9 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -448,8 +448,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -463,8 +463,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -492,8 +492,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -536,8 +536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -551,8 +551,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -566,8 +566,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -580,8 +580,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -609,8 +609,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -624,8 +624,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -639,8 +639,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -654,8 +654,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -681,8 +681,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -695,8 +695,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -709,8 +709,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -750,8 +750,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Airtable Workflow\n\n## Overview\nAutomated workflow: Airtable Workflow. This workflow integrates 8 different services: airtableTrigger, stickyNote, httpRequest, airtable, code. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Workflow execution error",

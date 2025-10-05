@@ -5,8 +5,8 @@
       "name": "END",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -2880,
-        540
+        100,
+        640
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -17,8 +17,8 @@
       "name": "Workflow 1",
       "type": "n8n-nodes-base.set",
       "position": [
-        -2620,
-        -20
+        100,
+        4060
       ],
       "parameters": {
         "options": {}
@@ -31,8 +31,8 @@
       "name": "Workflow 2",
       "type": "n8n-nodes-base.set",
       "position": [
-        -2620,
-        200
+        100,
+        4240
       ],
       "parameters": {
         "options": {}
@@ -45,8 +45,8 @@
       "name": "Workflow 3",
       "type": "n8n-nodes-base.set",
       "position": [
-        -2620,
-        420
+        100,
+        4420
       ],
       "parameters": {
         "options": {}
@@ -59,8 +59,8 @@
       "name": "Incoming Webhook Data",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -4760,
-        220
+        100,
+        2980
       ],
       "webhookId": "94d08900-4816-4c74-962a-aacff5077d5d",
       "parameters": {
@@ -75,8 +75,8 @@
       "name": "Fetch Webhook Data & Declare lockValue",
       "type": "n8n-nodes-base.code",
       "position": [
-        -4520,
-        220
+        100,
+        2800
       ],
       "parameters": {
         "jsCode": "// Parse the Slack payload\nconst payload = JSON.parse($('Incoming Webhook Data').first().json[\"body\"][\"payload\"]);\n\n// Extract button action details\nconst var1 = payload.var1;\nconst var2 = payload.var2;\nconst var3 = payload.var3;\n\n// Log or return the details\nreturn {\n    var1 : var1,\n    var2: var2,\n    var3: var3,\n    lockValue : `${var1}-${var2}-${var3}`\n};"
@@ -89,8 +89,8 @@
       "name": "Check Redis Lock",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -4220,
-        220
+        100,
+        280
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -112,8 +112,8 @@
       "name": "Acquire Redis Lock",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -3520,
-        200
+        100,
+        100
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -136,8 +136,8 @@
       "name": "redisLock existence boolean",
       "type": "n8n-nodes-base.if",
       "position": [
-        -4020,
-        220
+        100,
+        6940
       ],
       "parameters": {
         "options": {},
@@ -171,8 +171,8 @@
       "name": "redisLock acquired booleans",
       "type": "n8n-nodes-base.if",
       "position": [
-        -3800,
-        320
+        100,
+        6760
       ],
       "parameters": {
         "options": {},
@@ -206,8 +206,8 @@
       "name": "Poll for lock",
       "type": "n8n-nodes-base.wait",
       "position": [
-        -3520,
-        420
+        100,
+        3160
       ],
       "webhookId": "615b4c18-2c29-418c-a2bf-302ff24e5c65",
       "parameters": {},
@@ -219,8 +219,8 @@
       "name": "duplicateWebhook boolean",
       "type": "n8n-nodes-base.if",
       "position": [
-        -3200,
-        420
+        100,
+        6580
       ],
       "parameters": {
         "options": {},
@@ -254,8 +254,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -4760,
-        -120
+        100,
+        3340
       ],
       "parameters": {
         "color": 6,
@@ -271,8 +271,8 @@
       "name": "Discard Redis Lock",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -2320,
-        200
+        100,
+        460
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -292,8 +292,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3580,
-        80
+        100,
+        3520
       ],
       "parameters": {
         "color": 5,
@@ -309,8 +309,8 @@
       "name": "Workflow Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -2880,
-        200
+        100,
+        6400
       ],
       "parameters": {
         "rules": {
@@ -401,8 +401,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2940,
-        680
+        100,
+        3700
       ],
       "parameters": {
         "color": 5,
@@ -417,8 +417,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2320,
-        100
+        100,
+        3880
       ],
       "parameters": {
         "color": 5,
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in 74d889d9-5215-495b-8e60-e1c78d79ae8c",
@@ -449,8 +449,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 74d889d9",
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **END**: noOp\n- **Workflow 1**: set\n- **Workflow 2**: set\n- **Workflow 3**: set\n- **Incoming Webhook Data**: webhook\n- **Fetch Webhook Data & Declare lockValue**: code\n- **Check Redis Lock**: redis\n- **Acquire Redis Lock**: redis\n- **redisLock existence boolean**: if\n- **redisLock acquired booleans**: if\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -493,8 +493,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -507,8 +507,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -536,8 +536,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -551,8 +551,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -565,8 +565,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -579,8 +579,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -609,8 +609,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -623,8 +623,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -636,8 +636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -650,8 +650,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -663,8 +663,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -690,8 +690,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -704,8 +704,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Noop Workflow\n\n## Overview\nAutomated workflow: Noop Workflow. This workflow integrates 10 different services: webhook, stickyNote, wait, code, switch. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -717,8 +717,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Telegram Trigger",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        -220,
-        240
+        100,
+        4600
       ],
       "webhookId": "b178f034-9997-4832-9bb4-a43c3015506e",
       "parameters": {
@@ -50,8 +50,8 @@
       "name": "Embeddings OpenAI",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        720,
-        460
+        100,
+        820
       ],
       "parameters": {
         "options": {}
@@ -70,7 +70,7 @@
       "name": "Default Data Loader",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        860,
+        100,
         460
       ],
       "parameters": {
@@ -85,8 +85,8 @@
       "name": "Recursive Character Text Splitter",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        940,
-        680
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -101,8 +101,8 @@
       "name": "Stop and Error",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        220,
-        840
+        100,
+        3880
       ],
       "parameters": {
         "errorMessage": "An error occurred"
@@ -115,8 +115,8 @@
       "name": "Question and Answer Chain",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -280,
-        500
+        100,
+        3160
       ],
       "parameters": {
         "text": "={{ $json.message.text }}\nSearch the database with the retriever for information for the answer",
@@ -130,8 +130,8 @@
       "name": "Vector Store Retriever",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -240,
-        680
+        100,
+        4960
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -142,8 +142,8 @@
       "name": "Pinecone Vector Store1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -280,
-        860
+        100,
+        2980
       ],
       "parameters": {
         "options": {},
@@ -168,8 +168,8 @@
       "name": "Groq Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -380,
-        660
+        100,
+        2440
       ],
       "parameters": {
         "model": "llama-3.1-70b-versatile",
@@ -189,8 +189,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        73.04879287725316
+        100,
+        3520
       ],
       "parameters": {
         "color": 7,
@@ -206,8 +206,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -878.769,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "color": 7,
@@ -223,8 +223,8 @@
       "name": "Check If is a document",
       "type": "n8n-nodes-base.if",
       "position": [
-        220,
-        240
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -257,8 +257,8 @@
       "name": "Change to application/pdf",
       "type": "n8n-nodes-base.code",
       "position": [
-        700,
-        220
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Função para modificar os metadados do arquivo binário\nfunction modifyBinaryMetadata(items) {\n for (const item of items) {\n if (item.binary && item.binary.data) {\n // Modifica o tipo MIME\n item.binary.data.mimeType = 'application/pdf';\n \n // Garante que o nome do arquivo termine com .pdf\n if (!item.binary.data.fileName.toLowerCase().endsWith('.pdf')) {\n item.binary.data.fileName += '.pdf';\n }\n \n // Atualiza o contentType no fileType (se existir)\n if (item.binary.data.fileType) {\n item.binary.data.fileType.contentType = 'application/pdf';\n }\n }\n }\n return items;\n}\n\n// Aplica a modificação e retorna os itens atualizados\nreturn modifyBinaryMetadata($input.all());"
@@ -271,8 +271,8 @@
       "name": "Telegram get File",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        520,
-        220
+        100,
+        4780
       ],
       "parameters": {
         "fileId": "={{ $json.message.document.file_id }}",
@@ -292,8 +292,8 @@
       "name": "Embeddings",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -100,
-        1080
+        100,
+        640
       ],
       "parameters": {
         "options": {}
@@ -313,8 +313,8 @@
       "type": "n8n-nodes-base.telegram",
       "onError": "continueErrorOutput",
       "position": [
-        160,
-        560
+        100,
+        4240
       ],
       "parameters": {
         "text": "={{ $json.response.text }}",
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.telegram",
       "onError": "continueErrorOutput",
       "position": [
-        1400,
-        220
+        100,
+        4420
       ],
       "parameters": {
         "text": "={{ $json.metadata.pdf.totalPages }} pages saved on Pinecone",
@@ -362,8 +362,8 @@
       "name": "Stop and Error1",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        1400,
-        580
+        100,
+        4060
       ],
       "parameters": {
         "errorMessage": "An error occurred."
@@ -376,8 +376,8 @@
       "name": "Pinecone Vector Store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        880,
-        220
+        100,
+        2800
       ],
       "parameters": {
         "mode": "insert",
@@ -403,8 +403,8 @@
       "name": "Limit to 1",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1220,
-        220
+        100,
+        2620
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -416,8 +416,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9fbce801",
@@ -431,8 +431,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1bfc1fbd",
@@ -446,8 +446,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ea4d4e74",
@@ -461,8 +461,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cf548bee",
@@ -476,8 +476,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e3bd4759",
@@ -491,8 +491,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e478df48",
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Telegram Trigger**: telegramTrigger\n- **Embeddings OpenAI**: embeddingsOpenAi\n- **Default Data Loader**: documentDefaultDataLoader\n- **Recursive Character Text Splitter**: textSplitterRecursiveCharacterTextSplitter\n- **Stop and Error**: stopAndError\n- **Question and Answer Chain**: chainRetrievalQa\n- **Vector Store Retriever**: retrieverVectorStore\n- **Pinecone Vector Store1**: vectorStorePinecone\n- **Groq Chat Model**: lmChatGroq\n- **Sticky Note**: stickyNote\n- ... and 16 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -520,8 +520,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -534,8 +534,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -562,8 +562,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -576,8 +576,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -590,8 +590,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -603,8 +603,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -616,8 +616,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -629,8 +629,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Telegram RAG pdf\n\n## Overview\nAutomated workflow: Telegram RAG pdf. This workflow integrates 14 different services: telegramTrigger, vectorStorePinecone, stickyNote, textSplitterRecursiveCharacterTextSplitter, chainRetrievalQa. It contains 26 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -656,8 +656,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Workflow execution error",

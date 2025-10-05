@@ -17,8 +17,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1540,
-        -400
+        100,
+        3700
       ],
       "parameters": {
         "rule": {
@@ -37,8 +37,8 @@
       "name": "Get Open Tickets",
       "type": "n8n-nodes-base.jira",
       "position": [
-        -1340,
-        -400
+        100,
+        1900
       ],
       "parameters": {
         "limit": 10,
@@ -62,8 +62,8 @@
       "name": "Simplify Ticket",
       "type": "n8n-nodes-base.set",
       "position": [
-        -800,
-        -400
+        100,
+        4240
       ],
       "parameters": {
         "options": {},
@@ -134,8 +134,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -620,
-        -220
+        100,
+        2980
       ],
       "parameters": {
         "model": {
@@ -159,8 +159,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -420,
-        -220
+        100,
+        5320
       ],
       "parameters": {
         "schemaType": "manual",
@@ -174,8 +174,8 @@
       "name": "Label, Prioritize & Rewrite",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -600,
-        -400
+        100,
+        2440
       ],
       "parameters": {
         "text": "=Reported by {{ $json.reportedBy }} <{{ $json.reportedByEmailAddress }}>\nReported at: {{ $json.createdAt }}\nIssue Key: {{ $json.issueKey }}\nSummary: {{ $json.summary }}\nDescription: {{ $json.description }}",
@@ -197,8 +197,8 @@
       "name": "Update Labels, Priority and Description",
       "type": "n8n-nodes-base.jira",
       "position": [
-        -240,
-        -400
+        100,
+        5680
       ],
       "parameters": {
         "issueKey": "YOUR_CREDENTIAL_HERE",
@@ -227,8 +227,8 @@
       "name": "Get Recent Similar Issues Resolved",
       "type": "n8n-nodes-base.jira",
       "position": [
-        120,
-        -360
+        100,
+        2080
       ],
       "parameters": {
         "limit": 5,
@@ -251,8 +251,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        340,
-        -360
+        100,
+        2620
       ],
       "parameters": {
         "options": {}
@@ -265,8 +265,8 @@
       "name": "Issue Ref",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        560,
-        -200
+        100,
+        2260
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -277,8 +277,8 @@
       "name": "Get Comments",
       "type": "n8n-nodes-base.jira",
       "position": [
-        1000,
-        -200
+        100,
+        1720
       ],
       "parameters": {
         "options": {
@@ -302,8 +302,8 @@
       "name": "Simplify Comments",
       "type": "n8n-nodes-base.set",
       "position": [
-        1220,
-        -200
+        100,
+        3880
       ],
       "parameters": {
         "options": {},
@@ -332,8 +332,8 @@
       "name": "Summarise Resolution",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1660,
-        -200
+        100,
+        5500
       ],
       "parameters": {
         "text": "=## Issue\n{{ $('Simplify Issue').item.json.issueKey }} {{ $('Simplify Issue').item.json.summary }}\n{{ $('Simplify Issue').item.json.description }}\n\n## Comments\n{{ $json.comments.map((item,idx) => `${idx+1}. ${item.comment.replaceAll('\\n', ' ')}`).join('\\n') }}",
@@ -354,8 +354,8 @@
       "name": "Simplify Issue",
       "type": "n8n-nodes-base.set",
       "position": [
-        780,
-        -200
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -426,8 +426,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1440,
-        -200
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -442,8 +442,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1760,
-        -40
+        100,
+        3160
       ],
       "parameters": {
         "model": {
@@ -467,8 +467,8 @@
       "name": "Return Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        2020,
-        -80
+        100,
+        3520
       ],
       "parameters": {
         "options": {},
@@ -509,8 +509,8 @@
       "name": "Attempt to Resolve Issue",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1100,
-        -600
+        100,
+        640
       ],
       "parameters": {
         "text": "=## Current Issue\nReported by: {{ $('Simplify Ticket').item.json.reportedBy }}\n{{ $('Simplify Ticket').item.json.issueKey }} {{ $('Simplify Ticket').item.json.summary }}\n{{ $('Simplify Ticket').item.json.description }}\n\n## Previously resolved Issues\n{{ $json.resolved_issues.toJsonString() }}",
@@ -531,8 +531,8 @@
       "name": "Aggregate1",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        900,
-        -600
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -547,8 +547,8 @@
       "name": "OpenAI Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1200,
-        -440
+        100,
+        3340
       ],
       "parameters": {
         "model": {
@@ -572,8 +572,8 @@
       "name": "Add Comment to Issue",
       "type": "n8n-nodes-base.jira",
       "position": [
-        1460,
-        -600
+        100,
+        100
       ],
       "parameters": {
         "comment": "={{ $json.text }}",
@@ -595,8 +595,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1620,
-        -600
+        100,
+        4420
       ],
       "parameters": {
         "color": 7,
@@ -612,8 +612,8 @@
       "name": "Mark as Seen",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        -1140,
-        -400
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -628,8 +628,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -900,
-        -600
+        100,
+        4600
       ],
       "parameters": {
         "color": 7,
@@ -645,8 +645,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        -600
+        100,
+        4780
       ],
       "parameters": {
         "color": 7,
@@ -662,8 +662,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        800,
-        -800
+        100,
+        4960
       ],
       "parameters": {
         "color": 7,
@@ -679,8 +679,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2100,
-        -1040
+        100,
+        5140
       ],
       "parameters": {
         "width": 440,
@@ -696,8 +696,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 24714621",
@@ -711,8 +711,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1cb3d1ac",
@@ -726,8 +726,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node bbf5bb39",
@@ -741,8 +741,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Get Open Tickets**: jira\n- **Simplify Ticket**: set\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Structured Output Parser**: outputParserStructured\n- **Label, Prioritize & Rewrite**: chainLlm\n- **Update Labels, Priority and Description**: jira\n- **Get Recent Similar Issues Resolved**: jira\n- **Loop Over Items**: splitInBatches\n- **Issue Ref**: noOp\n- ... and 20 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -755,8 +755,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -769,8 +769,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -783,8 +783,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -797,8 +797,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -811,8 +811,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -825,8 +825,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -851,8 +851,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -864,8 +864,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -878,8 +878,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 12 different services: stickyNote, scheduleTrigger, chainLlm, outputParserStructured, set. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -891,8 +891,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

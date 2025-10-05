@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1100,
-        600
+        100,
+        4060
       ],
       "parameters": {
         "model": "gpt-4-1106-preview",
@@ -50,8 +50,8 @@
       "name": "Window Buffer Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1220,
-        600
+        100,
+        4780
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -66,8 +66,8 @@
       "type": "n8n-nodes-base.telegram",
       "onError": "continueErrorOutput",
       "position": [
-        1500,
-        380
+        100,
+        4600
       ],
       "parameters": {
         "text": "={{ $json.output }}",
@@ -91,8 +91,8 @@
       "name": "Correct errors",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1700,
-        380
+        100,
+        280
       ],
       "parameters": {
         "text": "={{ $('AI Agent').item.json.output.replace(/&/g, \"&amp;\").replace(/>/g, \"&gt;\").replace(/</g, \"&lt;\").replace(/\"/g, \"&quot;\") }}",
@@ -116,8 +116,8 @@
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        940,
-        900
+        100,
+        3520
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -128,8 +128,8 @@
       "name": "Listen for incoming events",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        940,
-        380
+        100,
+        3880
       ],
       "webhookId": "322dce18-f93e-4f86-b9b1-3305519b7834",
       "parameters": {
@@ -152,8 +152,8 @@
       "name": "Send back an image",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1300,
-        900
+        100,
+        4240
       ],
       "parameters": {
         "file": "={{ $json.data[0].url }}",
@@ -177,8 +177,8 @@
       "name": "add response field",
       "type": "n8n-nodes-base.set",
       "position": [
-        1480,
-        900
+        100,
+        6760
       ],
       "parameters": {
         "fields": {
@@ -199,8 +199,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        900,
-        840
+        100,
+        4420
       ],
       "parameters": {
         "width": 752.0361990950231,
@@ -215,8 +215,8 @@
       "name": "Dall-E 3 Tool",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1360,
-        600
+        100,
+        460
       ],
       "parameters": {
         "name": "Draw_Dalle_image",
@@ -239,8 +239,8 @@
       "name": "Generate image in Dall-E 3",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1120,
-        900
+        100,
+        3700
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -284,8 +284,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1140,
-        380
+        100,
+        100
       ],
       "parameters": {
         "text": "={{ $json.message.text }}",
@@ -303,8 +303,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in 39d532d3-8c96-4722-9cb0-cad92ff39e94",
@@ -318,8 +318,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e275f31f",
@@ -333,8 +333,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 96faef5d",
@@ -348,8 +348,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5ad43039",
@@ -363,8 +363,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 69a45c1f",
@@ -378,8 +378,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2f5d5f25",
@@ -393,8 +393,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 39d532d3",
@@ -408,8 +408,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Window Buffer Memory**: memoryBufferWindow\n- **Telegram**: telegram\n- **Correct errors**: telegram\n- **Execute Workflow Trigger**: executeWorkflowTrigger\n- **Listen for incoming events**: telegramTrigger\n- **Send back an image**: telegram\n- **add response field**: set\n- **Sticky Note**: stickyNote\n- **Dall-E 3 Tool**: toolWorkflow\n- ... and 9 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -422,8 +422,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -451,8 +451,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -480,8 +480,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -495,8 +495,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -509,8 +509,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -523,8 +523,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -538,8 +538,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -553,8 +553,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -567,8 +567,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -580,8 +580,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -607,8 +607,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -648,8 +648,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Telegram AI Langchain bot\n\n## Overview\nAutomated workflow: Telegram AI Langchain bot. This workflow integrates 11 different services: telegramTrigger, stickyNote, httpRequest, telegram, agent. It contains 19 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -661,8 +661,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",

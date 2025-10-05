@@ -26,8 +26,8 @@
       "name": "Wait1",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1520,
-        380
+        100,
+        4780
       ],
       "webhookId": "93996a89-7e6c-4f08-9e42-eceb160a7d89",
       "parameters": {
@@ -42,8 +42,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1620,
-        180
+        100,
+        2260
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -54,8 +54,8 @@
       "name": "Shopify get products",
       "type": "n8n-nodes-base.graphql",
       "position": [
-        320,
-        200
+        100,
+        2800
       ],
       "parameters": {
         "query": "=query getProducts($first: Int = {{ $json.batchsize }}, $after: String = \"{{ $json.endCursor }}\") {\n  products(first: $first, after: $after) {\n    edges {\n      node {\n        title\n        tags\n        description\n        variants(first: 1) {\n          edges {\n            node {\n              price\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n",
@@ -77,8 +77,8 @@
       "name": "Split output",
       "type": "n8n-nodes-base.code",
       "position": [
-        760,
-        200
+        100,
+        2980
       ],
       "parameters": {
         "language": "python",
@@ -92,8 +92,8 @@
       "name": "Check if there is next page",
       "type": "n8n-nodes-base.if",
       "position": [
-        1300,
-        200
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -126,8 +126,8 @@
       "name": "writing first product details",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -140,
-        380
+        100,
+        7120
       ],
       "parameters": {
         "columns": {
@@ -217,8 +217,8 @@
       "name": "Set cursor",
       "type": "n8n-nodes-base.set",
       "position": [
-        1420,
-        740
+        100,
+        2620
       ],
       "parameters": {
         "fields": {
@@ -244,8 +244,8 @@
       "name": "writing remaning product info to google sheets",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1020,
-        200
+        100,
+        7300
       ],
       "parameters": {
         "columns": {
@@ -333,8 +333,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1300,
-        520
+        100,
+        2440
       ],
       "parameters": {
         "rule": {
@@ -354,8 +354,8 @@
       "name": "update Curser",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        640,
-        0
+        100,
+        6940
       ],
       "parameters": {
         "columns": {
@@ -434,8 +434,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        -540,
-        520
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -469,7 +469,7 @@
       "type": "n8n-nodes-base.code",
       "position": [
         100,
-        540
+        640
       ],
       "parameters": {
         "jsCode": "let mergedJson = {};\n\ntry {\n    const batch_size = $(\"BatchSize\").all(0, 0);\n    if (batch_size.length > 0 && batch_size[0].json) {\n        Object.assign(mergedJson, batch_size[0].json);\n    }\n} catch (error) {\n    console.log(\"BatchSize data not available\");\n}\n\nlet endCursorFound = false;\ntry {\n    const last_cursor = $(\"LastCursor\").all(0, 0);\n    if (last_cursor.length > 0 && last_cursor[0].json) {\n        Object.assign(mergedJson, last_cursor[0].json);\n        if (last_cursor[0].json.endCursor) {\n            mergedJson.endCursor = last_cursor[0].json.endCursor;\n            endCursorFound = true;\n        }\n    }\n} catch (error) {\n    console.log(\"LastCursor data not available\");\n}\n\nif (!endCursorFound) {\n    try {\n        const shopify_initial = $(\"shopify-initial\").all(0, 0);\n        if (shopify_initial.length > 0 && shopify_initial[0].json && shopify_initial[0].json.data && shopify_initial[0].json.data.products && shopify_initial[0].json.data.products.pageInfo) {\n            mergedJson.endCursor = shopify_initial[0].json.data.products.pageInfo.endCursor;\n        }\n    } catch (error) {\n        console.log(\"Shopify data not available\");\n    }\n}\n\nif (Object.keys(mergedJson).length === 0 || mergedJson.hasOwnProperty('error')) {\n    return [{ json: { error: \"No data available. Ensure relevant nodes have been executed.\" } }];\n}\n\nreturn [{ json: mergedJson }];"
@@ -483,8 +483,8 @@
       "name": "BatchSize",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1080,
-        520
+        100,
+        100
       ],
       "parameters": {
         "fields": {
@@ -507,8 +507,8 @@
       "name": "LastCursor",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -720,
-        520
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -542,8 +542,8 @@
       "name": "shopify-initial",
       "type": "n8n-nodes-base.graphql",
       "position": [
-        -300,
-        380
+        100,
+        6760
       ],
       "parameters": {
         "query": "=query getProducts($first: Int = 1) {\n  products(first: $first) {\n    edges {\n      node {\n        title\n        tags\n        description\n        variants(first: 1) {\n          edges {\n            node {\n              price\n            }\n          }\n        }\n      }\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n",
@@ -564,8 +564,8 @@
       "name": "Check cursor is not empty",
       "type": "n8n-nodes-base.if",
       "position": [
-        420,
-        20
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -598,8 +598,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1500,
-        -400
+        100,
+        3160
       ],
       "parameters": {
         "color": 4,
@@ -615,8 +615,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1420,
-        340
+        100,
+        3340
       ],
       "parameters": {
         "width": 262.2077922077919,
@@ -631,8 +631,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1140,
-        360
+        100,
+        3520
       ],
       "parameters": {
         "color": 3,
@@ -648,8 +648,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -820,
-        260
+        100,
+        3700
       ],
       "parameters": {
         "color": 5,
@@ -665,8 +665,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -380,
-        -160
+        100,
+        3880
       ],
       "parameters": {
         "color": 4,
@@ -682,8 +682,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -160,
-        560
+        100,
+        4060
       ],
       "parameters": {
         "color": 6,
@@ -699,8 +699,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        660,
-        200
+        100,
+        4240
       ],
       "parameters": {
         "width": 304.7727272727272,
@@ -715,8 +715,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1400,
-        620
+        100,
+        4420
       ],
       "parameters": {
         "color": 5,
@@ -732,8 +732,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -32.17532467532425,
-        20
+        100,
+        4600
       ],
       "parameters": {
         "color": 3,
@@ -750,8 +750,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cced491b",
@@ -765,8 +765,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 55a6cb5d",
@@ -780,8 +780,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3a9d27fa",
@@ -795,8 +795,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e885b0e7",
@@ -810,8 +810,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Wait1**: wait\n- **No Operation, do nothing**: noOp\n- **Shopify get products**: graphql\n- **Split output**: code\n- **Check if there is next page**: if\n- **writing first product details**: googleSheets\n- **Set cursor**: set\n- **writing remaning product info to google sheets**: googleSheets\n- **Schedule Trigger**: scheduleTrigger\n- **update Curser**: googleSheets\n- ... and 19 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -824,8 +824,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -838,8 +838,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -852,8 +852,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -866,8 +866,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -880,8 +880,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -894,8 +894,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -907,8 +907,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -920,8 +920,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -933,8 +933,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -947,8 +947,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Shopify to Google Sheets Product Sync Automation\n\n## Overview\nAutomated workflow: Shopify to Google Sheets Product Sync Automation. This workflow integrates 10 different services: stickyNote, wait, code, scheduleTrigger, graphql. It contains 29 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -960,8 +960,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

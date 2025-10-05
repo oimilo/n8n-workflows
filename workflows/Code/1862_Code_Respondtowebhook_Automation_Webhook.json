@@ -26,8 +26,8 @@
       "name": "Receive Vectors",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -440,
-        20
+        100,
+        2260
       ],
       "webhookId": "30091e91-fc67-4bab-b1fd-ed65c8f4f860",
       "parameters": {
@@ -44,8 +44,8 @@
       "name": "Extract & Parse Vectors",
       "type": "n8n-nodes-base.set",
       "position": [
-        360,
-        20
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -68,8 +68,8 @@
       "name": "Validate & Compute Centroid",
       "type": "n8n-nodes-base.code",
       "position": [
-        960,
-        20
+        100,
+        3520
       ],
       "parameters": {
         "jsCode": "const input = items[0].json;\nconst vectors = input.vectors;\n\nif (!Array.isArray(vectors) || vectors.length === 0) {\n  return [{ json: { error: \"Invalid input: Expected an array of vectors.\" } }];\n}\n\nconst dimension = vectors[0].length;\nif (!vectors.every(v => v.length === dimension)) {\n  return [{ json: { error: \"Vectors have inconsistent dimensions.\" } }];\n}\n\nconst centroid = new Array(dimension).fill(0);\nvectors.forEach(vector => {\n  vector.forEach((val, index) => {\n    centroid[index] += val;\n  });\n});\n\nfor (let i = 0; i < dimension; i++) {\n  centroid[i] /= vectors.length;\n}\n\nreturn [{ json: { centroid } }];"
@@ -82,8 +82,8 @@
       "name": "Return Centroid Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1640,
-        20
+        100,
+        2440
       ],
       "parameters": {
         "options": {}
@@ -96,8 +96,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        -200
+        100,
+        2620
       ],
       "parameters": {
         "color": 3,
@@ -113,8 +113,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        640,
-        -280
+        100,
+        2800
       ],
       "parameters": {
         "color": 4,
@@ -130,8 +130,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1340,
-        -200
+        100,
+        2980
       ],
       "parameters": {
         "color": 2,
@@ -147,8 +147,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -820,
-        -200
+        100,
+        3160
       ],
       "parameters": {
         "color": 4,
@@ -165,8 +165,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in 32a8aa56-aa7e-4c9e-a39e-f65234224bcf",
@@ -180,8 +180,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in 821bc173-3578-4cf2-9fd7-8ea9cba8dc3f",
@@ -195,8 +195,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 32a8aa56",
@@ -210,8 +210,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 821bc173",
@@ -225,8 +225,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Calculate the Centroid of a Set of Vectors\n\n## Overview\nAutomated workflow: Calculate the Centroid of a Set of Vectors. This workflow integrates 6 different services: webhook, stickyNote, code, respondToWebhook, set. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Node Types**: 6\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Receive Vectors**: webhook\n- **Extract & Parse Vectors**: set\n- **Validate & Compute Centroid**: code\n- **Return Centroid Response**: respondToWebhook\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note4**: stickyNote\n- **Error Handler**: stopAndError\n- **Stopanderror 1**: stopAndError\n- ... and 2 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -239,8 +239,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -254,8 +254,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -269,8 +269,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3880
       ],
       "parameters": {
         "content": "# Calculate the Centroid of a Set of Vectors\n\n## Overview\nAutomated workflow: Calculate the Centroid of a Set of Vectors. This workflow integrates 6 different services: webhook, stickyNote, code, respondToWebhook, set. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -283,8 +283,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -298,8 +298,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -313,8 +313,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Calculate the Centroid of a Set of Vectors\n\n## Overview\nAutomated workflow: Calculate the Centroid of a Set of Vectors. This workflow integrates 6 different services: webhook, stickyNote, code, respondToWebhook, set. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -327,8 +327,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -342,8 +342,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -357,8 +357,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Calculate the Centroid of a Set of Vectors\n\n## Overview\nAutomated workflow: Calculate the Centroid of a Set of Vectors. This workflow integrates 6 different services: webhook, stickyNote, code, respondToWebhook, set. It contains 12 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -371,8 +371,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Calculate the Centroid of a Set of Vectors\n\n## Overview\nAutomated workflow: Calculate the Centroid of a Set of Vectors. This workflow integrates 6 different services: webhook, stickyNote, code, respondToWebhook, set. It contains 12 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -384,8 +384,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -398,8 +398,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Calculate the Centroid of a Set of Vectors\n\n## Overview\nAutomated workflow: Calculate the Centroid of a Set of Vectors. This workflow integrates 6 different services: webhook, stickyNote, code, respondToWebhook, set. It contains 12 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -411,8 +411,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",

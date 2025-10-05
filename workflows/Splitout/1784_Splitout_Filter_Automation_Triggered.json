@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -340,
-        240
+        100,
+        1720
       ],
       "parameters": {
         "model": {
@@ -51,8 +51,8 @@
       "name": "Clarification Questions",
       "type": "n8n-nodes-base.form",
       "position": [
-        1100,
-        -60
+        100,
+        460
       ],
       "webhookId": "61936e5d-a2d3-447f-bf2f-722be2e1eb17",
       "parameters": {
@@ -68,8 +68,8 @@
       "name": "Get Basic Information",
       "type": "n8n-nodes-base.formTrigger",
       "position": [
-        -880,
-        -60
+        100,
+        1360
       ],
       "webhookId": "5256b332-3d3c-486a-8449-85fa44961bb8",
       "parameters": {
@@ -109,8 +109,8 @@
       "name": "Get Business Overview",
       "type": "n8n-nodes-base.form",
       "position": [
-        -640,
-        -60
+        100,
+        1540
       ],
       "webhookId": "16216db0-6150-4ac7-b1f7-7fd6c2eb74c5",
       "parameters": {
@@ -133,8 +133,8 @@
       "name": "End Form",
       "type": "n8n-nodes-base.form",
       "position": [
-        1320,
-        -60
+        100,
+        640
       ],
       "webhookId": "eb756213-2fae-4b29-85b3-727d3cf53b90",
       "parameters": {
@@ -151,8 +151,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -120,
-        240
+        100,
+        3880
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"response\": [\n    {\n      \"question\": \"What is the biggest challenge facing their business at present?\",\n      \"has_been_answered\": false,\n      \"reasoning\": \"put your reason here\"\n    },\n    {\n      \"question\": \"Does the company have any existing automation workflows already in place?\",\n      \"has_been_answered\": true,\n      \"reasoning\": \"put your reason here\"\n    },\n    {\n      \"question\": \"Is the respondent a decision-maker in the business? (This can be inferred from their job title if it indicates a leadership position such as CEO, Founder, Director, etc.)\",\n      \"has_been_answered\": false,\n      \"reasoning\": \"put your reason here\"\n    },\n    {\n      \"question\": \"Which specific business functions or departments are they looking to automate? (Examples: Sales, Marketing, HR, Finance, Customer Service, Supply Chain, etc.)\",\n      \"has_been_answered\": true,\n      \"reasoning\": \"put your reason here\"\n    },\n    {\n      \"question\": \"What does their current IT infrastructure look like?\",\n      \"has_been_answered\": false,\n      \"reasoning\": \"put your reason here\"\n    }\n  ]\n}\n"
@@ -165,8 +165,8 @@
       "name": "Remove Already Answered Questions",
       "type": "n8n-nodes-base.filter",
       "position": [
-        340,
-        -60
+        100,
+        2080
       ],
       "parameters": {
         "options": {},
@@ -200,8 +200,8 @@
       "name": "Analyse Response",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -280,
-        -60
+        100,
+        280
       ],
       "parameters": {
         "text": "=## Analysis Task\n\nAnalyze the following customer response to the question \"Please describe your current situation and why you are interested in automating with AI.\" \n\nCustomer Information:\n- Job Title: {{ $('Get Basic Information').item.json['Job Title'] }}\n- Response: {{ $json['Please describe your current situation and why you are interested in automating with AI'] }}\n\n## Required Information\nIdentify whether the customer's response clearly addresses each of these critical questions:\n\n1. What specific goals are you looking to achieve with automation?\n2. Does the company have any existing automation workflows already in place?\n3. Is the respondent a decision-maker in the business? (This can be inferred from their job title if it indicates a leadership position such as CEO, Founder, Director, etc.)\n4. Which specific business functions or departments are you looking to automate? (Examples: Sales, Marketing, HR, Finance, Customer Service, Supply Chain, etc.)\n5. What does your current IT infrastructure look like?\n\n## Output Format\nAnalyse each question with whether you believe that the question has already been answered. Go step by step and use reasoning. ",
@@ -216,8 +216,8 @@
       "name": "Split Out Analysis",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        120,
-        -60
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -232,8 +232,8 @@
       "name": "Prepare For Form Generation",
       "type": "n8n-nodes-base.set",
       "position": [
-        580,
-        -60
+        100,
+        1900
       ],
       "parameters": {
         "options": {},
@@ -268,8 +268,8 @@
       "name": "Aggregate For Form Generation",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        840,
-        -60
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -283,8 +283,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1660,
-        -300
+        100,
+        3160
       ],
       "parameters": {
         "width": 700,
@@ -299,8 +299,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -940,
-        -300
+        100,
+        3340
       ],
       "parameters": {
         "width": 480,
@@ -315,8 +315,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -940,
-        -140
+        100,
+        2440
       ],
       "parameters": {
         "color": 7,
@@ -332,8 +332,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -440,
-        -220
+        100,
+        2620
       ],
       "parameters": {
         "color": 7,
@@ -349,8 +349,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -420,
-        140
+        100,
+        3700
       ],
       "parameters": {
         "color": 5,
@@ -366,8 +366,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -300,
-        -160
+        100,
+        3520
       ],
       "parameters": {
         "color": 5,
@@ -383,8 +383,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        60,
-        -140
+        100,
+        2800
       ],
       "parameters": {
         "color": 7,
@@ -400,8 +400,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1000,
-        -140
+        100,
+        2980
       ],
       "parameters": {
         "color": 7,
@@ -418,8 +418,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5893c244",
@@ -433,8 +433,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4060
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Clarification Questions**: form\n- **Get Basic Information**: formTrigger\n- **Get Business Overview**: form\n- **End Form**: form\n- **Structured Output Parser**: outputParserStructured\n- **Remove Already Answered Questions**: filter\n- **Analyse Response**: chainLlm\n- **Split Out Analysis**: splitOut\n- **Prepare For Form Generation**: set\n- ... and 10 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -447,8 +447,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4240
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -461,8 +461,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -475,8 +475,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -489,8 +489,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -517,8 +517,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -543,8 +543,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -556,8 +556,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -570,8 +570,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Dynamic Form with AI\n\n## Overview\nAutomated workflow: Dynamic Form with AI. This workflow integrates 11 different services: filter, formTrigger, stickyNote, splitOut, chainLlm. It contains 20 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -583,8 +583,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

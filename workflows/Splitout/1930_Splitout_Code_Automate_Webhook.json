@@ -26,8 +26,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        88,
-        455
+        100,
+        5140
       ],
       "parameters": {
         "model": {
@@ -52,8 +52,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        208,
-        455
+        100,
+        8020
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"primary_keywords\": [\"string\"],\n  \"long_tail_keywords\": [\n    {\n      \"keyword\": \"string\",\n      \"intent\": \"string\"\n    }\n  ],\n  \"question_based_keywords\": [\"string\"],\n  \"related_topics\": [\"string\"]\n}\n"
@@ -66,8 +66,8 @@
       "name": "Topic Expansion",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        60,
-        235
+        100,
+        8200
       ],
       "parameters": {
         "text": "=I need to create comprehensive SEO keyword research for content about: \n{{ $json.primary_topic }}\n\nMy target audience is: {{ $json.target_audience }}\nThis will be used for a: {{ $json.content_type }}\nLocation: {{ $json.location }}\nLanguage: {{ $json.language }}\n\nPlease generate:\n1. A list of 20 primary keywords directly related to {{ $json.primary_topic }}\n2. 30 long-tail keyword variations with search intent (informational, commercial, transactional)\n3. 15 question-based keywords people might ask about this topic\n4. 10 related topics that could be used for supporting content\n\nFormat the output as a structured JSON with these categories. ",
@@ -83,8 +83,8 @@
       "name": "Competitor Analysis",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1100,
-        660
+        100,
+        640
       ],
       "parameters": {
         "text": "=Analyze the following competitor content for the Primary Topic \"{{ $('Format Json and add Competitor URLs').item.json.primary_topic }}\":\n\nCompetitor: {{ $('Split the Competitor URLs').item.json.competitorUrls }}\nDATA: ```\n{{ $json.tasks[0].result.toJsonString() }}\n```\n\nPlease identify:\n1. Primary keywords they appear to be targeting\n2. Content gaps or missing topics they aren't covering\n3. Unique angles or approaches they're taking\n4. Questions they're answering (or not answering)\n\nFormat the output as a structured analysis. ",
@@ -99,8 +99,8 @@
       "name": "Keyword Difficulty",
       "type": "n8n-nodes-dataforseo.dataForSeo",
       "position": [
-        656,
-        260
+        100,
+        4240
       ],
       "parameters": {
         "keywords": {
@@ -129,8 +129,8 @@
       "name": "Search Volume & CPC",
       "type": "n8n-nodes-dataforseo.dataForSeo",
       "position": [
-        656,
-        60
+        100,
+        5680
       ],
       "parameters": {
         "date_to": {},
@@ -160,8 +160,8 @@
       "name": "split primary keywords",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        440,
-        160
+        100,
+        10720
       ],
       "parameters": {
         "options": {},
@@ -175,8 +175,8 @@
       "name": "OpenAI Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1920,
-        640
+        100,
+        5500
       ],
       "parameters": {
         "model": {
@@ -201,8 +201,8 @@
       "name": "Keyword Ranking per URL",
       "type": "n8n-nodes-dataforseo.dataForSeo",
       "position": [
-        880,
-        660
+        100,
+        4420
       ],
       "parameters": {
         "limit": 10,
@@ -226,8 +226,8 @@
       "name": "Final Keyword Strategy",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1940,
-        440
+        100,
+        3700
       ],
       "parameters": {
         "text": "=# Role: Act as an expert SEO Strategist and Content Planner.\n\n# Context:\n# You are creating an actionable SEO Keyword Strategy & Content Brief based on prior AI-driven keyword generation and competitor analysis.\n# The goal is content creation for the 'Primary Topic', targeting the specified 'Target Audience' and 'Content Type' in the given 'Location' and 'Language'.\n# Data provided includes initial keyword ideas (primary, long-tail, questions), keyword metrics (volume, difficulty), related topics, and competitor analysis insights (their likely keywords, content gaps, unique angles).\n\n# Input Parameters for this Task:\nPrimary Topic: {{ $json.primary_topic }}\nTarget Audience: {{ $json.target_audience }}\nContent Type: {{ $json.content_type }}\nLocation: {{ $json.location }}\nLanguage: {{ $json.language }}\nAnalyzed Compeitors: {{ $json.competitor_urls }}\n\n# Your Task:\n# Analyze the provided input parameters and the detailed 'DATA' section below.\n# Synthesize this information into a clear, concise, and actionable SEO Keyword Strategy & Content Brief.\n# Structure the output logically using Markdown. Focus on providing insights and actionable recommendations, not just listing data. Explain the 'why' behind key recommendations. Keep the language easy to understand, assuming the reader (e.g., a content writer or marketing manager) understands basic SEO concepts but isn't necessarily a deep expert.\n\n# Required Output Sections (Use Markdown Headers):\n\n## 1. Executive Summary\n   - **Objective:** Briefly state the primary goal of creating content on this topic for this audience (e.g., \"Attract [Target Audience] seeking information on [Primary Topic]...\" or \"Position our brand as a thought leader for [Target Audience] regarding [Primary Topic]\").\n   - **Key Opportunity:** Summarize the most significant keyword opportunity identified (e.g., \"Target the high-volume term '[Example Keyword]' while capturing related informational queries via long-tail variations.\")\n   - **Competitor Angle:** Briefly mention the main strategic takeaway from the competitor analysis (e.g., \"Competitors focus heavily on [X], leaving an opportunity to address [Y] or provide a unique angle on [Z].\")\n\n## 2. Target Keyword Strategy & Rationale\n   - **Primary Target Keywords:**\n      - List the top 5-10 recommended primary keywords.\n      - For each, include Search Volume (SV) and Keyword Difficulty (KD).\n      - **Add brief commentary/rationale for each group or key term:** Why were these chosen? (e.g., \"High relevance and strong search volume despite moderate difficulty,\" or \"Balances primary topic focus with user search behavior.\")\n   - **Secondary & Long-Tail Opportunities:**\n      - List the top 10-15 recommended long-tail and secondary keywords.\n      - Group them by likely Search Intent (e.g., Informational, Commercial, Transactional) if discernible from the input data.\n      - **Add brief commentary on the overall opportunity:** What specific user needs or funnel stages do these address? Note any clusters with particularly low competition.\n   - **Key Question Keywords:**\n      - List the top 5 question-based keywords the content *must* answer.\n      - **Add brief commentary:** Why are these questions crucial for the target audience or content goals?\n\n## 3. Competitive Landscape & Content Gaps\n   - **Competitor Focus:** Briefly summarize the main keyword themes or angles competitors seem to be targeting, based on the provided analysis.\n   - **Identified Gaps/Opportunities:** Highlight 1-3 specific content gaps, under-served intents, or unique angles identified from the competitor analysis that this content piece should leverage. Be specific (e.g., \"Competitors explain 'what', but not 'how to implement',\" or \"Lack of practical examples for [Target Audience]\").\n\n## 4. Content Outline & Actionable Recommendations\n   - **Recommended Structure:** Propose a logical H2/H3 structure or outline for the content piece, designed to cover the target keywords and address user intent effectively.\n   - **Keyword Integration:** Briefly suggest how to naturally incorporate the different keyword types (primary, long-tail, questions) within the proposed structure.\n   - **Content Enhancement:** Provide 2-3 specific, actionable recommendations to make the content stand out for the target audience and potentially outperform competitors (e.g., \"Include step-by-step instructions,\" \"Add original data/charts,\" \"Feature quotes from [Target Audience Role],\" \"Create a downloadable checklist\").\n\n## 5. Proposed SEO Titles\n   - List 3-5 compelling, SEO-optimized title options for the content piece. Ensure they are relevant, incorporate keywords naturally, and entice clicks.\n\n# DATA for Analysis:\n# (Analyze the following JSON data containing keyword suggestions, metrics, and competitor analysis results)\n```json\n{{ $json.data.toJsonString() }}\n\n{{ $json.output.toJsonString() }}\n```\n\nFinal Output Format: Ensure the entire response is well-structured, clean Markdown, ready to be used as a content brief.",
@@ -242,8 +242,8 @@
       "name": "Get Input from NocoDB",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -680,
-        340
+        100,
+        4060
       ],
       "webhookId": "ac7e989d-6e32-4850-83c4-f10421467fb8",
       "parameters": {
@@ -259,8 +259,8 @@
       "name": "Split the Competitor URLs",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        580,
-        660
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -274,8 +274,8 @@
       "name": "Set relevant fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        -500,
-        340
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -340,8 +340,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1100,
-        860
+        100,
+        5320
       ],
       "parameters": {
         "model": {
@@ -366,8 +366,8 @@
       "name": "Format Json and add Competitor URLs",
       "type": "n8n-nodes-base.code",
       "position": [
-        300,
-        660
+        100,
+        3880
       ],
       "parameters": {
         "jsCode": "const inputJson = $input.first().json;\nconst rawUrls = inputJson.competitor_urls;\n\nconst competitorUrls = rawUrls\n  .split(\",\")\n  .map(url => url.trim())\n  .filter(url => url.length > 0);\n\nconst outputJson = {\n  ...inputJson,\n  competitorUrls: competitorUrls\n};\n\nreturn [{ json: outputJson }];\n"
@@ -380,8 +380,8 @@
       "name": "Aggregate SV & CPC",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        880,
-        60
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -395,8 +395,8 @@
       "name": "Aggregate KWD",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        880,
-        260
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -410,8 +410,8 @@
       "name": "Merge SV, CPC & KWD",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1174,
-        160
+        100,
+        4780
       ],
       "parameters": {
         "mode": "combine",
@@ -426,8 +426,8 @@
       "name": "Merge Topic Expansion, SV, CPC & KWD",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1472,
-        235
+        100,
+        4960
       ],
       "parameters": {
         "mode": "combine",
@@ -442,8 +442,8 @@
       "name": "Aggregate Competitor Analysis",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        1472,
-        660
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -457,8 +457,8 @@
       "name": "Merge Everything",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1720,
-        440
+        100,
+        4600
       ],
       "parameters": {
         "mode": "combine",
@@ -476,8 +476,8 @@
       "name": "Write Content Brief ",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        2320,
-        440
+        100,
+        10540
       ],
       "parameters": {
         "table": "mfsjucjn304v1hc",
@@ -511,8 +511,8 @@
       "name": "Update Status - Done",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        2320,
-        600
+        100,
+        8380
       ],
       "parameters": {
         "table": "mp3qmbuye3pyihc",
@@ -546,8 +546,8 @@
       "name": "Send Notification",
       "type": "n8n-nodes-base.slack",
       "position": [
-        2320,
-        800
+        100,
+        5860
       ],
       "webhookId": "d4615307-81b9-45a3-9d03-4fe5875811c1",
       "parameters": {
@@ -578,8 +578,8 @@
       "name": "Start Notification",
       "type": "n8n-nodes-base.slack",
       "position": [
-        -340,
-        20
+        100,
+        6400
       ],
       "webhookId": "d4615307-81b9-45a3-9d03-4fe5875811c1",
       "parameters": {
@@ -610,8 +610,8 @@
       "name": "Update Status - Started",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        -140,
-        40
+        100,
+        8560
       ],
       "parameters": {
         "table": "mp3qmbuye3pyihc",
@@ -645,8 +645,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -440,
-        -140
+        100,
+        6580
       ],
       "parameters": {
         "color": 7,
@@ -662,8 +662,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        60,
-        40
+        100,
+        6760
       ],
       "parameters": {
         "width": 280,
@@ -678,8 +678,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        400,
-        -80
+        100,
+        6940
       ],
       "parameters": {
         "color": 5,
@@ -695,8 +695,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        260,
-        600
+        100,
+        7120
       ],
       "parameters": {
         "color": 4,
@@ -712,8 +712,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1700,
-        260
+        100,
+        7300
       ],
       "parameters": {
         "color": 6,
@@ -729,8 +729,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2260,
-        260
+        100,
+        7480
       ],
       "parameters": {
         "color": 7,
@@ -745,8 +745,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -740,
-        240
+        100,
+        7660
       ],
       "parameters": {
         "width": 400,
@@ -761,8 +761,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        -280
+        100,
+        7840
       ],
       "parameters": {
         "color": 3,
@@ -779,8 +779,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in 613e1d25-3e9d-4a7f-8657-392854eb00de",
@@ -794,8 +794,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 65aacfa5",
@@ -809,8 +809,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 49819332",
@@ -824,8 +824,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 613e1d25",
@@ -839,8 +839,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1f083fb0",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c23e1c12",
@@ -869,8 +869,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node acfee96e",
@@ -884,8 +884,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Structured Output Parser**: outputParserStructured\n- **Topic Expansion**: agent\n- **Competitor Analysis**: agent\n- **Keyword Difficulty**: dataForSeo\n- **Search Volume & CPC**: dataForSeo\n- **split primary keywords**: splitOut\n- **OpenAI Chat Model2**: lmChatOpenAi\n- **Keyword Ranking per URL**: dataForSeo\n- **Final Keyword Strategy**: agent\n- ... and 31 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -898,8 +898,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -913,8 +913,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -927,8 +927,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -941,8 +941,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -956,8 +956,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -971,8 +971,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 47\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -985,8 +985,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 48\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -999,8 +999,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1014,8 +1014,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1029,8 +1029,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1043,8 +1043,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9820
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1056,8 +1056,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1070,8 +1070,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10000
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 54\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1083,8 +1083,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1097,8 +1097,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10180
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1110,8 +1110,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1124,8 +1124,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        10360
       ],
       "parameters": {
         "content": "# AI powered SEO Keyword Research Automation - The vibe Marketer\n\n## Overview\nAutomated workflow: AI powered SEO Keyword Research Automation - The vibe Marketer. This workflow integrates 14 different services: webhook, stickyNote, code, agent, splitOut. It contains 41 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1137,8 +1137,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

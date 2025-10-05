@@ -17,8 +17,8 @@
       "name": "When clicking \"Execute Workflow\"",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -1300,
-        360
+        100,
+        6760
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "Whether type is file",
       "type": "n8n-nodes-base.if",
       "position": [
-        940,
-        780
+        100,
+        7480
       ],
       "parameters": {
         "conditions": {
@@ -50,8 +50,8 @@
       "name": "Set new path for subfolder",
       "type": "n8n-nodes-base.set",
       "position": [
-        1240,
-        900
+        100,
+        4240
       ],
       "parameters": {
         "fields": {
@@ -77,8 +77,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        540,
-        474.3406813627256
+        100,
+        4600
       ],
       "parameters": {
         "width": 1861.9238476953906,
@@ -93,8 +93,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2440,
-        478.85370741482984
+        100,
+        4780
       ],
       "parameters": {
         "width": 695.2464929859717,
@@ -109,8 +109,8 @@
       "name": "Set new path for file",
       "type": "n8n-nodes-base.code",
       "position": [
-        2900,
-        860
+        100,
+        4060
       ],
       "parameters": {
         "jsCode": "for (const item of $input.all()) {\n  const toPath = $('Set folder-paths for from and to').item.json.to;\n  const fromPath = $('Set folder-paths for from and to').item.json.from;\n\n   // Remove leading and trailing slashes\n  path = fromPath.replace(/^\\/|\\/$/g, '');\n  // Split the path into an array of folders\n  const folders = path.split('/');\n  // Remove empty strings (resulting from leading, trailing, or consecutive slashes)\n  const nonEmptyFoldersCount = folders.filter(folder => folder !== '').length;\n\n  newFilePathArray = item.json.path.replace(/^\\/|\\/$/g, '').split('/');\n  \n  item.json.newPath = toPath.replace(/^\\/|\\/$/g, '') + '/' + newFilePathArray.slice(nonEmptyFoldersCount).join(\"/\")\n}\n\nreturn $input.all();"
@@ -123,8 +123,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3180,
-        480
+        100,
+        4960
       ],
       "parameters": {
         "width": 695.2464929859717,
@@ -139,8 +139,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3920,
-        480
+        100,
+        5140
       ],
       "parameters": {
         "width": 695.2464929859717,
@@ -155,8 +155,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -380,
-        480
+        100,
+        5320
       ],
       "parameters": {
         "width": 871.7450543093198,
@@ -171,8 +171,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1340,
-        60
+        100,
+        5500
       ],
       "parameters": {
         "width": 723.2756594453772,
@@ -188,8 +188,8 @@
       "type": "n8n-nodes-base.webhook",
       "disabled": true,
       "position": [
-        -1320,
-        880
+        100,
+        6580
       ],
       "webhookId": "285b2cba-587b-4131-82a8-cdd35a8d49e1",
       "parameters": {
@@ -207,8 +207,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1340,
-        580
+        100,
+        5680
       ],
       "parameters": {
         "width": 723.2756594453772,
@@ -223,8 +223,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1340,
-        1140
+        100,
+        5860
       ],
       "parameters": {
         "width": 723.2756594453772,
@@ -240,8 +240,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "disabled": true,
       "position": [
-        -1320,
-        1440
+        100,
+        2800
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -252,8 +252,8 @@
       "name": "Set folder-paths for from and to",
       "type": "n8n-nodes-base.set",
       "position": [
-        -280,
-        880
+        100,
+        3880
       ],
       "parameters": {
         "fields": {
@@ -279,8 +279,8 @@
       "type": "n8n-nodes-base.nextCloud",
       "onError": "continueRegularOutput",
       "position": [
-        -40,
-        880
+        100,
+        640
       ],
       "parameters": {
         "path": "={{ $json.to }}",
@@ -300,8 +300,8 @@
       "name": "Get all folders/files in from-folder",
       "type": "n8n-nodes-base.nextCloud",
       "position": [
-        240,
-        880
+        100,
+        3160
       ],
       "parameters": {
         "path": "={{ $('Set folder-paths for from and to').item.json.from }}",
@@ -322,8 +322,8 @@
       "name": "Loop over files and folders",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        660,
-        880
+        100,
+        3520
       ],
       "parameters": {
         "options": {}
@@ -336,8 +336,8 @@
       "name": "Consolidate all files and folders found",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2000,
-        760
+        100,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -349,8 +349,8 @@
       "type": "n8n-nodes-base.nextCloud",
       "onError": "continueRegularOutput",
       "position": [
-        1440,
-        900
+        100,
+        460
       ],
       "parameters": {
         "path": "={{$('Set new path for subfolder').item.json.to }}",
@@ -370,8 +370,8 @@
       "name": "Get all folders/files in found subfolder",
       "type": "n8n-nodes-base.nextCloud",
       "position": [
-        1680,
-        900
+        100,
+        2980
       ],
       "parameters": {
         "path": "={{$('Set new path for subfolder').item.json.from }}",
@@ -392,8 +392,8 @@
       "name": "Whether there is are more files or subfolders found",
       "type": "n8n-nodes-base.if",
       "position": [
-        2200,
-        880
+        100,
+        7300
       ],
       "parameters": {
         "conditions": {
@@ -413,8 +413,8 @@
       "name": "Consolidate all found files",
       "type": "n8n-nodes-base.code",
       "position": [
-        2580,
-        860
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "let results = [],\n  i = 0;\n\ndo {\n  try {\n    results = results.concat($(\"Consolidate all files and folders found\").all(0, i));\n  } catch (error) {\n    return results;\n  }\n  i++;\n} while (true);"
@@ -427,8 +427,8 @@
       "name": "Loop Over all files",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        3300,
-        860
+        100,
+        3340
       ],
       "parameters": {
         "options": {}
@@ -441,8 +441,8 @@
       "name": "Move file to destination",
       "type": "n8n-nodes-base.nextCloud",
       "position": [
-        3660,
-        940
+        100,
+        3700
       ],
       "parameters": {
         "path": "={{ decodeURIComponent($json.path) }}",
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.nextCloud",
       "onError": "continueRegularOutput",
       "position": [
-        4200,
-        840
+        100,
+        820
       ],
       "parameters": {
         "path": "={{ $('Set folder-paths for from and to').item.json.from }}",
@@ -486,8 +486,8 @@
       "name": "Set paths",
       "type": "n8n-nodes-base.set",
       "position": [
-        -780,
-        360
+        100,
+        4420
       ],
       "parameters": {
         "fields": {
@@ -512,8 +512,8 @@
       "name": "Whether the request is valid",
       "type": "n8n-nodes-base.if",
       "position": [
-        -1100,
-        880
+        100,
+        6940
       ],
       "parameters": {
         "conditions": {
@@ -533,8 +533,8 @@
       "name": "Stop and Error: request not valid",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        -760,
-        920
+        100,
+        6220
       ],
       "parameters": {
         "errorMessage": "The Request is not valid!"
@@ -547,8 +547,8 @@
       "name": "Whether the request is valid1",
       "type": "n8n-nodes-base.if",
       "position": [
-        -1120,
-        1440
+        100,
+        7120
       ],
       "parameters": {
         "conditions": {
@@ -568,8 +568,8 @@
       "name": "Stop and Error: request not valid1",
       "type": "n8n-nodes-base.stopAndError",
       "position": [
-        -760,
-        1480
+        100,
+        6400
       ],
       "parameters": {
         "errorMessage": "The Request is not valid!"
@@ -582,8 +582,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2440,
-        60
+        100,
+        6040
       ],
       "parameters": {
         "width": 770.5015081009478,
@@ -599,8 +599,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c1e7754f",
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking \"Execute Workflow\"**: manualTrigger\n- **Whether type is file**: if\n- **Set new path for subfolder**: set\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Set new path for file**: code\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Sticky Note4**: stickyNote\n- **Sticky Note5**: stickyNote\n- ... and 23 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -643,8 +643,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -657,8 +657,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -671,8 +671,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -686,8 +686,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -701,8 +701,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -715,8 +715,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -729,8 +729,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -744,8 +744,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -759,8 +759,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -773,8 +773,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 44\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -786,8 +786,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -800,8 +800,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -813,8 +813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -827,8 +827,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -840,8 +840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 11 different services: webhook, stickyNote, splitInBatches, code, noOp. It contains 33 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -867,8 +867,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

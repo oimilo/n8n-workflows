@@ -26,8 +26,8 @@
       "name": "CONFIG",
       "type": "n8n-nodes-base.set",
       "position": [
-        660,
-        60
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -75,8 +75,8 @@
       "name": "Convert to File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        4020,
-        1600
+        100,
+        820
       ],
       "parameters": {
         "options": {},
@@ -91,8 +91,8 @@
       "name": "HasFile?",
       "type": "n8n-nodes-base.if",
       "position": [
-        2400,
-        880
+        100,
+        13060
       ],
       "parameters": {
         "options": {},
@@ -125,8 +125,8 @@
       "name": "Extract from File",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        2660,
-        860
+        100,
+        11620
       ],
       "parameters": {
         "options": {},
@@ -141,8 +141,8 @@
       "name": "Main Page",
       "type": "n8n-nodes-base.html",
       "position": [
-        4660,
-        -100
+        100,
+        14140
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n<html>\n  <head>\n{{ $('CONFIG').first().json.HTML_headers }}\n  <body>\n    <div data-app id=\"main\">Please wait...</div>\n    <script>\n      \n      mermaid.initialize({\n        startOnLoad: false,\n      });\n      let svgCounter = 0;\n\n      window.$docsify = {\n        el: '#main',\n        auto2top: true,\n        loadSidebar: 'summary.md',\n        basePath: '{{ $json.webhookUrl.split($json.webhookUrl.extractDomain())[1] }}/',\n        name: 'All Workflows',\n        markdown: {\n          renderer: {\n            code(code, lang) {\n              if (lang === \"mermaid\") {\n                const svgName = `mermaid-svg-${svgCounter++}`;\n                const MERMAID_CONTAINER_ID = `${svgName}-container`;\n                mermaid.render(svgName, code).then(({ svg }) => {\n                  const containerElement = document.querySelector(\n                    `#${MERMAID_CONTAINER_ID}`\n                  );\n                  if (containerElement) {\n                    containerElement.innerHTML = svg;\n                  } else {\n                    console.error(`Error: #${MERMAID_CONTAINER_ID} not found`);\n                  }\n                });\n                return `<div class=\"mermaid\" id=\"${MERMAID_CONTAINER_ID}\"></div>`;\n              }\n              return this.origin.code.apply(this, arguments);\n            },\n          },\n        },        \n        plugins: [\n          function(hook, vm) {\n            hook.ready(function() {\n              // Check if URL doesn't end with slash but also isn't a file path\n              if (!window.location.pathname.endsWith('/') && !window.location.pathname.includes('.')) {\n                // Use history.replaceState to avoid adding to browser history\n                const newUrl = window.location.pathname + '/' + window.location.hash;\n                window.history.replaceState(null, null, newUrl);\n              }\n            });\n          }\n        ],        \n      };\n    </script>\n{{ $('CONFIG').first().json.HTML_docsify_include }}\n  </body>\n</html>"
@@ -155,8 +155,8 @@
       "name": "Instance overview",
       "type": "n8n-nodes-base.html",
       "position": [
-        4660,
-        160
+        100,
+        13240
       ],
       "parameters": {
         "html": "# Your n8n instance workflows:\n\n| Workflow | Status | Docs | Created | Updated | Nodes | Triggers |\n|----------|:------:|------|---------|---------|-------|----------|\n{{ $jmespath($input.all(),'[].json.content').join('\\n') }}"
@@ -170,8 +170,8 @@
       "name": "Sort-workflows",
       "type": "n8n-nodes-base.sort",
       "position": [
-        2080,
-        160
+        100,
+        17020
       ],
       "parameters": {
         "options": {},
@@ -192,8 +192,8 @@
       "name": "doc action",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1740,
-        1080
+        100,
+        22600
       ],
       "parameters": {
         "rules": {
@@ -312,8 +312,8 @@
       "name": "Empty Set",
       "type": "n8n-nodes-base.set",
       "position": [
-        2000,
-        960
+        100,
+        1360
       ],
       "parameters": {
         "options": {}
@@ -326,8 +326,8 @@
       "name": "Load Doc File",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        1900,
-        860
+        100,
+        13960
       ],
       "parameters": {
         "options": {},
@@ -342,8 +342,8 @@
       "name": "Respond with markdown",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        4920,
-        1040
+        100,
+        16660
       ],
       "parameters": {
         "options": {
@@ -368,8 +368,8 @@
       "name": "Respond with HTML",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        4920,
-        860
+        100,
+        16300
       ],
       "parameters": {
         "options": {
@@ -394,8 +394,8 @@
       "name": "Save New Doc File",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        4180,
-        1600
+        100,
+        16840
       ],
       "parameters": {
         "options": {},
@@ -411,8 +411,8 @@
       "name": "Blank Doc File",
       "type": "n8n-nodes-base.set",
       "position": [
-        4000,
-        1080
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -436,8 +436,8 @@
       "name": "Fetch Single Workflow1",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        2820,
-        1200
+        100,
+        11980
       ],
       "parameters": {
         "operation": "get",
@@ -462,8 +462,8 @@
       "name": "Fill Workflow Table",
       "type": "n8n-nodes-base.set",
       "position": [
-        2280,
-        160
+        100,
+        12160
       ],
       "parameters": {
         "options": {},
@@ -488,8 +488,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueRegularOutput",
       "position": [
-        3480,
-        1200
+        100,
+        280
       ],
       "parameters": {
         "text": "=Here's the workflow data:\n{{Object.assign(\n  Object.fromEntries(Object.entries($json).filter(([key]) => !['staticData', 'pinData'].includes(key))),\n  {nodes: $json.nodes.map(node => Object.fromEntries(Object.entries(node).filter(([key]) => !['id', 'position'].includes(key))))}\n).toJsonString() }}",
@@ -512,8 +512,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3480,
-        1360
+        100,
+        15760
       ],
       "parameters": {
         "model": "gpt-4-turbo",
@@ -536,8 +536,8 @@
       "name": "Structured Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3820,
-        1360
+        100,
+        20260
       ],
       "parameters": {
         "jsonSchemaExample": "{\n\t\"workflow_description\": \"## Workflow overview\\n\\n>some additiona info\\n\\nWorkflow desctiption\",\n\t\"nodes_settings\": \"## Nodes settings\\n\\n###Node name 1\\n\\n-  Setting 1\\n-  Setting 2###Node name 2\\n\\n-  Setting 1\\n-  Setting 2\"\n}"
@@ -550,8 +550,8 @@
       "name": "Auto-fixing Output Parser",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3580,
-        1360
+        100,
+        100
       ],
       "parameters": {
         "options": {}
@@ -564,8 +564,8 @@
       "name": "Respond with main page HTML",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        4920,
-        -100
+        100,
+        16480
       ],
       "parameters": {
         "options": {
@@ -590,8 +590,8 @@
       "name": "Workflow Tags",
       "type": "n8n-nodes-base.html",
       "position": [
-        4660,
-        500
+        100,
+        22240
       ],
       "parameters": {
         "html": "- **Click to filter by tag:**\n{{ [...new Set($jmespath($input.all(),'[].json.tags[].name'))].map(tag => `- [${tag}](tag-${encodeURIComponent(tag)})`).join('\\n') }}"
@@ -605,8 +605,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1740,
-        1880
+        100,
+        15580
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -617,8 +617,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        3140,
-        1100
+        100,
+        14320
       ],
       "parameters": {
         "mode": "combine",
@@ -634,8 +634,8 @@
       "name": "Fallback file name",
       "type": "n8n-nodes-base.html",
       "position": [
-        4660,
-        1900
+        100,
+        11800
       ],
       "parameters": {
         "html": "> File: {{ $json.params.file }}"
@@ -648,8 +648,8 @@
       "name": "mkdir",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        2100,
-        1060
+        100,
+        23320
       ],
       "parameters": {
         "command": "=mkdir -p {{$('CONFIG').first().json.project_path}}"
@@ -662,8 +662,8 @@
       "name": "Merge1",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2240,
-        880
+        100,
+        14500
       ],
       "parameters": {
         "mode": "chooseBranch"
@@ -676,8 +676,8 @@
       "name": "Edit Page",
       "type": "n8n-nodes-base.html",
       "position": [
-        4660,
-        860
+        100,
+        1180
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n<html>\n  <head>\n{{ $('CONFIG').first().json.HTML_headers }}\n{{ $('CONFIG').first().json.HTML_styles_editor }}\n  </head>\n  <body>\n    <div class=\"container\">\n      <div class=\"button-container\">\n        <button class=\"button save-button\" onclick=\"saveContent()\">Save</button>\n        <button class=\"button cancel-button\" onclick=\"closeWindow()\">Cancel</button>\n      </div>\n      <div class=\"editor-preview-container\">\n        <textarea id=\"editor\">{{ $json.workflowdata }}</textarea>\n        <div class=\"preview-container\">\n          <div id=\"preview\"></div>\n        </div>\n      </div>\n    </div>\n    \n<script>\n  const editor = document.getElementById('editor');\n  let vm;\n\n      mermaid.initialize({\n        startOnLoad: false,\n      });\n\n      let svgCounter = 0;\n\n      // Function to save content\n      async function saveContent() {\n        try {\n          const response = await fetch(window.location.pathname + '?action=save', {\n            method: 'POST',\n            headers: {\n              'Content-Type': 'application/json',\n            },\n            body: JSON.stringify({\n              content: editor.value\n            })\n          });\n          \n          if (response.ok) {\n            alert('Successfully saved!');\n          } else {\n            alert('Failed to save content');\n          }\n        } catch (error) {\n          console.error('Error saving content:', error);\n          alert('Error saving content');\n        }\n      }\n  \n      // Function to close window\n      function closeWindow() {\n        window.close();\n      }\n   \n  window.$docsify = {\n    el: '#preview',\n    loadSidebar: false,\n    loadNavbar: false,\n    basePath: '/',\n    hideSidebar: true,\n        markdown: {\n          renderer: {\n            code(code, lang) {\n              if (lang === \"mermaid\") {\n                const svgName = `mermaid-svg-${svgCounter++}`;\n                const MERMAID_CONTAINER_ID = `${svgName}-container`;\n                mermaid.render(svgName, code).then(({ svg }) => {\n                  const containerElement = document.querySelector(\n                    `#${MERMAID_CONTAINER_ID}`\n                  );\n                  if (containerElement) {\n                    containerElement.innerHTML = svg;\n                  } else {\n                    console.error(`Error: #${MERMAID_CONTAINER_ID} not found`);\n                  }\n                });\n                return `<div class=\"mermaid\" id=\"${MERMAID_CONTAINER_ID}\"></div>`;\n              }\n              return this.origin.code.apply(this, arguments);\n            },\n          },\n        },\n    plugins: [\n      function(hook, _vm) {\n        vm = _vm;\n        \n        hook.beforeEach(function(content) {\n          return editor.value;\n        });\n      }\n    ]\n  };\n  \nlet timeout;\nfunction updatePreview() {\n  clearTimeout(timeout);\n  timeout = setTimeout(() => {\n    if (vm) {\n      const markdownSection = document.querySelector('.markdown-section');\n      if (markdownSection) {\n        const compiler = new window.DocsifyCompiler({\n          basePath: '/',\n          relativePath: false,\n          fallbackLanguages: [],\n          nameLink: '/',\n          routerMode: 'hash'\n        }, vm.router);\n        \n        const html = compiler.compile(editor.value);\n        markdownSection.innerHTML = html;\n        window.Prism.highlightAll();\n\n        // Re-render all mermaid diagrams\n        const mermaidDivs = markdownSection.querySelectorAll('pre[data-lang=\"mermaid\"] code');\n        mermaidDivs.forEach((div, index) => {\n          const code = div.textContent;\n          const svgName = `mermaid-svg-${svgCounter++}`;\n          const MERMAID_CONTAINER_ID = `${svgName}-container`;\n          \n          // Replace the <pre> element with our container\n          const container = document.createElement('div');\n          container.className = 'mermaid';\n          container.id = MERMAID_CONTAINER_ID;\n          div.parentElement.replaceWith(container);\n          \n          // Render the diagram\n          mermaid.render(svgName, code).then(({ svg }) => {\n            const containerElement = document.getElementById(MERMAID_CONTAINER_ID);\n            if (containerElement) {\n              containerElement.innerHTML = svg;\n            }\n          });\n        });\n      }\n    }\n  }, 500);\n};\n  \n  editor.addEventListener('input', updatePreview);\n</script>\n{{ $('CONFIG').first().json.HTML_docsify_include }}\n  </body>\n</html>"
@@ -690,8 +690,8 @@
       "name": "Workflow md content",
       "type": "n8n-nodes-base.html",
       "position": [
-        4660,
-        1040
+        100,
+        22420
       ],
       "parameters": {
         "html": "{{ $json.workflowdata }}"
@@ -705,8 +705,8 @@
       "name": "Is Action Edit?1",
       "type": "n8n-nodes-base.if",
       "position": [
-        3300,
-        1100
+        100,
+        13420
       ],
       "parameters": {
         "options": {},
@@ -740,8 +740,8 @@
       "name": "Is Action Edit?2",
       "type": "n8n-nodes-base.if",
       "position": [
-        4180,
-        880
+        100,
+        13600
       ],
       "parameters": {
         "options": {},
@@ -775,8 +775,8 @@
       "name": "Generate Mermaid Chart",
       "type": "n8n-nodes-base.code",
       "position": [
-        3000,
-        1260
+        100,
+        12340
       ],
       "parameters": {
         "jsCode": "const workflow = $input.first().json;\n\n// Extract nodes from the workflow\nconst nodes = workflow.nodes || [];\n\n// Node types to exclude\nconst excludedNodeTypes = ['n8n-nodes-base.stickyNote'];\n\n// Define shapes and their corresponding brackets\n// {{ $env.WEBHOOK_URL }}\nconst shapes = {\n    'rect': ['[', ']'],\n    'rhombus': ['{', '}'],\n    'circle': ['((', '))'],\n    'hexagon': ['{{', '}}'],\n    'subroutine': ['[[', ']]'],\n    'parallelogram': ['[\\/', '\\/]'],\n    'wait': ['(', ')']\n    // Add more shapes here as needed\n};\n\n// Define special shapes for specific node types\nconst specialShapes = {\n    'n8n-nodes-base.if': 'rhombus',\n    'n8n-nodes-base.switch': 'rhombus',\n    'n8n-nodes-base.code': 'subroutine',\n    'n8n-nodes-base.executeWorkflow': 'subroutine',\n    'n8n-nodes-base.httpRequest':'parallelogram',\n    'n8n-nodes-base.wait':'wait'\n    // List more special node types\n};\n\n// Function to get the shape for a node type\nfunction getNodeShape(nodeType) {\n    return specialShapes[nodeType] || 'rect';\n}\n\n// Create a map of node names to their \"EL<N>\" identifiers, disabled status, and shape\nconst nodeMap = {};\nlet nodeCounter = 1;\nnodes.forEach((node) => {\n    if (!excludedNodeTypes.includes(node.type)) {\n        const shape = getNodeShape(node.type);\n        nodeMap[node.name] = {\n            id: `EL${nodeCounter}`,\n            disabled: node.disabled || false,\n            shape: shape,\n            brackets: shapes[shape] || shapes['rect'] // Default to rect if shape not found\n        };\n        nodeCounter++;\n    }\n});\n\n// Function to convert special characters to HTML entities\nfunction convertToHTMLEntities(str) {\n    return str.replaceAll('\"',\"'\").replace(/[^\\w\\s-]/g, function(char) {\n        return '&#' + char.charCodeAt(0) + ';';\n    });\n}\n\n// Function to format node text (with strike-through if disabled)\nfunction formatNodeText(nodeName, isDisabled) {\n    const escapedName = convertToHTMLEntities(nodeName);\n    return isDisabled ? `<s>${escapedName}</s>` : escapedName;\n}\n\n// Generate connections and isolated nodes\nconst connections = [];\nconst isolatedNodes = new Set(Object.keys(nodeMap));\n\nif (workflow.connections) {\n    Object.entries(workflow.connections).forEach(([sourceName, targetConnections]) => {\n        Object.entries(targetConnections).forEach(([connectionType, targets]) => {\n            targets.forEach(targetArray => {\n                targetArray.forEach(target => {\n                    const sourceNode = nodeMap[sourceName];\n                    const targetNode = nodeMap[target.node];\n                    if (sourceNode && targetNode) {\n                        let connectionLine = `    ${sourceNode.id}${sourceNode.brackets[0]}${formatNodeText(sourceName, sourceNode.disabled)}${sourceNode.brackets[1]}`;\n                        if (connectionType === 'main') {\n                            connectionLine += ` -->`;\n                        } else {\n                            connectionLine += ` -.- |${connectionType}|`;\n                        }\n                        connectionLine += ` ${targetNode.id}${targetNode.brackets[0]}${formatNodeText(target.node, targetNode.disabled)}${targetNode.brackets[1]}`;\n                        connections.push(connectionLine);\n                        isolatedNodes.delete(sourceName);\n                        isolatedNodes.delete(target.node);\n                    }\n                });\n            });\n        });\n    });\n}\n\n// Add isolated nodes to the connections array\nisolatedNodes.forEach(nodeName => {\n    const node = nodeMap[nodeName];\n    connections.push(`    ${node.id}${node.brackets[0]}${formatNodeText(nodeName, node.disabled)}${node.brackets[1]}`);\n});\n\n// Generate the Mermaid flowchart string\nconst mermaidChart = `---\nconfig:\n  look: neo\n  theme: default\n---\nflowchart LR\n${connections.join('\\n')}`;\n\n// Output the result\nreturn {\n    json: {\n        mermaidChart: mermaidChart\n    }\n};"
@@ -789,8 +789,8 @@
       "name": "Merge2",
       "type": "n8n-nodes-base.merge",
       "position": [
-        3840,
-        1140
+        100,
+        14680
       ],
       "parameters": {
         "mode": "combine",
@@ -805,8 +805,8 @@
       "name": "Generated Doc",
       "type": "n8n-nodes-base.set",
       "position": [
-        4000,
-        1240
+        100,
+        12520
       ],
       "parameters": {
         "options": {},
@@ -829,8 +829,8 @@
       "name": "Passthrough",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2100,
-        1240
+        100,
+        15940
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -841,8 +841,8 @@
       "name": "Merge3",
       "type": "n8n-nodes-base.merge",
       "position": [
-        3140,
-        880
+        100,
+        14860
       ],
       "parameters": {
         "mode": "combine",
@@ -857,8 +857,8 @@
       "name": "Merge4",
       "type": "n8n-nodes-base.merge",
       "position": [
-        960,
-        -100
+        100,
+        15040
       ],
       "parameters": {
         "mode": "combine",
@@ -873,8 +873,8 @@
       "name": "Merge5",
       "type": "n8n-nodes-base.merge",
       "position": [
-        960,
-        240
+        100,
+        15220
       ],
       "parameters": {
         "mode": "combine",
@@ -889,8 +889,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        2100,
-        1600
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -914,8 +914,8 @@
       "name": "Is Action Save?",
       "type": "n8n-nodes-base.if",
       "position": [
-        4540,
-        1600
+        100,
+        13780
       ],
       "parameters": {
         "options": {},
@@ -959,8 +959,8 @@
       "name": "Merge6",
       "type": "n8n-nodes-base.merge",
       "position": [
-        4360,
-        1700
+        100,
+        15400
       ],
       "parameters": {
         "mode": "chooseBranch",
@@ -974,8 +974,8 @@
       "name": "Respond OK on Save",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        4920,
-        1580
+        100,
+        16120
       ],
       "parameters": {
         "options": {
@@ -991,8 +991,8 @@
       "name": "single workflow",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        240,
-        240
+        100,
+        23500
       ],
       "webhookId": "135bc21f-c7d0-4afe-be73-f984d444b43b",
       "parameters": {
@@ -1009,8 +1009,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
-        -242.54375384615383
+        100,
+        17200
       ],
       "parameters": {
         "width": 296.5956923076922,
@@ -1025,8 +1025,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -77.62340912473337,
-        108.96056004923076
+        100,
+        17380
       ],
       "parameters": {
         "width": 509.1040245093486,
@@ -1041,8 +1041,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        -240.54580345183416
+        100,
+        17920
       ],
       "parameters": {
         "color": 3,
@@ -1058,8 +1058,8 @@
       "name": "file types",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1180,
-        240
+        100,
+        22960
       ],
       "parameters": {
         "rules": {
@@ -1102,8 +1102,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4620,
-        -245.7696645512633
+        100,
+        18100
       ],
       "parameters": {
         "width": 446.67466982248516,
@@ -1118,8 +1118,8 @@
       "name": "Get All Workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1880,
-        160
+        100,
+        12700
       ],
       "parameters": {
         "filters": {
@@ -1142,8 +1142,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        20.913927466176517
+        100,
+        18280
       ],
       "parameters": {
         "width": 820.1843305645202,
@@ -1158,8 +1158,8 @@
       "name": "md files",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1440,
-        180
+        100,
+        23140
       ],
       "parameters": {
         "rules": {
@@ -1274,8 +1274,8 @@
       "name": "Get Workflow tags",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1880,
-        500
+        100,
+        12880
       ],
       "parameters": {
         "filters": {},
@@ -1295,8 +1295,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1780,
-        360
+        100,
+        18460
       ],
       "parameters": {
         "width": 817.6163848212657,
@@ -1311,8 +1311,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1700,
-        1780
+        100,
+        18640
       ],
       "parameters": {
         "width": 367.8950651848079,
@@ -1327,8 +1327,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1020,
-        729
+        100,
+        18820
       ],
       "parameters": {
         "color": 6,
@@ -1344,8 +1344,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4460,
-        751
+        100,
+        19000
       ],
       "parameters": {
         "width": 652.3100890494833,
@@ -1360,8 +1360,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4000,
-        1501
+        100,
+        19180
       ],
       "parameters": {
         "width": 522.870786668288,
@@ -1376,8 +1376,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1887,
-        758
+        100,
+        17560
       ],
       "parameters": {
         "width": 639.8696984316115,
@@ -1392,8 +1392,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2786.9421822644376,
-        1023
+        100,
+        17740
       ],
       "parameters": {
         "width": 1369.2986733206085,
@@ -1408,8 +1408,8 @@
       "name": "docsify",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        240,
-        -100
+        100,
+        22780
       ],
       "webhookId": "8b719afe-8be3-4cd5-84ed-aca521b31a89",
       "parameters": {
@@ -1426,8 +1426,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in c0805f50-8f8c-49ba-b0c7-6768bf89798c",
@@ -1441,8 +1441,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19360
       ],
       "parameters": {
         "message": "Error occurred in 9c7a18b9-a081-4162-94f4-e125d666cbcc",
@@ -1456,8 +1456,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19540
       ],
       "parameters": {
         "message": "Error occurred in 086a57cf-a2b4-4f32-8ca6-38546e4856c1",
@@ -1471,8 +1471,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19720
       ],
       "parameters": {
         "message": "Error occurred in b47f18a4-9b59-4278-890d-b6f6c596c554",
@@ -1486,8 +1486,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        19900
       ],
       "parameters": {
         "message": "Error occurred in 273dfd58-abef-49b7-8f12-5abc3d3515a6",
@@ -1501,8 +1501,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        20080
       ],
       "parameters": {
         "message": "Error occurred in 6953bf0c-3122-4d80-9e74-1c07a892bf31",
@@ -1516,8 +1516,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 75cdf7fc",
@@ -1531,8 +1531,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0bf2317b",
@@ -1546,8 +1546,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1f35bc3e",
@@ -1561,8 +1561,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c0805f50",
@@ -1576,8 +1576,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9c7a18b9",
@@ -1591,8 +1591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 50944148",
@@ -1606,8 +1606,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9bc58cd3",
@@ -1621,8 +1621,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 086a57cf",
@@ -1636,8 +1636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b47f18a4",
@@ -1651,8 +1651,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 273dfd58",
@@ -1666,8 +1666,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        10540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6953bf0c",
@@ -1681,8 +1681,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20440
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 77\n- **Node Types**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **CONFIG**: set\n- **Convert to File**: convertToFile\n- **HasFile?**: if\n- **Extract from File**: extractFromFile\n- **Main Page**: html\n- **Instance overview**: html\n- **Sort-workflows**: sort\n- **doc action**: switch\n- **Empty Set**: set\n- **Load Doc File**: readWriteFile\n- ... and 67 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1695,8 +1695,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1710,8 +1710,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1725,8 +1725,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1740,8 +1740,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1755,8 +1755,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1770,8 +1770,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1785,8 +1785,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20620
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 84\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1799,8 +1799,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20800
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 85\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1813,8 +1813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1828,8 +1828,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1843,8 +1843,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1858,8 +1858,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1873,8 +1873,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1888,8 +1888,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1903,8 +1903,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1918,8 +1918,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1933,8 +1933,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1948,8 +1948,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1963,8 +1963,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1978,8 +1978,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1993,8 +1993,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20980
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 98\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2007,8 +2007,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21160
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 99\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2021,8 +2021,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2036,8 +2036,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2051,8 +2051,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2066,8 +2066,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2081,8 +2081,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2096,8 +2096,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2111,8 +2111,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2126,8 +2126,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2141,8 +2141,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2156,8 +2156,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2171,8 +2171,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2186,8 +2186,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2201,8 +2201,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21340
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 112\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2215,8 +2215,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21520
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 113\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2228,8 +2228,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2242,8 +2242,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2256,8 +2256,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2270,8 +2270,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2284,8 +2284,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2298,8 +2298,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2312,8 +2312,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21700
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 120\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2325,8 +2325,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2339,8 +2339,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2353,8 +2353,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2367,8 +2367,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2381,8 +2381,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2395,8 +2395,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2409,8 +2409,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21880
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2422,8 +2422,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2436,8 +2436,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        22060
       ],
       "parameters": {
         "content": "# Docsify example\n\n## Overview\nAutomated workflow: Docsify example. This workflow integrates 21 different services: convertToFile, stickyNote, merge, switch, outputParserAutofixing. It contains 77 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2449,8 +2449,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Workflow execution error",

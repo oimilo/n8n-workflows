@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        280,
-        380
+        100,
+        14140
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2220,
-        800
+        100,
+        9280
       ],
       "parameters": {
         "options": {}
@@ -58,8 +58,8 @@
       "name": "OpenAI Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2220,
-        380
+        100,
+        9460
       ],
       "parameters": {
         "options": {}
@@ -78,8 +78,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2940,
-        600
+        100,
+        8920
       ],
       "parameters": {
         "mode": "combine",
@@ -94,8 +94,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3840,
-        420
+        100,
+        9100
       ],
       "parameters": {
         "options": {}
@@ -114,8 +114,8 @@
       "name": "SET company_name",
       "type": "n8n-nodes-base.set",
       "position": [
-        540,
-        380
+        100,
+        10000
       ],
       "parameters": {
         "options": {},
@@ -138,8 +138,8 @@
       "name": "Define dictionary of demographic keys",
       "type": "n8n-nodes-base.set",
       "position": [
-        740,
-        380
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -271,8 +271,8 @@
       "name": "ScrapingBee Search Glassdoor",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        940,
-        380
+        100,
+        10540
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -315,8 +315,8 @@
       "name": "Extract company url path",
       "type": "n8n-nodes-base.html",
       "position": [
-        1140,
-        380
+        100,
+        8020
       ],
       "parameters": {
         "options": {},
@@ -340,8 +340,8 @@
       "name": "ScrapingBee GET company page contents",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1340,
-        380
+        100,
+        10360
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -384,8 +384,8 @@
       "name": "Extract reviews page url path",
       "type": "n8n-nodes-base.html",
       "position": [
-        1540,
-        380
+        100,
+        8560
       ],
       "parameters": {
         "options": {},
@@ -409,8 +409,8 @@
       "name": "ScrapingBee GET Glassdoor Reviews Content",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1760,
-        380
+        100,
+        10180
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -453,8 +453,8 @@
       "name": "Extract Overall Review Summary",
       "type": "n8n-nodes-base.html",
       "position": [
-        1980,
-        260
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -477,8 +477,8 @@
       "name": "Extract Demographics Module",
       "type": "n8n-nodes-base.html",
       "position": [
-        1980,
-        520
+        100,
+        7660
       ],
       "parameters": {
         "options": {},
@@ -501,8 +501,8 @@
       "name": "Extract overall ratings and distribution percentages",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2200,
-        200
+        100,
+        8380
       ],
       "parameters": {
         "text": "={{ $json.review_summary }}",
@@ -562,8 +562,8 @@
       "name": "Extract demographic distributions",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2200,
-        620
+        100,
+        8200
       ],
       "parameters": {
         "text": "={{ $json.demographics_content }}",
@@ -811,8 +811,8 @@
       "name": "Define contributions to variance",
       "type": "n8n-nodes-base.set",
       "position": [
-        2560,
-        200
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -859,8 +859,8 @@
       "name": "Set variance and std_dev",
       "type": "n8n-nodes-base.set",
       "position": [
-        2740,
-        200
+        100,
+        10720
       ],
       "parameters": {
         "options": {},
@@ -901,8 +901,8 @@
       "name": "Calculate P-Scores",
       "type": "n8n-nodes-base.code",
       "position": [
-        3340,
-        440
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Approximate CDF for standard normal distribution\nfunction normSDist(z) {\n const t = 1 / (1 + 0.3275911 * Math.abs(z));\n const d = 0.254829592 * t - 0.284496736 * t * t + 1.421413741 * t * t * t - 1.453152027 * t * t * t * t + 1.061405429 * t * t * t * t * t;\n return 0.5 * (1 + Math.sign(z) * d * Math.exp(-z * z / 2));\n}\n\nfor (const item of $input.all()) {\n if (!item.json.population_analysis.p_scores) {\n item.json.population_analysis.p_scores = {};\n }\n\n for (const score of Object.keys(item.json.population_analysis.z_scores)) {\n // Check if review count exists and is greater than zero\n if (item.json.population_analysis.review_count[score] > 0) {\n // Apply the p_score formula: 2 * NORM.S.DIST(-ABS(z_score))\n const p_score = 2 * normSDist(-Math.abs(item.json.population_analysis.z_scores[score]));\n\n // Store the calculated p_score\n item.json.population_analysis.p_scores[score] = p_score;\n } else {\n // Remove z_scores, effect_sizes, and p_scores for groups with no reviews\n delete item.json.population_analysis.z_scores[score];\n delete item.json.population_analysis.effect_sizes[score];\n delete item.json.population_analysis.p_scores[score];\n }\n }\n}\n\nreturn $input.all();"
@@ -915,8 +915,8 @@
       "name": "Sort Effect Sizes",
       "type": "n8n-nodes-base.set",
       "position": [
-        3540,
-        440
+        100,
+        10900
       ],
       "parameters": {
         "options": {},
@@ -940,8 +940,8 @@
       "name": "Calculate Z-Scores and Effect Sizes",
       "type": "n8n-nodes-base.set",
       "position": [
-        3140,
-        600
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -1294,8 +1294,8 @@
       "name": "Format dataset for scatterplot",
       "type": "n8n-nodes-base.code",
       "position": [
-        3340,
-        760
+        100,
+        8740
       ],
       "parameters": {
         "jsCode": "// Iterate through the input data and format the dataset for QuickChart\nfor (const item of $input.all()) {\n // Ensure the data object exists and initialize datasets\n item.json.data = {\n datasets: []\n };\n\n const z_scores = item.json.population_analysis.z_scores;\n const effect_sizes = item.json.population_analysis.effect_sizes;\n const review_count = item.json.population_analysis.review_count;\n\n // Ensure z_scores, effect_sizes, and review_count are defined and are objects\n if (z_scores && effect_sizes && review_count && typeof z_scores === 'object' && typeof effect_sizes === 'object' && typeof review_count === 'object') {\n // Initialize the dataset object\n const dataset = {\n label: 'Demographics Data',\n data: []\n };\n\n // Iterate through the demographic keys\n for (const key in z_scores) {\n // Check if review count for the demographic is greater than 0\n if (z_scores.hasOwnProperty(key) && effect_sizes.hasOwnProperty(key) && review_count[key] > 0) {\n\n // Add each demographic point to the dataset\n dataset.data.push({\n x: z_scores[key], // x = z_score\n y: effect_sizes[key], // y = effect_size\n label: $('Define dictionary of demographic keys').first().json[key],\n });\n }\n }\n\n // Only add the dataset if it contains data\n if (dataset.data.length > 0) {\n item.json.data.datasets.push(dataset);\n }\n\n delete item.json.population_analysis\n }\n}\n\n// Return the updated input with the data object containing datasets and labels\nreturn $input.all();\n"
@@ -1308,8 +1308,8 @@
       "name": "Specify additional parameters for scatterplot",
       "type": "n8n-nodes-base.set",
       "position": [
-        3540,
-        760
+        100,
+        11080
       ],
       "parameters": {
         "options": {
@@ -1341,8 +1341,8 @@
       "name": "Quickchart Scatterplot",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3740,
-        760
+        100,
+        9820
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -1373,8 +1373,8 @@
       "name": "QuickChart Bar Chart",
       "type": "n8n-nodes-base.quickChart",
       "position": [
-        3740,
-        560
+        100,
+        9640
       ],
       "parameters": {
         "data": "={{ $json.population_analysis.effect_sizes.values() }}",
@@ -1396,8 +1396,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        480,
-        40
+        100,
+        11260
       ],
       "parameters": {
         "color": 7,
@@ -1413,8 +1413,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        900,
-        180
+        100,
+        11440
       ],
       "parameters": {
         "color": 4,
@@ -1430,8 +1430,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        920,
-        240
+        100,
+        12160
       ],
       "parameters": {
         "color": 7,
@@ -1447,8 +1447,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2180,
-        99.69933502879758
+        100,
+        12340
       ],
       "parameters": {
         "color": 5,
@@ -1464,8 +1464,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2516.1138215303854,
-        100
+        100,
+        12520
       ],
       "parameters": {
         "color": 7,
@@ -1481,8 +1481,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3320,
-        706.46982689582
+        100,
+        12700
       ],
       "parameters": {
         "color": 5,
@@ -1498,8 +1498,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        120
+        100,
+        12880
       ],
       "parameters": {
         "width": 356.84794255678776,
@@ -1514,8 +1514,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        500,
-        880
+        100,
+        13060
       ],
       "parameters": {
         "color": 6,
@@ -1531,8 +1531,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4020,
-        880
+        100,
+        13240
       ],
       "parameters": {
         "color": 7,
@@ -1548,8 +1548,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3980,
-        800
+        100,
+        11620
       ],
       "parameters": {
         "color": 6,
@@ -1565,8 +1565,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2540,
-        800
+        100,
+        11800
       ],
       "parameters": {
         "color": 6,
@@ -1582,8 +1582,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4140,
-        80
+        100,
+        11980
       ],
       "parameters": {
         "color": 6,
@@ -1599,8 +1599,8 @@
       "name": "Text Analysis of Bias Data",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3720,
-        280
+        100,
+        13960
       ],
       "parameters": {
         "text": "=This data compares the average rating given by different demographic groups against a baseline (the overall mean rating).\n\nObjective:\n1. Analyze the data and offer between 2 and 5 key takeaways with a title and short (one-sentence) summary.\n2. Below the key takeaways, Include a heading called \"Employee Experiences\". Under this heading, include a subheader and paragraph describing the possible perception of the workplace for members of any groups reporting significantly worse (or better) experiences than others.\n3. Ensure there are between 2-5 key takeaways and employee experiences\n\nData for analysis:\n{{ $json.population_analysis.toJsonString() }}",
@@ -1615,8 +1615,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in 862f1c77-44a8-4d79-abac-33351ebb731b",
@@ -1630,8 +1630,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13420
       ],
       "parameters": {
         "message": "Error occurred in d20bb0e7-4ca7-41d0-a3e9-41abc811b064",
@@ -1645,8 +1645,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13600
       ],
       "parameters": {
         "message": "Error occurred in d2e7fee9-e3d4-42bf-8be6-38b352371273",
@@ -1660,8 +1660,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        13780
       ],
       "parameters": {
         "message": "Error occurred in a937132c-43fc-4fa0-ae35-885da89e51d1",
@@ -1675,8 +1675,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 11a1a2d5",
@@ -1690,8 +1690,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 395f7b67",
@@ -1705,8 +1705,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1eba1dd7",
@@ -1720,8 +1720,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 862f1c77",
@@ -1735,8 +1735,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d20bb0e7",
@@ -1750,8 +1750,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d2e7fee9",
@@ -1765,8 +1765,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a937132c",
@@ -1780,8 +1780,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14320
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 49\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **OpenAI Chat Model1**: lmChatOpenAi\n- **OpenAI Chat Model2**: lmChatOpenAi\n- **Merge**: merge\n- **OpenAI Chat Model**: lmChatOpenAi\n- **SET company_name**: set\n- **Define dictionary of demographic keys**: set\n- **ScrapingBee Search Glassdoor**: httpRequest\n- **Extract company url path**: html\n- **ScrapingBee GET company page contents**: httpRequest\n- ... and 39 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1794,8 +1794,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1809,8 +1809,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1824,8 +1824,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1839,8 +1839,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1854,8 +1854,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14500
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 54\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1868,8 +1868,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14680
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 55\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1882,8 +1882,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1897,8 +1897,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1912,8 +1912,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1927,8 +1927,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1942,8 +1942,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1957,8 +1957,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1972,8 +1972,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1987,8 +1987,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2002,8 +2002,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14860
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 64\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2016,8 +2016,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15040
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2030,8 +2030,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2045,8 +2045,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2060,8 +2060,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2075,8 +2075,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2090,8 +2090,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2105,8 +2105,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2120,8 +2120,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2135,8 +2135,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2150,8 +2150,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15220
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 74\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2164,8 +2164,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15400
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 75\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2177,8 +2177,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2191,8 +2191,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2205,8 +2205,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2219,8 +2219,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2233,8 +2233,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15580
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 80\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2246,8 +2246,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2260,8 +2260,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2274,8 +2274,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2288,8 +2288,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2302,8 +2302,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15760
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2315,8 +2315,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2329,8 +2329,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15940
       ],
       "parameters": {
         "content": "# Spot Workplace Discrimination Patterns with AI\n\n## Overview\nAutomated workflow: Spot Workplace Discrimination Patterns with AI. This workflow integrates 12 different services: stickyNote, httpRequest, code, chainLlm, merge. It contains 49 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2342,8 +2342,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Workflow execution error",

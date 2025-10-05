@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        3880
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1600,
-        420
+        100,
+        4600
       ],
       "parameters": {
         "color": 6,
@@ -55,8 +55,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueErrorOutput",
       "position": [
-        20,
-        180
+        100,
+        3340
       ],
       "parameters": {
         "url": "{{ $env.WEBHOOK_URL }}",
@@ -73,8 +73,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -140,
-        -100
+        100,
+        4780
       ],
       "parameters": {
         "width": 377.6129032258063,
@@ -89,8 +89,8 @@
       "name": "When chat message received",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -300,
-        180
+        100,
+        6220
       ],
       "webhookId": "39c3c6d5-ea06-4faa-b0e3-4e77a05b0297",
       "parameters": {
@@ -104,8 +104,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -740,
-        200
+        100,
+        4960
       ],
       "parameters": {
         "width": 378.75806451612857,
@@ -120,8 +120,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        360,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "width": 570.0000000000002,
@@ -136,8 +136,8 @@
       "name": "Get timeDifference",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        1600,
-        160
+        100,
+        3520
       ],
       "parameters": {
         "endDate": "={{ $json.endDateTime }}",
@@ -153,8 +153,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1900,
-        -260
+        100,
+        5320
       ],
       "parameters": {
         "width": 304.3225806451618,
@@ -169,8 +169,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -760,
-        -200
+        100,
+        5500
       ],
       "parameters": {
         "color": 5,
@@ -186,8 +186,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        -160
+        100,
+        5680
       ],
       "parameters": {
         "width": 615.8064516129025,
@@ -202,8 +202,8 @@
       "name": "Run Model with Dunamic Inputs",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1020,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "model": "={{ $node['Extract Model IDsto Run Separately'].json.id }}",
@@ -229,8 +229,8 @@
       "name": "Analyze LLM Response Metrics",
       "type": "n8n-nodes-base.code",
       "position": [
-        2000,
-        160
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Get the input data from n8n\nconst inputData = items.map(item => item.json);\n\n// Function to count words in a string\nfunction countWords(text) {\n return text.trim().split(/\\s+/).length;\n}\n\n// Function to count sentences in a string\nfunction countSentences(text) {\n const sentences = text.match(/[^.!?]+[.!?]+/g) || [];\n return sentences.length;\n}\n\n// Function to calculate average sentence length\nfunction averageSentenceLength(text) {\n const sentences = text.match(/[^.!?]+[.!?]+/g) || [];\n const sentenceLengths = sentences.map(sentence => sentence.trim().split(/\\s+/).length);\n const totalWords = sentenceLengths.reduce((acc, val) => acc + val, 0);\n return sentenceLengths.length ? (totalWords / sentenceLengths.length) : 0;\n}\n\n// Function to calculate average word length\nfunction averageWordLength(text) {\n const words = text.trim().split(/\\s+/);\n const totalCharacters = words.reduce((acc, word) => acc + word.length, 0);\n return words.length ? (totalCharacters / words.length) : 0;\n}\n\n// Function to calculate Flesch-Kincaid Readability Score\nfunction fleschKincaidReadability(text) {\n // Split text into sentences (approximate)\n const sentences = text.match(/[^.!?]+[.!?]*[\\n]*/g) || [];\n // Split text into words\n const words = text.trim().split(/\\s+/);\n // Estimate syllable count by matching vowel groups\n const syllableCount = (text.toLowerCase().match(/[aeiouy]{1,2}/g) || []).length;\n\n const sentenceCount = sentences.length;\n const wordCount = words.length;\n\n // Avoid division by zero\n if (wordCount === 0 || sentenceCount === 0) return 0;\n\n const averageWordsPerSentence = wordCount / sentenceCount;\n const averageSyllablesPerWord = syllableCount / wordCount;\n\n // Flesch-Kincaid formula\n return 206.835 - (1.015 * averageWordsPerSentence) - (84.6 * averageSyllablesPerWord);\n}\n\n\n// Prepare the result array for n8n output\nconst resultArray = [];\n\n// Loop through the input data and analyze each LLM response\ninputData.forEach(item => {\n const llmResponse = item.llm_response;\n\n // Perform the analyses\n const wordCount = countWords(llmResponse);\n const sentenceCount = countSentences(llmResponse);\n const avgSentenceLength = averageSentenceLength(llmResponse);\n const readabilityScore = fleschKincaidReadability(llmResponse);\n const avgWordLength = averageWordLength(llmResponse);\n\n // Structure the output to include original input and new calculated values\n resultArray.push({\n json: {\n llm_response: item.llm_response,\n prompt: item.prompt,\n model: item.model,\n start_time: item.start_time,\n end_time: item.end_time,\n time_diff: item.time_diff,\n word_count: wordCount,\n sentence_count: sentenceCount,\n average_sent_length: avgSentenceLength,\n readability_score: readabilityScore,\n average_word_length: avgWordLength\n }\n });\n});\n\n// Return the result array to n8n\nreturn resultArray;\n"
@@ -243,8 +243,8 @@
       "name": "Save Results to Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        2180,
-        160
+        100,
+        4420
       ],
       "parameters": {
         "columns": {
@@ -401,8 +401,8 @@
       "name": "Capture End Time",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        1380,
-        160
+        100,
+        460
       ],
       "parameters": {
         "options": {},
@@ -416,8 +416,8 @@
       "name": "Capture Start Time",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        520,
-        160
+        100,
+        640
       ],
       "parameters": {
         "options": {},
@@ -431,8 +431,8 @@
       "name": "Prepare Data for Analysis",
       "type": "n8n-nodes-base.set",
       "position": [
-        1800,
-        160
+        100,
+        4060
       ],
       "parameters": {
         "options": {},
@@ -485,8 +485,8 @@
       "name": "Extract Model IDsto Run Separately",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        300,
-        160
+        100,
+        3160
       ],
       "parameters": {
         "options": {},
@@ -500,8 +500,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2240,
-        -160
+        100,
+        5860
       ],
       "parameters": {
         "width": 330.4677419354838,
@@ -516,8 +516,8 @@
       "name": "Add System Prompt",
       "type": "n8n-nodes-base.set",
       "position": [
-        740,
-        160
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -541,8 +541,8 @@
       "name": "LLM Response Analysis",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1000,
-        160
+        100,
+        3700
       ],
       "parameters": {
         "text": "={{ $('When chat message received').item.json.chatInput }}",
@@ -563,8 +563,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        780
+        100,
+        6040
       ],
       "parameters": {
         "color": 3,
@@ -581,8 +581,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in 7801734c-5eb9-4abd-b234-e406462931f7",
@@ -596,8 +596,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7801734c",
@@ -611,8 +611,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dd5f7e7b",
@@ -626,8 +626,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node adef5d92",
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **Get Models**: httpRequest\n- **Sticky Note1**: stickyNote\n- **When chat message received**: chatTrigger\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- **Get timeDifference**: dateTime\n- **Sticky Note4**: stickyNote\n- **Sticky Note5**: stickyNote\n- **Sticky Note6**: stickyNote\n- ... and 15 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -655,8 +655,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -670,8 +670,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -684,8 +684,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -698,8 +698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -713,8 +713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -728,8 +728,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -742,8 +742,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -756,8 +756,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -771,8 +771,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -786,8 +786,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -800,8 +800,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -813,8 +813,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -827,8 +827,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -840,8 +840,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -854,8 +854,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -867,8 +867,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -881,8 +881,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Testing Mulitple Local LLM with LM Studio\n\n## Overview\nAutomated workflow: Testing Mulitple Local LLM with LM Studio. This workflow integrates 11 different services: stickyNote, httpRequest, code, splitOut, chainLlm. It contains 25 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -894,8 +894,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -6,8 +6,8 @@
       "name": "If is not new contact",
       "type": "n8n-nodes-base.if",
       "position": [
-        780,
-        460
+        380,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -26,8 +26,8 @@
       "name": "On Contact Identified",
       "type": "n8n-nodes-base.mauticTrigger",
       "position": [
-        600,
-        460
+        100,
+        280
       ],
       "webhookId": "a3ee0f93-2870-44e2-bb2f-0175433263b3",
       "parameters": {
@@ -49,8 +49,8 @@
       "name": "extract information",
       "type": "n8n-nodes-base.itemLists",
       "position": [
-        980,
-        480
+        660,
+        100
       ],
       "parameters": {
         "options": {},
@@ -63,8 +63,8 @@
       "name": "validate email",
       "type": "n8n-nodes-base.oneSimpleApi",
       "position": [
-        1180,
-        480
+        1220,
+        100
       ],
       "parameters": {
         "resource": "utility",
@@ -84,8 +84,8 @@
       "type": "n8n-nodes-base.if",
       "notes": "IF\ndeliverability is not good\nOR\nDomain is not valid\nOR\nEmail is Disposable",
       "position": [
-        1360,
-        480
+        1500,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -115,8 +115,8 @@
       "name": "Send to Slack",
       "type": "n8n-nodes-base.slack",
       "position": [
-        1560,
-        460
+        1780,
+        100
       ],
       "parameters": {
         "text": "=:warning: New Contact with Suspicious Email :warning:\n*Name: * {{$node[\"extract information\"].json[\"contact\"][\"fields\"][\"core\"][\"firstname\"][\"normalizedValue\"]}} {{$node[\"extract information\"].json[\"contact\"][\"fields\"][\"core\"][\"lastname\"][\"normalizedValue\"]}}\n*Email: * {{$node[\"extract information\"].json[\"contact\"][\"fields\"][\"core\"][\"email\"][\"normalizedValue\"]}}\n*Link: * https://mautic.my.domain.com/s/contacts/view/{{$node[\"extract information\"].json[\"contact\"][\"id\"]}}\n*Creator: * {{$node[\"extract information\"].json[\"contact\"][\"createdByUser\"]}}",
@@ -139,8 +139,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Check for valid Mautic contact email\n\n## Overview\nProduction-ready workflow: Check for valid Mautic contact email. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -152,8 +152,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        940,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -166,8 +166,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Check for valid Mautic contact email\n\n## Overview\nProduction-ready workflow: Check for valid Mautic contact email. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -179,8 +179,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -5,8 +5,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        380,
-        240
+        100,
+        1360
       ],
       "parameters": {
         "rule": {
@@ -26,8 +26,8 @@
       "name": "Strava",
       "type": "n8n-nodes-base.strava",
       "position": [
-        380,
-        480
+        100,
+        1540
       ],
       "parameters": {
         "limit": 10,
@@ -41,8 +41,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        380,
-        740
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "// Obtén los items del nodo \"Strava\"\nconst stravaItems = $('strava_last').all();\n\n// Obtén los items del nodo \"ultimas_id\"\nconst ultimasGuardadasItems = $('saved_last').all();\n\n// Extrae las referencias guardadas en un Set, asegurando el formato como cadena\nconst referenciasGuardadas = new Set(\n    ultimasGuardadasItems.map(item => String(item.json.id))\n);\n\n// Filtra los items de \"Strava\" cuyos IDs no estén en las referencias guardadas\nconst filteredItems = stravaItems.filter(item => {\n    // Convertir el ID actual de Strava a cadena para comparar correctamente\n    return !referenciasGuardadas.has(String(item.json.id));\n});\n\n// Depuración: imprime las referencias y los resultados\nconsole.log('Referencias guardadas:', [...referenciasGuardadas]);\nconsole.log('Items filtrados:', filteredItems);\n\n// Devuelve los items filtrados\nreturn filteredItems;\n\n\n"
@@ -55,8 +55,8 @@
       "name": "Google Sheets",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        900,
-        740
+        100,
+        1000
       ],
       "parameters": {
         "columns": {
@@ -177,8 +177,8 @@
       "name": "strava_last",
       "type": "n8n-nodes-base.set",
       "position": [
-        1420,
-        480
+        100,
+        4960
       ],
       "parameters": {
         "options": {},
@@ -225,8 +225,8 @@
       "name": "Remove Duplicates",
       "type": "n8n-nodes-base.removeDuplicates",
       "position": [
-        900,
-        480
+        100,
+        1180
       ],
       "parameters": {
         "compare": "selectedFields",
@@ -241,8 +241,8 @@
       "name": "activities",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        660,
-        240
+        100,
+        3700
       ],
       "parameters": {
         "options": {},
@@ -275,8 +275,8 @@
       "name": "sort_saved",
       "type": "n8n-nodes-base.sort",
       "position": [
-        900,
-        240
+        100,
+        4600
       ],
       "parameters": {
         "options": {},
@@ -296,8 +296,8 @@
       "name": "last_saved",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1160,
-        240
+        100,
+        3880
       ],
       "parameters": {
         "keep": "lastItems",
@@ -311,8 +311,8 @@
       "name": "saved_last",
       "type": "n8n-nodes-base.set",
       "position": [
-        1420,
-        240
+        100,
+        4240
       ],
       "parameters": {
         "options": {},
@@ -335,8 +335,8 @@
       "name": "sort_strava",
       "type": "n8n-nodes-base.sort",
       "position": [
-        660,
-        480
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -356,8 +356,8 @@
       "name": "last_strava",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1160,
-        480
+        100,
+        4060
       ],
       "parameters": {
         "keep": "lastItems",
@@ -371,8 +371,8 @@
       "name": "sort_results",
       "type": "n8n-nodes-base.sort",
       "position": [
-        660,
-        740
+        100,
+        4420
       ],
       "parameters": {
         "options": {},
@@ -394,7 +394,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        3340
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 13 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c8a93e6e",
@@ -422,8 +422,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2d1c4dc5",
@@ -437,8 +437,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **Strava**: strava\n- **Code**: code\n- **Google Sheets**: googleSheets\n- **strava_last**: set\n- **Remove Duplicates**: removeDuplicates\n- **activities**: googleSheets\n- **sort_saved**: sort\n- **last_saved**: limit\n- **saved_last**: set\n- ... and 6 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -451,8 +451,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -465,8 +465,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -479,8 +479,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -493,8 +493,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2260
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -507,8 +507,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2440
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -521,8 +521,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2620
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -534,8 +534,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2800
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -547,8 +547,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2980
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -574,8 +574,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -26,8 +26,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        940,
-        120
+        100,
+        10180
       ],
       "parameters": {
         "mode": "combine",
@@ -42,8 +42,8 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1520,
-        120
+        100,
+        10720
       ],
       "parameters": {
         "options": {},
@@ -58,8 +58,8 @@
       "name": "Wait 3 sec",
       "type": "n8n-nodes-base.wait",
       "position": [
-        920,
-        680
+        100,
+        13060
       ],
       "webhookId": "90f31c1f-6707-4f2f-b525-d3961432cd81",
       "parameters": {
@@ -73,8 +73,8 @@
       "name": "Is Ready?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1340,
-        680
+        100,
+        10000
       ],
       "parameters": {
         "options": {},
@@ -108,8 +108,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        520,
-        -100
+        100,
+        11080
       ],
       "parameters": {
         "width": 1193,
@@ -124,8 +124,8 @@
       "name": "FLUX Fill",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        660,
-        680
+        100,
+        9640
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -185,8 +185,8 @@
       "name": "Check FLUX status",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1120,
-        680
+        100,
+        100
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -217,8 +217,8 @@
       "name": "Get Fill Image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1560,
-        780
+        100,
+        9820
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -232,8 +232,8 @@
       "name": "Show the image to user",
       "type": "n8n-nodes-base.respondToWebhook",
       "position": [
-        1900,
-        780
+        100,
+        10900
       ],
       "parameters": {
         "options": {
@@ -257,8 +257,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        420
+        100,
+        11260
       ],
       "parameters": {
         "color": 4,
@@ -274,8 +274,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1720,
-        660
+        100,
+        11440
       ],
       "parameters": {
         "width": 506,
@@ -290,8 +290,8 @@
       "name": "Mockups",
       "type": "n8n-nodes-base.set",
       "position": [
-        660,
-        220
+        100,
+        10360
       ],
       "parameters": {
         "options": {},
@@ -314,8 +314,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        260,
-        120
+        100,
+        13240
       ],
       "webhookId": "9c864ee6-e4d3-46e7-98d4-bea43739963e",
       "parameters": {
@@ -332,8 +332,8 @@
       "name": "Editor page",
       "type": "n8n-nodes-base.html",
       "position": [
-        1240,
-        120
+        100,
+        280
       ],
       "parameters": {
         "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n <meta charset=\"UTF-8\">\n <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n <title>Konva Image Editor</title>\n <script src=\"{{ $env.WEBHOOK_URL }}\"></script>\n <script defer src=\"{{ $env.WEBHOOK_URL }}\"></script>\n <link rel=\"stylesheet\" href=\"{{ $env.WEBHOOK_URL }}\" />\n <link rel=\"stylesheet\" href=\"{{ $env.WEBHOOK_URL }}\" />\n <script src=\"{{ $env.WEBHOOK_URL }}\"></script>\n</head>\n<body>\n <div class=\"controls-wrapper\">\n <div class=\"left-panel\">\n <div class=\"image-controls\">\n <select id=\"imageSelector\">\n <option value=\"\">Select an image...</option>\n <option value=\"local\">Load from PC...</option>\n </select>\n <input type=\"file\" id=\"fileInput\" style=\"display: none\" accept=\"image/*\">\n <button id=\"clearButton\">Clear All</button>\n </div>\n \n <div class=\"brush-controls\">\n <label for=\"brushSize\" title=\"Use mouse wheel to adjust brush size\">Brush Size:</label>\n <div class=\"slider-container\">\n <input type=\"range\" id=\"brushSize\" min=\"5\" max=\"40\" value=\"20\">\n <span class=\"slider-value\" id=\"brushSizeValue\">20px</span>\n </div>\n </div>\n </div>\n\n <div class=\"right-panel\">\n <div class=\"prompt-row\">\n <input type=\"text\" id=\"promptInput\" placeholder=\"Enter your prompt (optional)\">\n </div>\n \n <div class=\"main-controls\">\n <label class=\"checkbox-container\">\n <input type=\"checkbox\" id=\"improvePrompt\" checked>\n <span>Improve prompt</span>\n </label>\n \n <div>\n <button id=\"sendButton\">Generate</button>\n <span class=\"loading\" id=\"loadingIndicator\">Processing...</span>\n </div>\n </div>\n \n <div class=\"parameters\">\n <div class=\"slider-container\">\n <label for=\"stepsSlider\">Steps:</label>\n <input type=\"range\" id=\"stepsSlider\" min=\"15\" max=\"50\" value=\"40\">\n <span class=\"slider-value\" id=\"stepsValue\">40</span>\n </div>\n \n <div class=\"slider-container\">\n <label for=\"guidanceSlider\">Guidance:</label>\n <input type=\"range\" id=\"guidanceSlider\" min=\"1.5\" max=\"100\" value=\"60\" step=\"0.1\">\n <span class=\"slider-value\" id=\"guidanceValue\">60.0</span>\n </div>\n </div>\n </div>\n </div>\n\n <div class=\"info\" id=\"imageInfo\"></div>\n <div id=\"container\"></div>\n <div id=\"cursor\"></div>\n\n <div id=\"resultModal\" class=\"modal\">\n <div class=\"modal-content\">\n <div class=\"modal-image-container\">\n <div class=\"comparison-container\">\n <div class=\"image-container\">\n <img class=\"image-before\" id=\"originalImage\" src=\"\" alt=\"Original\">\n <img class=\"image-after\" id=\"resultImage\" src=\"\" alt=\"Generated\">\n </div>\n <input type=\"range\" min=\"0\" max=\"100\" value=\"10\" class=\"slider\">\n <div class=\"slider-line\"></div>\n <div class=\"slider-button\" aria-hidden=\"true\">\n &lt; &gt;\n </div>\n <div class=\"labels\">\n <div class=\"label-before\">Original</div>\n <div class=\"label-after\">Generated</div>\n </div>\n </div>\n </div>\n <div class=\"modal-buttons\">\n <button id=\"reuseButton\">Use Generated</button>\n <button id=\"saveButton\">Save Image</button>\n <button id=\"closeButton\">Close</button>\n </div>\n </div>\n </div>\n\n<script>\n const urlParams = new URLSearchParams(window.location.search);\n const pageId = urlParams.get('id');\n\n // Image data will be populated by n8n\n const imageData = {{ JSON.stringify($json.Images,'',2) }};\n const webhookUrl = '{{ $json.webhookUrl }}';\n\n // Initialize the editor when the page loads\n document.addEventListener('DOMContentLoaded', function() {\n initializeEditor({\n images: imageData,\n webhookUrl: webhookUrl,\n pageId: pageId\n });\n });\n</script>\n</body>\n</html>\n"
@@ -346,8 +346,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        540,
-        20
+        100,
+        11620
       ],
       "parameters": {
         "color": 5,
@@ -363,8 +363,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1080,
-        -20
+        100,
+        11800
       ],
       "parameters": {
         "color": 5,
@@ -380,8 +380,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        580,
-        500
+        100,
+        11980
       ],
       "parameters": {
         "color": 5,
@@ -397,8 +397,8 @@
       "name": "NO OP",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        420,
-        680
+        100,
+        10540
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -410,8 +410,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in 5da963f7-4320-4359-aefa-bf8f6d6ef815",
@@ -425,8 +425,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12160
       ],
       "parameters": {
         "message": "Error occurred in b32e8e0b-a449-47d9-8de4-c0062235ff99",
@@ -440,8 +440,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12340
       ],
       "parameters": {
         "message": "Error occurred in d7d70191-5316-4f20-b570-b8f138b77762",
@@ -455,8 +455,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12520
       ],
       "parameters": {
         "message": "Error occurred in dafc2712-114f-4723-b587-08ff853513f5",
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12700
       ],
       "parameters": {
         "message": "Error occurred in 68672890-62c3-4020-a09c-9ea691cba361",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        12880
       ],
       "parameters": {
         "message": "Error occurred in da82cb73-af4a-4042-bf4e-17894155fb87",
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5da963f7",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b32e8e0b",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d7d70191",
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node dafc2712",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 68672890",
@@ -575,8 +575,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node da82cb73",
@@ -590,8 +590,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13420
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Merge**: merge\n- **Respond to Webhook**: respondToWebhook\n- **Wait 3 sec**: wait\n- **Is Ready?**: if\n- **Sticky Note**: stickyNote\n- **FLUX Fill**: httpRequest\n- **Check FLUX status**: httpRequest\n- **Get Fill Image**: httpRequest\n- **Show the image to user**: respondToWebhook\n- **Sticky Note1**: stickyNote\n- ... and 20 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -619,8 +619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -634,8 +634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -694,8 +694,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13600
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -708,8 +708,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13780
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -737,8 +737,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -752,8 +752,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -767,8 +767,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -782,8 +782,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -797,8 +797,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -812,8 +812,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -827,8 +827,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -842,8 +842,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -857,8 +857,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -872,8 +872,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -887,8 +887,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -902,8 +902,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13960
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 51\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -916,8 +916,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14140
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -930,8 +930,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -945,8 +945,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -960,8 +960,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -975,8 +975,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -990,8 +990,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1005,8 +1005,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1035,8 +1035,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1050,8 +1050,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1065,8 +1065,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1080,8 +1080,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1095,8 +1095,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1110,8 +1110,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14320
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 65\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1124,8 +1124,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14500
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 66\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1137,8 +1137,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1151,8 +1151,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1165,8 +1165,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1179,8 +1179,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1193,8 +1193,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1207,8 +1207,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1221,8 +1221,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14680
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 73\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1234,8 +1234,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1248,8 +1248,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1262,8 +1262,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1276,8 +1276,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1290,8 +1290,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1304,8 +1304,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1318,8 +1318,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        14860
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1331,8 +1331,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1345,8 +1345,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15040
       ],
       "parameters": {
         "content": "# FLUX-fill standalone\n\n## Overview\nAutomated workflow: FLUX-fill standalone. This workflow integrates 11 different services: webhook, stickyNote, httpRequest, wait, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1358,8 +1358,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Workflow execution error",

@@ -17,8 +17,8 @@
       "name": "Create database page",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1220,
-        400
+        940,
+        100
       ],
       "parameters": {
         "title": "={{$json[\"body\"][\"issue\"][\"title\"]}}",
@@ -52,7 +52,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         1220,
-        800
+        100
       ],
       "parameters": {
         "content": "## IF & Switch\nDepends on what action was taken on an issue in GitHub."
@@ -65,8 +65,8 @@
       "name": "Find database page",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1400,
-        600
+        1780,
+        100
       ],
       "parameters": {
         "options": {},
@@ -91,8 +91,8 @@
       "name": "Switch",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1580,
-        600
+        2060,
+        100
       ],
       "parameters": {
         "rules": {
@@ -125,8 +125,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        1040,
-        500
+        660,
+        100
       ],
       "parameters": {
         "conditions": {
@@ -146,8 +146,8 @@
       "name": "Edit issue",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1760,
-        360
+        2340,
+        100
       ],
       "parameters": {
         "pageId": "={{ $node[\"Find database page\"].json[\"id\"] }}",
@@ -176,8 +176,8 @@
       "name": "Delete issue",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1760,
-        520
+        2620,
+        100
       ],
       "parameters": {
         "pageId": "={{$node[\"Find database page\"].json[\"id\"]}}",
@@ -197,8 +197,8 @@
       "name": "Create custom Notion filters",
       "type": "n8n-nodes-base.function",
       "position": [
-        1220,
-        600
+        1500,
+        100
       ],
       "parameters": {
         "functionCode": "const new_items = [];\nfor (item of $items(\"Trigger on issues\")) {\n\n  // do not process this item if action is created\n  if (item.json[\"body\"][\"action\"] == \"opened\") {\n    continue;\n  }\n\n  // build the output template\n  var new_item = {\n    \"json\": {\n      \"notionfilter\": \"\"\n    }\n  };\n  new_item = JSON.stringify(new_item);\n  new_item = JSON.parse(new_item);\n  new_items.push(new_item);\n\n  // create Notion filter to find specific database page by issue ID\n  notionfilter = {\n    or: [],\n  }\n\n  const filter = {\n    property: 'Issue ID',\n    number: {\n      equals: parseInt(item.json[\"body\"][\"issue\"][\"id\"])\n    }\n  }\n  notionfilter[\"or\"].push(filter);\n\n  new_item.json.notionfilter = JSON.stringify(notionfilter); \n}\n\nreturn new_items;"
@@ -211,8 +211,8 @@
       "name": "Close issue",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1760,
-        680
+        2900,
+        100
       ],
       "parameters": {
         "pageId": "={{$node[\"Find database page\"].json[\"id\"]}}",
@@ -241,8 +241,8 @@
       "name": "Reopen issue",
       "type": "n8n-nodes-base.notion",
       "position": [
-        1760,
-        840
+        3180,
+        100
       ],
       "parameters": {
         "pageId": "={{$node[\"Find database page\"].json[\"id\"]}}",
@@ -270,8 +270,8 @@
       "name": "Trigger on issues",
       "type": "n8n-nodes-base.githubTrigger",
       "position": [
-        860,
-        500
+        100,
+        280
       ],
       "webhookId": "bc0a0a44-00db-473b-8746-b60b3b36039c",
       "parameters": {
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 11\n- **Node Types**: 6\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Create database page**: notion\n- **Note**: stickyNote\n- **Find database page**: notion\n- **Switch**: switch\n- **If Node**: if\n- **Edit issue**: notion\n- **Delete issue**: notion\n- **Create custom Notion filters**: function\n- **Close issue**: notion\n- **Reopen issue**: notion\n- ... and 1 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -310,8 +310,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -324,8 +324,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -338,8 +338,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -352,8 +352,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -366,8 +366,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -380,8 +380,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -393,8 +393,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -406,8 +406,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -419,8 +419,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        380,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -433,8 +433,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# Notion Workflow\n\n## Overview\nAutomated workflow: Notion Workflow. This workflow integrates 6 different services: stickyNote, function, githubTrigger, switch, if. It contains 11 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -446,8 +446,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

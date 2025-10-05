@@ -17,8 +17,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        200,
-        2800
+        100,
+        5320
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -29,8 +29,8 @@
       "name": "SERP results",
       "type": "n8n-nodes-base.set",
       "position": [
-        1286,
-        2800
+        100,
+        2980
       ],
       "parameters": {
         "options": {},
@@ -73,8 +73,8 @@
       "type": "n8n-nodes-base.splitOut",
       "notes": "Split SERP into rows",
       "position": [
-        1457,
-        2800
+        100,
+        3160
       ],
       "parameters": {
         "options": {},
@@ -89,8 +89,8 @@
       "type": "n8n-nodes-base.filter",
       "notes": "Title is not empty",
       "position": [
-        1637,
-        2800
+        100,
+        5140
       ],
       "parameters": {
         "options": {},
@@ -124,8 +124,8 @@
       "type": "n8n-nodes-base.code",
       "notes": "Assign SERP position",
       "position": [
-        2020,
-        2800
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "const items = $input.all(); // Get all input items\n\n// Group items by searchQuery\nconst groupedItems = items.reduce((acc, item) => {\n  const searchQuery = item.json.searchQuery || 'default';\n  if (!acc[searchQuery]) {\n    acc[searchQuery] = [];\n  }\n  acc[searchQuery].push(item);\n  return acc;\n}, {});\n\n// Assign positions within each group\nconst result = Object.values(groupedItems).flatMap(group => \n  group.map((item, index) => ({\n    json: {\n      ...item.json,\n      position: index + 1, // Add the position based on the index within the group\n    },\n  }))\n);\n\nreturn result; // Return the modified items"
@@ -139,7 +139,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "notes": "SERP results - scrapingRobot\n\n{{ $env.API_BASE_URL }}",
       "position": [
-        1106,
+        100,
         2800
       ],
       "parameters": {
@@ -186,8 +186,8 @@
       "name": "Sticky Note29",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        356,
-        2760
+        100,
+        4420
       ],
       "parameters": {
         "color": 7,
@@ -203,8 +203,8 @@
       "name": "Sticky Note30",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1046,
-        2760
+        100,
+        4600
       ],
       "parameters": {
         "color": 7,
@@ -220,8 +220,8 @@
       "name": "Sticky Note22",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        360,
-        2980
+        100,
+        3880
       ],
       "parameters": {
         "color": 3,
@@ -237,8 +237,8 @@
       "name": "Connect to your own database - ",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        420,
-        2800
+        100,
+        460
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.set",
       "notes": "Array of keywords",
       "position": [
-        660,
-        2800
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -274,8 +274,8 @@
       "name": "Sticky Note24",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1040,
-        2980
+        100,
+        4060
       ],
       "parameters": {
         "color": 3,
@@ -291,8 +291,8 @@
       "name": "Sticky Note31",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1420,
-        2760
+        100,
+        4780
       ],
       "parameters": {
         "color": 7,
@@ -308,8 +308,8 @@
       "name": "Sticky Note27",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2200,
-        2740
+        100,
+        4240
       ],
       "parameters": {
         "color": 7,
@@ -325,8 +325,8 @@
       "name": "Connect to your own database2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2263,
-        2800
+        100,
+        640
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -337,8 +337,8 @@
       "name": "Assign SearchQuery",
       "type": "n8n-nodes-base.set",
       "position": [
-        1820,
-        2800
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -362,8 +362,8 @@
       "name": "Split out Keywords",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        860,
-        2800
+        100,
+        3520
       ],
       "parameters": {
         "options": {},
@@ -377,8 +377,8 @@
       "name": "Sticky Note40",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2200,
-        2980
+        100,
+        4960
       ],
       "parameters": {
         "color": 3,
@@ -394,8 +394,8 @@
       "name": "Sticky Note18",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -540,
-        2400
+        100,
+        3700
       ],
       "parameters": {
         "color": 4,
@@ -412,8 +412,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in 34a38c07-6439-4177-a12a-a2f6295cd914",
@@ -427,8 +427,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 34a38c07",
@@ -442,8 +442,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Node Types**: 9\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **SERP results**: set\n- **Separate**: splitOut\n- **Title <> Empty**: filter\n- **Assign SERP #pos**: code\n- **GET SERP**: httpRequest\n- **Sticky Note29**: stickyNote\n- **Sticky Note30**: stickyNote\n- **Sticky Note22**: stickyNote\n- **Connect to your own database - **: noOp\n- ... and 11 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -456,8 +456,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -471,8 +471,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -499,8 +499,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -514,8 +514,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -529,8 +529,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -543,8 +543,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -572,8 +572,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -628,8 +628,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -655,8 +655,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -682,8 +682,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 9 different services: filter, httpRequest, stickyNote, code, splitOut. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -695,8 +695,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Workflow execution error",

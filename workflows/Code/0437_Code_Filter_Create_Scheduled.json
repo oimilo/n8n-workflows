@@ -17,8 +17,8 @@
       "name": "Update last contacted time",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        2380,
-        140
+        100,
+        6400
       ],
       "parameters": {
         "columns": {
@@ -112,8 +112,8 @@
       "type": "n8n-nodes-base.set",
       "disabled": true,
       "position": [
-        1500,
-        1120
+        100,
+        4600
       ],
       "parameters": {
         "fields": {
@@ -163,8 +163,8 @@
       "name": "Email sequence",
       "type": "n8n-nodes-base.set",
       "position": [
-        1000,
-        140
+        100,
+        1360
       ],
       "parameters": {
         "mode": "raw",
@@ -179,8 +179,8 @@
       "name": "Fill message placeholders",
       "type": "n8n-nodes-base.code",
       "position": [
-        1720,
-        1120
+        100,
+        2620
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -194,8 +194,8 @@
       "name": "Compose message",
       "type": "n8n-nodes-base.set",
       "position": [
-        1940,
-        1120
+        100,
+        640
       ],
       "parameters": {
         "fields": {
@@ -216,8 +216,8 @@
       "name": "Get previous message threads",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1280,
-        620
+        100,
+        2980
       ],
       "parameters": {
         "filters": {
@@ -240,8 +240,8 @@
       "name": "Get thread details",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        1500,
-        620
+        100,
+        3160
       ],
       "parameters": {
         "simple": false,
@@ -264,8 +264,8 @@
       "name": "Classify threads",
       "type": "n8n-nodes-base.code",
       "position": [
-        1940,
-        620
+        100,
+        460
       ],
       "parameters": {
         "jsCode": "// Because emails are sent slightly after the schedule trigger runs, we'll end up waiting an extra day to send unless we take into account the execution time of the workflow\nlet buffer_mins = 20\n\nlet templates = $('Email sequence').first().json.emails\n\nfunction next_sequence_number(messages, mail_id, sender_name) {\n  for (let i = 0; i < messages.length; i++) {\n    if(!('html' in messages[i])) return -1;\n    let in_campaign = messages[i].html.includes(\"data-cam='\"+mail_id+\"'\")\n    let valid_seq = messages[i].html.includes(\"data-seq='\"+i+\"'\")\n    let from_us = messages[i].From.includes(sender_name)\n    console.log(in_campaign + \", \" + valid_seq + \", \" + from_us)\n    if(!(from_us && in_campaign && valid_seq)) {\n      return -1;\n    }\n  }\n  return messages.length;\n}\n\n\nfor (const item of $input.all()) {\n  item.json.first_message_at = DateTime.fromMillis($('Get thread details').item.json.messages[0].internalDate*1)\n  item.json.days_since_first_message = DateTime.now().diff(item.json.first_message_at, 'days').days\n  item.json.next_sequence_number = next_sequence_number(\n    item.json.messages,\n    $('Settings').first().json.mail_id,\n    $('Settings').first().json.sender_name\n  );\n  item.json.next_message_due = (\n    item.json.next_sequence_number > 0\n    && item.json.next_sequence_number < templates.length\n    && templates[item.json.next_sequence_number].send_on_day <= item.json.days_since_first_message + (buffer_mins/60/24)\n  )\n\n  // Retrieve the placeholder values from the snippet, for use in future messages\n  const ph_matches = item.json.messages[0].snippet.match(/data-ph='([^']*)'/)\n  if(ph_matches?.length > 1) {\n    const placeholders = JSON.parse(ph_matches[1])\n    for(key of placeholders.keys()) {\n      item.json[key] = placeholders[key]\n    }\n  }\n\n}\n\nreturn $input.all();"
@@ -278,8 +278,8 @@
       "name": "Next message due?",
       "type": "n8n-nodes-base.filter",
       "position": [
-        2160,
-        620
+        100,
+        3340
       ],
       "parameters": {
         "options": {},
@@ -312,8 +312,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1906,
-        427
+        100,
+        4960
       ],
       "parameters": {
         "color": 7,
@@ -329,8 +329,8 @@
       "name": "Execute Workflow Trigger",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        1280,
-        1120
+        100,
+        2440
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -341,8 +341,8 @@
       "name": "Replying?",
       "type": "n8n-nodes-base.if",
       "position": [
-        2160,
-        1120
+        100,
+        4240
       ],
       "parameters": {
         "options": {},
@@ -375,8 +375,8 @@
       "name": "Send new message",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        2380,
-        1240
+        100,
+        4420
       ],
       "parameters": {
         "sendTo": "={{ $json.to_email }}",
@@ -401,8 +401,8 @@
       "name": "Call message send sub-workflow",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        2820,
-        620
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -416,8 +416,8 @@
       "name": "Prepare reply params",
       "type": "n8n-nodes-base.set",
       "position": [
-        2380,
-        620
+        100,
+        3880
       ],
       "parameters": {
         "fields": {
@@ -459,8 +459,8 @@
       "name": "Prepare first message params",
       "type": "n8n-nodes-base.set",
       "position": [
-        1720,
-        140
+        100,
+        3700
       ],
       "parameters": {
         "fields": {
@@ -501,8 +501,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1240,
-        -100
+        100,
+        5320
       ],
       "parameters": {
         "color": 7,
@@ -518,8 +518,8 @@
       "name": "Call message send sub-workflow1",
       "type": "n8n-nodes-base.executeWorkflow",
       "position": [
-        2160,
-        140
+        100,
+        280
       ],
       "parameters": {
         "mode": "each",
@@ -534,8 +534,8 @@
       "name": "To email?",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1500,
-        140
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -568,8 +568,8 @@
       "name": "Decode messages",
       "type": "n8n-nodes-base.code",
       "position": [
-        1720,
-        620
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "// TODO: Some messages have an empty payload and a parts field instead (containing an array)\n\nfor (const item of $input.all()) {\n  for (const message of item.json.messages) {\n    console.log('message', message.payload.body.data || \"\")\n    let buffer = Buffer.from(message.payload.body.data || \"\", \"base64\");\n    message.html = buffer.toString(\"utf8\")\n  }\n}\n\nreturn $input.all();"
@@ -582,8 +582,8 @@
       "name": "Decode placeholder values",
       "type": "n8n-nodes-base.code",
       "position": [
-        2600,
-        620
+        100,
+        1000
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -597,8 +597,8 @@
       "name": "Package placeholder values",
       "type": "n8n-nodes-base.code",
       "position": [
-        1940,
-        140
+        100,
+        3520
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -612,8 +612,8 @@
       "name": "Settings",
       "type": "n8n-nodes-base.set",
       "position": [
-        780,
-        140
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -660,8 +660,8 @@
       "name": "Reply to message",
       "type": "n8n-nodes-base.gmail",
       "position": [
-        2380,
-        1020
+        100,
+        4060
       ],
       "parameters": {
         "message": "={{ $json.message }}",
@@ -685,8 +685,8 @@
       "name": "Get emails",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1280,
-        140
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -715,8 +715,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        -180
+        100,
+        5500
       ],
       "parameters": {
         "color": 7,
@@ -732,8 +732,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        360
+        100,
+        5680
       ],
       "parameters": {
         "color": 7,
@@ -749,8 +749,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        920
+        100,
+        5860
       ],
       "parameters": {
         "color": 7,
@@ -766,8 +766,8 @@
       "name": "Every hour",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        320,
-        140
+        100,
+        2260
       ],
       "parameters": {
         "rule": {
@@ -787,8 +787,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2120,
-        958
+        100,
+        5140
       ],
       "parameters": {
         "color": 7,
@@ -804,8 +804,8 @@
       "name": "Don't email on weekends",
       "type": "n8n-nodes-base.filter",
       "position": [
-        540,
-        140
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -838,8 +838,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        740,
-        -120
+        100,
+        6040
       ],
       "parameters": {
         "width": 404.04123613412946,
@@ -855,8 +855,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8565747a",
@@ -870,8 +870,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d453661e",
@@ -885,8 +885,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Update last contacted time**: googleSheets\n- **Set message template**: set\n- **Email sequence**: set\n- **Fill message placeholders**: code\n- **Compose message**: set\n- **Get previous message threads**: gmail\n- **Get thread details**: gmail\n- **Classify threads**: code\n- **Next message due?**: filter\n- **Sticky Note2**: stickyNote\n- ... and 24 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -899,8 +899,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -913,8 +913,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -927,8 +927,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -941,8 +941,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -969,8 +969,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -982,8 +982,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -995,8 +995,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1008,8 +1008,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1022,8 +1022,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Googlesheets Workflow\n\n## Overview\nAutomated workflow: Googlesheets Workflow. This workflow integrates 11 different services: filter, stickyNote, code, scheduleTrigger, set. It contains 34 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1035,8 +1035,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Workflow execution error",

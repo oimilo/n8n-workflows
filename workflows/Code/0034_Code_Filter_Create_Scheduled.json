@@ -17,8 +17,8 @@
       "name": "Get current date",
       "type": "n8n-nodes-base.code",
       "position": [
-        240,
-        2460
+        2900,
+        100
       ],
       "parameters": {
         "jsCode": "const monthNames = [\n  'January',\n  'February',\n  'March',\n  'April',\n  'May',\n  'June',\n  'July',\n  'August',\n  'September',\n  'October',\n  'November',\n  'December',\n]\n\nconst date = new Date()\nconst year = date.getFullYear()\nconst month = date.getMonth()\n\nlet currentDate = {\n  month: month,\n  year: year,\n  text: `${monthNames[month]} '${year.toString().slice(-2)}`\n}\n\nitems[0].json.currentDate = currentDate\n\nreturn items\n\n// Month > Number e.g. July = 6, December = 11\n// Year > Text\n// Text > Playlist name\n\n// let currentDate = {\n//   month: 8, \n//   year: '2024',\n//   text: `September '23`\n// }\n\n// items[0].json.currentDate = currentDate\n\n// return items\n\n"
@@ -31,8 +31,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        2580
+        3180,
+        100
       ],
       "parameters": {
         "width": 1290.936043660723,
@@ -47,8 +47,8 @@
       "name": "Get last 10 liked tracks",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        500,
-        2680
+        3740,
+        100
       ],
       "parameters": {
         "limit": 10,
@@ -68,8 +68,8 @@
       "name": "Check if track is saved",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        940,
-        2780
+        4860,
+        100
       ],
       "parameters": {
         "table": "m0dm2y304t7vmuk",
@@ -99,8 +99,8 @@
       "name": "Is not saved",
       "type": "n8n-nodes-base.if",
       "position": [
-        1160,
-        2780
+        5700,
+        100
       ],
       "parameters": {
         "options": {},
@@ -133,8 +133,8 @@
       "name": "Create song entry",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        1380,
-        2700
+        6540,
+        100
       ],
       "parameters": {
         "table": "m0dm2y304t7vmuk",
@@ -172,8 +172,8 @@
       "name": "Get all user playlist",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        500,
-        2220
+        4020,
+        100
       ],
       "parameters": {
         "resource": "playlist",
@@ -194,8 +194,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        460,
-        2080
+        3460,
+        100
       ],
       "parameters": {
         "width": 1481.5336029736159,
@@ -210,8 +210,8 @@
       "name": "Get monthly playlist",
       "type": "n8n-nodes-base.filter",
       "position": [
-        720,
-        2220
+        4300,
+        100
       ],
       "parameters": {
         "options": {},
@@ -245,8 +245,8 @@
       "name": "Get playlist in DB",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        1160,
-        2120
+        5980,
+        100
       ],
       "parameters": {
         "table": "mchan0xys9h7h7e",
@@ -273,8 +273,8 @@
       "name": "Monthly playlist exist in Spotify ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        940,
-        2220
+        5140,
+        100
       ],
       "parameters": {
         "options": {},
@@ -307,8 +307,8 @@
       "name": "Playlist exist  in DB ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1380,
-        2120
+        6820,
+        100
       ],
       "parameters": {
         "options": {},
@@ -341,8 +341,8 @@
       "name": "Create playlist in Spotify",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        1160,
-        2320
+        6260,
+        100
       ],
       "parameters": {
         "name": "={{ $('Get current date').item.json.currentDate.text }}",
@@ -366,8 +366,8 @@
       "name": "Create playlist in DB1",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        1380,
-        2320
+        7100,
+        100
       ],
       "parameters": {
         "table": "mchan0xys9h7h7e",
@@ -405,8 +405,8 @@
       "name": "Create playlist in DB",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        1600,
-        2200
+        7380,
+        100
       ],
       "parameters": {
         "table": "mchan0xys9h7h7e",
@@ -444,8 +444,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        2040,
-        2460
+        8220,
+        100
       ],
       "parameters": {
         "mode": "chooseBranch",
@@ -459,8 +459,8 @@
       "name": "Clean op",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1820,
-        2200
+        7940,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -471,8 +471,8 @@
       "name": "Clean op2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1600,
-        2800
+        7660,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -483,8 +483,8 @@
       "name": "Get this month playlist in DB",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        2260,
-        2460
+        8780,
+        100
       ],
       "parameters": {
         "table": "mchan0xys9h7h7e",
@@ -510,8 +510,8 @@
       "name": "Get this month tracks in DB",
       "type": "n8n-nodes-base.nocoDb",
       "position": [
-        2480,
-        2460
+        9060,
+        100
       ],
       "parameters": {
         "table": "m0dm2y304t7vmuk",
@@ -537,8 +537,8 @@
       "name": "Add song to the playlist",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        3580,
-        2460
+        10460,
+        100
       ],
       "parameters": {
         "id": "={{ $('Get this month playlist in DB').item.json.uri }}",
@@ -560,8 +560,8 @@
       "name": "For each tracks in liked song",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        720,
-        2680
+        4580,
+        100
       ],
       "parameters": {
         "options": {
@@ -576,8 +576,8 @@
       "name": "For each monthly tracks in DB",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        2700,
-        2460
+        9340,
+        100
       ],
       "parameters": {
         "options": {}
@@ -590,8 +590,8 @@
       "name": "Get this month tracks in Spotify",
       "type": "n8n-nodes-base.spotify",
       "position": [
-        2920,
-        2560
+        9620,
+        100
       ],
       "parameters": {
         "id": "={{ $('Get this month playlist in DB').item.json.uri }}",
@@ -614,8 +614,8 @@
       "name": "Filter1",
       "type": "n8n-nodes-base.filter",
       "position": [
-        3140,
-        2560
+        9900,
+        100
       ],
       "parameters": {
         "options": {},
@@ -650,8 +650,8 @@
       "name": "Song is not present in the playlist ?",
       "type": "n8n-nodes-base.if",
       "position": [
-        3360,
-        2560
+        10180,
+        100
       ],
       "parameters": {
         "options": {},
@@ -684,8 +684,8 @@
       "name": "Clean op1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3800,
-        2560
+        10740,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -696,8 +696,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2220,
-        2400
+        8500,
+        100
       ],
       "parameters": {
         "width": 1733.785946789966,
@@ -712,8 +712,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        20,
-        2460
+        100,
+        280
       ],
       "parameters": {
         "rule": {
@@ -732,8 +732,8 @@
       "name": "End",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        4100,
-        2260
+        11020,
+        100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -745,8 +745,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        380,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get current date**: code\n- **Sticky Note3**: stickyNote\n- **Get last 10 liked tracks**: spotify\n- **Check if track is saved**: nocoDb\n- **Is not saved**: if\n- **Create song entry**: nocoDb\n- **Get all user playlist**: spotify\n- **Sticky Note4**: stickyNote\n- **Get monthly playlist**: filter\n- **Get playlist in DB**: nocoDb\n- ... and 20 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -759,8 +759,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        660,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -773,8 +773,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        940,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -787,8 +787,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1220,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -801,8 +801,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1500,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -815,8 +815,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        1780,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -829,8 +829,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2060,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -842,8 +842,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2340,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -855,8 +855,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        2620,
+        100
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -868,8 +868,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        5420,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -882,8 +882,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Code Workflow\n\n## Overview\nAutomated workflow: Code Workflow. This workflow integrates 10 different services: stickyNote, filter, code, scheduleTrigger, merge. It contains 30 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

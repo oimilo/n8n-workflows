@@ -7,7 +7,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        3520
       ],
       "parameters": {}
     },
@@ -15,8 +15,8 @@
       "name": "Read Harvey's Email",
       "type": "n8n-nodes-base.emailReadImap",
       "position": [
-        270,
-        390
+        100,
+        4060
       ],
       "parameters": {
         "options": {}
@@ -32,8 +32,8 @@
       "name": "Who Is The Email From?",
       "type": "n8n-nodes-base.switch",
       "position": [
-        460,
-        390
+        100,
+        4960
       ],
       "parameters": {
         "rules": {
@@ -56,8 +56,8 @@
       "name": "Read Excuses File",
       "type": "n8n-nodes-base.readBinaryFile",
       "position": [
-        670,
-        230
+        100,
+        3880
       ],
       "parameters": {
         "filePath": "/home/n8n/Excuse_Generator.xlsx"
@@ -70,8 +70,8 @@
       "name": "Retrieve Excuses Spreadsheet Data",
       "type": "n8n-nodes-base.spreadsheetFile",
       "position": [
-        860,
-        230
+        100,
+        4240
       ],
       "parameters": {
         "options": {}
@@ -84,8 +84,8 @@
       "name": "Generate Excuse",
       "type": "n8n-nodes-base.function",
       "position": [
-        1040,
-        230
+        100,
+        3340
       ],
       "parameters": {
         "functionCode": "var leadinmax = 24;\nvar perpmax = 25;\nvar delaymax = 23;\nvar leadin = Math.floor((Math.random() * leadinmax ) + 1);\nvar perp = Math.floor((Math.random() * perpmax ) + 1);\nvar delay = Math.floor((Math.random() * delaymax) + 1);\n\nvar excuse = items[leadin].json.Leadin + \" \" + items[perp].json.Perpetrator + \" \" + items[delay].json.Delay;\n\nitems = [{json:{}}];\n\nitems[0].json.excuse = excuse;\nreturn items;\n"
@@ -98,8 +98,8 @@
       "name": "Merge Excuse and Mail Data",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1230,
-        330
+        100,
+        3700
       ],
       "parameters": {
         "mode": "mergeByIndex"
@@ -112,8 +112,8 @@
       "name": "Send Email",
       "type": "n8n-nodes-base.emailSend",
       "position": [
-        1460,
-        250
+        100,
+        4420
       ],
       "parameters": {
         "text": "= {{$node[\"Merge Excuse and Mail Data\"].json[\"excuse\"]}}\n\nMaybe next time.\n\nHarvey",
@@ -133,8 +133,8 @@
       "name": "Slack (Louis)",
       "type": "n8n-nodes-base.slack",
       "position": [
-        1470,
-        410
+        100,
+        4780
       ],
       "parameters": {
         "text": "=Here is what Louis emailed you:\n```\n{{$node[\"Merge Excuse and Mail Data\"].json[\"textPlain\"]}}\n```\n\nHere is how \"you\" responded:\n> {{$node[\"Merge Excuse and Mail Data\"].json[\"excuse\"]}}\n\n:+1: *You're Welcome!* :smirk:",
@@ -155,8 +155,8 @@
       "name": "Slack (General)",
       "type": "n8n-nodes-base.slack",
       "position": [
-        890,
-        470
+        100,
+        4600
       ],
       "parameters": {
         "text": "You've just received an email. You may wish to check it out.",
@@ -180,7 +180,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        5140
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Nodes:\n- 9 total nodes\n- Includes error handling\n- Follows best practices\n\n## Usage:\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production"
@@ -193,8 +193,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -208,8 +208,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -223,8 +223,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -238,8 +238,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -253,8 +253,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -267,8 +267,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -281,8 +281,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -311,8 +311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -326,8 +326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -341,8 +341,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -355,8 +355,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -369,8 +369,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -384,8 +384,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -399,8 +399,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -414,8 +414,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -429,8 +429,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -443,8 +443,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -456,8 +456,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -484,8 +484,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -497,8 +497,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -511,8 +511,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -525,8 +525,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -538,8 +538,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -552,8 +552,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Emailreadimap Workflow\n\n## Overview\nAutomated workflow: Emailreadimap Workflow. This workflow processes data and performs automated tasks.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -565,8 +565,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

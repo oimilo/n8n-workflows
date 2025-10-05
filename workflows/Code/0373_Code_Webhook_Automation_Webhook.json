@@ -17,8 +17,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -840,
-        620
+        100,
+        7840
       ],
       "webhookId": "5dc2467c-0b39-43e9-bdbd-399231f69c4e",
       "parameters": {
@@ -35,8 +35,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        -540,
-        620
+        100,
+        100
       ],
       "parameters": {
         "jsCode": "\nconst available = items[0].json.body.available;\nconst inventory_item = items[0].json.body.inventory_item_id;\nconst lowInventory = available > 0 && available < 4;\nconst outOfStock = available === 0;\n\nreturn [\n  {\n    json: {\n      available: available,\n      inventory_tem: inventory_item,\n      low_inventory: lowInventory,\n      out_of_stock: outOfStock,\n    },\n  },\n];"
@@ -49,8 +49,8 @@
       "name": "Low Inventory",
       "type": "n8n-nodes-base.if",
       "position": [
-        -180,
-        500
+        100,
+        5860
       ],
       "parameters": {
         "conditions": {
@@ -70,8 +70,8 @@
       "name": "Out of stock",
       "type": "n8n-nodes-base.if",
       "position": [
-        -180,
-        780
+        100,
+        6040
       ],
       "parameters": {
         "conditions": {
@@ -91,8 +91,8 @@
       "name": "HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        560,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "body": "={\n  \"embeds\": [\n    {\n      \"title\":  \"{{ $json.data.inventoryItem.variant.product.title }}\",\n      \"description\": \"This product is running out of stock!\",\n      \"color\": 16776960,\n      \"fields\": [\n        {\n          \"name\": \"Remaining Inventory\",\n          \"value\": \"{{ $json.data.inventoryItem.variant.inventoryQuantity }}\",\n          \"inline\": false\n        },\n        {\n          \"name\": \"Product Variant\",\n          \"value\": \"{{ $json.data.inventoryItem.variant.title }}\",\n          \"inline\": true\n        }\n      ],\n      \"image\": {\n        \"url\": \"{{ $json.data.inventoryItem.variant.product.images.edges[0].node.originalSrc }}\"\n      },\n      \"footer\": {\n        \"text\": \"Alert from inventory management system\"\n      }\n    }\n  ]\n}",
@@ -118,8 +118,8 @@
       "name": "HTTP Request1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        560,
-        860
+        100,
+        5680
       ],
       "parameters": {
         "body": "={\n  \"embeds\": [\n    {\n      \"title\":  \"{{ $json.data.inventoryItem.variant.product.title }}\",\n      \"description\": \"This product is sold out!\",\n      \"color\": 16711680,\n      \"fields\": [\n        {\n          \"name\": \"Remaining Inventory\",\n          \"value\": \"{{ $json.data.inventoryItem.variant.inventoryQuantity }}\",\n          \"inline\": false\n        },\n        {\n          \"name\": \"Product Variant\",\n          \"value\": \"{{ $json.data.inventoryItem.variant.title }}\",\n          \"inline\": true\n        }\n      ],\n      \"image\": {\n        \"url\": \"{{ $json.data.inventoryItem.variant.product.images.edges[0].node.originalSrc }}\"\n      },\n      \"footer\": {\n        \"text\": \"Alert from inventory management system\"\n      }\n    }\n  ]\n}",
@@ -145,8 +145,8 @@
       "name": "GraphQL1- shopify",
       "type": "n8n-nodes-base.graphql",
       "position": [
-        180,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "query": "={\n  inventoryItem(id: \"gid://shopify/InventoryItem/{{ $json.inventory_tem }}\") {\n    id\n    variant {\n      id\n      title\n      inventoryQuantity  # This line adds the inventory quantity field\n      product {\n        id\n        title\n        images(first: 1) {\n          edges {\n            node {\n              originalSrc\n            }\n          }\n        }\n      }\n    }\n  }\n}",
@@ -161,8 +161,8 @@
       "name": "GraphQL -  shopify",
       "type": "n8n-nodes-base.graphql",
       "position": [
-        200,
-        860
+        100,
+        5140
       ],
       "parameters": {
         "query": "={\n  inventoryItem(id: \"gid://shopify/InventoryItem/{{ $json.inventory_tem }}\") {\n    id\n    variant {\n      id\n      title\n      inventoryQuantity  # This line adds the inventory quantity field\n      product {\n        id\n        title\n        images(first: 1) {\n          edges {\n            node {\n              originalSrc\n            }\n          }\n        }\n      }\n    }\n  }\n}",
@@ -177,8 +177,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1160,
-        600
+        100,
+        6220
       ],
       "parameters": {
         "color": 7,
@@ -194,8 +194,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -600,
-        780
+        100,
+        6400
       ],
       "parameters": {
         "color": 7,
@@ -211,8 +211,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -240,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "color": 7,
@@ -228,8 +228,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -220,
-        920
+        100,
+        6760
       ],
       "parameters": {
         "color": 7,
@@ -245,8 +245,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        120,
-        560
+        100,
+        6940
       ],
       "parameters": {
         "color": 7,
@@ -262,8 +262,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        520,
-        580
+        100,
+        7120
       ],
       "parameters": {
         "color": 7,
@@ -279,8 +279,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1160,
-        260
+        100,
+        7300
       ],
       "parameters": {
         "width": 361.2353658536575,
@@ -296,8 +296,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 174f80b5-6c84-47b3-a906-eeb4fc5207b8",
@@ -311,8 +311,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in ce6a4937-ce78-486e-adcb-a0d11a856cd9",
@@ -326,8 +326,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in 4a571564-03a1-44de-a06d-b5142911d6f4",
@@ -341,8 +341,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 174f80b5",
@@ -356,8 +356,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ce6a4937",
@@ -371,8 +371,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 4a571564",
@@ -386,8 +386,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Webhook**: webhook\n- **Code**: code\n- **Low Inventory**: if\n- **Out of stock**: if\n- **HTTP Request**: httpRequest\n- **HTTP Request1**: httpRequest\n- **GraphQL1- shopify**: graphql\n- **GraphQL -  shopify**: graphql\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- ... and 11 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -400,8 +400,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -415,8 +415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -430,8 +430,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -445,8 +445,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -459,8 +459,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -488,8 +488,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -503,8 +503,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -563,8 +563,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -636,8 +636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -666,8 +666,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -681,8 +681,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -695,8 +695,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -708,8 +708,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -722,8 +722,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -736,8 +736,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -750,8 +750,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9280
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -763,8 +763,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -777,8 +777,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -791,8 +791,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -805,8 +805,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9460
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -818,8 +818,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -832,8 +832,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9640
       ],
       "parameters": {
         "content": "# Webhook Workflow\n\n## Overview\nAutomated workflow: Webhook Workflow. This workflow integrates 7 different services: webhook, stickyNote, httpRequest, code, graphql. It contains 21 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -845,8 +845,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Workflow execution error",

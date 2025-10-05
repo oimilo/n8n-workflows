@@ -17,8 +17,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -380,
-        -280
+        100,
+        1180
       ],
       "parameters": {
         "color": 7,
@@ -34,8 +34,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -380,
-        -400
+        100,
+        1720
       ],
       "parameters": {
         "color": 5,
@@ -51,8 +51,8 @@
       "name": "FileSystem MCP Server",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -180,
-        -140
+        100,
+        460
       ],
       "webhookId": "0d93cfd5-2fbf-457e-9535-5bfc9a73ba9e",
       "parameters": {
@@ -66,8 +66,8 @@
       "name": "ListDirectory",
       "type": "n8n-nodes-base.executeCommandTool",
       "position": [
-        -300,
-        60
+        100,
+        640
       ],
       "parameters": {
         "command": "=ls /home/node/{{ $fromAI('path', 'optional, leave blank for project root directory.') }}",
@@ -81,8 +81,8 @@
       "name": "CreateDirectory",
       "type": "n8n-nodes-base.executeCommandTool",
       "position": [
-        -200,
-        160
+        100,
+        100
       ],
       "parameters": {
         "command": "=mkdir -p /home/node/{{ $fromAI('filename', 'name of directory. Will be scoped under the /home/node/ project root directory. Optionally use path to create within subdirectories') }}",
@@ -96,8 +96,8 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        400,
-        40
+        100,
+        1900
       ],
       "parameters": {
         "workflowInputs": {
@@ -124,8 +124,8 @@
       "name": "Operation",
       "type": "n8n-nodes-base.switch",
       "position": [
-        580,
-        40
+        380,
+        100
       ],
       "parameters": {
         "rules": {
@@ -191,8 +191,8 @@
       "name": "readOneOrMultipleFiles",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        840,
-        140
+        660,
+        100
       ],
       "parameters": {
         "command": "=cat {{ $json.filenames.join(' ') }}"
@@ -205,8 +205,8 @@
       "name": "ReadFiles",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        40,
-        160
+        100,
+        820
       ],
       "parameters": {
         "name": "readFil",
@@ -268,8 +268,8 @@
       "name": "WriteFiles",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        140,
-        60
+        100,
+        3880
       ],
       "parameters": {
         "name": "write_file",
@@ -331,8 +331,8 @@
       "name": "writeOneOrMultipleFiles",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        840,
-        -60
+        940,
+        100
       ],
       "parameters": {
         "command": "={{\n$json.filenames.map((filename,idx) =>\n  `echo \"${$json.contents[idx] ?? ''}\" > /home/node/${filename}`\n).join('\\n')\n}}"
@@ -345,8 +345,8 @@
       "name": "SearchDirectory",
       "type": "n8n-nodes-base.executeCommandTool",
       "position": [
-        -80,
-        240
+        100,
+        1000
       ],
       "parameters": {
         "command": "=find /home/node/ -name \"{{ $fromAI('filename', 'A name search paramter for the linux find tool') }}\"\n",
@@ -360,8 +360,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        320,
-        -280
+        100,
+        1360
       ],
       "parameters": {
         "color": 7,
@@ -377,8 +377,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -880,
-        -740
+        100,
+        1540
       ],
       "parameters": {
         "width": 460,
@@ -394,8 +394,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 14\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note**: stickyNote\n- **Sticky Note3**: stickyNote\n- **FileSystem MCP Server**: mcpTrigger\n- **ListDirectory**: executeCommandTool\n- **CreateDirectory**: executeCommandTool\n- **When Executed by Another Workflow**: executeWorkflowTrigger\n- **Operation**: switch\n- **readOneOrMultipleFiles**: executeCommand\n- **ReadFiles**: toolWorkflow\n- **WriteFiles**: toolWorkflow\n- ... and 4 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -408,8 +408,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2260
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -422,8 +422,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2440
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -436,8 +436,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2620
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2800
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2980
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3160
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -491,8 +491,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3340
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -504,8 +504,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3520
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -517,8 +517,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        1220,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -531,8 +531,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        3700
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 7 different services: stickyNote, switch, executeCommandTool, mcpTrigger, toolWorkflow. It contains 14 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Workflow execution error",

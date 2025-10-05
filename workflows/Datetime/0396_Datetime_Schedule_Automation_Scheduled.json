@@ -17,8 +17,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        380,
-        240
+        100,
+        280
       ],
       "parameters": {
         "rule": {
@@ -35,8 +35,8 @@
       "name": "PURGE DAYS",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        920,
-        460
+        2060,
+        100
       ],
       "parameters": {
         "options": {},
@@ -52,8 +52,8 @@
       "name": "DELETE OLD BACKUPS",
       "type": "n8n-nodes-base.dropbox",
       "position": [
-        1520,
-        460
+        4300,
+        100
       ],
       "parameters": {
         "path": "={{ $json.pathDisplay }}",
@@ -74,8 +74,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        -20
+        940,
+        100
       ],
       "parameters": {
         "width": 932.4394074276975,
@@ -90,8 +90,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        220
+        1220,
+        100
       ],
       "parameters": {
         "width": 931.4765002625034,
@@ -106,8 +106,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        817.111278504417,
-        420
+        660,
+        100
       ],
       "parameters": {
         "width": 932.4394074276973,
@@ -122,8 +122,8 @@
       "name": "GET WORKFLOWS",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1100,
-        260
+        2620,
+        100
       ],
       "parameters": {
         "filters": {}
@@ -142,8 +142,8 @@
       "name": "MAKE JSON FILES",
       "type": "n8n-nodes-base.moveBinaryData",
       "position": [
-        1300,
-        260
+        3460,
+        100
       ],
       "parameters": {
         "mode": "jsonToBinary",
@@ -160,8 +160,8 @@
       "name": "UPLOAD WORKFLOWS",
       "type": "n8n-nodes-base.dropbox",
       "position": [
-        1520,
-        260
+        4580,
+        100
       ],
       "parameters": {
         "path": "={{ $('DESTINATION FOLDER').last().json.folder }}{{ $('GET WORKFLOWS').item.json.name }}.json",
@@ -183,8 +183,8 @@
       "name": "DESTINATION FOLDER",
       "type": "n8n-nodes-base.set",
       "position": [
-        580,
-        240
+        380,
+        100
       ],
       "parameters": {
         "fields": {
@@ -207,8 +207,8 @@
       "name": "WAIT FOR MOVE TO FINISH",
       "type": "n8n-nodes-base.merge",
       "position": [
-        900,
-        260
+        1500,
+        100
       ],
       "parameters": {
         "mode": "chooseBranch",
@@ -223,8 +223,8 @@
       "type": "n8n-nodes-base.dropbox",
       "onError": "continueRegularOutput",
       "position": [
-        1100,
-        40
+        2900,
+        100
       ],
       "parameters": {
         "path": "={{ $('DESTINATION FOLDER').last().json.folder }}",
@@ -249,8 +249,8 @@
       "name": "IGNORE FOLDERS",
       "type": "n8n-nodes-base.filter",
       "position": [
-        1300,
-        40
+        3740,
+        100
       ],
       "parameters": {
         "options": {},
@@ -284,8 +284,8 @@
       "type": "n8n-nodes-base.dropbox",
       "onError": "continueRegularOutput",
       "position": [
-        1520,
-        40
+        4860,
+        100
       ],
       "parameters": {
         "path": "={{ $json.pathDisplay }}",
@@ -312,8 +312,8 @@
       "type": "n8n-nodes-base.dropbox",
       "onError": "continueRegularOutput",
       "position": [
-        1100,
-        460
+        3180,
+        100
       ],
       "parameters": {
         "path": "={{ $('DESTINATION FOLDER').last().json.folder }}old",
@@ -338,8 +338,8 @@
       "name": "CHECK DATES",
       "type": "n8n-nodes-base.if",
       "position": [
-        1300,
-        460
+        4020,
+        100
       ],
       "parameters": {
         "options": {},
@@ -371,8 +371,8 @@
       "name": "GET CURRENT DATE",
       "type": "n8n-nodes-base.dateTime",
       "position": [
-        900,
-        40
+        1780,
+        100
       ],
       "parameters": {
         "date": "={{ $now }}",
@@ -389,8 +389,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        460
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Node Types**: 10\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **PURGE DAYS**: dateTime\n- **DELETE OLD BACKUPS**: dropbox\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **GET WORKFLOWS**: n8n\n- **MAKE JSON FILES**: moveBinaryData\n- **UPLOAD WORKFLOWS**: dropbox\n- **DESTINATION FOLDER**: set\n- ... and 7 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -403,8 +403,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -417,8 +417,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        820
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -431,8 +431,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1000
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -445,8 +445,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1180
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -459,8 +459,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1360
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -473,8 +473,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1540
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 23\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -486,8 +486,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1720
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -499,8 +499,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        1900
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -512,8 +512,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        2340,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -526,8 +526,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        2080
       ],
       "parameters": {
         "content": "# Scheduletrigger Workflow\n\n## Overview\nAutomated workflow: Scheduletrigger Workflow. This workflow integrates 10 different services: stickyNote, filter, scheduleTrigger, dropbox, n8n. It contains 17 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -539,8 +539,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

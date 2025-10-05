@@ -4,8 +4,8 @@
       "name": "Function",
       "type": "n8n-nodes-base.function",
       "position": [
-        230,
-        710
+        940,
+        100
       ],
       "parameters": {
         "functionCode": "// Code here will run only once, no matter how many input items there are.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.function\n\n// Loop over inputs and add a new field called 'myNewField' to the JSON of each one\nfor (item of items) {\n  \nvar type = \"Status\";\n// Acknowledged\nif ((item.json.body.alert.statusCode == 2)  && (item.json.body.eventType == 201)) {\n    type = \"Acknowledged\";\n}\n// Closed\nif ((item.json.body.alert.statusCode == 4) & (item.json.body.eventType == 201)) {\n    type = \"Closed\";\n}\n// New Alert\nif ((item.json.body.alert.statusCode == 1) & (item.json.body.eventType == 200)) {\n    type = \"New Alert\";\n}\n\n// No one on duty\nif ((item.json.body.alert.statusCode == 16) & (item.json.body.eventType == 201)) {\n    type = \"No one on duty\";\n}\n \n// Annotation\nvar annotation = \"\";\nif ((item.json.body.eventType == 203) & (item.json.body.annotation != undefined) ) {\n    type = \"Annotated\";\n    annotation = item.json.body.annotation.message;\n}\nif (annotation != \"\") {\n    annotation = \": \" + annotation;\n}\n \nvar username = \"System\";\nif (item.json.body.user != undefined) {\n    username = item.json.body.user.username;\n}\n \nvar data = type + \" by \" + username + annotation;\n \nitem.json.s4Status = data; //  + \": \" + JSON.stringify(item.json);\n\n\nitem.json.s4Up = false;\nif (type == \"Closed\") {\n  item.json.s4Up = true;\n}\n\n}\n\n// You can write logs to the browser console\nconsole.log('Done!');\n\nreturn items;\n\n\n"
@@ -18,8 +18,8 @@
       "type": "n8n-nodes-base.notionTrigger",
       "disabled": true,
       "position": [
-        230,
-        210
+        100,
+        280
       ],
       "parameters": {
         "event": "pageAddedToDatabase",
@@ -44,8 +44,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        50,
-        710
+        100,
+        460
       ],
       "webhookId": "95fd62c7-fc8c-4f6f-8441-bbf85a2da81a",
       "parameters": {
@@ -60,8 +60,8 @@
       "name": "Function",
       "type": "n8n-nodes-base.function",
       "position": [
-        230,
-        710
+        380,
+        100
       ],
       "parameters": {
         "functionCode": "// Code here will run only once, no matter how many input items there are.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.function\n\n// Loop over inputs and add a new field called 'myNewField' to the JSON of each one\nfor (item of items) {\n  \nvar type = \"Status\";\n// Acknowledged\nif ((item.json.body.alert.statusCode == 2)  && (item.json.body.eventType == 201)) {\n    type = \"Acknowledged\";\n}\n// Closed\nif ((item.json.body.alert.statusCode == 4) & (item.json.body.eventType == 201)) {\n    type = \"Closed\";\n}\n// New Alert\nif ((item.json.body.alert.statusCode == 1) & (item.json.body.eventType == 200)) {\n    type = \"New Alert\";\n}\n\n// No one on duty\nif ((item.json.body.alert.statusCode == 16) & (item.json.body.eventType == 201)) {\n    type = \"No one on duty\";\n}\n \n// Annotation\nvar annotation = \"\";\nif ((item.json.body.eventType == 203) & (item.json.body.annotation != undefined) ) {\n    type = \"Annotated\";\n    annotation = item.json.body.annotation.message;\n}\nif (annotation != \"\") {\n    annotation = \": \" + annotation;\n}\n \nvar username = \"System\";\nif (item.json.body.user != undefined) {\n    username = item.json.body.user.username;\n}\n \nvar data = type + \" by \" + username + annotation;\n \nitem.json.s4Status = data; //  + \": \" + JSON.stringify(item.json);\n\n\nitem.json.s4Up = false;\nif (type == \"Closed\") {\n  item.json.s4Up = true;\n}\n\n}\n\n// You can write logs to the browser console\nconsole.log('Done!');\n\nreturn items;\n\n\n"
@@ -73,8 +73,8 @@
       "name": "Notion Update",
       "type": "n8n-nodes-base.notion",
       "position": [
-        420,
-        710
+        1220,
+        100
       ],
       "parameters": {
         "pageId": "={{$node[\"Webhook\"].json[\"body\"][\"alert\"][\"externalEventId\"]}}",
@@ -102,8 +102,8 @@
       "name": "Interval",
       "type": "n8n-nodes-base.interval",
       "position": [
-        50,
-        380
+        380,
+        280
       ],
       "parameters": {
         "interval": 20
@@ -115,8 +115,8 @@
       "name": "SIGNL4 Resolve",
       "type": "n8n-nodes-base.signl4",
       "position": [
-        420,
-        540
+        1500,
+        100
       ],
       "parameters": {
         "operation": "resolve",
@@ -132,8 +132,8 @@
       "name": "SIGNL4 Alert",
       "type": "n8n-nodes-base.signl4",
       "position": [
-        420,
-        210
+        1780,
+        100
       ],
       "parameters": {
         "message": "=Machine Alert: {{$node[\"Notion Trigger\"].json[\"Name\"]}}",
@@ -158,8 +158,8 @@
       "name": "Notion Update Read",
       "type": "n8n-nodes-base.notion",
       "position": [
-        570,
-        380
+        2340,
+        100
       ],
       "parameters": {
         "pageId": "={{$node[\"Notion Read New\"].json[\"id\"]}}",
@@ -187,8 +187,8 @@
       "name": "Notion Read Open",
       "type": "n8n-nodes-base.notion",
       "position": [
-        230,
-        540
+        660,
+        100
       ],
       "parameters": {
         "options": {
@@ -227,8 +227,8 @@
       "name": "Notion Read New",
       "type": "n8n-nodes-base.notion",
       "position": [
-        230,
-        380
+        940,
+        280
       ],
       "parameters": {
         "options": {
@@ -265,8 +265,8 @@
       "name": "Notion Update Final",
       "type": "n8n-nodes-base.notion",
       "position": [
-        570,
-        540
+        2620,
+        100
       ],
       "parameters": {
         "pageId": "={{$node[\"Notion Read Open\"].json[\"id\"]}}",
@@ -293,8 +293,8 @@
       "name": "SIGNL4 Alert 2",
       "type": "n8n-nodes-base.signl4",
       "position": [
-        420,
-        380
+        2060,
+        100
       ],
       "parameters": {
         "message": "=Machine Alert: {{$node[\"Notion Read New\"].json[\"Name\"]}}",
@@ -321,8 +321,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        660,
+        280
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -334,8 +334,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        2900,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -348,8 +348,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        640
       ],
       "parameters": {
         "content": "# Production Workflow\n\n## Overview\nProduction-ready workflow: Production Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -361,8 +361,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        100
       ],
       "parameters": {
         "message": "Workflow execution error",

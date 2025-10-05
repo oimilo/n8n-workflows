@@ -17,8 +17,8 @@
       "name": "Notion Trigger",
       "type": "n8n-nodes-base.notionTrigger",
       "position": [
-        -100,
-        360
+        100,
+        4600
       ],
       "parameters": {
         "event": "pagedUpdatedInDatabase",
@@ -51,8 +51,8 @@
       "name": "Notion",
       "type": "n8n-nodes-base.notion",
       "position": [
-        320,
-        220
+        100,
+        4240
       ],
       "parameters": {
         "blockId": {
@@ -78,8 +78,8 @@
       "name": "Notion Node Blocks to Md",
       "type": "n8n-nodes-base.code",
       "position": [
-        760,
-        220
+        100,
+        4420
       ],
       "parameters": {
         "jsCode": "function notionToMarkdown(blocks) {\n  return blocks\n    .map(block => {\n      if (!block.json.content) return \"\"; // Skip empty content\n      \n      switch (block.json.type) {\n        case \"heading_1\":\n          return `# ${block.json.content}`;\n        case \"heading_2\":\n          return `## ${block.json.content}`;\n        case \"heading_3\":\n          return `### ${block.json.content}`;\n        case \"bulleted_list_item\":\n          return `- ${block.json.content}`;\n        case \"to_do\":\n          return `- [ ] ${block.json.content}`;\n        case \"paragraph\":\n          return `${block.json.content}`;\n        default:\n          return \"\"; // Ignore unsupported types\n      }\n    })\n    .filter(line => line.trim() !== \"\") // Remove empty lines\n    .join(\"\\n\\n\"); // Ensure proper spacing\n}\nconsole.log($input.all())\nreturn [ {\"md\": notionToMarkdown($input.all())} ]"
@@ -92,8 +92,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        560,
-        540
+        100,
+        4780
       ],
       "parameters": {
         "options": {},
@@ -107,8 +107,8 @@
       "name": "Full Notion Blocks to Md",
       "type": "n8n-nodes-base.code",
       "position": [
-        760,
-        540
+        100,
+        3700
       ],
       "parameters": {
         "jsCode": "function jsonToMarkdown(blocks) {\n    let markdown = \"\";\n\n    function parseRichText(richTextArray) {\n        return richTextArray.map(text => {\n            let content = text.text.content;\n            if (text.annotations.bold) content = `**${content}**`;\n            if (text.annotations.italic) content = `*${content}*`;\n            if (text.annotations.strikethrough) content = `~~${content}~~`;\n            if (text.annotations.underline) content = `_${content}_`;\n            if (text.annotations.code) content = `\\`${content}\\``;\n            if (text.text.link) content = `[${content}](${text.text.link.url})`;\n            return content;\n        }).join(\"\");\n    }\n\n    blocks.forEach(block => {\n        switch (block.json.type) {\n            case \"heading_1\":\n                markdown += `\\n# ${parseRichText(block.json.heading_1.rich_text)}\\n`;\n                break;\n            case \"heading_2\":\n                markdown += `\\n## ${parseRichText(block.json.heading_2.rich_text)}\\n`;\n                break;\n            case \"heading_3\":\n                markdown += `\\n### ${parseRichText(block.json.heading_3.rich_text)}\\n`;\n                break;\n            case \"paragraph\":\n                markdown += `\\n${parseRichText(block.json.paragraph.rich_text)}\\n`;\n                break;\n            case \"bulleted_list_item\":\n                markdown += `- ${parseRichText(block.json.bulleted_list_item.rich_text)}\\n`;\n                break;\n            case \"numbered_list_item\":\n                markdown += `1. ${parseRichText(block.json.numbered_list_item.rich_text)}\\n`;\n                break;\n            case \"to_do\":\n                let checked = block.json.to_do.checked ? \"[x]\" : \"[ ]\";\n                markdown += `- ${checked} ${parseRichText(block.json.to_do.rich_text)}\\n`;\n                break;\n            case \"quote\":\n                markdown += `\\n> ${parseRichText(block.json.quote.rich_text)}\\n`;\n                break;\n            case \"code\":\n                markdown += `\\n\\\n\\`${block.code.language}\\`\\n\\\n${parseRichText(block.json.code.rich_text)}\\n\\\n\\n`;\n                break;\n            case \"unsupported\":\n                break;\n        }\n    });\n\n    return markdown.trim();\n}\n\nreturn [ { \"md\": jsonToMarkdown($input.all()) }];\n\n"
@@ -121,8 +121,8 @@
       "name": "Md to Notion Blocks v3",
       "type": "n8n-nodes-base.code",
       "position": [
-        1100,
-        340
+        100,
+        4060
       ],
       "parameters": {
         "mode": "runOnceForEachItem",
@@ -136,8 +136,8 @@
       "name": "Add blocks as Children",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1340,
-        340
+        100,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -163,8 +163,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        280,
-        100
+        100,
+        4960
       ],
       "parameters": {
         "width": 640,
@@ -179,8 +179,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        280,
-        440
+        100,
+        5140
       ],
       "parameters": {
         "width": 640,
@@ -195,8 +195,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -180,
-        220
+        100,
+        5320
       ],
       "parameters": {
         "width": 340,
@@ -211,8 +211,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1040,
-        200
+        100,
+        5500
       ],
       "parameters": {
         "height": 320,
@@ -226,8 +226,8 @@
       "name": "Get Child blocks",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        340,
-        540
+        100,
+        3880
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        280
       ],
       "parameters": {
         "message": "Error occurred in 1af23a39-132a-45c5-8e71-090d0c4cf7df",
@@ -265,8 +265,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in bc62cd3b-cc4b-4e4d-b617-e4012494a03b",
@@ -280,8 +280,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1af23a39",
@@ -295,8 +295,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node bc62cd3b",
@@ -310,8 +310,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 16\n- **Node Types**: 7\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Notion Trigger**: notionTrigger\n- **Notion**: notion\n- **Notion Node Blocks to Md**: code\n- **Split Out**: splitOut\n- **Full Notion Blocks to Md**: code\n- **Md to Notion Blocks v3**: code\n- **Add blocks as Children**: httpRequest\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- ... and 6 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -324,8 +324,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -339,8 +339,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -354,8 +354,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 19\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -368,8 +368,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 20\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -382,8 +382,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -397,8 +397,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -412,8 +412,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -427,8 +427,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -442,8 +442,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -456,8 +456,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -557,8 +557,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -571,8 +571,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -585,8 +585,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -598,8 +598,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -612,8 +612,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -626,8 +626,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7300
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -639,8 +639,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -653,8 +653,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# Notiontrigger Workflow\n\n## Overview\nAutomated workflow: Notiontrigger Workflow. This workflow integrates 7 different services: notionTrigger, stickyNote, httpRequest, code, splitOut. It contains 16 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -666,8 +666,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Workflow execution error",

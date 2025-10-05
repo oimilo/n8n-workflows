@@ -26,8 +26,8 @@
       "name": "Get video transcript",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        880,
-        0
+        100,
+        3340
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -67,8 +67,8 @@
       "name": "Get Video ID",
       "type": "n8n-nodes-base.code",
       "position": [
-        660,
-        0
+        100,
+        3160
       ],
       "parameters": {
         "jsCode": "// Loop over input items\nfor (const item of $input.all()) {\n    // Extract the YouTube video ID using a regular expression\n    const Source = item.json.Source;\n    const videoIdMatch = Source.match(/(?:v=|\\/)([a-zA-Z0-9_-]{11})/);\n\n    const videoId = videoIdMatch ? videoIdMatch[1] : null; // Extracted video ID or null if not found\n\n    // Add the video ID to the JSON\n    item.json.videoId = videoId;\n}\n\n// Return all items with the new videoId field\nreturn $input.all();\n"
@@ -81,8 +81,8 @@
       "name": "Combine Transcripts",
       "type": "n8n-nodes-base.code",
       "position": [
-        1320,
-        0
+        100,
+        280
       ],
       "parameters": {
         "jsCode": "// Initialize an empty string to hold the concatenated transcript\nlet Transcript = \"\";\n\n// Safeguard against undefined paths and ensure required properties exist\nif ($json.data && $json.data.transcripts) {\n    // Loop through all transcript objects\n    for (const key in $json.data.transcripts) {\n        if ($json.data.transcripts[key].custom) {\n            const customArray = $json.data.transcripts[key].custom;\n\n            // Extract and append text from each transcript entry\n            for (const item of customArray) {\n                if (item.text) {\n                    Transcript += item.text + \" \"; // Add a space between texts\n                }\n            }\n        }\n    }\n}\n\n// Return the combined transcript as a new field\nreturn [\n    {\n        json: {\n            Transcript: Transcript.trim(), // Trim to clean up extra spaces\n        },\n    },\n];\n"
@@ -95,8 +95,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        240,
-        0
+        100,
+        3520
       ],
       "parameters": {
         "rule": {
@@ -115,8 +115,8 @@
       "name": "Airtable",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        460,
-        0
+        100,
+        100
       ],
       "parameters": {
         "base": {
@@ -153,8 +153,8 @@
       "name": "Get Full Transcript",
       "type": "n8n-nodes-base.set",
       "position": [
-        1540,
-        0
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -177,8 +177,8 @@
       "name": "Get All Transcripts",
       "type": "n8n-nodes-base.set",
       "position": [
-        1100,
-        0
+        100,
+        2620
       ],
       "parameters": {
         "options": {},
@@ -201,8 +201,8 @@
       "name": "Get Main Idea & Key Takeaways",
       "type": "n8n-nodes-base.set",
       "position": [
-        2120,
-        0
+        100,
+        2980
       ],
       "parameters": {
         "options": {},
@@ -231,8 +231,8 @@
       "name": "Extract detailed summary",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1760,
-        0
+        100,
+        2440
       ],
       "parameters": {
         "text": "=Your job is to generate detailed summary of \"{{ $json.Transcript }}\".\n\nAlways output your answer in the following format:\n\n- Main Idea\n- Takeaways",
@@ -248,8 +248,8 @@
       "name": "Update Airtable",
       "type": "n8n-nodes-base.airtable",
       "position": [
-        2320,
-        0
+        100,
+        4240
       ],
       "parameters": {
         "base": {
@@ -469,8 +469,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        760,
-        -580
+        100,
+        3700
       ],
       "parameters": {
         "width": 460,
@@ -485,8 +485,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        760,
-        -340
+        100,
+        3880
       ],
       "parameters": {
         "width": 460,
@@ -501,8 +501,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1300,
-        -580
+        100,
+        4060
       ],
       "parameters": {
         "width": 500,
@@ -518,8 +518,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        460
       ],
       "parameters": {
         "message": "Error occurred in eb18fe74-8812-48ab-b977-41f5cedf9a76",
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node eb18fe74",
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4420
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 15\n- **Node Types**: 8\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Get video transcript**: httpRequest\n- **Get Video ID**: code\n- **Combine Transcripts**: code\n- **Schedule Trigger**: scheduleTrigger\n- **Airtable**: airtable\n- **Get Full Transcript**: set\n- **Get All Transcripts**: set\n- **Get Main Idea & Key Takeaways**: set\n- **Extract detailed summary**: informationExtractor\n- **Update Airtable**: airtable\n- ... and 5 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -562,8 +562,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4600
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 17\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4780
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 18\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -605,8 +605,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -620,8 +620,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -635,8 +635,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        4960
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 21\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5140
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 22\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -663,8 +663,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -678,8 +678,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -693,8 +693,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5320
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 25\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -707,8 +707,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 26\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -720,8 +720,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -734,8 +734,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -747,8 +747,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -761,8 +761,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -774,8 +774,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -788,8 +788,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# YouTube to Airtable Anonym\n\n## Overview\nAutomated workflow: YouTube to Airtable Anonym. This workflow integrates 8 different services: stickyNote, httpRequest, airtable, code, scheduleTrigger. It contains 15 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -801,8 +801,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Workflow execution error",

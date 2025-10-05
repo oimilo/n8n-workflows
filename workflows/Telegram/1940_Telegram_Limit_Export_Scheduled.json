@@ -26,8 +26,8 @@
       "name": "On clicking 'execute'",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        620,
-        -140
+        100,
+        3520
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Loop Over Items",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1140,
-        340
+        100,
+        3340
       ],
       "parameters": {
         "options": {
@@ -54,8 +54,8 @@
       "name": "Every Day",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        620,
-        80
+        100,
+        2260
       ],
       "parameters": {
         "rule": {
@@ -72,8 +72,8 @@
       "name": "Create Folder with DateTime Stamp",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1220,
-        -40
+        100,
+        460
       ],
       "parameters": {
         "name": "=n8n-Workflow-Backups-{{ $json.datetime }}",
@@ -105,8 +105,8 @@
       "name": "Get DateTIme",
       "type": "n8n-nodes-base.set",
       "position": [
-        920,
-        -40
+        100,
+        2800
       ],
       "parameters": {
         "options": {},
@@ -129,8 +129,8 @@
       "name": "Get Workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
-        1520,
-        -40
+        100,
+        2980
       ],
       "parameters": {
         "filters": {},
@@ -150,8 +150,8 @@
       "name": "Limit to 200",
       "type": "n8n-nodes-base.limit",
       "position": [
-        1820,
-        -40
+        100,
+        3160
       ],
       "parameters": {
         "maxItems": 200
@@ -164,8 +164,8 @@
       "name": "Convert Workflow to JSON File",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        1400,
-        340
+        100,
+        280
       ],
       "parameters": {
         "options": {
@@ -181,8 +181,8 @@
       "name": "Save JSON File to Google Drive Folder",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1600,
-        340
+        100,
+        3700
       ],
       "parameters": {
         "name": "={{ $binary.data.fileName }}.json",
@@ -212,8 +212,8 @@
       "name": "Execute Once",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        980,
-        720
+        100,
+        2440
       ],
       "parameters": {},
       "executeOnce": true,
@@ -225,8 +225,8 @@
       "name": "Search Folder Names",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        1180,
-        720
+        100,
+        3880
       ],
       "parameters": {
         "limit": 10,
@@ -253,8 +253,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "onError": "continueRegularOutput",
       "position": [
-        1600,
-        720
+        100,
+        640
       ],
       "parameters": {
         "options": {
@@ -283,8 +283,8 @@
       "name": "Complete Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        960,
-        1040
+        100,
+        100
       ],
       "webhookId": "382a3b43-b83f-47b1-a276-67c6b98a441a",
       "parameters": {
@@ -309,8 +309,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1020,
-        220
+        100,
+        4060
       ],
       "parameters": {
         "color": 5,
@@ -326,8 +326,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        840,
-        620
+        100,
+        4240
       ],
       "parameters": {
         "color": 3,
@@ -343,8 +343,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        840,
-        960
+        100,
+        4420
       ],
       "parameters": {
         "width": 340,
@@ -359,8 +359,8 @@
       "name": "Find Folders to Delete",
       "type": "n8n-nodes-base.code",
       "position": [
-        1400,
-        720
+        100,
+        2620
       ],
       "parameters": {
         "jsCode": "// Get all input items and sort by name in descending order\nconst sortedItems = $input.all().sort((a, b) => {\n  if (!a.name || !b.name) return 0;\n  return b.name.localeCompare(a.name);\n});\n\n// Get items older than 7 days\nconst olderItems = sortedItems.slice(7);\n\nreturn olderItems\n\n"
@@ -373,8 +373,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1740,
-        -160
+        100,
+        4600
       ],
       "parameters": {
         "width": 260,
@@ -389,8 +389,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1440,
-        -160
+        100,
+        4780
       ],
       "parameters": {
         "width": 260,
@@ -405,8 +405,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1140,
-        -160
+        100,
+        4960
       ],
       "parameters": {
         "width": 260,
@@ -421,8 +421,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        840,
-        -160
+        100,
+        5140
       ],
       "parameters": {
         "width": 260,
@@ -437,8 +437,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -160,
-        -160
+        100,
+        5320
       ],
       "parameters": {
         "color": 7,
@@ -455,8 +455,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 67f62b6e",
@@ -470,8 +470,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 18f61908",
@@ -485,8 +485,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 97690d84",
@@ -500,8 +500,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node aadc54d7",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fcb210bf",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ccdc0655",
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5500
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 28\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **On clicking 'execute'**: manualTrigger\n- **Loop Over Items**: splitInBatches\n- **Every Day**: scheduleTrigger\n- **Create Folder with DateTime Stamp**: googleDrive\n- **Get DateTIme**: set\n- **Get Workflows**: n8n\n- **Limit to 200**: limit\n- **Convert Workflow to JSON File**: convertToFile\n- **Save JSON File to Google Drive Folder**: googleDrive\n- **Execute Once**: noOp\n- ... and 18 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -559,8 +559,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5680
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 29\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -573,8 +573,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        5860
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -587,8 +587,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6220
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 32\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -615,8 +615,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6400
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 33\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -629,8 +629,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6580
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 34\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -642,8 +642,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6760
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 35\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -655,8 +655,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        6940
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -668,8 +668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        820
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -682,8 +682,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7120
       ],
       "parameters": {
         "content": "# ✨😃Automated Workflow Backups to Google Drive\n\n## Overview\nAutomated workflow: ✨😃Automated Workflow Backups to Google Drive. This workflow integrates 13 different services: convertToFile, stickyNote, telegram, code, scheduleTrigger. It contains 28 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -695,8 +695,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1000
       ],
       "parameters": {
         "message": "Workflow execution error",

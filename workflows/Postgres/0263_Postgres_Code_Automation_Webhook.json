@@ -26,8 +26,8 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -1120,
-        -560
+        100,
+        10360
       ],
       "parameters": {
         "rule": {
@@ -47,8 +47,8 @@
       "name": "OpenAI Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2060,
-        -20
+        100,
+        9280
       ],
       "parameters": {
         "model": {
@@ -73,8 +73,8 @@
       "name": "Download Image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2620,
-        100
+        100,
+        1180
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -95,8 +95,8 @@
       "name": "Prepare Post JSON",
       "type": "n8n-nodes-base.code",
       "position": [
-        3440,
-        -520
+        100,
+        10180
       ],
       "parameters": {
         "jsCode": "const items = $input.all();\n\nlet image = null;\nlet contentBlock = null;\nlet categoryBlock = null;\nlet titleBlock = null;\n\n// Inspect all incoming JSON\nfor (const item of items) {\n  const json = item.json;\n\n  // Detect image\n  if (json?.source_url && json?.media_type === 'image') {\n    image = json;\n    continue;\n  }\n\n  // Detect GPT-generated content\n  if (typeof json.content === 'string' && json.content.includes('<!-- wp:paragraph')) {\n    contentBlock = json;\n    continue;\n  }\n\n  // Detect category block\n  if (json?.category_id && json?.description) {\n    categoryBlock = json;\n    continue;\n  }\n\n  // Detect GPT-generated title from AI output\n  if (typeof json.output === 'string') {\n    titleBlock = json;\n    continue;\n  }\n\n  // Fallback title if nothing else matched\n  if (typeof json.title === 'string') {\n    titleBlock = json;\n  }\n}\n\nreturn [{\n  json: {\n    title: $input.first().json.title,\n    content: contentBlock?.content || '<p>No content</p>',\n    status: 'publish',\n    categories: [categoryBlock?.category_id || 1],\n    featured_media: image?.id || null,\n  }\n}];\n"
@@ -109,8 +109,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        3200,
-        -520
+        100,
+        8560
       ],
       "parameters": {
         "numberInputs": 3
@@ -123,8 +123,8 @@
       "name": "OpenAI Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        640,
-        -20
+        100,
+        9460
       ],
       "parameters": {
         "model": {
@@ -149,8 +149,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2420,
-        -1340
+        100,
+        10720
       ],
       "parameters": {
         "color": 4,
@@ -166,8 +166,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1180,
-        -740
+        100,
+        10900
       ],
       "parameters": {
         "color": 4,
@@ -183,8 +183,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -700,
-        -740
+        100,
+        12880
       ],
       "parameters": {
         "color": 6,
@@ -200,8 +200,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -460,
-        -740
+        100,
+        13600
       ],
       "parameters": {
         "width": 220,
@@ -216,8 +216,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -220,
-        -740
+        100,
+        13780
       ],
       "parameters": {
         "color": 5,
@@ -233,8 +233,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        -740
+        100,
+        13960
       ],
       "parameters": {
         "width": 220,
@@ -249,8 +249,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        340,
-        -360
+        100,
+        14140
       ],
       "parameters": {
         "color": 5,
@@ -266,8 +266,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        580,
-        -360
+        100,
+        14320
       ],
       "parameters": {
         "color": 7,
@@ -283,8 +283,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        900,
-        -360
+        100,
+        14500
       ],
       "parameters": {
         "width": 220,
@@ -299,8 +299,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1220,
-        -740
+        100,
+        14680
       ],
       "parameters": {
         "width": 220,
@@ -315,8 +315,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1460,
-        -740
+        100,
+        11080
       ],
       "parameters": {
         "width": 220,
@@ -331,8 +331,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1700,
-        -740
+        100,
+        11260
       ],
       "parameters": {
         "color": 5,
@@ -348,8 +348,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2000,
-        -360
+        100,
+        11440
       ],
       "parameters": {
         "color": 7,
@@ -365,8 +365,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2320,
-        -480
+        100,
+        11620
       ],
       "parameters": {
         "width": 220,
@@ -381,8 +381,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2320,
-        -100
+        100,
+        11800
       ],
       "parameters": {
         "width": 220,
@@ -397,8 +397,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2560,
-        -100
+        100,
+        11980
       ],
       "parameters": {
         "color": 6,
@@ -414,8 +414,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2800,
-        -100
+        100,
+        12160
       ],
       "parameters": {
         "color": 6,
@@ -431,8 +431,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3140,
-        -720
+        100,
+        12340
       ],
       "parameters": {
         "width": 220,
@@ -447,8 +447,8 @@
       "name": "Sticky Note18",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3380,
-        -720
+        100,
+        12520
       ],
       "parameters": {
         "width": 220,
@@ -463,8 +463,8 @@
       "name": "Sticky Note19",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3620,
-        -720
+        100,
+        12700
       ],
       "parameters": {
         "color": 6,
@@ -480,8 +480,8 @@
       "name": "Sticky Note20",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -700,
-        -360
+        100,
+        13060
       ],
       "parameters": {
         "color": 3,
@@ -497,8 +497,8 @@
       "name": "Sticky Note21",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -220,
-        -360
+        100,
+        13240
       ],
       "parameters": {
         "color": 3,
@@ -514,8 +514,8 @@
       "name": "Load Categories",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -640,
-        -560
+        100,
+        8200
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -529,8 +529,8 @@
       "name": "Category Filter",
       "type": "n8n-nodes-base.code",
       "position": [
-        -400,
-        -560
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "const excludeIds = [1, 11, 12, 13, 15, 17, 18, 36, 37, 38, 39];\n\nreturn $input.all()\n  .filter(item => !excludeIds.includes(item.json.id))\n  .map(item => {\n    const { id, name, description, link } = item.json;\n    return {\n      json: { id, name, description, link }\n    };\n  });\n"
@@ -543,8 +543,8 @@
       "name": "Selecting recent",
       "type": "n8n-nodes-base.postgres",
       "position": [
-        -160,
-        -560
+        100,
+        10540
       ],
       "parameters": {
         "query": "SELECT category_id, MAX(used_at) AS last_used_at\nFROM used_categories\nGROUP BY category_id\nORDER BY last_used_at ASC;",
@@ -567,8 +567,8 @@
       "name": "Picks Less Used",
       "type": "n8n-nodes-base.code",
       "position": [
-        80,
-        -560
+        100,
+        9640
       ],
       "parameters": {
         "jsCode": "const categories = $items(\"Category Filter\");\nconst usedRows = $items(\"Selecting recent\");\n\nif (!categories || categories.length === 0) {\n  throw new Error(\"No category in Code2\");\n}\n\nif (!usedRows || usedRows.length === 0) {\n  return [categories[0]];\n}\n\nconst usedMap = new Map(\n  usedRows.map(row => {\n    const id = row.json.category_id;\n    const time = new Date(row.json.last_used_at || row.json.used_at).getTime();\n    return [id, time];\n  })\n);\n\nlet selected = null;\nlet minTime = Infinity;\n\nfor (const cat of categories) {\n  const id = cat.json.id;\n  const lastUsed = usedMap.get(id) ?? 0;\n\n  if (lastUsed < minTime) {\n    minTime = lastUsed;\n    selected = cat;\n  }\n}\n\nreturn [selected || categories[0]];"
@@ -581,8 +581,8 @@
       "name": "10 latest headlines",
       "type": "n8n-nodes-base.postgres",
       "position": [
-        400,
-        -200
+        100,
+        100
       ],
       "parameters": {
         "query": "SELECT name, description \nFROM used_categories \nWHERE category_id = {{ $json.id }}\nORDER BY used_at DESC \nLIMIT 10;",
@@ -604,8 +604,8 @@
       "name": "New article title",
       "type": "n8n-nodes-base.code",
       "position": [
-        960,
-        -200
+        100,
+        8920
       ],
       "parameters": {
         "jsCode": "return [\n  {\n    json: {\n      title: $input.first().json.output\n    }\n  }\n];\n"
@@ -618,8 +618,8 @@
       "name": "AI Agent SEO Headings",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        600,
-        -200
+        100,
+        280
       ],
       "parameters": {
         "text": "=Based on the category \"{{ $('Picks Less Used').item.json.name }}\"  \nwith the description:  \n{{ $('Picks Less Used').item.json.description }}\n\nHere are existing article titles already published:  \n{{ $items(\"10 latest headlines\").map(i => i.json.description).join(\"\\n\") }}\n\nYour task:  \n- Come up with a **new unique article title** that fits this category  \n- The topic should be narrow, practical, and not duplicate any existing titles  \n- Make it clickable, relevant, and professional  \n- Do **not** reuse or partially copy old titles  \n- Style should be expert-level, insightful, and engaging — no clickbait\n\nImportant:  \n- Output **only** the new title (no extra words, no formatting)  \n- The title must be ready for publication as-is (plain text)",
@@ -634,8 +634,8 @@
       "name": "AI Agent SEO writer",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2020,
-        -200
+        100,
+        460
       ],
       "parameters": {
         "text": "=You are writing a blog post using native WordPress HTML blocks.\n\n🧱 Follow this exact structure:\n\n- Paragraphs inside: <!-- wp:paragraph --> ... <!-- /wp:paragraph -->\n- Level 3 headings inside: <!-- wp:heading {\"level\":3} --> ... <!-- /wp:heading -->\n- Level 4 headings inside: <!-- wp:heading {\"level\":4} --> ... <!-- /wp:heading -->\n- Lists inside: <!-- wp:list --> ... <!-- /wp:list -->\n- Table of contents using: <!-- wp:yoast-seo/table-of-contents --> with anchor links\n- Final section: conclusion in list format\n- Final block: call-to-action with the link \"{{ $('Combines full post meta').item.json.link }}\" or {{$node[\"Config\"].json[\"domain\"]}}\n\n🎯 Use the topic info from:\n- name: {{ $json.name }}\n- description: {{ $json.description }}\n- link: {{ $('Combines full post meta').item.json.link }}\n\n---\n\n✍️ General writing guidelines:\n- The main theme always follows `name` and `description`\n- Each post must focus on a new subtopic (narrower than the main theme)\n- The article must be useful, professional, and well-structured\n- Avoid fluff or repetition — deliver actionable advice\n- Output should follow valid WordPress HTML blocks strictly\n\n---\n\n💡 Examples of subtopics for \"{{ $json.name }}\":\n- Top 5 beginner tools in {{ $json.name }}\n- How to choose the right {{ $json.name }} without risks\n- Common mistakes in using {{ $json.name }}\n- How to monetize with CPA or RevShare in {{ $json.name }}\n- Smart strategies to scale {{ $json.name }} traffic in 2025\n- Proven international platforms in {{ $json.name }} — worth trying?\n- What leads to account bans in {{ $json.name }}\n- Top scaling errors in {{ $json.name }}\n\nIn every post, generate a **new and unique** subtopic — no repeats.\n\n---\n\n🚨 Important:\nOnly output raw WordPress blocks — no additional formatting or notes.\n\n🧱 Structure Example:\n\n1. Introduction:\n<!-- wp:paragraph -->\n<p>A short, attention-grabbing intro explaining what the article covers and why it matters.</p>\n<!-- /wp:paragraph -->\n\n2. Table of Contents:\n<!-- wp:yoast-seo/table-of-contents -->\n<div class=\"wp-block-yoast-seo-table-of-contents yoast-table-of-contents\">\n  <h2>Contents</h2>\n  <ul>\n    <li><a href=\"#h-block-1\">Block 1</a></li>\n    <li><a href=\"#h-block-2\">Block 2</a></li>\n    <li><a href=\"#h-block-3\">Block 3</a></li>\n    <li><a href=\"#h-conclusion\">Conclusion</a></li>\n  </ul>\n</div>\n<!-- /wp:yoast-seo/table-of-contents -->\n\n3. Main Content Blocks:\n<!-- wp:heading {\"level\":3} -->\n<h3 class=\"wp-block-heading\" id=\"h-block-1\"><strong><mark style=\"background-color:var(--accent)\" class=\"has-inline-color has-base-3-color\">Block Title</mark></strong></h3>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Informative paragraph with practical insights.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>Optional second paragraph — avoid repetition.</p>\n<!-- /wp:paragraph -->\n\n4. Actionable Tips:\n<!-- wp:list -->\n<ul class=\"wp-block-list\">\n  <li><strong>Tip:</strong> Keep it short and valuable</li>\n  <li><strong>Example:</strong> Provide a link or quick example</li>\n</ul>\n<!-- /wp:list -->\n\n5. Conclusion:\n<!-- wp:heading {\"level\":3} -->\n<h3 class=\"wp-block-heading\" id=\"h-conclusion\"><strong><mark style=\"background-color:var(--accent)\" class=\"has-inline-color has-base-3-color\">Conclusion</mark></strong></h3>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Summarize key takeaways and motivate the reader to take action.</p>\n<!-- /wp:paragraph -->\n\n6. Call to Action:\n<!-- wp:paragraph -->\n<p>Read more at <strong><mark style=\"background-color:var(--accent)\" class=\"has-inline-color has-base-3-color\">{{$node[\"Config\"].json[\"domain\"]}}/</mark></strong></p>\n<!-- /wp:paragraph -->",
@@ -650,8 +650,8 @@
       "name": "Merge heading",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1280,
-        -540
+        100,
+        8740
       ],
       "parameters": {},
       "typeVersion": 3.1,
@@ -662,8 +662,8 @@
       "name": "Combines full post meta",
       "type": "n8n-nodes-base.code",
       "position": [
-        1520,
-        -540
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "let data = {};\n$input.all().forEach(item => {\n  Object.assign(data, item.json);\n});\nreturn [{ json: data }];\n"
@@ -676,8 +676,8 @@
       "name": "Updating posts DB",
       "type": "n8n-nodes-base.postgres",
       "position": [
-        1760,
-        -540
+        100,
+        15400
       ],
       "parameters": {
         "table": {
@@ -781,8 +781,8 @@
       "name": "Extracting output",
       "type": "n8n-nodes-base.code",
       "position": [
-        2380,
-        -280
+        100,
+        8020
       ],
       "parameters": {
         "jsCode": "return [{\n  json: {\n    content: $input.first().json.output,\n  }\n}];\n"
@@ -795,8 +795,8 @@
       "name": "Placeholder creator",
       "type": "n8n-nodes-base.code",
       "position": [
-        2380,
-        100
+        100,
+        9820
       ],
       "parameters": {
         "jsCode": "const name = $('Updating posts DB').first().json.name || \"{{ $json.domain }}\";\nconst encoded = encodeURIComponent(name); \n\nreturn {\n  image_url: `{{ $env.WEBHOOK_URL }}{encoded}&font=montserrat`\n};\n"
@@ -809,8 +809,8 @@
       "name": "Media Upload to WP",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2860,
-        100
+        100,
+        8380
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -849,8 +849,8 @@
       "name": "Post to WP",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3680,
-        -520
+        100,
+        10000
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -898,8 +898,8 @@
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3900,
-        -520
+        100,
+        9100
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -910,8 +910,8 @@
       "name": "Sticky Note22",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -940,
-        -740
+        100,
+        13420
       ],
       "parameters": {
         "color": 4,
@@ -927,8 +927,8 @@
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "position": [
-        -880,
-        -560
+        100,
+        1000
       ],
       "parameters": {
         "options": {},
@@ -952,8 +952,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in c9450a63-a89e-46eb-b083-b0f40d7b797c",
@@ -967,8 +967,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14860
       ],
       "parameters": {
         "message": "Error occurred in 3f90d8c5-7dd9-41c4-a862-e21942fdc87d",
@@ -982,8 +982,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15040
       ],
       "parameters": {
         "message": "Error occurred in 6f0f0202-3803-48ef-b8f5-dd56a023c43f",
@@ -997,8 +997,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15220
       ],
       "parameters": {
         "message": "Error occurred in 0621bad7-e7bf-4aae-bbf3-2e1f571d81d8",
@@ -1012,8 +1012,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8ce11fcd",
@@ -1027,8 +1027,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c9450a63",
@@ -1042,8 +1042,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9c21f5ce",
@@ -1057,8 +1057,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3f90d8c5",
@@ -1072,8 +1072,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6f0f0202",
@@ -1087,8 +1087,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0621bad7",
@@ -1102,8 +1102,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15580
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 56\n- **Node Types**: 11\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Schedule Trigger**: scheduleTrigger\n- **OpenAI Chat Model**: lmChatOpenAi\n- **Download Image**: httpRequest\n- **Prepare Post JSON**: code\n- **Merge**: merge\n- **OpenAI Chat Model1**: lmChatOpenAi\n- **Sticky Note**: stickyNote\n- **Sticky Note1**: stickyNote\n- **Sticky Note2**: stickyNote\n- **Sticky Note3**: stickyNote\n- ... and 46 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1116,8 +1116,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1131,8 +1131,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1146,8 +1146,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1161,8 +1161,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1176,8 +1176,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15760
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 61\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1190,8 +1190,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        15940
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 62\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1204,8 +1204,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1219,8 +1219,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1234,8 +1234,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1249,8 +1249,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1264,8 +1264,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1279,8 +1279,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1294,8 +1294,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1309,8 +1309,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1324,8 +1324,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16120
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 71\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1338,8 +1338,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16300
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 72\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1352,8 +1352,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1367,8 +1367,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1382,8 +1382,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1397,8 +1397,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1412,8 +1412,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1427,8 +1427,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1442,8 +1442,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1457,8 +1457,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1472,8 +1472,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16480
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 81\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1486,8 +1486,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16660
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 82\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1499,8 +1499,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1513,8 +1513,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1527,8 +1527,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1541,8 +1541,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1555,8 +1555,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16840
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 87\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1568,8 +1568,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1582,8 +1582,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1596,8 +1596,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1610,8 +1610,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1624,8 +1624,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17020
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1637,8 +1637,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1651,8 +1651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17200
       ],
       "parameters": {
         "content": "# Auto WordPress Blog Generator (GPT + Postgres + WP Media)\n\n## Overview\nAutomated workflow: Auto WordPress Blog Generator (GPT + Postgres + WP Media). This workflow integrates 11 different services: stickyNote, httpRequest, code, scheduleTrigger, agent. It contains 56 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1664,8 +1664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Workflow execution error",

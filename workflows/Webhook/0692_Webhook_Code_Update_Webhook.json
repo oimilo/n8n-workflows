@@ -17,8 +17,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2880,
-        340
+        100,
+        13600
       ],
       "parameters": {
         "color": 6,
@@ -34,8 +34,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -840,
-        340
+        100,
+        13960
       ],
       "parameters": {
         "color": 5,
@@ -51,8 +51,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1334.2232779572741,
-        340
+        100,
+        11800
       ],
       "parameters": {
         "color": 7,
@@ -68,8 +68,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        -2840,
-        480
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
@@ -82,8 +82,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3300,
-        340
+        100,
+        13420
       ],
       "parameters": {
         "color": 5,
@@ -99,8 +99,8 @@
       "name": "ApplicantData",
       "type": "n8n-nodes-base.set",
       "position": [
-        -2640,
-        480
+        100,
+        280
       ],
       "parameters": {
         "options": {},
@@ -123,8 +123,8 @@
       "name": "ERPNext - Reject if Resume not Attached",
       "type": "n8n-nodes-base.erpNext",
       "position": [
-        -2380,
-        800
+        100,
+        1360
       ],
       "parameters": {
         "docType": "Job%20Applicant",
@@ -153,7 +153,7 @@
       "name": "Applied Against Job",
       "type": "n8n-nodes-base.if",
       "position": [
-        -2140,
+        100,
         460
       ],
       "parameters": {
@@ -189,8 +189,8 @@
       "name": "ERPNext - Hold Applicant",
       "type": "n8n-nodes-base.erpNext",
       "position": [
-        -2180,
-        800
+        100,
+        1180
       ],
       "parameters": {
         "docType": "Job%20Applicant",
@@ -219,8 +219,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -140,
-        343.6198532285906
+        100,
+        13780
       ],
       "parameters": {
         "color": 6,
@@ -236,8 +236,8 @@
       "name": "Get Job Opening",
       "type": "n8n-nodes-base.erpNext",
       "position": [
-        -80,
-        620
+        100,
+        10000
       ],
       "parameters": {
         "docType": "Job%20Opening",
@@ -258,8 +258,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        140,
-        320
+        100,
+        14140
       ],
       "parameters": {
         "color": 4,
@@ -275,8 +275,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        980,
-        320
+        100,
+        14320
       ],
       "parameters": {
         "color": 6,
@@ -292,8 +292,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        220,
-        800
+        100,
+        10180
       ],
       "parameters": {
         "options": {},
@@ -313,8 +313,8 @@
       "name": "Convert to Fields",
       "type": "n8n-nodes-base.code",
       "position": [
-        660,
-        620
+        100,
+        820
       ],
       "parameters": {
         "jsCode": "// Input text from the `output` field\nconst textOutput = $json.output || '';\n\n// Function to extract values from the text\nfunction extractFields(text) {\n    const fields = {};\n\n    // Regular expressions to extract each field\n    const fitLevelMatch = text.match(/FitLevel:\\s*(.+)\\n/);\n    const scoreMatch = text.match(/Score:\\s*(\\d+)\\n/);\n    const ratingMatch = text.match(/Rating:\\s*(\\d+)\\n/);\n    const justificationMatch = text.match(/Justification:\\s*([\\s\\S]+)/);\n\n    // Assign extracted values to the fields\n    fields.fit_level = fitLevelMatch ? fitLevelMatch[1].trim() : null;\n    fields.score = scoreMatch ? scoreMatch[1].trim() : null;\n    fields.applicant_rating = ratingMatch ? ratingMatch[1].trim() : null;\n    fields.justification_by_ai = justificationMatch ? justificationMatch[1].trim() : null;\n\n    return fields;\n}\n\n// Extract fields from the output\nconst extractedFields = extractFields(textOutput);\n\n// Return the fields as JSON\nreturn {\n    json: extractedFields\n};\n"
@@ -327,8 +327,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1460,
-        320
+        100,
+        14500
       ],
       "parameters": {
         "color": 5,
@@ -344,8 +344,8 @@
       "name": "If score less than 80",
       "type": "n8n-nodes-base.if",
       "position": [
-        1520,
-        620
+        100,
+        10360
       ],
       "parameters": {
         "options": {},
@@ -379,8 +379,8 @@
       "name": "Reject Applicant",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1880,
-        460
+        100,
+        11260
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -412,8 +412,8 @@
       "name": "Update Applicant Data",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1140,
-        620
+        100,
+        15580
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -445,8 +445,8 @@
       "name": "Reume Attachment Link",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1820,
-        560
+        100,
+        11620
       ],
       "parameters": {
         "options": {},
@@ -469,8 +469,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2874.102923130834,
-        680
+        100,
+        11980
       ],
       "parameters": {
         "color": 3,
@@ -486,8 +486,8 @@
       "name": "Resume Link Provided",
       "type": "n8n-nodes-base.if",
       "position": [
-        -2400,
-        480
+        100,
+        11440
       ],
       "parameters": {
         "options": {},
@@ -520,8 +520,8 @@
       "name": "Accept Applicant",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1860,
-        760
+        100,
+        100
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -553,8 +553,8 @@
       "name": "Sticky Note11",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3800,
-        340
+        100,
+        12160
       ],
       "parameters": {
         "color": 4,
@@ -570,8 +570,8 @@
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "position": [
-        -3180,
-        620
+        100,
+        15760
       ],
       "webhookId": "f003f8ea-1f24-457c-8f28-762bd7942023",
       "parameters": {
@@ -587,8 +587,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1980,
-        340
+        100,
+        12340
       ],
       "parameters": {
         "color": 6,
@@ -604,8 +604,8 @@
       "name": "Sticky Note13",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2420,
-        340
+        100,
+        12520
       ],
       "parameters": {
         "color": 6,
@@ -621,8 +621,8 @@
       "name": "File Type",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -1600,
-        560
+        100,
+        9820
       ],
       "parameters": {
         "rules": {
@@ -710,8 +710,8 @@
       "name": "Download PDF Resume",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1160,
-        460
+        100,
+        1000
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -725,8 +725,8 @@
       "name": "PDF to Text",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        -720,
-        440
+        100,
+        10900
       ],
       "parameters": {
         "options": {},
@@ -740,8 +740,8 @@
       "name": "Txt File to Text (Example)",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        -740,
-        680
+        100,
+        15400
       ],
       "parameters": {
         "options": {},
@@ -755,8 +755,8 @@
       "name": "Merge1",
       "type": "n8n-nodes-base.merge",
       "position": [
-        -420,
-        620
+        100,
+        10540
       ],
       "parameters": {},
       "typeVersion": 3,
@@ -767,8 +767,8 @@
       "name": "Recruitment AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        200,
-        620
+        100,
+        11080
       ],
       "parameters": {
         "text": "=System Prompt : \nYou are a highly skilled AI agent trained to compare and analyze text from resumes against job descriptions. Your primary goal is to assess whether the candidate is a good fit for the role based on the given inputs. You will receive two inputs:\n\n1. **Job Description**: A detailed description of the responsibilities, qualifications, and skills required for a specific job role.\n2. **Resume Text**: A summary of a candidate's qualifications, skills, experience, and education.\n\nYour task is to:\n1. **Analyze Match**: Compare the candidate's resume text against the job description and assess the alignment of:\n   - Required skills\n   - Relevant experience\n   - Educational background\n   - Certifications\n   - Keywords mentioned in both texts (e.g., specific tools, methodologies, or terminologies).\n\n2. **Assess Fit**: Determine if the candidate is a strong, moderate, or weak fit for the role. Assign a score from 0 to 100 based on relevance:\n   - **Strong Fit**: 80–100 (Candidate meets or exceeds the majority of the job requirements).\n   - **Moderate Fit**: 50–79 (Candidate meets some key requirements but lacks in others).\n   - **Weak Fit**: Below 50 (Candidate does not align with the role requirements).\n\n3. **Provide Justification**: Include a brief explanation of why the candidate is or isn’t a good fit, highlighting strengths, gaps, or missing criteria.\n\nOutput Format:\n- **Fit Level**: [Strong Fit / Moderate Fit / Weak Fit]\n- **Score**: [0–100]\n- **Rating**: [0–5]\n- **Justification**: A concise summary of the reasoning behind the fit level.\n\nRemember to maintain a neutral and objective tone in your analysis and ensure that your assessment is solely based on the information provided in the inputs.\"\n\n\nProvide me the output in the following format:\n\nFitLevel\n<fitLevel>\n\nScore:\n<score>\n\nRating:\n<rating>\n\nJustification:\n<justification>\n\nBelow are the inputs \n\nJob Title : {{ $json.job_title }}\nJob Desription : {{ $json.description }}\n\n\nHere here Job Applican't text from Resume : \n{{ $('PDF to Text').item.json.text }}\n",
@@ -784,8 +784,8 @@
       "name": "Sticky Note14",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        320
+        100,
+        12700
       ],
       "parameters": {
         "color": 6,
@@ -801,8 +801,8 @@
       "name": "Sticky Note15",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1720,
-        320
+        100,
+        12880
       ],
       "parameters": {
         "color": 3,
@@ -818,8 +818,8 @@
       "name": "Sticky Note16",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1720,
-        660
+        100,
+        13060
       ],
       "parameters": {
         "color": 4,
@@ -835,8 +835,8 @@
       "name": "Microsoft Outlook",
       "type": "n8n-nodes-base.microsoftOutlook",
       "position": [
-        2240,
-        460
+        100,
+        10720
       ],
       "parameters": {
         "additionalFields": {}
@@ -855,8 +855,8 @@
       "name": "Sticky Note17",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2140,
-        331.1661985540012
+        100,
+        13240
       ],
       "parameters": {
         "color": 6,
@@ -872,8 +872,8 @@
       "name": "WhatsApp Business Cloud",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        2280,
-        760
+        100,
+        15940
       ],
       "parameters": {
         "operation": "send",
@@ -895,8 +895,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in 0d7a84c2-0b1d-4e61-a3df-b81dd7981f1a",
@@ -910,8 +910,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14680
       ],
       "parameters": {
         "message": "Error occurred in a55e70d1-7070-407d-9107-41cb33d2f0ae",
@@ -925,8 +925,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        14860
       ],
       "parameters": {
         "message": "Error occurred in e6770961-05b2-4488-99b1-7d1a219f8372",
@@ -940,8 +940,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15040
       ],
       "parameters": {
         "message": "Error occurred in 173c6341-2ab7-4ee5-a6bd-0770ae19c013",
@@ -955,8 +955,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        15220
       ],
       "parameters": {
         "message": "Error occurred in cc7f4ca0-8e9b-49de-a7f1-f1f7913d6dcc",
@@ -970,8 +970,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 28f23589",
@@ -985,8 +985,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 0d7a84c2",
@@ -1000,8 +1000,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a55e70d1",
@@ -1015,8 +1015,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node e6770961",
@@ -1030,8 +1030,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 173c6341",
@@ -1045,8 +1045,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cc7f4ca0",
@@ -1060,8 +1060,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1209643a",
@@ -1075,8 +1075,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 17430d0d",
@@ -1090,8 +1090,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16120
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 52\n- **Node Types**: 15\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Sticky Note4**: stickyNote\n- **Sticky Note6**: stickyNote\n- **Sticky Note**: stickyNote\n- **Code**: code\n- **Sticky Note2**: stickyNote\n- **ApplicantData**: set\n- **ERPNext - Reject if Resume not Attached**: erpNext\n- **Applied Against Job**: if\n- **ERPNext - Hold Applicant**: erpNext\n- **Sticky Note5**: stickyNote\n- ... and 42 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1104,8 +1104,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1119,8 +1119,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1134,8 +1134,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1149,8 +1149,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1164,8 +1164,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1179,8 +1179,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16300
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1193,8 +1193,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16480
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 59\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1207,8 +1207,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1222,8 +1222,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1237,8 +1237,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1252,8 +1252,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1267,8 +1267,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1282,8 +1282,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1297,8 +1297,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1312,8 +1312,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1327,8 +1327,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1342,8 +1342,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1357,8 +1357,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16660
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 70\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1371,8 +1371,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        16840
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 71\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1385,8 +1385,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1400,8 +1400,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1415,8 +1415,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1430,8 +1430,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1445,8 +1445,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1460,8 +1460,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1475,8 +1475,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1490,8 +1490,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1505,8 +1505,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1520,8 +1520,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1535,8 +1535,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17020
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 82\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1549,8 +1549,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17200
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 83\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1562,8 +1562,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1576,8 +1576,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1590,8 +1590,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1604,8 +1604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1618,8 +1618,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1632,8 +1632,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17380
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 89\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1645,8 +1645,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1659,8 +1659,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1673,8 +1673,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1687,8 +1687,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1701,8 +1701,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1715,8 +1715,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17560
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1728,8 +1728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -1742,8 +1742,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        17740
       ],
       "parameters": {
         "content": "# Stickynote Workflow\n\n## Overview\nAutomated workflow: Stickynote Workflow. This workflow integrates 15 different services: webhook, stickyNote, httpRequest, microsoftOutlook, code. It contains 52 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -1755,8 +1755,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Workflow execution error",

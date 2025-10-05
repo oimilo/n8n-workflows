@@ -17,8 +17,8 @@
       "name": "Google Sheets Trigger",
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "position": [
-        -2000,
-        800
+        100,
+        7660
       ],
       "parameters": {
         "options": {},
@@ -53,8 +53,8 @@
       "name": "Apollo Organization Enrichment",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -460,
-        800
+        100,
+        1000
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -80,8 +80,8 @@
       "name": "Create Apollo People Search URL",
       "type": "n8n-nodes-base.code",
       "position": [
-        580,
-        720
+        100,
+        1720
       ],
       "parameters": {
         "jsCode": "const baseUrl = '{{ $env.API_BASE_URL }}';\nconst seniorities = ['owner', 'founder', 'c_suite', 'partner', 'vp', 'head', 'director'];\nconst seniorityParams = seniorities.map(s => `person_seniorities[]=${encodeURIComponent(s)}`).join('&');\nconst domains = $input.all().map(item => item.json.Domain);\nconst domainParams = domains.map(d => `q_organization_domains_list[]=${encodeURIComponent(d)}`).join('&');\nconst perPageParam = 'per_page=10';\nconst fullUrl = `${baseUrl}?${seniorityParams}&${domainParams}&${perPageParam}`;\nreturn [{ json: { url: fullUrl } }];\n"
@@ -94,8 +94,8 @@
       "name": "Loop Over Items (1000 per Batch)",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        360,
-        800
+        100,
+        8020
       ],
       "parameters": {
         "options": {},
@@ -109,8 +109,8 @@
       "name": "Apollo Find Decision Makers",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        880,
-        880
+        100,
+        820
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -128,8 +128,8 @@
       "name": "Add Contacts",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1180,
-        520
+        100,
+        460
       ],
       "parameters": {
         "columns": {
@@ -331,8 +331,8 @@
       "name": "Apollo Enrich Decision Makers",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1840,
-        700
+        100,
+        640
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -353,8 +353,8 @@
       "name": "Create Apollo People Enrichment Payload",
       "type": "n8n-nodes-base.code",
       "position": [
-        1620,
-        620
+        100,
+        1540
       ],
       "parameters": {
         "jsCode": "const details = $input.all().map(item => ({\n  linkedin_url: item.json['LinkedIn Profile URL'],\n  domain: item.json['Company Domain']\n}));\n\nreturn [{ json: { details } }];\n"
@@ -367,8 +367,8 @@
       "name": "Enrich Contacts",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        1840,
-        420
+        100,
+        2260
       ],
       "parameters": {
         "columns": {
@@ -560,8 +560,8 @@
       "name": "Loop Over Items For Bulk Enrichment (10 per batch)",
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
-        1400,
-        520
+        100,
+        8200
       ],
       "parameters": {
         "options": {},
@@ -575,8 +575,8 @@
       "name": "Determine Contact's Department",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        800,
-        520
+        100,
+        2080
       ],
       "parameters": {
         "modelId": {
@@ -602,8 +602,8 @@
       "name": "Apollo Organization Search",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -1340,
-        640
+        100,
+        1180
       ],
       "parameters": {
         "url": "{{ $env.API_BASE_URL }}",
@@ -630,8 +630,8 @@
       "name": "Add Company Website",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -1120,
-        640
+        100,
+        280
       ],
       "parameters": {
         "columns": {
@@ -863,8 +863,8 @@
       "name": "Approve Company Website",
       "type": "n8n-nodes-base.slack",
       "position": [
-        -800,
-        600
+        100,
+        1360
       ],
       "webhookId": "830f75dd-f56e-4086-90ac-72ca14e226ce",
       "parameters": {
@@ -888,8 +888,8 @@
       "name": "Add Company Details",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        140,
-        800
+        100,
+        100
       ],
       "parameters": {
         "columns": {
@@ -1123,8 +1123,8 @@
       "name": "Select Unprocessed Companies",
       "type": "n8n-nodes-base.filter",
       "position": [
-        -1780,
-        800
+        100,
+        8740
       ],
       "parameters": {
         "options": {},
@@ -1158,8 +1158,8 @@
       "name": "Is Domain Already Provided?",
       "type": "n8n-nodes-base.if",
       "position": [
-        -1560,
-        800
+        100,
+        7840
       ],
       "parameters": {
         "options": {},
@@ -1193,8 +1193,8 @@
       "name": "Summarize Core Business",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -240,
-        800
+        100,
+        11800
       ],
       "parameters": {
         "modelId": {
@@ -1220,8 +1220,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -280,
-        -20
+        100,
+        9460
       ],
       "parameters": {
         "color": 6,
@@ -1237,8 +1237,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1920,
-        280
+        100,
+        9640
       ],
       "parameters": {
         "color": 7,
@@ -1254,8 +1254,8 @@
       "name": "Split Out Batched Decision Maker Response",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        580,
-        520
+        100,
+        9100
       ],
       "parameters": {
         "options": {},
@@ -1269,8 +1269,8 @@
       "name": "Split Out Batched Enrichment Response",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1620,
-        420
+        100,
+        9280
       ],
       "parameters": {
         "options": {},
@@ -1284,8 +1284,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1800,
-        980
+        100,
+        9820
       ],
       "parameters": {
         "color": 7,
@@ -1301,8 +1301,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -480,
-        1000
+        100,
+        10000
       ],
       "parameters": {
         "color": 7,
@@ -1318,8 +1318,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        340,
-        1100
+        100,
+        10180
       ],
       "parameters": {
         "color": 7,
@@ -1335,8 +1335,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        540,
-        360
+        100,
+        10360
       ],
       "parameters": {
         "color": 7,
@@ -1352,8 +1352,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1340,
-        940
+        100,
+        10540
       ],
       "parameters": {
         "color": 7,
@@ -1369,8 +1369,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2020,
-        320
+        100,
+        10720
       ],
       "parameters": {
         "color": 4,
@@ -1386,8 +1386,8 @@
       "name": "Send Weekly Report",
       "type": "n8n-nodes-base.slack",
       "position": [
-        -1360,
-        1420
+        100,
+        8920
       ],
       "webhookId": "4323a085-01ed-415e-98d0-d176b96767aa",
       "parameters": {
@@ -1412,8 +1412,8 @@
       "name": "Retrieve Verified Leads",
       "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -1800,
-        1420
+        100,
+        8560
       ],
       "parameters": {
         "options": {},
@@ -1449,8 +1449,8 @@
       "name": "Derive Past Week's Lead Gen. Metrics",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1580,
-        1420
+        100,
+        1900
       ],
       "parameters": {
         "jsCode": "// Extract all items from the input\nconst items = $input.all();\n\n// Initialize Sets to store unique company domains and email addresses\nconst uniqueCompanies = new Set();\nconst uniqueEmails = new Set();\n\n// Iterate through each item to populate the Sets\nfor (const item of items) {\n  const domain = item.json['Company Domain'];\n  const email = item.json['Email Address'];\n\n  if (domain) uniqueCompanies.add(domain);\n  if (email) uniqueEmails.add(email);\n}\n\n// Create the summary message\nconst message = `This week we discovered ${uniqueEmails.size} decision makers from ${uniqueCompanies.size} companies.`;\n\n// Return the message as output\nreturn [\n  {\n    json: {\n      message,\n      companies: uniqueCompanies.size,\n      contacts: uniqueEmails.size,\n    },\n  },\n];\n"
@@ -1463,8 +1463,8 @@
       "name": "Weekly Report Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
-        -2020,
-        1420
+        100,
+        11980
       ],
       "parameters": {
         "rule": {
@@ -1486,8 +1486,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1820,
-        1620
+        100,
+        10900
       ],
       "parameters": {
         "color": 4,
@@ -1503,8 +1503,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -960,
-        200
+        100,
+        11080
       ],
       "parameters": {
         "color": 7,
@@ -1520,8 +1520,8 @@
       "name": "Merge Rows Which Now All Contain Domains",
       "type": "n8n-nodes-base.merge",
       "position": [
-        -680,
-        800
+        100,
+        8380
       ],
       "parameters": {},
       "typeVersion": 3.1,
@@ -1533,8 +1533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in 8ac2066b-c84f-4556-a700-d95f015e6869",
@@ -1548,8 +1548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11260
       ],
       "parameters": {
         "message": "Error occurred in 9bf3e9f1-e52f-4067-be7e-607c7178b0ca",
@@ -1563,8 +1563,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11440
       ],
       "parameters": {
         "message": "Error occurred in 9a00bdf2-ef63-4119-8730-f84fa5a26224",
@@ -1578,8 +1578,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        11620
       ],
       "parameters": {
         "message": "Error occurred in 5ae52935-7e99-4903-addd-a7e5acbba513",
@@ -1593,8 +1593,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ea812abb",
@@ -1608,8 +1608,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 8ac2066b",
@@ -1623,8 +1623,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9bf3e9f1",
@@ -1638,8 +1638,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9f92040a",
@@ -1653,8 +1653,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 9a00bdf2",
@@ -1668,8 +1668,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3d9c30f1",
@@ -1683,8 +1683,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1472e5a7",
@@ -1698,8 +1698,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 5ae52935",
@@ -1713,8 +1713,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2afafc0c",
@@ -1728,8 +1728,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node b56cb966",
@@ -1743,8 +1743,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1cc56d46",
@@ -1758,8 +1758,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 56860bd2",
@@ -1773,8 +1773,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a9ff1d43",
@@ -1788,8 +1788,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node ebe891a3",
@@ -1803,8 +1803,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12160
       ],
       "parameters": {
         "content": "# Googlesheetstrigger Workflow\n\n## Overview\nAutomated workflow: Googlesheetstrigger Workflow. This workflow integrates 14 different services: filter, httpRequest, stickyNote, code, googleSheetsTrigger. It contains 53 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 53\n- **Node Types**: 14\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Sheets Trigger**: googleSheetsTrigger\n- **Apollo Organization Enrichment**: httpRequest\n- **Create Apollo People Search URL**: code\n- **Loop Over Items (1000 per Batch)**: splitInBatches\n- **Apollo Find Decision Makers**: httpRequest\n- **Add Contacts**: googleSheets\n- **Apollo Enrich Decision Makers**: httpRequest\n- **Create Apollo People Enrichment Payload**: code\n- **Enrich Contacts**: googleSheets\n- **Loop Over Items For Bulk Enrichment (10 per batch)**: splitInBatches\n- ... and 43 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1817,8 +1817,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1832,8 +1832,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1847,8 +1847,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1862,8 +1862,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1877,8 +1877,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12340
       ],
       "parameters": {
         "content": "# Googlesheetstrigger Workflow\n\n## Overview\nAutomated workflow: Googlesheetstrigger Workflow. This workflow integrates 14 different services: filter, httpRequest, stickyNote, code, googleSheetsTrigger. It contains 53 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 58\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1891,8 +1891,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1906,8 +1906,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1921,8 +1921,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1936,8 +1936,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1951,8 +1951,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12520
       ],
       "parameters": {
         "content": "# Googlesheetstrigger Workflow\n\n## Overview\nAutomated workflow: Googlesheetstrigger Workflow. This workflow integrates 14 different services: filter, httpRequest, stickyNote, code, googleSheetsTrigger. It contains 53 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 63\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1965,8 +1965,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1980,8 +1980,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1995,8 +1995,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2010,8 +2010,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2025,8 +2025,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12700
       ],
       "parameters": {
         "content": "# Googlesheetstrigger Workflow\n\n## Overview\nAutomated workflow: Googlesheetstrigger Workflow. This workflow integrates 14 different services: filter, httpRequest, stickyNote, code, googleSheetsTrigger. It contains 53 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 68\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2039,8 +2039,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        12880
       ],
       "parameters": {
         "content": "# Googlesheetstrigger Workflow\n\n## Overview\nAutomated workflow: Googlesheetstrigger Workflow. This workflow integrates 14 different services: filter, httpRequest, stickyNote, code, googleSheetsTrigger. It contains 53 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2052,8 +2052,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2066,8 +2066,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        13060
       ],
       "parameters": {
         "content": "# Googlesheetstrigger Workflow\n\n## Overview\nAutomated workflow: Googlesheetstrigger Workflow. This workflow integrates 14 different services: filter, httpRequest, stickyNote, code, googleSheetsTrigger. It contains 53 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2079,8 +2079,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Workflow execution error",

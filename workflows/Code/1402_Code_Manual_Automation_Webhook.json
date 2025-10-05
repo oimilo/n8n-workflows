@@ -26,8 +26,8 @@
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -640,
-        -50
+        100,
+        7300
       ],
       "parameters": {},
       "typeVersion": 1,
@@ -38,8 +38,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -260,
-        -420
+        100,
+        6580
       ],
       "parameters": {
         "color": 3,
@@ -55,8 +55,8 @@
       "name": "Set the URLs",
       "type": "n8n-nodes-base.set",
       "position": [
-        -200,
-        -300
+        100,
+        6220
       ],
       "parameters": {
         "options": {},
@@ -86,8 +86,8 @@
       "type": "n8n-nodes-mcp.mcpClient",
       "notes": "Scrape a single webpage URL with advanced options for content extraction and get back the results in MarkDown language.",
       "position": [
-        20,
-        -300
+        100,
+        460
       ],
       "parameters": {
         "toolName": "web_data_linkedin_person_profile",
@@ -108,8 +108,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -260,
-        -60
+        100,
+        6400
       ],
       "parameters": {
         "color": 4,
@@ -125,8 +125,8 @@
       "name": "List all tools for Bright Data",
       "type": "n8n-nodes-mcp.mcpClient",
       "position": [
-        -420,
-        50
+        100,
+        5680
       ],
       "parameters": {},
       "credentials": {
@@ -144,8 +144,8 @@
       "type": "n8n-nodes-mcp.mcpClient",
       "notes": "Scrape a single webpage URL with advanced options for content extraction and get back the results in MarkDown language.",
       "position": [
-        20,
-        50
+        100,
+        280
       ],
       "parameters": {
         "toolName": "web_data_linkedin_company_profile",
@@ -166,8 +166,8 @@
       "name": "Set the LinkedIn Company URL",
       "type": "n8n-nodes-base.set",
       "position": [
-        -200,
-        50
+        100,
+        6040
       ],
       "parameters": {
         "options": {},
@@ -196,8 +196,8 @@
       "name": "Webhook for LinkedIn Company Web Scraper",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1060,
-        40
+        100,
+        6940
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -214,8 +214,8 @@
       "name": "LinkedIn Data Extractor",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        240,
-        200
+        100,
+        5320
       ],
       "parameters": {
         "text": "=Write a complete story of the provided company information in JSON. Use the following Company info to produce a story or a blog post. Make sure to incorporate all the provided company context.\n\nHere's the Company Info in JSON - {{ $json.input }}",
@@ -240,8 +240,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        328,
-        420
+        100,
+        5140
       ],
       "parameters": {
         "options": {},
@@ -261,8 +261,8 @@
       "name": "List all available tools for Bright Data",
       "type": "n8n-nodes-mcp.mcpClient",
       "position": [
-        -420,
-        -300
+        100,
+        5500
       ],
       "parameters": {},
       "credentials": {
@@ -279,8 +279,8 @@
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "position": [
-        318,
-        -100
+        100,
+        640
       ],
       "parameters": {
         "jsCode": "jsonContent = JSON.parse($input.first().json.result.content[0].text) \nreturn jsonContent\n"
@@ -293,8 +293,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        616,
-        50
+        100,
+        5860
       ],
       "parameters": {},
       "typeVersion": 3.1,
@@ -305,8 +305,8 @@
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        836,
-        50
+        100,
+        100
       ],
       "parameters": {
         "options": {},
@@ -329,8 +329,8 @@
       "name": "Create a binary data for LinkedIn person info extract",
       "type": "n8n-nodes-base.function",
       "position": [
-        320,
-        -500
+        100,
+        1000
       ],
       "parameters": {
         "functionCode": "items[0].binary = {\n  data: {\n    data: new Buffer(JSON.stringify(items[0].json, null, 2)).toString('base64')\n  }\n};\nreturn items;"
@@ -343,8 +343,8 @@
       "name": "Write the LinkedIn person info to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        520,
-        -500
+        100,
+        9460
       ],
       "parameters": {
         "options": {},
@@ -359,8 +359,8 @@
       "name": "Create a binary data for LinkedIn company info extract",
       "type": "n8n-nodes-base.function",
       "position": [
-        1000,
-        -180
+        100,
+        820
       ],
       "parameters": {
         "functionCode": "items[0].binary = {\n  data: {\n    data: new Buffer(JSON.stringify(items[0].json, null, 2)).toString('base64')\n  }\n};\nreturn items;"
@@ -373,8 +373,8 @@
       "name": "Write the LinkedIn company info to disk",
       "type": "n8n-nodes-base.readWriteFile",
       "position": [
-        1220,
-        -180
+        100,
+        9280
       ],
       "parameters": {
         "options": {},
@@ -389,8 +389,8 @@
       "name": "Webhook for LinkedIn Person Web Scraper",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        318,
-        -300
+        100,
+        7120
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -414,8 +414,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        1180
       ],
       "parameters": {
         "message": "Error occurred in 99f45d7f-ad79-4ffc-8299-c71bd870f8fb",
@@ -429,8 +429,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in 335efc2b-80e3-4fac-b31f-82fff4ac4e65",
@@ -444,8 +444,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 99f45d7f",
@@ -459,8 +459,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d1927c08",
@@ -474,8 +474,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 3e74c49e",
@@ -489,8 +489,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6ed1402b",
@@ -504,8 +504,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 335efc2b",
@@ -519,8 +519,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7480
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 27\n- **Node Types**: 13\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Sticky Note1**: stickyNote\n- **Set the URLs**: set\n- **Bright Data MCP Client For LinkedIn Person**: mcpClient\n- **Sticky Note**: stickyNote\n- **List all tools for Bright Data**: mcpClient\n- **Bright Data MCP Client For LinkedIn Company**: mcpClient\n- **Set the LinkedIn Company URL**: set\n- **Webhook for LinkedIn Company Web Scraper**: httpRequest\n- **LinkedIn Data Extractor**: informationExtractor\n- ... and 17 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -533,8 +533,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1360
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -548,8 +548,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1540
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -563,8 +563,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7660
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 30\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -577,8 +577,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        7840
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 31\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -591,8 +591,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1720
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -606,8 +606,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        1900
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2080
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -636,8 +636,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2260
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -651,8 +651,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8020
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -665,8 +665,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8200
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -679,8 +679,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2440
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -694,8 +694,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2620
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -709,8 +709,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2800
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -724,8 +724,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        2980
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -739,8 +739,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8380
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -753,8 +753,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8560
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -780,8 +780,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -794,8 +794,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8740
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 46\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -807,8 +807,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -821,8 +821,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -835,8 +835,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        8920
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -848,8 +848,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -862,8 +862,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        9100
       ],
       "parameters": {
         "content": "# LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini\n\n## Overview\nAutomated workflow: LinkedIn Web Scraping with Bright Data MCP Server & Google Gemini. This workflow integrates 13 different services: stickyNote, httpRequest, code, lmChatGoogleGemini, readWriteFile. It contains 27 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -875,8 +875,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Workflow execution error",

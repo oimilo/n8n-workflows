@@ -28,7 +28,7 @@
       "typeVersion": 1,
       "position": [
         100,
-        100
+        12880
       ],
       "parameters": {}
     },
@@ -37,8 +37,8 @@
       "name": "Google Gemini Chat Model1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -440,
-        -40
+        100,
+        11260
       ],
       "parameters": {
         "options": {},
@@ -58,8 +58,8 @@
       "name": "Handle Queries",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -160,
-        -280
+        100,
+        12340
       ],
       "parameters": {
         "text": "={{ $('Chat').item.json.chatInput }}",
@@ -76,8 +76,8 @@
       "name": "Split Out",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1380,
-        -200
+        100,
+        15760
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -93,8 +93,8 @@
       "name": "Summarize & Analyze Transcript",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        660,
-        540
+        100,
+        19000
       ],
       "parameters": {
         "text": "=Please analyze the given text and create a structured summary following these guidelines:\n\n1. Break down the content into main topics using Level 2 headers (##)\n2. Under each header:\n   - List only the most essential concepts and key points\n   - Use bullet points for clarity\n   - Keep explanations concise\n   - Preserve technical accuracy\n   - Highlight key terms in bold\n3. Format requirements:\n   - Use markdown formatting\n   - Keep bullet points simple (no nesting)\n   - Bold important terms using **term**\n   - Use tables for comparisons\n   - Include relevant technical details\n\nPlease provide a clear, structured summary that captures the core concepts while maintaining technical accuracy.\n\n**Make sure the summary is 300-400 max characters long.**\n\nInclude metadata such as video number, id, and title in the summary.\n\n**Here is the text**\n\nVideo number: {{ $json.video_number }}\nTitle: {{ $json.title }}\nYoutube ID: {{ $json.youtubeId }}\nTranscript:\n{{ $json.transcript_text }}",
@@ -108,8 +108,8 @@
       "name": "Concatenate",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        1700,
-        -200
+        100,
+        1180
       ],
       "parameters": {
         "options": {},
@@ -132,8 +132,8 @@
       "name": "Split Out1",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        660,
-        40
+        100,
+        15940
       ],
       "parameters": {
         "options": {},
@@ -147,8 +147,8 @@
       "name": "Limit",
       "type": "n8n-nodes-base.limit",
       "position": [
-        860,
-        40
+        100,
+        12700
       ],
       "parameters": {
         "maxItems": "={{ $('Update Context Intent').item.json.output.limit }}"
@@ -161,8 +161,8 @@
       "name": "Qdrant Vector Store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1680,
-        480
+        100,
+        14320
       ],
       "parameters": {
         "mode": "insert",
@@ -187,8 +187,8 @@
       "name": "Recursive Character Text Splitter",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1800,
-        860
+        100,
+        15040
       ],
       "parameters": {
         "options": {},
@@ -203,8 +203,8 @@
       "name": "Embeddings Google Gemini",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1660,
-        700
+        100,
+        2440
       ],
       "parameters": {
         "modelName": "models/text-embedding-004"
@@ -223,8 +223,8 @@
       "name": "Google Gemini Chat Model2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        640,
-        740
+        100,
+        11440
       ],
       "parameters": {
         "options": {},
@@ -244,8 +244,8 @@
       "name": "Embeddings Google Gemini1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -120,
-        320
+        100,
+        2620
       ],
       "parameters": {
         "modelName": "models/text-embedding-004"
@@ -264,8 +264,8 @@
       "name": "Chat",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -2780,
-        -460
+        100,
+        640
       ],
       "webhookId": "e66183cc-1eed-4968-b34b-bcecf1bb55e8",
       "parameters": {
@@ -283,8 +283,8 @@
       "name": "Video Titles",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1160,
-        40
+        100,
+        19900
       ],
       "parameters": {
         "options": {},
@@ -298,8 +298,8 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        1700,
-        20
+        100,
+        13060
       ],
       "parameters": {
         "mode": "combineBySql",
@@ -313,8 +313,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        980,
-        540
+        100,
+        2260
       ],
       "parameters": {
         "options": {},
@@ -367,8 +367,8 @@
       "name": "AI Agent",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2720,
-        480
+        100,
+        100
       ],
       "parameters": {
         "text": "=Please analyze the given \"Transcript summary\" and create a full summary overview, following the below guidelines.\n\n1. Provide a full descriptive break down of the content of each video. Assume the user does not won't or have time to watch such videos, so:\n- Your summary needs to be exhaustive, descriptive, and minimise bullet points\n- Your summary needs to captures all the core concepts while maintaining technical accuracy\n- Your summary will be verbose\n\n2. Consider that the intent of the user is not to watch the videos but rather have all the content required and summaries from on the \"Transcript summary\".\n\n3. Use the tool called `chat_playlist_data`, which can analyze YouTube videos. Use this tool effectively to process video content and generate structured summaries.\n\nUser message:\n{{ $('Chat').item.json.chatInput }}\n\nTranscript summary:\n{{ $('Full Summary').item.json.concatenated_summary }}",
@@ -385,8 +385,8 @@
       "name": "Google Gemini Chat Model4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2520,
-        720
+        100,
+        11800
       ],
       "parameters": {
         "options": {},
@@ -407,8 +407,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "onError": "continueRegularOutput",
       "position": [
-        1340,
-        480
+        100,
+        2080
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -444,8 +444,8 @@
       "name": "Default Data Loader",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1820,
-        700
+        100,
+        1720
       ],
       "parameters": {
         "options": {
@@ -483,8 +483,8 @@
       "name": "Chat Buffer Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -260,
-        -40
+        100,
+        820
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -499,8 +499,8 @@
       "name": "Full Summary",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        2520,
-        480
+        100,
+        10000
       ],
       "parameters": {
         "options": {},
@@ -522,8 +522,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -560,
-        -400
+        100,
+        17020
       ],
       "parameters": {
         "color": 7,
@@ -539,8 +539,8 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        -400
+        100,
+        17200
       ],
       "parameters": {
         "color": 7,
@@ -556,8 +556,8 @@
       "name": "Chat Buffer Memory1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2700,
-        720
+        100,
+        1000
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -572,8 +572,8 @@
       "name": "YouTube Transcript",
       "type": "n8n-nodes-youtube-transcription-dmr.youtubeTranscripter",
       "position": [
-        1160,
-        -200
+        100,
+        21880
       ],
       "parameters": {
         "videoId": "={{ $json.id }}",
@@ -587,8 +587,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
-        340
+        100,
+        17380
       ],
       "parameters": {
         "color": 7,
@@ -604,8 +604,8 @@
       "name": "Sticky Note5",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1240,
-        340
+        100,
+        17560
       ],
       "parameters": {
         "color": 7,
@@ -621,8 +621,8 @@
       "name": "Sticky Note6",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2260,
-        340
+        100,
+        17740
       ],
       "parameters": {
         "color": 7,
@@ -639,8 +639,8 @@
       "type": "n8n-nodes-base.noOp",
       "onError": "continueRegularOutput",
       "position": [
-        -2260,
-        -460
+        100,
+        13240
       ],
       "parameters": {
         "text": "= {{ $('Chat').item.json.chatInput }}",
@@ -660,8 +660,8 @@
       "name": "Structured Output Parser1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -2020,
-        -220
+        100,
+        18820
       ],
       "parameters": {
         "jsonSchemaExample": "{\n  \"intent\": \"PLAYLIST|VIDEO|NONE\",\n  \"url\": \"Youtube Playlist or Video URL or empty string,\",\n  \"id\": \"Youtube Playlist or Video ID or empty string,\",\n  \"limit\": \"number of playlist videos to process or 0\",\n  \"status\": \"PENDING|READY|DONE\"\n}"
@@ -674,8 +674,8 @@
       "name": "Update Context Intent",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -1160,
-        -640
+        100,
+        19180
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -699,8 +699,8 @@
       "type": "n8n-nodes-base.redis",
       "onError": "continueRegularOutput",
       "position": [
-        -2440,
-        -460
+        100,
+        10540
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -727,8 +727,8 @@
       "name": "Route Message Intent",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -1700,
-        -460
+        100,
+        15220
       ],
       "parameters": {
         "rules": {
@@ -797,8 +797,8 @@
       "name": "Process Status",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1340,
-        -640
+        100,
+        14140
       ],
       "parameters": {
         "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nif ($input.last().json.output.intent == 'VIDEO') {\n  $input.last().json.output.status = 'READY'\n}\n\nelse if ($input.last().json.output.intent == 'PLAYLIST' && parseInt($input.last().json.output.limit) > 0) {\n  $input.last().json.output.status = 'READY'\n}\n\nelse {\n  $input.last().json.output = {\n    intent: $('Default Intent').first().json.output.intent,\n    url: $('Default Intent').first().json.output.url,\n    id: $('Default Intent').first().json.output.id,\n    limit: $('Default Intent').first().json.output.limit,\n    status: 'PENDING',\n  }\n}\n\n\nreturn $input.all();"
@@ -811,8 +811,8 @@
       "name": "Simple Memory",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -2180,
-        -220
+        100,
+        15400
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -826,8 +826,8 @@
       "name": "Simple Memory3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1040,
-        -1180
+        100,
+        15580
       ],
       "parameters": {
         "sessionKey": "YOUR_CREDENTIAL_HERE",
@@ -841,8 +841,8 @@
       "name": "Sticky Note7",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2540,
-        -620
+        100,
+        17920
       ],
       "parameters": {
         "color": 7,
@@ -858,8 +858,8 @@
       "name": "Google Gemini Chat Model6",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -2340,
-        -220
+        100,
+        11980
       ],
       "parameters": {
         "options": {},
@@ -879,8 +879,8 @@
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1420,
-        -1020
+        100,
+        18280
       ],
       "parameters": {
         "color": 7,
@@ -896,8 +896,8 @@
       "name": "Sticky Note10",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        800,
-        -1480
+        100,
+        16660
       ],
       "parameters": {
         "color": 7,
@@ -913,8 +913,8 @@
       "name": "Numb of Videos",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        900,
-        -1380
+        100,
+        13420
       ],
       "parameters": {
         "text": "={{ $('Chat').item.json.chatInput }}",
@@ -931,8 +931,8 @@
       "name": "Default Intent",
       "type": "n8n-nodes-base.code",
       "position": [
-        -1920,
-        -460
+        100,
+        1900
       ],
       "parameters": {
         "jsCode": "if(\n  ($('Message Intent').first().json?.output?.intent == 'NONE' \n     || Object.keys($('Message Intent').first().json?.output || {}).length == 0)\n  && Object.keys($('Get Previous Context Intent').first().json.context_intent).length > 0\n) {\n  //use prev context intent\n  if(!$input.first().json.output) {\n    $input.first().json.output = {}\n  }\n  $input.first().json.output.intent = $('Get Previous Context Intent').first().json.context_intent?.intent || \"NONE\";\n  $input.first().json.output.url = $('Get Previous Context Intent').first().json.context_intent?.url || \"\";\n  $input.first().json.output.id = $('Get Previous Context Intent').first().json.context_intent?.id || \"\";\n  $input.first().json.output.limit = $('Get Previous Context Intent').first().json.context_intent?.limit || 0;\n  $input.first().json.output.status = $('Get Previous Context Intent').first().json.context_intent?.status || \"PENDING\";\n} else {\n  // $input.first().json.output.intent = $('Message Intent').first().json.context_intent?.intent || \"NONE\";\n  // $input.first().json.output.url = $('Message Intent').first().json.context_intent?.url || \"\";\n  // $input.first().json.output.id = $('Message Intent').first().json.context_intent?.id || \"\";\n  // $input.first().json.output.limit = $('Message Intent').first().json.context_intent?.limit || 0;\n  // $input.first().json.output.status = $('Message Intent').first().json.context_intent?.status || \"PENDING\";\n}\n\n// else use message intent\n\nreturn $input.all();"
@@ -945,8 +945,8 @@
       "name": "Playlist Limit",
       "type": "n8n-nodes-base.if",
       "position": [
-        160,
-        -860
+        100,
+        13780
       ],
       "parameters": {
         "options": {},
@@ -989,8 +989,8 @@
       "name": "Playlist or Video",
       "type": "n8n-nodes-base.switch",
       "position": [
-        160,
-        -640
+        100,
+        13960
       ],
       "parameters": {
         "rules": {
@@ -1056,8 +1056,8 @@
       "name": "Get Fields for Summary",
       "type": "n8n-nodes-base.code",
       "position": [
-        2340,
-        480
+        100,
+        10180
       ],
       "parameters": {
         "jsCode": "return $('Edit Fields').all();"
@@ -1070,8 +1070,8 @@
       "name": "Update Context Process Done1",
       "type": "n8n-nodes-base.redis",
       "position": [
-        2040,
-        480
+        100,
+        19540
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1095,8 +1095,8 @@
       "name": "Google Gemini Chat Model8",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        880,
-        -1180
+        100,
+        12160
       ],
       "parameters": {
         "options": {},
@@ -1116,8 +1116,8 @@
       "name": "Playlist HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        660,
-        -200
+        100,
+        13600
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1131,8 +1131,8 @@
       "name": "YouTube Transcript1",
       "type": "n8n-nodes-youtube-transcription-dmr.youtubeTranscripter",
       "position": [
-        1200,
-        -860
+        100,
+        22060
       ],
       "parameters": {
         "videoId": "={{ $('Update Context Intent').item.json.output.id }}",
@@ -1146,8 +1146,8 @@
       "name": "Video HTTP Request",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        900,
-        -860
+        100,
+        19720
       ],
       "parameters": {
         "url": "{{ $env.BASE_URL }}",
@@ -1161,8 +1161,8 @@
       "name": "Get Title and Desc",
       "type": "n8n-nodes-base.code",
       "position": [
-        1200,
-        -640
+        100,
+        10720
       ],
       "parameters": {
         "jsCode": "/**\n * This code node contains a modified version of play-dl,\n * which is licensed under the GNU General Public License Version 3 (GPLv3).\n *\n * Original Library Name: play-dl\n * Original Library Source: {{ $env.WEBHOOK_URL }}\n * Original Library License: GNU General Public License Version 3 (GPLv3)\n * (See: {{ $env.WEBHOOK_URL }}\n *\n * Modifications were made to the original library for use within this N8N workflow.\n * These modifications are also licensed under the GNU General Public License Version 3 (GPLv3).\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <{{ $env.WEBHOOK_URL }}>.\n */\n\n\n/**\n * Basic function to get specific data (title, description, duration)\n * from pre-fetched HTML body data of a YouTube video page.\n * Assumes the HTML body is passed as the first argument.\n *\n * @param {string} body HTML body data of the YouTube video page.\n * @param {string} video_id YouTube video ID.\n * @param {string} url YouTube video URL.\n * @returns {Promise<{title: string, description: string, duration: number}>} Video Basic Info.\n * @throws {Error} If video ID cannot be extracted, captcha is detected,\n * or necessary data cannot be parsed.\n */\nasync function video_basic_info(body, video_id, url) {\n  // --- Input Validation ---\n  if (typeof body !== 'string') {\n    throw new Error('body parameter must be a string of HTML');\n  }\n  if (typeof video_id !== 'string' || !video_id.trim()) {\n    throw new Error('video_id parameter must be a non-empty string');\n  }\n  if (typeof url !== 'string' || !url.trim()) {\n    throw new Error('url parameter must be a non-empty URL string');\n  }\n\n  // --- Captcha Check ---\n  // Added check for consent page as well\n  if (body.includes('Our systems have detected unusual traffic') || body.includes('consent.google.com')) {\n    throw new Error('Captcha or Consent page encountered: YouTube likely requires interaction or detected bot-like activity.');\n  }\n\n  // --- Extract Player Data ---\n  let player_data;\n  try {\n    // More robust regex to find ytInitialPlayerResponse, stopping at the next semicolon\n    const player_data_match = body.match(/var ytInitialPlayerResponse\\s*=\\s*({.+?});\\s*(?:var |<\\/script)/);\n    if (!player_data_match || !player_data_match[1]) {\n      // Fallback attempt with simpler split (less reliable)\n      const split_data = body.split('var ytInitialPlayerResponse = ');\n      player_data = split_data?.[1]?.split(';</script>')?.[0];\n    } else {\n      player_data = player_data_match[1];\n    }\n\n    if (!player_data) {\n      // Check for common failure indicators in the HTML if data isn't found\n      if (body.includes('<title>YouTube</title>') && !body.includes('videoDetails')) {\n        throw new Error('Could not find ytInitialPlayerResponse data. The page might be a generic YouTube page, not a video page, or the structure changed.');\n      }\n      throw new Error('Could not find ytInitialPlayerResponse data.');\n    }\n  } catch (error) {\n    console.log(\"Error during player_data extraction:\", error);\n    throw new Error(`Failed during player data extraction: ${error}`);\n  }\n\n\n  let player_response;\n  try {\n    player_response = JSON.parse(player_data);\n  } catch (e) {\n    console.log(\"Raw player_data that failed parsing:\", player_data.substring(0, 500) + '...'); // Log start of data\n    throw new Error(`Failed to parse ytInitialPlayerResponse JSON: ${e}`);\n  }\n\n  // --- Extract Required Video Details ---\n  // Use optional chaining for safety\n  const vid = player_response?.videoDetails;\n\n  // Add more robust checking, including playability status\n  if (!vid) {\n    const playabilityStatus = player_response?.playabilityStatus;\n    let reason = \"videoDetails object not found in the response.\";\n    if (playabilityStatus?.status && playabilityStatus.status !== 'OK') {\n      reason = ` Playability status: ${playabilityStatus.status}. Reason: ${playabilityStatus.reason ||\n        playabilityStatus.errorScreen?.playerErrorMessageRenderer?.reason?.simpleText ||\n        playabilityStatus.errorScreen?.playerKavRenderer?.reason?.simpleText ||\n        'No specific reason provided.'\n        }`;\n    } else if (playabilityStatus?.status === 'OK' && !vid) {\n      reason = \" Playability status is OK, but videoDetails is still missing. Response structure might have changed.\";\n    }\n    throw new Error(`Could not get video details. ${reason}`);\n  }\n\n  // --- Return Simplified Data ---\n  // Ensure values exist before accessing, provide defaults if necessary\n  return {\n    title: vid.title || 'N/A',\n    description: vid.shortDescription || '', // Default to empty string if missing\n    duration: Number(vid.lengthSeconds) || 0, // Default to 0 if missing/invalid\n  };\n}\n\n\nreturn video_basic_info($input.first().json.data, $('Update Context Intent').first().json.output.id, $('Update Context Intent').first().json.output.url);"
@@ -1178,8 +1178,8 @@
       "name": "Split Out2",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        1440,
-        -860
+        100,
+        16120
       ],
       "parameters": {
         "include": "selectedOtherFields",
@@ -1195,8 +1195,8 @@
       "name": "Concatenate1",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        1660,
-        -860
+        100,
+        1360
       ],
       "parameters": {
         "options": {},
@@ -1219,8 +1219,8 @@
       "name": "Sticky Note12",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        800,
-        -1000
+        100,
+        16840
       ],
       "parameters": {
         "color": 7,
@@ -1236,8 +1236,8 @@
       "name": "Get Videos",
       "type": "n8n-nodes-base.code",
       "position": [
-        1520,
-        480
+        100,
+        10900
       ],
       "parameters": {
         "jsCode": "return $('Edit Fields').all();"
@@ -1250,8 +1250,8 @@
       "name": "Get Playlist Videos Data",
       "type": "n8n-nodes-base.code",
       "position": [
-        860,
-        -200
+        100,
+        10360
       ],
       "parameters": {
         "jsCode": "/**\n * This code node contains a modified version of play-dl,\n * which is licensed under the GNU General Public License Version 3 (GPLv3).\n *\n * Original Library Name: play-dl\n * Original Library Source: {{ $env.WEBHOOK_URL }}\n * Original Library License: GNU General Public License Version 3 (GPLv3)\n * (See: {{ $env.WEBHOOK_URL }}\n *\n * Modifications were made to the original library for use within this N8N workflow.\n * These modifications are also licensed under the GNU General Public License Version 3 (GPLv3).\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <{{ $env.WEBHOOK_URL }}>.\n */\n\n\n/**\n * Gets YouTube playlist info from a playlist url.\n *\n * Example\n * ```js\n * const playlist = await play.playlist_info('youtube playlist url')\n *\n * const playlist = await play.playlist_info('youtube playlist url', { incomplete : true })\n * ```\n * @param body HTML body of the playlist page\n * @param url Playlist URL\n * @returns YouTube Playlist\n */\nfunction playlist_info(body, url) {\n  let url_ = url.trim();\n  if (body.indexOf('Our systems have detected unusual traffic from your computer network.') !== -1)\n    throw new Error('Captcha page: YouTube has detected that you are a bot!');\n\n  const response = JSON.parse(\n    body\n      .split('var ytInitialData = ')[1]\n      .split(';</script>')[0]\n      .split(/;\\s*(var|const|let)\\s/)[0]\n  );\n\n  if (response.alerts) {\n    if (response.alerts[0].alertWithButtonRenderer?.type === 'INFO') {\n      throw new Error(\n        `While parsing playlist url\\n${response.alerts[0].alertWithButtonRenderer.text.simpleText}`\n      );\n    } else if (response.alerts[0].alertRenderer?.type === 'ERROR')\n      throw new Error(`While parsing playlist url\\n${response.alerts[0].alertRenderer.text.runs[0].text}`);\n    else throw new Error('While parsing playlist url\\nUnknown Playlist Error');\n  }\n  if (response.currentVideoEndpoint) {\n    return getWatchPlaylist(response, body, url_);\n  } else return getNormalPlaylist(response, body);\n}\n\n/**\n * Function to parse Playlist from YouTube search\n * @param data html data of that request\n * @param limit No. of videos to parse\n * @returns Array of YouTube Video objects.\n */\nfunction getPlaylistVideos(data, limit = Infinity) {\n  const videos = [];\n\n  for (let i = 0; i < data.length; i++) {\n    if (limit === videos.length) break;\n    const info = data[i].playlistVideoRenderer;\n    if (!info || !info.shortBylineText) continue;\n\n    videos.push({\n      id: info.videoId,\n      duration: parseInt(info.lengthSeconds) || 0,\n      duration_raw: info.lengthText?.simpleText ?? '0:00',\n      thumbnails: info.thumbnail.thumbnails,\n      title: info.title.runs[0].text,\n      upcoming: info.upcomingEventData?.startTime\n        ? new Date(parseInt(info.upcomingEventData.startTime) * 1000)\n        : undefined,\n      channel: {\n        id: info.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId || undefined,\n        name: info.shortBylineText.runs[0].text || undefined,\n        url: `{{ $env.WEBHOOK_URL }}{info.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.canonicalBaseUrl ||\n          info.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url\n          }`,\n        icon: undefined\n      }\n    });\n  }\n  return videos;\n}\n\n\nfunction getWatchPlaylist(response, body, url) {\n  const playlist_details = response.contents.twoColumnWatchNextResults.playlist?.playlist;\n  if (!playlist_details)\n    throw new Error(\"Watch playlist unavailable due to YouTube layout changes.\")\n\n  const videos = getWatchPlaylistVideos(playlist_details.contents);\n  const videoCount = playlist_details.totalVideos;\n  const channel = playlist_details.shortBylineText?.runs?.[0];\n  const badge = playlist_details.badges?.[0]?.metadataBadgeRenderer?.style.toLowerCase();\n\n  return {\n    id: playlist_details.playlistId || '',\n    title: playlist_details.title || '',\n    videoCount: parseInt(videoCount) || 0,\n    videos: videos,\n    url: url,\n    channel: {\n      id: channel?.navigationEndpoint?.browseEndpoint?.browseId || null,\n      name: channel?.text || null,\n      url: `{{ $env.WEBHOOK_URL }}{channel?.navigationEndpoint?.browseEndpoint?.canonicalBaseUrl ||\n        channel?.navigationEndpoint?.commandMetadata?.webCommandMetadata?.url\n        }`,\n      verified: Boolean(badge?.includes('verified')),\n      artist: Boolean(badge?.includes('artist'))\n    }\n  };\n}\n\nfunction getNormalPlaylist(response, body) {\n  const json_data =\n    response.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0]\n      .itemSectionRenderer.contents[0].playlistVideoListRenderer.contents;\n  const playlist_details = response.sidebar.playlistSidebarRenderer.items;\n  const videos = getPlaylistVideos(json_data, 100);\n\n  const data = playlist_details[0].playlistSidebarPrimaryInfoRenderer;\n  if (!data.title.runs || !data.title.runs.length) throw new Error('Failed to Parse Playlist info.');\n\n  const author = playlist_details[1]?.playlistSidebarSecondaryInfoRenderer.videoOwner;\n  const views = data.stats.length === 3 ? data.stats[1].simpleText.replace(/\\D/g, '') : 0;\n  const lastUpdate =\n    data.stats\n      .find((x) => 'runs' in x && x['runs'].find((y) => y.text.toLowerCase().includes('last update')))\n      ?.runs.pop()?.text ?? null;\n  const videosCount = data.stats[0].runs[0].text.replace(/\\D/g, '') || 0;\n\n  return {\n    id: data.title.runs[0].navigationEndpoint.watchEndpoint.playlistId,\n    title: data.title.runs[0].text,\n    videoCount: parseInt(videosCount) || 0,\n    lastUpdate: lastUpdate,\n    views: parseInt(views) || 0,\n    videos: videos,\n    url: `{{ $env.WEBHOOK_URL }}{data.title.runs[0].navigationEndpoint.watchEndpoint.playlistId}`,\n    link: `{{ $env.WEBHOOK_URL }}{data.title.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url}`,\n    channel: author\n      ? {\n        name: author.videoOwnerRenderer.title.runs[0].text,\n        id: author.videoOwnerRenderer.title.runs[0].navigationEndpoint.browseEndpoint.browseId,\n        url: `{{ $env.WEBHOOK_URL }}{author.videoOwnerRenderer.navigationEndpoint.commandMetadata.webCommandMetadata.url ||\n          author.videoOwnerRenderer.navigationEndpoint.browseEndpoint.canonicalBaseUrl\n          }`,\n        icons: author.videoOwnerRenderer.thumbnail.thumbnails ?? []\n      }\n      : {},\n    thumbnail: data.thumbnailRenderer.playlistVideoThumbnailRenderer?.thumbnail.thumbnails.length\n      ? data.thumbnailRenderer.playlistVideoThumbnailRenderer.thumbnail.thumbnails[\n      data.thumbnailRenderer.playlistVideoThumbnailRenderer.thumbnail.thumbnails.length - 1\n      ]\n      : null\n  };\n}\n\nfunction parseDuration(text) {\n  if (!text) return 0;\n  const split = text.split(':');\n\n  switch (split.length) {\n    case 2:\n      return parseInt(split[0]) * 60 + parseInt(split[1]);\n\n    case 3:\n      return parseInt(split[0]) * 60 * 60 + parseInt(split[1]) * 60 + parseInt(split[2]);\n\n    default:\n      return 0;\n  }\n}\n\nfunction getWatchPlaylistVideos(data, limit = Infinity) {\n  const videos = [];\n\n  for (let i = 0; i < data.length; i++) {\n    if (limit === videos.length) break;\n    const info = data[i].playlistPanelVideoRenderer;\n    if (!info || !info.shortBylineText) continue;\n    const channel_info = info.shortBylineText.runs[0];\n\n    videos.push({\n      id: info.videoId,\n      duration: parseDuration(info.lengthText?.simpleText) || 0,\n      duration_raw: info.lengthText?.simpleText ?? '0:00',\n      thumbnails: info.thumbnail.thumbnails,\n      title: info.title.simpleText,\n      upcoming:\n        info.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer?.style === 'UPCOMING' || undefined,\n      channel: {\n        id: channel_info.navigationEndpoint.browseEndpoint.browseId || undefined,\n        name: channel_info.text || undefined,\n        url: `{{ $env.WEBHOOK_URL }}{channel_info.navigationEndpoint.browseEndpoint.canonicalBaseUrl ||\n          channel_info.navigationEndpoint.commandMetadata.webCommandMetadata.url\n          }`,\n        icon: undefined\n      }\n    });\n  }\n\n  return videos;\n}\n\n\nreturn playlist_info($input.first().json.data, $('Update Context Intent').first().json.output.url);"
@@ -1267,8 +1267,8 @@
       "name": "Embeddings Google Gemini2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2640,
-        1060
+        100,
+        2800
       ],
       "parameters": {
         "modelName": "models/text-embedding-004"
@@ -1287,8 +1287,8 @@
       "name": "Qdrant Vector Store3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -100,
-        160
+        100,
+        14680
       ],
       "parameters": {
         "options": {},
@@ -1312,8 +1312,8 @@
       "name": "Answer questions with a vector store",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        180,
-        -40
+        100,
+        280
       ],
       "parameters": {
         "name": "chat_playlist_data",
@@ -1328,8 +1328,8 @@
       "name": "Qdrant Vector Store4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2700,
-        900
+        100,
+        14860
       ],
       "parameters": {
         "options": {},
@@ -1353,8 +1353,8 @@
       "name": "Answer questions with a vector store1",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        2860,
-        700
+        100,
+        460
       ],
       "parameters": {
         "name": "chat_playlist_data",
@@ -1369,8 +1369,8 @@
       "name": "Google Gemini Chat Model",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        3000,
-        900
+        100,
+        11080
       ],
       "parameters": {
         "options": {},
@@ -1390,8 +1390,8 @@
       "name": "Google Gemini Chat Model3",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        220,
-        160
+        100,
+        11620
       ],
       "parameters": {
         "options": {},
@@ -1411,8 +1411,8 @@
       "name": "Qdrant Vector Store2",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -820,
-        -880
+        100,
+        14500
       ],
       "parameters": {
         "mode": "load",
@@ -1439,8 +1439,8 @@
       "name": "Embeddings Google Gemini4",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        -840,
-        -640
+        100,
+        2980
       ],
       "parameters": {
         "modelName": "models/text-embedding-004"
@@ -1459,8 +1459,8 @@
       "name": "If Node",
       "type": "n8n-nodes-base.if",
       "position": [
-        -260,
-        -880
+        100,
+        12520
       ],
       "parameters": {
         "options": {},
@@ -1493,8 +1493,8 @@
       "name": "Count Content",
       "type": "n8n-nodes-base.summarize",
       "position": [
-        -460,
-        -880
+        100,
+        1540
       ],
       "parameters": {
         "options": {},
@@ -1514,8 +1514,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        20,
-        -1020
+        100,
+        16300
       ],
       "parameters": {
         "color": 7,
@@ -1531,8 +1531,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -920,
-        -1020
+        100,
+        16480
       ],
       "parameters": {
         "color": 7,
@@ -1548,8 +1548,8 @@
       "name": "Update Context Intent1",
       "type": "n8n-nodes-base.redis",
       "position": [
-        -460,
-        -640
+        100,
+        19360
       ],
       "parameters": {
         "key": "YOUR_CREDENTIAL_HERE",
@@ -1572,8 +1572,8 @@
       "name": "Sticky Note8",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2540,
-        20
+        100,
+        18100
       ],
       "parameters": {
         "width": 1080,
@@ -1589,8 +1589,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        3160
       ],
       "parameters": {
         "message": "Error occurred in 1cbcec5e-b58c-4fce-b944-08c47a7385db",
@@ -1604,8 +1604,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        18460
       ],
       "parameters": {
         "message": "Error occurred in fa6b8a79-436e-4742-9732-cd5c1b2d3c88",
@@ -1619,8 +1619,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        800,
-        400
+        100,
+        18640
       ],
       "parameters": {
         "message": "Error occurred in 41a07802-3fba-42fa-8482-f526a7e1b173",
@@ -1634,8 +1634,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8200
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 505077d1",
@@ -1649,8 +1649,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9100
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node a3b23c6b",
@@ -1664,8 +1664,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8380
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 6f4ee00d",
@@ -1679,8 +1679,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8740
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 75442631",
@@ -1694,8 +1694,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9460
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node cf1e5c50",
@@ -1709,8 +1709,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7480
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 1cbcec5e",
@@ -1724,8 +1724,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9280
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node c0ecf826",
@@ -1739,8 +1739,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9640
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node d3f71d59",
@@ -1754,8 +1754,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        9820
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node fa6b8a79",
@@ -1769,8 +1769,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8020
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 41a07802",
@@ -1784,8 +1784,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8560
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 71b60b8e",
@@ -1799,8 +1799,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7660
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 22f18788",
@@ -1814,8 +1814,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7840
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 2aa52dd2",
@@ -1829,8 +1829,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        8920
       ],
       "parameters": {
         "message": "Error occurred in workflow execution at node 7c289d61",
@@ -1844,8 +1844,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20080
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 89\n- **Node Types**: 24\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **Google Gemini Chat Model1**: lmChatGoogleGemini\n- **Handle Queries**: agent\n- **Split Out**: splitOut\n- **Summarize & Analyze Transcript**: chainLlm\n- **Concatenate**: summarize\n- **Split Out1**: splitOut\n- **Limit**: limit\n- **Qdrant Vector Store**: vectorStoreQdrant\n- **Recursive Character Text Splitter**: textSplitterRecursiveCharacterTextSplitter\n- **Embeddings Google Gemini**: embeddingsGoogleGemini\n- ... and 79 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
@@ -1858,8 +1858,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3340
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1873,8 +1873,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3520
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1888,8 +1888,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3700
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1903,8 +1903,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20260
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 93\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1917,8 +1917,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20440
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 94\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -1931,8 +1931,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        3880
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1946,8 +1946,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4060
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1961,8 +1961,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4240
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1976,8 +1976,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4420
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -1991,8 +1991,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4600
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2006,8 +2006,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4780
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2021,8 +2021,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20620
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 101\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2035,8 +2035,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20800
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 102\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2049,8 +2049,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        4960
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2064,8 +2064,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5140
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2079,8 +2079,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5320
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2094,8 +2094,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5500
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2109,8 +2109,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5680
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2124,8 +2124,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        5860
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2139,8 +2139,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        20980
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 109\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2153,8 +2153,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21160
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 110\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2166,8 +2166,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6040
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2180,8 +2180,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6220
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2194,8 +2194,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6400
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2208,8 +2208,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21340
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 114\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
@@ -2221,8 +2221,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6580
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2235,8 +2235,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6760
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2249,8 +2249,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        6940
       ],
       "parameters": {
         "message": "Error occurred in workflow execution",
@@ -2263,8 +2263,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21520
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2276,8 +2276,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7120
       ],
       "parameters": {
         "message": "Workflow execution error",
@@ -2290,8 +2290,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        50,
-        50
+        100,
+        21700
       ],
       "parameters": {
         "content": "# ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2\n\n## Overview\nAutomated workflow: ⚡AI-Powered YouTube Playlist & Video Summarization and Analysis v2. This workflow integrates 24 different services: stickyNote, vectorStoreQdrant, textSplitterRecursiveCharacterTextSplitter, merge, switch. It contains 89 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
@@ -2303,8 +2303,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        1000,
-        400
+        100,
+        7300
       ],
       "parameters": {
         "message": "Workflow execution error",
