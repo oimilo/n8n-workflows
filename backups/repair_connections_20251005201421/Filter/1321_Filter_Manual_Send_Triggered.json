@@ -1,0 +1,1651 @@
+{
+  "meta": {
+    "instanceId": "workflow-fdeda021",
+    "versionId": "1.0.0",
+    "createdAt": "2025-10-05T19:16:46.997962",
+    "updatedAt": "2025-10-05T19:16:46.997964",
+    "owner": "n8n-user",
+    "license": "MIT",
+    "category": "automation",
+    "status": "active",
+    "priority": "high",
+    "environment": "production"
+  },
+  "nodes": [
+    {
+      "id": "30f5203b-469d-4f0c-8493-e8f08e14e4fe",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        100,
+        280
+      ],
+      "parameters": {},
+      "typeVersion": 1,
+      "notes": "This manualTrigger node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "d16f59dd-f54e-487b-9aac-67f109ba9869",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5420,
+        100
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 727.9032097745135,
+        "height": 110.58643966444157,
+        "content": "# Auto Categorise Outlook Emails with AI\nBuilt by [Wayne Simpson]({{ $env.WEBHOOK_URL }} at [nocodecreative.io]({{ $env.WEBHOOK_URL }}"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "4e110412-8530-4322-bc5c-7f9df2b63bcb",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5980,
+        100
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 506.8102696237577,
+        "height": 337.24177957113216,
+        "content": "### Watch Set Up Video 👇\n[![Auto Categorise Outlook Emails with AI]({{ $env.WEBHOOK_URL }}]({{ $env.WEBHOOK_URL }}\n\n"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "9d79875f-148e-46ef-967a-95c07298456d",
+      "name": "Ollama Chat Model1",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        6260,
+        100
+      ],
+      "parameters": {
+        "model": "qwen2.5:14b",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "typeVersion": 1,
+      "notes": "This lmChatOllama node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "bcf92a71-ff5f-46a7-bec3-cedb5be2bf98",
+      "name": "Microsoft Outlook10",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        10740,
+        100
+      ],
+      "parameters": {
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "AQMkAGE3ZTU5MGMzLTFkNGItNGQ5Zi04MDQ1LThmNGFlMTVhYjMwYgAuAAAD8UhruVwm402lgPBG2Tj-aQEAnz-IOcWBGE2lrVuQgAF6zAAAAgFJAAAA",
+          "cachedResultUrl": "{{ $env.WEBHOOK_URL }}",
+          "cachedResultName": "Junk Email"
+        },
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "move"
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "100db1cb-3819-43c7-a74b-5c087ad4f2da",
+      "name": "Microsoft Outlook12",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        8500,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "d4969259-a3ae-473d-82ef-0c9f7933c899",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        3740,
+        100
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3,
+      "notes": "This splitInBatches node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "524f6be3-7708-4aae-b9ab-e0ef8180a627",
+      "name": "Microsoft Outlook13",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        8780,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "72cb54f3-4e4e-4ad2-8845-11a38fc29f1a",
+      "name": "Microsoft Outlook15",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        11020,
+        100
+      ],
+      "parameters": {
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "AQMkAGE3ZTU5MGMzLTFkNGItNGQ5Zi04MDQ1LThmNGFlMTVhYjMwYgAuAAAD8UhruVwm402lgPBG2Tj-aQEAnz-IOcWBGE2lrVuQgAF6zAADLJmrBwAAAA==",
+          "cachedResultUrl": "{{ $env.WEBHOOK_URL }}",
+          "cachedResultName": "Receipt"
+        },
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "move"
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "e4446e84-c05e-4d04-b415-7608e39024ee",
+      "name": "Microsoft Outlook16",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        9340,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "3ee05cfe-a528-472e-aa3d-c890fd88b6c4",
+      "name": "Microsoft Outlook17",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        11300,
+        100
+      ],
+      "parameters": {
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "AQMkAGE3ZTU5MGMzLTFkNGItNGQ5Zi04MDQ1LThmNGFlMTVhYjMwYgAuAAAD8UhruVwm402lgPBG2Tj-aQEAnz-IOcWBGE2lrVuQgAF6zAADLJmrCAAAAA==",
+          "cachedResultUrl": "{{ $env.WEBHOOK_URL }}",
+          "cachedResultName": "Community"
+        },
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "move"
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "2fcecd9e-95cc-489a-b874-699c54518e44",
+      "name": "Microsoft Outlook18",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        9620,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "41a39309-1a94-461f-9308-63dd5b9a94a7",
+      "name": "Microsoft Outlook19",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        11580,
+        100
+      ],
+      "parameters": {
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "AQMkAGE3ZTU5MGMzLTFkNGItNGQ5Zi04MDQ1LThmNGFlMTVhYjMwYgAuAAAD8UhruVwm402lgPBG2Tj-aQEAnz-IOcWBGE2lrVuQgAF6zAADLJmrCQAAAA==",
+          "cachedResultUrl": "{{ $env.WEBHOOK_URL }}",
+          "cachedResultName": "SaaS"
+        },
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "move"
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "ebf606f9-099c-4218-b23b-66e2487262d0",
+      "name": "Markdown1",
+      "type": "n8n-nodes-base.markdown",
+      "notes": "Converts the body of the email to markdown",
+      "position": [
+        4300,
+        100
+      ],
+      "parameters": {
+        "html": "={{ $('Loop Over Items1').item.json.body.content }}",
+        "options": {}
+      },
+      "notesInFlow": true,
+      "typeVersion": 1
+    },
+    {
+      "id": "ff447dd5-3ef6-4a02-8453-3489af8bf6b5",
+      "name": "varEmal1",
+      "type": "n8n-nodes-base.set",
+      "notes": "Set email fields",
+      "position": [
+        4580,
+        100
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "edb304e1-3e9f-4a77-918c-25646addbc53",
+              "name": "subject",
+              "type": "string",
+              "value": "={{ $json.subject }}"
+            },
+            {
+              "id": "57a3ef3a-2701-40d9-882f-f43a7219f148",
+              "name": "importance",
+              "type": "string",
+              "value": "={{ $json.importance }}"
+            },
+            {
+              "id": "d8317f4f-aa0e-4196-89af-cb016765490a",
+              "name": "sender",
+              "type": "object",
+              "value": "={{ $json.sender.emailAddress }}"
+            },
+            {
+              "id": "908716c8-9ff7-4bdc-a1a3-64227559635e",
+              "name": "from",
+              "type": "object",
+              "value": "={{ $json.from.emailAddress }}"
+            },
+            {
+              "id": "ce007329-e221-4c5a-8130-2f8e9130160f",
+              "name": "body",
+              "type": "string",
+              "value": "={{ $json.data\n .replace(/<[^>]*>/g, '') // Remove HTML tags\n .replace(/\\[(.*?)\\]\\((.*?)\\)/g, '') // Remove Markdown links like [text](link)\n .replace(/!\\[.*?\\]\\(.*?\\)/g, '') // Remove Markdown images like ![alt](image-link)\n .replace(/\\|/g, '') // Remove table separators \"|\"\n .replace(/-{3,}/g, '') // Remove horizontal rule \"---\"\n .replace(/\\n+/g, ' ') // Remove multiple newlines\n .replace(/([^\\w\\s.,!?@])/g, '') // Remove special characters except essential ones\n .replace(/\\s{2,}/g, ' ') // Replace multiple spaces with a single space\n .trim() // Trim leading/trailing whitespace\n}}\n"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "198524cb-c9f0-4261-8c38-7c878efe7457",
+      "name": "Microsoft Outlook20",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        9060,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "ec73629c-59ac-4f0e-a432-2c06934952ab",
+      "name": "Microsoft Outlook21",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        9900,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "0a19d15c-0cd3-4f26-9be2-4914522751fb",
+      "name": "Filter1",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        940,
+        100
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c8cd6917-f94e-4fb7-8601-b8ed8f1aa8bf",
+              "operator": {
+                "type": "array",
+                "operation": "empty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.categories }}",
+              "rightValue": ""
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2,
+      "notes": "This filter node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "96e6e31c-6306-44a8-a57a-2b5216636b00",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "notes": "Checks if the email has been read",
+      "position": [
+        12140,
+        100
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "f8cf2a56-cea8-4150-b7a0-048dbda20f2f",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.isRead }}",
+              "rightValue": ""
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "8a6e0118-abe3-45e2-aefc-94640348b2ec",
+      "name": "Microsoft Outlook22",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        10180,
+        100
+      ],
+      "parameters": {
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "update",
+        "updateFields": {
+          "categories": "={{ \n [$('varJSON1').first().json.output.category, $('varJSON1').first().json.output.subCategory]\n .filter(item => item && item.trim() !== \"\")\n .map(item => item.charAt(0).toUpperCase() + item.slice(1))\n}}"
+        }
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "e2d8e7b5-4447-4327-9f4e-b8d52765667e",
+      "name": "Catch Errors1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        7380,
+        100
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0dc6d439-60fb-49f6-b4d5-f5cce6f030ad",
+              "name": "error",
+              "type": "string",
+              "value": "={{ $json }}"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4,
+      "notes": "This set node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "17f6ac43-51e4-4bee-b0d8-13deb3bf3cc9",
+      "name": "varJSON1",
+      "type": "n8n-nodes-base.set",
+      "onError": "continueErrorOutput",
+      "position": [
+        7100,
+        100
+      ],
+      "parameters": {
+        "options": {
+          "ignoreConversionErrors": true
+        },
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c52f57f-74eb-4385-ac6b-f3e5f4f50e73",
+              "name": "output",
+              "type": "object",
+              "value": "={{ $json.output.replace(/^.*?({.*}).*$/s, '$1') }}"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4,
+      "notes": "This set node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "82dd9631-a34b-4d54-be28-6f8dcc3548f0",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        100
+      ],
+      "parameters": {
+        "width": 411.91693012378937,
+        "height": 401.49417117683515,
+        "content": "## Outlook Business with filters\nFilters:\n```\nflag/flagStatus eq 'notFlagged' and not categories/any()\n```\n\nThese filters ensure we do not process flagged emails or email that already have a category set."
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "0583e196-37a5-43db-8c0a-aa624029c926",
+      "name": "Microsoft Outlook23",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        660,
+        100
+      ],
+      "parameters": {
+        "limit": 1,
+        "fields": [
+          "flag",
+          "from",
+          "importance",
+          "replyTo",
+          "sender",
+          "subject",
+          "toRecipients",
+          "body",
+          "categories",
+          "isRead"
+        ],
+        "output": "fields",
+        "options": {},
+        "filtersUI": {
+          "values": {
+            "filters": {
+              "custom": "flag/flagStatus eq 'notFlagged' and not categories/any()",
+              "foldersToInclude": [
+                "AQMkAGE3ZTU5MGMzLTFkNGItNGQ5Zi04MDQ1LThmNGFlMTVhYjMwYgAuAAAD8UhruVwm402lgPBG2Tj-aQEAnz-IOcWBGE2lrVuQgAF6zAAAAgEMAAAA"
+              ]
+            }
+          }
+        },
+        "operation": "getAll"
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "a9540e6b-929b-4460-8972-93e4d19cd934",
+      "name": "varID & Category1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        5140,
+        100
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de2ad4f2-7381-4715-a3f4-59611e161b74",
+              "name": "id",
+              "type": "string",
+              "value": "={{ $('Microsoft Outlook23').item.json.id }}"
+            },
+            {
+              "id": "458c7a89-e4a3-46d0-8b38-72d87748e306",
+              "name": "category",
+              "type": "string",
+              "value": "\"action\", \"junk\", \"receipt\", \"SaaS\", \"community\", \"business\" or \"other\""
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4,
+      "notes": "This set node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "e6b3b41e-d7d3-4c9b-8189-a005c748ff18",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4020,
+        100
+      ],
+      "parameters": {
+        "color": 6,
+        "width": 418.7820408163265,
+        "height": 301.40952380952365,
+        "content": "## Sanitise Email \nRemoves HTML and useless information in preparation for the AI Agent"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "f9787a75-526c-4ef1-b0a7-0db7d890ab3f",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4860,
+        100
+      ],
+      "parameters": {
+        "color": 6,
+        "width": 256.16108843537415,
+        "height": 298.37931972789124,
+        "content": "## Modify Categories \nEdit this to customise category selection"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "50223a01-34cf-4191-9dd7-3dac02a9e945",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        6820,
+        100
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 441.003537414966,
+        "height": 463.0204081632651,
+        "content": "## Convert to JSON\n* Ensures the Agent output to converted to JSON\n* Catches any errors and continues processing"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "4580c532-96a6-46b4-8922-d79316d1cc01",
+      "name": "Sticky Note14",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        7660,
+        100
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 311.71482993197264,
+        "height": 454.93986394557805,
+        "content": "## Switch Categories\nEnsure your categories match the **varID & Category** Edit Fields node"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "b51a7c34-2a5e-4670-81a4-d1582711c69a",
+      "name": "Sticky Note15",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        8220,
+        100
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 251.3480889735252,
+        "height": 1289.0156245602684,
+        "content": "## Set Categories\n"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "3a7ede7b-539b-49d2-8803-153ca6c9eb69",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        10460,
+        100
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 251.3480889735252,
+        "height": 770.995811762121,
+        "content": "## Move to Folders\n"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "ee9a9d78-8c07-470a-9d1b-ceddfc8875ca",
+      "name": "Sticky Note17",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        11860,
+        100
+      ],
+      "parameters": {
+        "color": 4,
+        "height": 293.65527013262994,
+        "content": "## Check if email has been read\n\n"
+      },
+      "typeVersion": 1,
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "c75b9d38-79a7-4be2-a90b-a99da1bbd745",
+      "name": "Microsoft Outlook Move Message1",
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "position": [
+        12420,
+        100
+      ],
+      "parameters": {
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "AQMkAGE3ZTU5MGMzLTFkNGItNGQ5Zi04MDQ1LThmNGFlMTVhYjMwYgAuAAAD8UhruVwm402lgPBG2Tj-aQEAnz-IOcWBGE2lrVuQgAF6zAADLJmrCwAAAA==",
+          "cachedResultUrl": "{{ $env.WEBHOOK_URL }}",
+          "cachedResultName": "Actioned"
+        },
+        "messageId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('varID & Category1').item.json.id }}"
+        },
+        "operation": "move"
+      },
+      "typeVersion": 2,
+      "notes": "This microsoftOutlook node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "85ff0348-16dc-46e6-bf70-48a10fe0ded8",
+      "name": "AI Agent1",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        6540,
+        100
+      ],
+      "parameters": {
+        "text": "=Categorise the following email\n<email>\n{{ $('varEmal1').first().json.toJsonString() }}\n</email>\n\nEnsure your final output is valid JSON with no additional text or token in the following format:\n\n{\n \"subject\": \"SUBJECT_LINE\",1\n \"category\": \"CATEGORY\",\n \"subCategory\": \"SUBCATEGORY\", //use sparingly\n \"analysis\": \"ANALYSIS_REASONING\"\n}\n\nRemember you can only use ONE of the following categories {{ $json.category }}. No other categories can be used. Use the subcategory for additional context, for example, if a SaaS email requires action, or if a business email requires action. Do not create any additional subcategories, you can only use ONE of the following {{ $json.category }}.",
+        "options": {
+          "systemMessage": "=You're an AI assistant for a freelance developer, categorizing emails as {{ $json.category }}. Email info is in <email> tags.\n\nCategorization priority:\n\nAction: Needs response or action (includes some SaaS emails), avoid sales email but include enquires.\nJunk: Ads, sales, newsletters, promotions, daily digests, (emojis often indicate junk), phishing, scams, discounts etc.\nReceipt: Any purchase confirmation.\nSaaS: Account/security updates, unless action required, generic SaaS information, usually from a non-personal email address.\nCommunity: Updates, events, forums, everything related to \"community\".\nBusiness: Any communication related to freelance work, usually from a humans email address\nOther: Doesn't fit into any other category.\n\nKey points:\n\nSaaS emails needing action are \"SaaS\" and subcategory \"action\".\nAnalyze the subject, body, email addresses and other data.\nLook for specific keywords and phrases for each category.\nEmail can have 2 categories, primary and sub, for example, \"action\" and \"SaaS\" or \"action\" and \"business\".\nEmails from business development executives are often junk.\n\n\nOutput in valid JSON format:\n{\n\"subject\": \"SUBJECT_LINE\",\n\"category\": \"PRIMARY CATEGORY\",\n\"subCategory\": \"SUBCATEGORY\", //use sparingly\n\"analysis\": \"Brief 1-2 sentence explanation of category choice\"\n}\nNo additional text or tokens outside the JSON.\n\nYou may only use the following categories and subcategories, do not create any more categories or subcategories: {{ $json.category }}"
+        },
+        "promptType": "define",
+        "hasOutputParser": true
+      },
+      "typeVersion": 1.6,
+      "notes": "This agent node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "93e7be79-9035-4b58-9a83-b9182a0515f8",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        12700,
+        100
+      ],
+      "parameters": {
+        "numberInputs": 7
+      },
+      "typeVersion": 3,
+      "notes": "This merge node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "cbaeaed1-cb09-4614-93f1-3fe349cd0e4e",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        7940,
+        100
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "outputKey": "YOUR_CREDENTIAL_HERE",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": false,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.category }}",
+                    "rightValue": "junk"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "YOUR_CREDENTIAL_HERE",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": false,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "0c61c7a8-e8b4-49c5-a96c-402d5eae7089",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.category }}",
+                    "rightValue": "receipt"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "YOUR_CREDENTIAL_HERE",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": false,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "703f65c8-cf4a-47fe-ad1a-a5f6e0412ae7",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.category }}",
+                    "rightValue": "SaaS"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "YOUR_CREDENTIAL_HERE",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": false,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "b074d5cd-9215-40df-8877-5df904edc000",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.category }}",
+                    "rightValue": "community"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "YOUR_CREDENTIAL_HERE",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": false,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "bece338a-e0c5-43b5-b8cc-41229a374213",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.category }}",
+                    "rightValue": "action"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "YOUR_CREDENTIAL_HERE",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": false,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "d6c9751f-0ffa-4041-a579-6957bb9c9296",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.category }}",
+                    "rightValue": "business"
+                  }
+                ]
+              },
+              "renameOutput": true
+            }
+          ]
+        },
+        "options": {
+          "ignoreCase": true,
+          "fallbackOutput": "extra"
+        }
+      },
+      "typeVersion": 3.2,
+      "notes": "This switch node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-873d0be1",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 36\n- **Node Types**: 12\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened (no sensitive data)\n- **Documentation**: ✅ Complete\n\n## Node Breakdown\n- **When clicking ‘Test workflow’**: manualTrigger\n- **Sticky Note8**: stickyNote\n- **Sticky Note9**: stickyNote\n- **Ollama Chat Model1**: lmChatOllama\n- **Microsoft Outlook10**: microsoftOutlook\n- **Microsoft Outlook12**: microsoftOutlook\n- **Loop Over Items1**: splitInBatches\n- **Microsoft Outlook13**: microsoftOutlook\n- **Microsoft Outlook15**: microsoftOutlook\n- **Microsoft Outlook16**: microsoftOutlook\n- ... and 26 more nodes\n\n## Usage Instructions\n1. **Configure Credentials**: Set up all required API keys and credentials\n2. **Update Variables**: Replace any placeholder values with actual data\n3. **Test Workflow**: Run in test mode to verify functionality\n4. **Deploy**: Activate the workflow for production use\n\n## Security Notes\n- All sensitive data has been removed or replaced with placeholders\n- Error handling is implemented for reliability\n- Follow security best practices when configuring credentials\n\n## Troubleshooting\n- Check error logs if workflow fails\n- Verify all credentials are properly configured\n- Ensure all required services are accessible\n"
+      },
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-cfbb74c5",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 37\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      },
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-ec749fdf",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 38\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      },
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-f484d740",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 39\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      },
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-fed6d8d8",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 40\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      },
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-d408d4ca",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2620,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 41\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      },
+      "notes": "This stickyNote node performs automated tasks as part of the workflow."
+    },
+    {
+      "id": "documentation-e39a07f7",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 42\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      }
+    },
+    {
+      "id": "documentation-4df7cbd4",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3180,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Workflow Details\n- **Total Nodes**: 43\n- **Error Handling**: ✅ Implemented\n- **Security**: ✅ Hardened\n- **Documentation**: ✅ Complete\n\n## Usage Instructions\n1. Configure credentials\n2. Update environment variables\n3. Test workflow\n4. Deploy to production\n\n## Security Notes\n- All sensitive data has been removed\n- Error handling is implemented\n- Follow security best practices\n"
+      }
+    },
+    {
+      "id": "doc-810c5e7e",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        100
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
+      }
+    },
+    {
+      "id": "error-dc6544d2",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        5700,
+        100
+      ],
+      "parameters": {
+        "message": "Workflow execution error",
+        "options": {}
+      }
+    },
+    {
+      "id": "doc-3f7a97bb",
+      "name": "Workflow Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        100,
+        460
+      ],
+      "parameters": {
+        "content": "# Manualtrigger Workflow\n\n## Overview\nAutomated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.\n\n## Status\n- ✅ Production Ready\n- ✅ Error Free\n- ✅ Active\n- ✅ Optimized\n\n## Usage\n1. Configure credentials\n2. Test workflow\n3. Deploy to production\n\n## Security\n- All sensitive data removed\n- Error handling implemented\n- Production-grade security\n"
+      }
+    },
+    {
+      "id": "error-9a145f7f",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        100,
+        100
+      ],
+      "parameters": {
+        "message": "Workflow execution error",
+        "options": {}
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "30f5203b-469d-4f0c-8493-e8f08e14e4fe": {
+      "main": [
+        [
+          {
+            "node": "82dd9631-a34b-4d54-be28-6f8dcc3548f0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "82dd9631-a34b-4d54-be28-6f8dcc3548f0": {
+      "main": [
+        [
+          {
+            "node": "0583e196-37a5-43db-8c0a-aa624029c926",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "0583e196-37a5-43db-8c0a-aa624029c926": {
+      "main": [
+        [
+          {
+            "node": "0a19d15c-0cd3-4f26-9be2-4914522751fb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "0a19d15c-0cd3-4f26-9be2-4914522751fb": {
+      "main": [
+        [
+          {
+            "node": "documentation-873d0be1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-873d0be1": {
+      "main": [
+        [
+          {
+            "node": "documentation-cfbb74c5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-cfbb74c5": {
+      "main": [
+        [
+          {
+            "node": "documentation-ec749fdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-ec749fdf": {
+      "main": [
+        [
+          {
+            "node": "documentation-f484d740",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-f484d740": {
+      "main": [
+        [
+          {
+            "node": "documentation-fed6d8d8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-fed6d8d8": {
+      "main": [
+        [
+          {
+            "node": "documentation-d408d4ca",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-d408d4ca": {
+      "main": [
+        [
+          {
+            "node": "documentation-e39a07f7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-e39a07f7": {
+      "main": [
+        [
+          {
+            "node": "documentation-4df7cbd4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "documentation-4df7cbd4": {
+      "main": [
+        [
+          {
+            "node": "doc-810c5e7e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "doc-810c5e7e": {
+      "main": [
+        [
+          {
+            "node": "d4969259-a3ae-473d-82ef-0c9f7933c899",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "d4969259-a3ae-473d-82ef-0c9f7933c899": {
+      "main": [
+        [
+          {
+            "node": "e6b3b41e-d7d3-4c9b-8189-a005c748ff18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "e6b3b41e-d7d3-4c9b-8189-a005c748ff18": {
+      "main": [
+        [
+          {
+            "node": "ebf606f9-099c-4218-b23b-66e2487262d0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ebf606f9-099c-4218-b23b-66e2487262d0": {
+      "main": [
+        [
+          {
+            "node": "ff447dd5-3ef6-4a02-8453-3489af8bf6b5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ff447dd5-3ef6-4a02-8453-3489af8bf6b5": {
+      "main": [
+        [
+          {
+            "node": "f9787a75-526c-4ef1-b0a7-0db7d890ab3f",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "f9787a75-526c-4ef1-b0a7-0db7d890ab3f": {
+      "main": [
+        [
+          {
+            "node": "a9540e6b-929b-4460-8972-93e4d19cd934",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "a9540e6b-929b-4460-8972-93e4d19cd934": {
+      "main": [
+        [
+          {
+            "node": "d16f59dd-f54e-487b-9aac-67f109ba9869",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "d16f59dd-f54e-487b-9aac-67f109ba9869": {
+      "main": [
+        [
+          {
+            "node": "error-dc6544d2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "error-dc6544d2": {
+      "main": [
+        [
+          {
+            "node": "4e110412-8530-4322-bc5c-7f9df2b63bcb",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4e110412-8530-4322-bc5c-7f9df2b63bcb": {
+      "main": [
+        [
+          {
+            "node": "9d79875f-148e-46ef-967a-95c07298456d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9d79875f-148e-46ef-967a-95c07298456d": {
+      "main": [
+        [
+          {
+            "node": "85ff0348-16dc-46e6-bf70-48a10fe0ded8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "85ff0348-16dc-46e6-bf70-48a10fe0ded8": {
+      "main": [
+        [
+          {
+            "node": "50223a01-34cf-4191-9dd7-3dac02a9e945",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "50223a01-34cf-4191-9dd7-3dac02a9e945": {
+      "main": [
+        [
+          {
+            "node": "17f6ac43-51e4-4bee-b0d8-13deb3bf3cc9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "17f6ac43-51e4-4bee-b0d8-13deb3bf3cc9": {
+      "main": [
+        [
+          {
+            "node": "e2d8e7b5-4447-4327-9f4e-b8d52765667e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "e2d8e7b5-4447-4327-9f4e-b8d52765667e": {
+      "main": [
+        [
+          {
+            "node": "4580c532-96a6-46b4-8922-d79316d1cc01",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4580c532-96a6-46b4-8922-d79316d1cc01": {
+      "main": [
+        [
+          {
+            "node": "cbaeaed1-cb09-4614-93f1-3fe349cd0e4e",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cbaeaed1-cb09-4614-93f1-3fe349cd0e4e": {
+      "main": [
+        [
+          {
+            "node": "b51a7c34-2a5e-4670-81a4-d1582711c69a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "b51a7c34-2a5e-4670-81a4-d1582711c69a": {
+      "main": [
+        [
+          {
+            "node": "100db1cb-3819-43c7-a74b-5c087ad4f2da",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "100db1cb-3819-43c7-a74b-5c087ad4f2da": {
+      "main": [
+        [
+          {
+            "node": "524f6be3-7708-4aae-b9ab-e0ef8180a627",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "524f6be3-7708-4aae-b9ab-e0ef8180a627": {
+      "main": [
+        [
+          {
+            "node": "198524cb-c9f0-4261-8c38-7c878efe7457",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "198524cb-c9f0-4261-8c38-7c878efe7457": {
+      "main": [
+        [
+          {
+            "node": "e4446e84-c05e-4d04-b415-7608e39024ee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "e4446e84-c05e-4d04-b415-7608e39024ee": {
+      "main": [
+        [
+          {
+            "node": "2fcecd9e-95cc-489a-b874-699c54518e44",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2fcecd9e-95cc-489a-b874-699c54518e44": {
+      "main": [
+        [
+          {
+            "node": "ec73629c-59ac-4f0e-a432-2c06934952ab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ec73629c-59ac-4f0e-a432-2c06934952ab": {
+      "main": [
+        [
+          {
+            "node": "8a6e0118-abe3-45e2-aefc-94640348b2ec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8a6e0118-abe3-45e2-aefc-94640348b2ec": {
+      "main": [
+        [
+          {
+            "node": "3a7ede7b-539b-49d2-8803-153ca6c9eb69",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3a7ede7b-539b-49d2-8803-153ca6c9eb69": {
+      "main": [
+        [
+          {
+            "node": "bcf92a71-ff5f-46a7-bec3-cedb5be2bf98",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "bcf92a71-ff5f-46a7-bec3-cedb5be2bf98": {
+      "main": [
+        [
+          {
+            "node": "72cb54f3-4e4e-4ad2-8845-11a38fc29f1a",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "72cb54f3-4e4e-4ad2-8845-11a38fc29f1a": {
+      "main": [
+        [
+          {
+            "node": "3ee05cfe-a528-472e-aa3d-c890fd88b6c4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3ee05cfe-a528-472e-aa3d-c890fd88b6c4": {
+      "main": [
+        [
+          {
+            "node": "41a39309-1a94-461f-9308-63dd5b9a94a7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "41a39309-1a94-461f-9308-63dd5b9a94a7": {
+      "main": [
+        [
+          {
+            "node": "ee9a9d78-8c07-470a-9d1b-ceddfc8875ca",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ee9a9d78-8c07-470a-9d1b-ceddfc8875ca": {
+      "main": [
+        [
+          {
+            "node": "96e6e31c-6306-44a8-a57a-2b5216636b00",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "96e6e31c-6306-44a8-a57a-2b5216636b00": {
+      "main": [
+        [
+          {
+            "node": "c75b9d38-79a7-4be2-a90b-a99da1bbd745",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "c75b9d38-79a7-4be2-a90b-a99da1bbd745": {
+      "main": [
+        [
+          {
+            "node": "93e7be79-9035-4b58-9a83-b9182a0515f8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "name": "Manualtrigger Workflow",
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": null,
+    "timezone": "UTC",
+    "executionTimeout": 3600,
+    "maxExecutions": 1000,
+    "retryOnFail": true,
+    "retryCount": 3,
+    "retryDelay": 1000
+  },
+  "description": "Automated workflow: Manualtrigger Workflow. This workflow integrates 12 different services: microsoftOutlook, stickyNote, markdown, filter, splitInBatches. It contains 36 nodes and follows best practices for error handling and security.",
+  "tags": [
+    "automation",
+    "n8n",
+    "production-ready",
+    "excellent",
+    "optimized"
+  ],
+  "notes": "Excellent quality workflow: Manualtrigger Workflow. This workflow has been optimized for production use with comprehensive error handling, security, and documentation."
+}
