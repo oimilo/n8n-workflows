@@ -1,0 +1,344 @@
+{
+  "name": "AI Agent - N8N Workflows Search Tools",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "When chat message received",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "name": "search_workflows",
+        "description": "Search for n8n workflows by keyword. Returns a list of workflows matching the search term.",
+        "workflowId": "={{ $workflow.id }}",
+        "fields": {
+          "values": [
+            {
+              "name": "query",
+              "type": "string",
+              "description": "Search term (e.g. 'telegram', 'openai', 'discord')"
+            },
+            {
+              "name": "per_page",
+              "type": "number",
+              "description": "Number of results to return (default: 10, max: 100)"
+            },
+            {
+              "name": "trigger",
+              "type": "string",
+              "description": "Filter by trigger type: Webhook, Manual, Scheduled, Complex, or all"
+            },
+            {
+              "name": "complexity",
+              "type": "string",
+              "description": "Filter by complexity: low, medium, high, or all"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/workflows",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.query || '' }}"
+            },
+            {
+              "name": "per_page",
+              "value": "={{ $json.per_page || 10 }}"
+            },
+            {
+              "name": "trigger",
+              "value": "={{ $json.trigger || 'all' }}"
+            },
+            {
+              "name": "complexity",
+              "value": "={{ $json.complexity || 'all' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "tool-search",
+      "name": "Tool: Search Workflows",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [460, 200]
+    },
+    {
+      "parameters": {
+        "name": "get_workflow_stats",
+        "description": "Get statistics about the workflow collection. Returns total workflows, active count, trigger types, complexity distribution, and unique integrations.",
+        "workflowId": "={{ $workflow.id }}",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/stats",
+        "options": {}
+      },
+      "id": "tool-stats",
+      "name": "Tool: Get Statistics",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "name": "list_categories",
+        "description": "List all available workflow categories. Returns categories like 'AI Agent Development', 'Communication & Messaging', 'Data Processing', etc.",
+        "workflowId": "={{ $workflow.id }}",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/categories",
+        "options": {}
+      },
+      "id": "tool-categories",
+      "name": "Tool: List Categories",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [460, 600]
+    },
+    {
+      "parameters": {
+        "name": "get_workflows_by_category",
+        "description": "Get all workflows in a specific category. Use list_categories first to see available categories.",
+        "workflowId": "={{ $workflow.id }}",
+        "fields": {
+          "values": [
+            {
+              "name": "category",
+              "type": "string",
+              "description": "Category name (e.g. 'Communication & Messaging', 'AI Agent Development')"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": "=https://n8n-workflows-production-fb1e.up.railway.app/api/workflows/category/{{ encodeURIComponent($json.category) }}",
+        "options": {}
+      },
+      "id": "tool-category-search",
+      "name": "Tool: Get Workflows by Category",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [460, 800]
+    },
+    {
+      "parameters": {
+        "name": "download_workflow",
+        "description": "Download the complete JSON of a specific workflow. Requires the exact filename from search results.",
+        "workflowId": "={{ $workflow.id }}",
+        "fields": {
+          "values": [
+            {
+              "name": "filename",
+              "type": "string",
+              "description": "Workflow filename (e.g. '0001_Telegram_Bot_Webhook.json')"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": "=https://n8n-workflows-production-fb1e.up.railway.app/api/workflows/{{ $json.filename }}/download",
+        "options": {}
+      },
+      "id": "tool-download",
+      "name": "Tool: Download Workflow",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [460, 1000]
+    },
+    {
+      "parameters": {
+        "name": "get_workflow_details",
+        "description": "Get detailed information about a specific workflow including nodes, connections, and metadata.",
+        "workflowId": "={{ $workflow.id }}",
+        "fields": {
+          "values": [
+            {
+              "name": "filename",
+              "type": "string",
+              "description": "Workflow filename (e.g. '0001_Telegram_Bot_Webhook.json')"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": "=https://n8n-workflows-production-fb1e.up.railway.app/api/workflows/{{ $json.filename }}",
+        "options": {}
+      },
+      "id": "tool-details",
+      "name": "Tool: Get Workflow Details",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [460, 1200]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "openai-model",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [680, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-credentials",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "memory",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [680, 500]
+    },
+    {
+      "parameters": {
+        "text": "=You are a helpful AI assistant that helps users find and explore n8n workflows.\n\nYou have access to a collection of 2,057 n8n workflows with 311 unique integrations.\n\nAvailable tools:\n- search_workflows: Search workflows by keyword\n- get_workflow_stats: Get collection statistics\n- list_categories: List all categories\n- get_workflows_by_category: Get workflows in a category\n- get_workflow_details: Get detailed info about a workflow\n- download_workflow: Download workflow JSON\n\nWhen users ask about workflows:\n1. Use search_workflows to find relevant workflows\n2. Present results in a clear, organized way\n3. Include filename, description, complexity, and node count\n4. Offer to provide more details or download links\n\nBe helpful, concise, and always provide actionable information.",
+        "options": {}
+      },
+      "id": "system-message",
+      "name": "System Message",
+      "type": "@n8n/n8n-nodes-langchain.systemMessage",
+      "typeVersion": 1,
+      "position": [680, 700]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ai-agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: Search Workflows": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: Get Statistics": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: List Categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: Get Workflows by Category": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: Download Workflow": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: Get Workflow Details": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "System Message": {
+      "ai_systemMessage": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_systemMessage",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-05T00:00:00.000Z",
+  "versionId": "1"
+}
