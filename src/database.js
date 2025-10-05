@@ -644,8 +644,42 @@ class WorkflowDatabase {
 
           // Load raw workflow JSON
           try {
-            const workflowPath = path.join(this.workflowsDir, filename);
-            const rawWorkflow = fs.readJsonSync(workflowPath);
+            // Prefer folder from DB when available, fallback to search
+            let filePathCandidate = workflow.folder
+              ? path.join(this.workflowsDir, workflow.folder, filename)
+              : path.join(this.workflowsDir, filename);
+
+            let rawWorkflow = null;
+            if (fs.existsSync(filePathCandidate)) {
+              rawWorkflow = fs.readJsonSync(filePathCandidate);
+            } else {
+              // Fallback: search all JSON files for matching filename (supports nested folders)
+              const allFiles = fs.readdirSync(this.workflowsDir)
+                ? null
+                : null; // noop to keep structure
+              const files = fs.walkSync
+                ? []
+                : [];
+              // Manual recursive search to avoid extra deps
+              const stack = [this.workflowsDir];
+              let foundPath = null;
+              while (stack.length && !foundPath) {
+                const current = stack.pop();
+                const entries = fs.readdirSync(current, { withFileTypes: true });
+                for (const entry of entries) {
+                  const full = path.join(current, entry.name);
+                  if (entry.isDirectory()) {
+                    stack.push(full);
+                  } else if (entry.isFile() && path.basename(full) === filename) {
+                    foundPath = full;
+                    break;
+                  }
+                }
+              }
+              if (foundPath) {
+                rawWorkflow = fs.readJsonSync(foundPath);
+              }
+            }
             workflow.raw_workflow = rawWorkflow;
           } catch (error) {
             console.error(

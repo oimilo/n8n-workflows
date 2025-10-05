@@ -173,12 +173,34 @@ app.get('/api/workflows/:filename', async (req, res) => {
   try {
     const { filename } = req.params;
     const workflow = await db.getWorkflowDetail(filename);
-    
+
     if (!workflow) {
       return res.status(404).json({ error: 'Workflow not found' });
     }
-    
-    res.json(workflow);
+
+    // Normalize response to match frontend expectation (raw_json)
+    const metadata = {
+      id: workflow.id,
+      filename: workflow.filename,
+      name: workflow.name,
+      folder: workflow.folder,
+      active: !!workflow.active,
+      description: workflow.description || '',
+      trigger_type: workflow.trigger_type,
+      complexity: workflow.complexity,
+      node_count: workflow.node_count,
+      integrations: workflow.integrations || [],
+      tags: workflow.tags || [],
+      created_at: workflow.created_at,
+      updated_at: workflow.updated_at,
+    };
+
+    res.json({
+      // Keep original for compatibility
+      ...workflow,
+      metadata,
+      raw_json: workflow.raw_workflow || null,
+    });
   } catch (error) {
     console.error('Error fetching workflow detail:', error);
     res.status(500).json({ error: 'Error fetching workflow detail', details: error.message });
@@ -189,15 +211,40 @@ app.get('/api/workflows/:filename', async (req, res) => {
 app.get('/api/workflows/:filename/download', async (req, res) => {
   try {
     const { filename } = req.params;
-    const workflowPath = path.join('workflows', filename);
-    
-    if (!fs.existsSync(workflowPath)) {
+
+    // Try to resolve using DB (has folder info)
+    const workflow = await db.getWorkflowDetail(filename);
+    let candidatePath = workflow && workflow.folder
+      ? path.join('workflows', workflow.folder, filename)
+      : path.join('workflows', filename);
+
+    if (!fs.existsSync(candidatePath)) {
+      // Fallback: search recursively by filename
+      const stack = ['workflows'];
+      let found = null;
+      while (stack.length && !found) {
+        const current = stack.pop();
+        const entries = fs.readdirSync(current, { withFileTypes: true });
+        for (const entry of entries) {
+          const full = path.join(current, entry.name);
+          if (entry.isDirectory()) {
+            stack.push(full);
+          } else if (entry.isFile() && path.basename(full) === filename) {
+            found = full;
+            break;
+          }
+        }
+      }
+      if (found) candidatePath = found;
+    }
+
+    if (!fs.existsSync(candidatePath)) {
       return res.status(404).json({ error: 'Workflow file not found' });
     }
-    
+
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.setHeader('Content-Type', 'application/json');
-    res.sendFile(path.resolve(workflowPath));
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.sendFile(path.resolve(candidatePath));
   } catch (error) {
     console.error('Error downloading workflow:', error);
     res.status(500).json({ error: 'Error downloading workflow', details: error.message });
