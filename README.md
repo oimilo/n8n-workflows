@@ -183,15 +183,15 @@ python import_workflows.py
 ### Current Collection Stats
 - **Total Workflows**: 2,057 automation workflows
 - **Active Workflows**: 215 (10.5% active rate)
-- **Total Nodes**: 29,528 (avg 14.4 nodes per workflow)
-- **Unique Integrations**: 367 different services and APIs
+- **Total Nodes**: 76,618 (avg 37.2 nodes per workflow)
+- **Unique Integrations**: 311 different services and APIs
 - **Database**: SQLite with FTS5 full-text search
 
 ### Trigger Distribution
-- **Complex**: 832 workflows (40.4%) - Multi-trigger systems
-- **Webhook**: 521 workflows (25.3%) - API-triggered automations  
-- **Manual**: 478 workflows (23.2%) - User-initiated workflows
-- **Scheduled**: 226 workflows (11.0%) - Time-based executions
+- **Complex**: 722 workflows (35.1%) - Multi-trigger systems
+- **Webhook**: 543 workflows (26.4%) - API-triggered automations  
+- **Manual**: 565 workflows (27.5%) - User-initiated workflows
+- **Scheduled**: 227 workflows (11.0%) - Time-based executions
 
 ### Complexity Analysis
 - **Low (≤5 nodes)**: ~35% - Simple automations
