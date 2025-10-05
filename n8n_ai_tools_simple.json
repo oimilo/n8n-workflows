@@ -1,0 +1,234 @@
+{
+  "name": "AI Agent - Workflows Search",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [460, 420],
+      "webhookId": "workflow-chat"
+    },
+    {
+      "parameters": {
+        "name": "search_workflows",
+        "description": "Search for n8n workflows by keyword. Returns workflows matching the search term with their details.",
+        "method": "GET",
+        "url": "=https://n8n-workflows-production-fb1e.up.railway.app/api/workflows?q={{ $fromAI('query', 'Search term like telegram or openai') }}&per_page=10",
+        "authentication": "none",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "query",
+              "description": "Search term (e.g. telegram, openai, discord)"
+            }
+          ]
+        }
+      },
+      "id": "tool-search",
+      "name": "Search Workflows",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 220]
+    },
+    {
+      "parameters": {
+        "name": "get_stats",
+        "description": "Get statistics about the workflow collection including total count, active workflows, trigger types, and integrations.",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/stats",
+        "authentication": "none"
+      },
+      "id": "tool-stats",
+      "name": "Get Statistics",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 420]
+    },
+    {
+      "parameters": {
+        "name": "list_categories",
+        "description": "List all available workflow categories like AI Agent Development, Communication & Messaging, Data Processing, etc.",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/categories",
+        "authentication": "none"
+      },
+      "id": "tool-categories",
+      "name": "List Categories",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 620]
+    },
+    {
+      "parameters": {
+        "name": "get_by_category",
+        "description": "Get workflows from a specific category. Use list_categories first to see available categories.",
+        "method": "GET",
+        "url": "=https://n8n-workflows-production-fb1e.up.railway.app/api/workflows/category/{{ encodeURIComponent($fromAI('category', 'Category name')) }}",
+        "authentication": "none",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "category",
+              "description": "Category name (e.g. Communication & Messaging)"
+            }
+          ]
+        }
+      },
+      "id": "tool-category",
+      "name": "Get by Category",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 820]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "openai",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [1020, 420],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-api",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 10
+      },
+      "id": "memory",
+      "name": "Window Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [1020, 620]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a helpful AI assistant specialized in finding n8n workflows.\n\nYou have access to a collection of 2,057 workflows with 311 unique integrations.\n\nAvailable tools:\n- search_workflows: Search by keyword\n- get_stats: Get collection statistics\n- list_categories: List all categories\n- get_by_category: Get workflows from a category\n\nWhen helping users:\n1. Use search_workflows to find relevant workflows\n2. Present results clearly with filename, description, and complexity\n3. Offer to provide more details or help with specific workflows\n4. Be concise and helpful\n\nExample:\nUser: \"Find telegram workflows\"\nYou: Use search_workflows(query=\"telegram\") and present the top results in a clear format."
+      },
+      "id": "system-prompt",
+      "name": "System Prompt",
+      "type": "@n8n/n8n-nodes-langchain.systemMessage",
+      "typeVersion": 1,
+      "position": [1020, 820]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [1260, 420]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Workflows": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Statistics": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get by Category": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "System Prompt": {
+      "ai_systemMessage": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_systemMessage",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": []
+}
