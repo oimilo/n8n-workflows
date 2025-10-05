@@ -1,0 +1,217 @@
+{
+  "name": "AI Agent - Workflows (Best Practice)",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [300, 420]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "model-openai",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [760, 320]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Você é um assistente de IA que ajuda a encontrar workflows do n8n. Use SEMPRE as tools abaixo conforme o pedido:\n\nFerramentas:\n- search_workflows(query): buscar por palavra-chave. Ex: 'telegram', 'openai', 'discord'.\n- get_stats(): estatísticas da coleção.\n- list_categories(): lista de categorias disponíveis.\n- get_by_category(category): workflows por categoria (use exatamente o nome retornado por list_categories).\n- get_workflow_details(filename): detalhes de um workflow específico.\n\nRegras:\n1) Responder em português do Brasil.\n2) Ao buscar, apresente: Nome, Filename, Nós, Complexidade.\n3) Seja conciso e prático.\n4) Se faltar parâmetro (query/category/filename), pergunte ao usuário.\n5) Não invente dados; use somente o retorno das tools."
+      },
+      "id": "system",
+      "name": "System Prompt",
+      "type": "@n8n/n8n-nodes-langchain.systemMessage",
+      "typeVersion": 1,
+      "position": [760, 520]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [1000, 420]
+    },
+
+    /* Tools */
+    {
+      "parameters": {
+        "name": "search_workflows",
+        "description": "Busca workflows por palavra-chave (ex: telegram, openai, discord)",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/workflows",
+        "authentication": "none",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $fromAI('query', 'Termo de busca (ex: telegram, openai)') }}"
+            },
+            {
+              "name": "per_page",
+              "value": "10"
+            }
+          ]
+        },
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "query",
+              "description": "Termo de busca (ex: telegram, openai, discord)"
+            }
+          ]
+        }
+      },
+      "id": "tool-search",
+      "name": "search_workflows",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [560, 120]
+    },
+    {
+      "parameters": {
+        "name": "get_stats",
+        "description": "Estatísticas da coleção de workflows",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/stats",
+        "authentication": "none"
+      },
+      "id": "tool-stats",
+      "name": "get_stats",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [560, 220]
+    },
+    {
+      "parameters": {
+        "name": "list_categories",
+        "description": "Lista todas as categorias disponíveis",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/categories",
+        "authentication": "none"
+      },
+      "id": "tool-categories",
+      "name": "list_categories",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [560, 320]
+    },
+    {
+      "parameters": {
+        "name": "get_by_category",
+        "description": "Workflows por categoria (use nome exato retornado por list_categories)",
+        "method": "GET",
+        "url": "={{ 'https://n8n-workflows-production-fb1e.up.railway.app/api/workflows/category/' + encodeURIComponent($fromAI('category', 'Nome da categoria')) }}",
+        "authentication": "none",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "category",
+              "description": "Nome exato da categoria (ex: Communication & Messaging)"
+            }
+          ]
+        }
+      },
+      "id": "tool-bycat",
+      "name": "get_by_category",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [560, 420]
+    },
+    {
+      "parameters": {
+        "name": "get_workflow_details",
+        "description": "Detalhes de um workflow pelo filename",
+        "method": "GET",
+        "url": "={{ 'https://n8n-workflows-production-fb1e.up.railway.app/api/workflows/' + $fromAI('filename', 'Filename exato do workflow (.json)') }}",
+        "authentication": "none",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "filename",
+              "description": "Nome do arquivo (ex: 0748_Noop_Telegram_Automation_Scheduled.json)"
+            }
+          ]
+        }
+      },
+      "id": "tool-details",
+      "name": "get_workflow_details",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [560, 520]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          { "node": "AI Agent", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "ai_languageModel": [
+        [
+          { "node": "AI Agent", "type": "ai_languageModel", "index": 0 }
+        ]
+      ]
+    },
+    "System Prompt": {
+      "ai_systemMessage": [
+        [
+          { "node": "AI Agent", "type": "ai_systemMessage", "index": 0 }
+        ]
+      ]
+    },
+    "search_workflows": {
+      "ai_tool": [
+        [
+          { "node": "AI Agent", "type": "ai_tool", "index": 0 }
+        ]
+      ]
+    },
+    "get_stats": {
+      "ai_tool": [
+        [
+          { "node": "AI Agent", "type": "ai_tool", "index": 0 }
+        ]
+      ]
+    },
+    "list_categories": {
+      "ai_tool": [
+        [
+          { "node": "AI Agent", "type": "ai_tool", "index": 0 }
+        ]
+      ]
+    },
+    "get_by_category": {
+      "ai_tool": [
+        [
+          { "node": "AI Agent", "type": "ai_tool", "index": 0 }
+        ]]
+    },
+    "get_workflow_details": {
+      "ai_tool": [
+        [
+          { "node": "AI Agent", "type": "ai_tool", "index": 0 }
+        ]]
+    }
+  },
+  "pinData": {},
+  "settings": { "executionOrder": "v1" },
+  "staticData": null,
+  "tags": []
+}
+

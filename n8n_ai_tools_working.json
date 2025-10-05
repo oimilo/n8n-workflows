@@ -1,0 +1,207 @@
+{
+  "name": "AI Agent - Workflows Search (Working)",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [460, 420],
+      "webhookId": "workflow-chat"
+    },
+    {
+      "parameters": {
+        "name": "search_workflows",
+        "description": "Busca workflows do n8n por palavra-chave. Retorna uma lista de workflows que correspondem ao termo de busca. Use quando o usuário pedir para buscar, encontrar ou procurar workflows.",
+        "method": "GET",
+        "url": "=https://n8n-workflows-production-fb1e.up.railway.app/api/workflows?q={{ $fromAI('query', 'Termo de busca') }}&per_page=10",
+        "authentication": "none",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "query",
+              "description": "Termo de busca (ex: telegram, openai, discord, email)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "tool-search",
+      "name": "search_workflows",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 220]
+    },
+    {
+      "parameters": {
+        "name": "get_stats",
+        "description": "Obtém estatísticas sobre a coleção de workflows incluindo total de workflows, workflows ativos, tipos de triggers, distribuição de complexidade e número de integrações únicas. Use quando o usuário pedir estatísticas, números, visão geral ou informações gerais sobre a coleção.",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/stats",
+        "authentication": "none",
+        "options": {}
+      },
+      "id": "tool-stats",
+      "name": "get_stats",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 420]
+    },
+    {
+      "parameters": {
+        "name": "list_categories",
+        "description": "Lista todas as categorias de workflows disponíveis como 'AI Agent Development', 'Communication & Messaging', 'Data Processing & Analysis', etc. Use quando o usuário pedir para ver categorias, tipos de workflows ou áreas disponíveis.",
+        "method": "GET",
+        "url": "https://n8n-workflows-production-fb1e.up.railway.app/api/categories",
+        "authentication": "none",
+        "options": {}
+      },
+      "id": "tool-categories",
+      "name": "list_categories",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [740, 620]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "openai",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [1020, 420],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-api",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 10
+      },
+      "id": "memory",
+      "name": "Window Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [1020, 620]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um assistente especializado em workflows do n8n.\n\n**Sua base de conhecimento:**\n- 2.057 workflows disponíveis\n- 311 integrações únicas\n- Categorias: AI, Comunicação, Dados, E-commerce, Marketing, etc.\n\n**Ferramentas disponíveis:**\n\n1. **search_workflows(query)** - Busca workflows por palavra-chave\n   - Use quando: usuário pedir para buscar, encontrar ou procurar workflows\n   - Exemplo: \"busque workflows de telegram\" → search_workflows(query=\"telegram\")\n\n2. **get_stats()** - Retorna estatísticas da coleção\n   - Use quando: usuário pedir números, estatísticas ou visão geral\n   - Exemplo: \"quantos workflows existem?\" → get_stats()\n\n3. **list_categories()** - Lista todas as categorias\n   - Use quando: usuário pedir categorias ou tipos disponíveis\n   - Exemplo: \"que categorias existem?\" → list_categories()\n\n**Como responder:**\n\n1. **Seja direto e útil**\n   - Apresente resultados de forma clara e organizada\n   - Use emojis para melhor visualização (📊 🔍 ✅)\n\n2. **Formate bem as respostas**\n   ```\n   Encontrei X workflows:\n   \n   1. **Nome do Workflow**\n      📁 Arquivo: filename.json\n      📊 Complexidade: média\n      🔧 Nós: 12\n   ```\n\n3. **Seja proativo**\n   - Ofereça ajuda adicional\n   - Sugira buscas relacionadas\n   - Pergunte se quer mais detalhes\n\n4. **Sempre em português brasileiro**\n\n**Exemplos de interação:**\n\nUsuário: \"Quero workflows de telegram\"\nVocê: Usa search_workflows(query=\"telegram\") e apresenta os resultados formatados\n\nUsuário: \"Quantos workflows tem?\"\nVocê: Usa get_stats() e apresenta os números de forma clara\n\nUsuário: \"Que tipos de workflow existem?\"\nVocê: Usa list_categories() e lista as categorias organizadas"
+      },
+      "id": "system-prompt",
+      "name": "System Prompt",
+      "type": "@n8n/n8n-nodes-langchain.systemMessage",
+      "typeVersion": 1,
+      "position": [1020, 820]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [1260, 420]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_workflows": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_stats": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "list_categories": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "System Prompt": {
+      "ai_systemMessage": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_systemMessage",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": []
+}
+
