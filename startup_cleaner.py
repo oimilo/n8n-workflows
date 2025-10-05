@@ -132,15 +132,19 @@ class WorkflowStartupCleaner:
         return False
     
     def clean_connections(self, workflow_data: Dict) -> bool:
-        """Clean and validate connections."""
+        """Clean and validate connections, or create them if missing."""
         connections = workflow_data.get('connections', {})
         nodes = workflow_data.get('nodes', [])
         
-        if not connections or not nodes:
+        if not nodes:
             return False
         
         # Get valid node IDs
         valid_node_ids = {node.get('id') for node in nodes}
+        
+        # If no connections exist, try to create logical connections
+        if not connections:
+            return self.create_logical_connections(workflow_data, nodes)
         
         cleaned_connections = {}
         cleaned = False
@@ -176,6 +180,46 @@ class WorkflowStartupCleaner:
         
         if cleaned:
             workflow_data['connections'] = cleaned_connections
+            return True
+        
+        return False
+    
+    def create_logical_connections(self, workflow_data: Dict, nodes: List[Dict]) -> bool:
+        """Create logical connections between nodes based on their order and type."""
+        if len(nodes) < 2:
+            return False
+        
+        # Sort nodes by position (x-coordinate) to determine logical flow
+        positioned_nodes = []
+        for node in nodes:
+            position = node.get('position', [0, 0])
+            positioned_nodes.append((position[0], node))
+        
+        # Sort by x-coordinate (left to right)
+        positioned_nodes.sort(key=lambda x: x[0])
+        
+        # Create connections between adjacent nodes
+        connections = {}
+        for i in range(len(positioned_nodes) - 1):
+            current_node = positioned_nodes[i][1]
+            next_node = positioned_nodes[i + 1][1]
+            
+            current_id = current_node.get('id')
+            next_id = next_node.get('id')
+            
+            if current_id and next_id:
+                # Create main connection
+                if current_id not in connections:
+                    connections[current_id] = {}
+                
+                connections[current_id]['main'] = [[{
+                    'node': next_id,
+                    'type': 'main',
+                    'index': 0
+                }]]
+        
+        if connections:
+            workflow_data['connections'] = connections
             return True
         
         return False
