@@ -327,6 +327,81 @@ app.post('/api/reindex', async (req, res) => {
   }
 });
 
+// AI-friendly endpoints (stable dataset for ingestion)
+app.get('/api/ai/workflows', async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page || '1'));
+    const perPage = Math.min(200, Math.max(1, parseInt(req.query.per_page || '50')));
+    await db.initialize();
+    const all = await db.getAllWorkflowsBasic();
+    const total = all.length;
+    const start = (page - 1) * perPage;
+    const slice = all.slice(start, start + perPage).map(w => ({
+      filename: w.filename,
+      name: w.name,
+      category: w.folder || 'Uncategorized',
+      node_count: w.node_count,
+      trigger_type: w.trigger_type,
+      complexity: w.complexity,
+      integrations: w.integrations,
+      tags: w.tags,
+      active: !!w.active,
+      updated_at: w.updated_at,
+    }));
+    res.json({
+      workflows: slice,
+      total,
+      page,
+      per_page: perPage,
+      pages: Math.ceil(total / perPage),
+    });
+  } catch (error) {
+    console.error('AI list error:', error);
+    res.status(500).json({ error: 'AI list error', details: error.message });
+  }
+});
+
+app.get('/api/ai/raw/:filename', async (req, res) => {
+  try {
+    const { filename } = req.params;
+    const wf = await db.getWorkflowDetail(filename);
+    if (!wf || !wf.raw_workflow) return res.status(404).json({ error: 'Not found' });
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.send(JSON.stringify(wf.raw_workflow));
+  } catch (error) {
+    console.error('AI raw error:', error);
+    res.status(500).json({ error: 'AI raw error', details: error.message });
+  }
+});
+
+app.get('/api/ai/dataset.ndjson', async (req, res) => {
+  try {
+    await db.initialize();
+    const all = await db.getAllWorkflowsBasic();
+    res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
+    for (const w of all) {
+      const wf = await db.getWorkflowDetail(w.filename);
+      const record = {
+        filename: w.filename,
+        name: w.name,
+        category: w.folder || 'Uncategorized',
+        node_count: w.node_count,
+        trigger_type: w.trigger_type,
+        complexity: w.complexity,
+        integrations: w.integrations,
+        tags: w.tags,
+        active: !!w.active,
+        raw_json: wf?.raw_workflow || null,
+      };
+      res.write(JSON.stringify(record) + '\n');
+    }
+    res.end();
+  } catch (error) {
+    console.error('AI dataset error:', error);
+    res.status(500).json({ error: 'AI dataset error', details: error.message });
+  }
+});
+
 // Get integrations
 app.get('/api/integrations', async (req, res) => {
   try {

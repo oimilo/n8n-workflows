@@ -619,6 +619,23 @@ class WorkflowDatabase {
     });
   }
 
+  async getAllWorkflowsBasic() {
+    if (!this.initialized) {
+      await this.initialize();
+    }
+    return new Promise((resolve, reject) => {
+      this.db.all("SELECT * FROM workflows ORDER BY name", (err, rows) => {
+        if (err) return reject(err);
+        const workflows = rows.map((row) => ({
+          ...row,
+          integrations: JSON.parse(row.integrations || "[]"),
+          tags: JSON.parse(row.tags || "[]"),
+        }));
+        resolve(workflows);
+      });
+    });
+  }
+
   async cleanupMissingFiles() {
     if (!this.initialized) {
       await this.initialize();
