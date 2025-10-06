@@ -6,7 +6,7 @@ High-performance API with sub-100ms response times.
 
 from fastapi import FastAPI, HTTPException, Query, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
+from fastapi.responses import HTMLResponse, FileResponse, JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, field_validator
@@ -366,6 +366,108 @@ def generate_mermaid_diagram(nodes: List[Dict], connections: Dict) -> str:
     
     # Format the final mermaid diagram code
     return "\n".join(mermaid_code)
+
+@app.get("/api/ai/workflows")
+async def ai_list_workflows(page: int = Query(1, ge=1), per_page: int = Query(50, ge=1, le=200)):
+    """AI-friendly listing of workflow metadata (paginated)."""
+    try:
+        offset = (page - 1) * per_page
+        workflows, total = db.search_workflows(
+            query="",
+            trigger_filter="all",
+            complexity_filter="all",
+            active_only=False,
+            limit=per_page,
+            offset=offset,
+        )
+        items = [
+            {
+                "filename": w.get("filename", ""),
+                "name": w.get("name", ""),
+                "category": w.get("folder", "") or "Uncategorized",
+                "node_count": w.get("node_count", 0),
+                "trigger_type": w.get("trigger_type", "Manual"),
+                "complexity": w.get("complexity", "low"),
+                "integrations": w.get("integrations", []),
+                "tags": w.get("tags", []),
+                "active": bool(w.get("active", False)),
+                "updated_at": w.get("updated_at"),
+            }
+            for w in workflows
+        ]
+        pages = (total + per_page - 1) // per_page
+        return {
+            "workflows": items,
+            "total": total,
+            "page": page,
+            "per_page": per_page,
+            "pages": pages,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI list error: {str(e)}")
+
+
+@app.get("/api/ai/raw/{filename}")
+async def ai_raw_workflow(filename: str):
+    """Return raw JSON for a workflow (for AI ingestion)."""
+    try:
+        workflows_path = Path('workflows')
+        json_files = list(workflows_path.rglob("*.json"))
+        matching_files = [f for f in json_files if f.name == filename]
+        if not matching_files:
+            raise HTTPException(status_code=404, detail=f"Workflow file '{filename}' not found on filesystem")
+        file_path = matching_files[0]
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return JSONResponse(content=data)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI raw error: {str(e)}")
+
+
+@app.get("/api/ai/dataset.ndjson")
+async def ai_dataset_ndjson():
+    """Stream entire dataset as NDJSON for AI pipelines/RAG."""
+    try:
+        def generator():
+            page = 1
+            per_page = 200
+            while True:
+                workflows, total = db.search_workflows(limit=per_page, offset=(page - 1) * per_page)
+                if not workflows:
+                    break
+                for w in workflows:
+                    try:
+                        workflows_path = Path('workflows')
+                        json_files = list(workflows_path.rglob("*.json"))
+                        match = next((f for f in json_files if f.name == w.get('filename')), None)
+                        raw_json = None
+                        if match and match.exists():
+                            with open(match, 'r', encoding='utf-8') as f:
+                                raw_json = json.load(f)
+                    except Exception:
+                        raw_json = None
+                    record = {
+                        "filename": w.get("filename", ""),
+                        "name": w.get("name", ""),
+                        "category": w.get("folder", "") or "Uncategorized",
+                        "node_count": w.get("node_count", 0),
+                        "trigger_type": w.get("trigger_type", "Manual"),
+                        "complexity": w.get("complexity", "low"),
+                        "integrations": w.get("integrations", []),
+                        "tags": w.get("tags", []),
+                        "active": bool(w.get("active", False)),
+                        "raw_json": raw_json,
+                    }
+                    yield json.dumps(record, ensure_ascii=False) + "\n"
+                if page * per_page >= total:
+                    break
+                page += 1
+
+        return StreamingResponse(generator(), media_type="application/x-ndjson; charset=utf-8")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI dataset error: {str(e)}")
 
 @app.post("/api/reindex")
 async def reindex_workflows(background_tasks: BackgroundTasks, force: bool = False):
