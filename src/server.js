@@ -135,7 +135,9 @@ app.get('/api/workflows', async (req, res) => {
       complexity = 'all',
       active_only = false,
       page = 1,
-      per_page = 20
+      per_page = 20,
+      exclude_legacy = 'false', // when true, hides files with numeric prefix (legacy set)
+      new_only = 'false',
     } = req.query;
     
     const pageNum = Math.max(1, parseInt(page));
@@ -146,12 +148,18 @@ app.get('/api/workflows', async (req, res) => {
     const { workflows, total } = await db.searchWorkflows(
       q, trigger, complexity, activeOnly, perPage, offset
     );
-    
-    const pages = Math.ceil(total / perPage);
-    
+    // Optional filter to exclude legacy files (numeric prefix like 0001_)
+    const wantNewOnly = (exclude_legacy === 'true') || (new_only === 'true') || (exclude_legacy === '1') || (new_only === '1');
+    const filtered = wantNewOnly
+      ? workflows.filter(w => !/^\d+_/.test(w.filename))
+      : workflows;
+
+    const filteredTotal = wantNewOnly ? filtered.length + (total - workflows.length) : total;
+    const pages = Math.ceil(filteredTotal / perPage);
+
     res.json({
-      workflows,
-      total,
+      workflows: filtered,
+      total: filteredTotal,
       page: pageNum,
       per_page: perPage,
       pages,
